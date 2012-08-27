@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <fieldset name="global" label="COM_ITPMETA_GLOBAL_TITLE" description="COM_ITPMETA_GLOBAL_PARAMS">
+        <field name="addGlobal" type="radio" default="0"  label="COM_ITPMETA_ADD_GLOBAL" description="COM_ITPMETA_ADD_GLOBAL_DESC" >
+           <option value="1">JYES</option>
+           <option value="0">JNO</option>
+       </field>
+       <field name="tags" type="textarea" rows="5" cols="60" default="" label="COM_ITPMETA_GLOBAL_TAGS" description="COM_ITPMETA_GLOBAL_TAGS_DESC" filter="raw" />
+    </fieldset>
+</config>

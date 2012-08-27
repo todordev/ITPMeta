@@ -1,0 +1,149 @@
+@CHARSET "UTF-8";
+.icon-48-itp-settings 	{ background-image: url(../images/settings_48.png); }
+.icon-48-itp-urls 	    { background-image: url(../images/urls_48.png); }
+.icon-48-itp-properties     { background-image: url(../images/properties_48.png); }
+.icon-48-itp-new-url     { background-image: url(../images/add_url_48.png); }
+.icon-48-itp-edit-url     { background-image: url(../images/edit_url_48.png); }
+.icon-48-itp-tags     { background-image: url(../images/tags_48.png); }
+.icon-48-itp-new-tag     { background-image: url(../images/tags_add_48.png); }
+.icon-48-itp-edit-tag     { background-image: url(../images/tags_edit_48.png); }
+.icon-32-itp-properties-back { background-image: url(../images/properties_back_32.png); }
+.icon-48-itp-globals 	    { background-image: url(../images/globals_48.png); }
+.icon-48-itp-new-global     { background-image: url(../images/add_global_48.png); }
+.icon-48-itp-edit-global     { background-image: url(../images/edit_global_48.png); }
+
+#itp-cpanel {
+      width: 400px;
+      height: 400px;
+      float: left;
+}
+
+#itp-itprism {
+    width: 400px;
+    height: 450px;
+    float: right;
+    text-align:left;
+}
+
+
+#itp-cpanel span {
+
+    display: block;
+    text-align: center;
+
+}
+
+.itp-cpitem {
+  float:left;
+  text-align: center;
+  margin: 0 5px 5px 0;
+
+}
+
+.itp-cpitem a {
+  display:block;
+  width: 120px;
+  height: 100px;
+  border: thin solid #E1E1E1;
+  vertical-align: middle;
+  text-decoration: none;
+  float:left;
+  color: #808080 !important;
+}
+
+.itp-cpitem:hover a {
+    border: thin outset #E1E1E1;
+    background: #FFF5EC none repeat scroll 0;
+    color: #0B55C4 !important;
+    text-decoration: none;
+}
+
+
+.itp-cpitem img {
+  padding: 10px;
+}
+
+.itp-tag-btn{
+  float:left;
+  margin: 5px;
+  padding: 5px;
+  border: thin solid #575757;
+  text-align: center;
+  font-size: medium;
+  cursor: pointer;
+  color: black !important;
+  text-decoration: none !important;
+}
+
+#itpm-content{
+  width: 90%;
+  height: 100px;
+}
+
+#itpm-url{
+  width: 90%;
+}
+
+#itmp-tags{
+    float:left;
+    width: 48%;
+    margin-left: 10px;
+}
+
+#itpm-tags-box{
+  width: 80%;
+}
+
+#itpm-tags-box h1{
+  background: #0E76AA;
+  text-align: center;
+  word-spacing: 3px;
+  font-weight: bold;
+  color: #000000;
+  margin:5px;
+  padding:5px;
+}
+
+.itpm-url-tag{
+  border: thin solid #000000;
+  padding: 5px;
+  margin:5px;
+  cursor:pointer;
+  display:block;
+  text-decoration:none !important;
+  color:black !important;
+  float:left;
+  width: 90%;
+}
+.itpm-url-tag:hover{
+  background-color: #E5E5E5;
+}
+
+#itpm-tags-form{
+    float:left; 
+	width: 48%;
+
+}
+
+.itpm-tag-item{
+    overflow: hidden;
+    margin:5px;
+}
+
+.itpm-tag-actions{
+    float:right;
+    margin:5px;
+    padding: 5px;
+}
+
+.itpm-tag-actions img {
+  cursor: pointer;
+}
+
+#tag-form textarea {
+	width: 500px !important;
+}
+
+#global-form textarea{
+	width: 100% !important;
+}

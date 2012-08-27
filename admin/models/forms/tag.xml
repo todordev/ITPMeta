@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+        <field 
+            name="content" type="textarea" class="textinput"
+            cols="60" 
+            rows="5"
+            label="COM_ITPMETA_CONTENT" 
+        />
+            
+        <field 
+            name="tag" type="textarea" 
+            disabled="true" 
+            cols="60" 
+            rows="5"
+            label="COM_ITPMETA_TAG" 
+        />
+        
+        <field 
+            name="output" type="textarea" class="textinput"
+            cols="60" 
+            rows="5"
+            label="COM_ITPMETA_OUTPUT" 
+            required="true"
+            filter="raw"
+        />
+        
+        <field 
+           name="id" 
+           type="text" 
+           default="0" 
+           label="JGLOBAL_FIELD_ID_LABEL" 
+           description="JGLOBAL_FIELD_ID_DESC"
+           readonly="true" 
+           class="readonly"
+        />
+        
+        <field 
+           name="url_id" 
+           type="hidden" 
+           default="0" 
+        />
+        
+	</fieldset>
+</form>
