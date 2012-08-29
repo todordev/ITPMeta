@@ -13,9 +13,11 @@
 	<packager>Todor Iliev</packager>
 	<packagerurl>http://www.itprism.com</packagerurl>
 	<description>
-	<![CDATA[<p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta">ITPMeta</a> is an easy way to put any code in the header of your site.</p>
-	<p>If you like this extension, you are able to invest in its improvement. You can <a href="http://itprism.com/sponsorship" title="Sponsoring" target="_blank">sponsor the extension via SMS or PayPal</a>.</p>
-	<p>Please, <a href="http://extensions.joomla.org/extensions/site-management/seo-a-metadata/15861">vote for the extension</a> on Joomla! Extensions Directory</p>
+	<![CDATA[
+	<p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta">ITPMeta</a> is an easy way to put any code in the header of your site.</p>
+	<p>Invest in the extension and help for its improvement. You can <a href="http://itprism.com/sponsorship" title="Sponsoring" target="_blank">sponsor the extension via SMS or PayPal</a>.</p>
+	<p><a href="http://itprism.com/" target="_blank">Subscribe for the newsletter</a> to receive information about updates and new ITPrism extensions.</p>
+	<p>Please, <a href="http://extensions.joomla.org/extensions/site-management/seo-a-metadata/15861" target="_blank">vote for the extension</a> on Joomla! Extensions Directory</p>
 	]]></description>
 	<files folder="packages">
 		<file type="component" 	id="com_itpmeta" >com_itpmeta.zip</file>

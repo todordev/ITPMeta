@@ -25,13 +25,15 @@ COLLATE utf8_general_ci ;
 
 CREATE TABLE IF NOT EXISTS `#__itpm_tags` (
   `id` smallint(6) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `tag` text NOT NULL,
   `content` text NOT NULL,
   `output` text NOT NULL,
   `url_id` smallint(6) UNSIGNED NOT NULL,
   PRIMARY KEY(`id`),
   INDEX `idx_itpmeta_url_id`(`url_id`),
   CONSTRAINT `FK_tags_urls` FOREIGN KEY (`url_id`)
-    REFERENCES `m7hxu_itpm_urls`(`id`)
+    REFERENCES `#__itpm_urls`(`id`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT
 )

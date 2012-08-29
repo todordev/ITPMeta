@@ -9,9 +9,10 @@
     <authorUrl>http://itprism.com</authorUrl>
     <version>3.0</version>
 	<description><![CDATA[
-	<p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta">ITPMeta</a> plugin puts your code to the head of pages.</p>
-<p>If you like this extension, you are able to invest in its improvement. You can <a href="http://itprism.com/sponsorship" title="Sponsoring" target="_blank">sponsor the extension via SMS or PayPal</a>.</p>
-<p>Please, <a href="http://extensions.joomla.org/extensions/site-management/seo-a-metadata/15861">vote for the extension</a> on Joomla! Extensions Directory</p></p>
+<p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta">ITPMeta</a> plugin puts your code to the header of pages.</p>
+<p>Invest in the extension and help for its improvement. You can <a href="http://itprism.com/sponsorship" title="Sponsoring" target="_blank">sponsor the extension via SMS or PayPal</a>.</p>
+<p><a href="http://itprism.com/" target="_blank">Subscribe for the newsletter</a> to receive information about updates and new ITPrism extensions.</p>
+<p>Please, <a href="http://extensions.joomla.org/extensions/site-management/seo-a-metadata/15861" target="_blank">vote for the extension</a> on Joomla! Extensions Directory</p>
 	]]></description>
 	
 	<files>

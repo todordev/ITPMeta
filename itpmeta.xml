@@ -30,22 +30,26 @@
 	
 	<media destination="com_itpmeta" folder="media">
 		<filename>index.html</filename>
-		<filename>itpmeta.js</filename>
-		<folder>css</folder>	
+		<folder>css</folder>
 		<folder>images</folder>
+		<folder>js</folder>
 	</media>
 	
 	<!-- Site Main File Copy Section -->
 	<files folder="site">
+	    <folder>controllers</folder>
+	    <folder>models</folder>
+	    <folder>views</folder>     
 		<filename>controller.php</filename>
 		<filename>index.html</filename>
 		<filename>itpmeta.php</filename>
+		<filename>router.php</filename>
 	</files>
 	
 	<administration>
 		<menu img="../media/com_itpmeta/images/menu_icon_itpmeta.png" link="option=com_itpmeta">COM_ITPMETA</menu>
 		<submenu>
-			<menu img="../media/com_itpmeta/images/menu_icon_cpanel.png" link="option=com_itpmeta&amp;view=cpanel">COM_ITPMETA_CP</menu>
+			<menu img="../media/com_itpmeta/images/menu_icon_cpanel.png" link="option=com_itpmeta&amp;view=cpanel">COM_ITPMETA_CONTROL_PANEL</menu>
 			<menu img="../media/com_itpmeta/images/menu_icon_globals.png" link="option=com_itpmeta&amp;view=globals">COM_ITPMETA_GLOBALS_TAGS</menu>
 			<menu img="../media/com_itpmeta/images/menu_icon_urls.png" link="option=com_itpmeta&amp;view=urls">COM_ITPMETA_MANAGE_URLS</menu>
 		</submenu>

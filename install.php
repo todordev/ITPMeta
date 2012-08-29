@@ -12,56 +12,51 @@
  */
 
 // no direct access
-defined( '_JEXEC' ) or die;
+defined('_JEXEC') or die();
 
 /**
  * Script file of VipPortfolio component
  */
-class pkg_itpMetaInstallerScript
-{
-        /**
-         * method to install the component
-         *
-         * @return void
-         */
-        function install($parent) 
-        {
-            
-        }
- 
-        /**
-         * method to uninstall the component
-         *
-         * @return void
-         */
-        function uninstall($parent) 
-        {
-        }
- 
-        /**
-         * method to update the component
-         *
-         * @return void
-         */
-        function update($parent) 
-        {
-        }
- 
-        /**
-         * method to run before an install/update/uninstall method
-         *
-         * @return void
-         */
-        function preflight($type, $parent) 
-        {
-        }
- 
-        /**
-         * method to run after an install/update/uninstall method
-         *
-         * @return void
-         */
-        function postflight($type, $parent) 
-        {
-        }
+class pkg_itpMetaInstallerScript {
+    /**
+     * method to install the component
+     *
+     * @return void
+     */
+    public function install($parent) {
+    
+    }
+    
+    /**
+     * method to uninstall the component
+     *
+     * @return void
+     */
+    public function uninstall($parent) {
+    }
+    
+    /**
+     * method to update the component
+     *
+     * @return void
+     */
+    public function update($parent) {
+    }
+    
+    /**
+     * method to run before an install/update/uninstall method
+     *
+     * @return void
+     */
+    public function preflight($type, $parent) {
+    }
+    
+    /**
+     * method to run after an install/update/uninstall method
+     *
+     * @return void
+     */
+    public function postflight($type, $parent) {
+        echo JText::_("COM_ITPMETA_INSTALL_ENABLE_PLUGIN");
+    }
 }

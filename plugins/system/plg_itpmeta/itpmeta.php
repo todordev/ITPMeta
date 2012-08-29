@@ -26,25 +26,33 @@ jimport('joomla.plugin.plugin');
 class plgSystemItpMeta extends JPlugin {
 	
 	public function __construct(&$subject, $config = array()){
-        
         parent::__construct($subject, $config);
+        
+        // Register the component helper
+        $helperPath = JPATH_ROOT . DIRECTORY_SEPARATOR. "administrator" . DIRECTORY_SEPARATOR . "components" . DIRECTORY_SEPARATOR ."com_itpmeta". DIRECTORY_SEPARATOR."helpers" . DIRECTORY_SEPARATOR;
+        JLoader::register("ItpMetaHelper", $helperPath . "helper.php");
+        
+        // Register the component version class
+        $libraryPath = JPATH_ROOT . DIRECTORY_SEPARATOR. "administrator" . DIRECTORY_SEPARATOR . "components" . DIRECTORY_SEPARATOR ."com_itpmeta". DIRECTORY_SEPARATOR."libraries" . DIRECTORY_SEPARATOR;
+        JLoader::register("ItpMetaVersion", $libraryPath . "version.php");
+        
 	}
     
-	public function onAfterDispatch() {
+	public function onBeforeCompileHead() {
 	    
-	    if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
-            return;
-        }
-
-        $app = JFactory::getApplication();
-        /* @var $app JApplication */
+	    $app = JFactory::getApplication();
+        /** @var $app JSite **/
 
         if($app->isAdmin()) {
             return;
         }
+        
+	    if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
+            return;
+        }
 
         $document = JFactory::getDocument();
-        /* @var $document JDocumentHTML */
+        /** @var $document JDocumentHTML **/
         
         $type = $document->getType();
         
@@ -52,15 +60,10 @@ class plgSystemItpMeta extends JPlugin {
              return;   
         }
         
-        // Register the component helper
-        $helperPath = JPATH_ROOT . DS. "administrator" . DS . "components" . DS ."com_itpmeta" . DS."helpers" . DS;
-        JLoader::register("ItpMetaHelper", $helperPath . "itpmetahelper.php");
-        
         // Gets current URL
         $uri    = JFactory::getURI();
         $path   = $uri->getPath();
         $query  = $uri->getQuery();
-        
         if(!empty($query)) {
             $path .= "?".$query;
         }
@@ -68,38 +71,13 @@ class plgSystemItpMeta extends JPlugin {
         // Load all tags for this address
         $tags = ItpMetaHelper::getTags($path);
         
-        // Get global metadata
-        $componentParams = &JComponentHelper::getParams('com_itpmeta');
-        $addGlobal  = $componentParams->get("addGlobal", 0);
-        $globalTags = array();
-        
-        if($addGlobal){
-            $tags_ = $componentParams->get("tags", "");
-            if(!empty($tags_)) {
-                $globalTags = explode("\n", $tags_);
-            }
-        }
-        
         // Add metadata
-        if(!empty($tags) OR !empty($globalTags)) {
-            
-            // Put tags for specified address
-            if(!empty($tags)) {
-                foreach($tags as $tag) {
-                    $tag->content = JString::trim($tag->content);
-                    if(!empty($tag->content)) {
-                        $document->addCustomTag($tag->content);
-                    }
-                }
-            }
-            
-            // Put global tags
-            if(!empty($globalTags)) {
-                foreach($globalTags as $tag) {
-                    $tag = JString::trim($tag);
-                    if(!empty($tag)) {
-                        $document->addCustomTag($tag);
-                    }
+        if(!empty($tags)) {
+            foreach($tags as $tag) {
+                
+                $tag->output = JString::trim($tag->output);
+                if(!empty($tag->output)) {
+                    $document->addCustomTag($tag->output);
                 }
             }
         }
@@ -111,19 +89,21 @@ class plgSystemItpMeta extends JPlugin {
      */
 	public function onAfterRender() {
 		
-		if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
-			return;
-        }
-
 	    $app = JFactory::getApplication();
-        /* @var $app JApplication */
+        /** @var $app JSite **/
 
         if($app->isAdmin()) {
             return;
         }
         
+        // Check component options
+        $params = JComponentHelper::getParams('com_itpmeta');
+		if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
+			return;
+        }
+        
 	    $document = JFactory::getDocument();
-        /* @var $document JDocumentHTML */
+        /** @var $document JDocumentHTML **/
         
         $type = $document->getType();
         if(strcmp("html",$type) !=0) {
@@ -133,8 +113,15 @@ class plgSystemItpMeta extends JPlugin {
         $buffer = JResponse::getBody();
         
         // Add open graph namespace in the html element
-        $newHtmlAttr = '<html xmlns:og="http://ogp.me/ns#" '; 
-        $buffer = str_replace("<html", $newHtmlAttr, $buffer);
+	    if($params->get("add_opengraph_scheme", 0)) {
+            $newHtmlAttr = '<html xmlns:og="http://ogp.me/ns#" '; 
+            $buffer = str_replace("<html", $newHtmlAttr, $buffer);
+        }
+        
+        // Add backlink to the end of the page
+        $version =  new ItpMetaVersion();
+        $versionCode = $version->backlink . "</body>";
+        $buffer = str_replace("</body>", $versionCode, $buffer);
         
         JResponse::setBody($buffer);
 	}
