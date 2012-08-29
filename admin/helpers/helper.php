@@ -23,30 +23,62 @@ class ItpMetaHelper {
      * @param string    $url
      * @param boolean   $published
      * @return array    Tags
+     * 
+     * @todo Do it with query object
      */
-    public static function getTags($url, $published = true){
+    public static function getTags($urlPath){
         
         $db = JFactory::getDBO();
- 
-        $query = "
-            SELECT 
-                #__itpm_tags.*
-            FROM 
-                #__itpm_tags AS a
-            INNER JOIN
-                #__itpm_urls AS b
-            ON
-                b.id = a.url_id
-            WHERE 
-                b.url = " . $db->quote( $url );
+        
+        /*
+        $query = $db->getQuery(true);
+        $query
+            ->select("output")
+            ->from("#__itpm_tags AS a")
+            ->join("LEFT", "#__itpm_urls AS b ON a.url_id = b.id")
+            ->where("b.uri = ". $db->quote( $urlPath ))
+            ->where("b.published = 1")
+            ;
+            
+        $query2 = $db->getQuery(true);
+        $query2
+            ->select("output")
+            ->from("#__itpm_global_tags")
+            ->where("published = 1");
 
-        if($published){
-           $query .= " AND b.published=1"; 
-        }
+        $query->union($query2);
+         */
+        
+        $query = "
+        	( SELECT 
+        		`output`
+    		FROM
+    			#__itpm_tags AS a
+			LEFT JOIN
+				#__itpm_urls AS b 
+			ON 
+				a.url_id = b.id
+			WHERE
+				b.uri = ". $db->quote( $urlPath ) . "
+			AND
+				b.published = 1 )
+				
+			UNION
+			
+			( SELECT 
+        		`output`
+    		FROM
+    			#__itpm_global_tags
+			WHERE
+				published = 1 )
+        ";
         
         $db->setQuery($query);
-        return $db->loadObjectList();
+        $result = $db->loadObjectList();
+        
+        return $result;
         
     }
+    
    
 }

@@ -30,6 +30,8 @@ class ItpMetaModelTags extends JModel {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                 'id', 'a.id',
+                'title', 'a.title',
+                'tag', 'a.tag',
                 'content', 'a.content',
                 'output', 'a.output'
             );
@@ -53,9 +55,10 @@ class ItpMetaModelTags extends JModel {
 
         // Select the required fields from the table.
         $query
-            ->select('id, content, output')
+            ->select('id, title, tag, content, output')
             ->from('`#__itpm_tags`')
-            ->where('url_id='.(int)$this->state->get('id'));
+            ->where('url_id='.(int)$this->state->get('url_id'))
+            ->order("title ASC");
 
         $db->setQuery($query);
         $results = $db->loadAssocList();

@@ -98,6 +98,10 @@ class ItpMetaModelTag extends JModelAdmin {
             $data["url_id"] = $urlId;
         }
         
+        if(!empty($data["id"])) {
+            $data["tag_id"] = $data["id"];
+        }
+        
         return $data;
     }
 
@@ -110,7 +114,9 @@ class ItpMetaModelTag extends JModelAdmin {
      */
     public function save($data){
         
-        $id         = JArrayHelper::getValue($data, "id", null);
+        $id         = JArrayHelper::getValue($data, "tag_id", null);
+        $title      = JArrayHelper::getValue($data, "title", "");
+        $tag        = JArrayHelper::getValue($data, "tag", "");
         $content    = JArrayHelper::getValue($data, "content", "");
         $output     = JArrayHelper::getValue($data, "output", "");
         $urlId      = JArrayHelper::getValue($data, "url_id", null);
@@ -119,9 +125,12 @@ class ItpMetaModelTag extends JModelAdmin {
         $row = $this->getTable();
         $row->load($id);
         
+        $row->set("title",   $title);
+        $row->set("tag",     $tag);
         $row->set("content", $content);
         $row->set("output",  $output);
         $row->set("url_id",  $urlId);
+        
         $row->store();
         
         return $row->id;

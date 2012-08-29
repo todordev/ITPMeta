@@ -83,6 +83,7 @@ class ItpMetaViewGlobal extends JView {
         JHtml::_('behavior.formvalidation');
         
         // Add scripts
+        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js');
         $this->document->addScript('../media/'.$this->option.'/js/admin/global.js');
         
         

@@ -92,6 +92,7 @@ class ItpMetaViewUrl extends JView {
         $this->document->addScript('../media/'.$this->option.'/js/messageclass/message.js');
         
         // Add scripts
+        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js');
         $this->document->addScript('../media/'.$this->option.'/js/admin/url.js');
         
         

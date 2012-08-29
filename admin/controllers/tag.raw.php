@@ -22,8 +22,7 @@ class ItpMetaControllerTag extends JControllerForm {
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
-	{
+	public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true)) {
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
 	}
@@ -39,11 +38,7 @@ class ItpMetaControllerTag extends JControllerForm {
         $app = JFactory::getApplication();
         /** @var $app JAdministrator **/
         
-        // Initialize variables
-        $itemId  = $app->input->getInt("id");
-        $urlId   = $app->input->getInt("url_id");
-        
-        // Gets the data from the form
+        // Get the data from the form
         $data    = $app->input->post->get('jform', array(), 'array');
         $model   = $this->getModel();
         
@@ -71,8 +66,8 @@ class ItpMetaControllerTag extends JControllerForm {
         }
         
         // Validate URL ID
-        $ulrId = JArrayHelper::getValue($validData, "url_id");
-        if (!$ulrId) {
+        $urlId = JArrayHelper::getValue($validData, "url_id");
+        if (!$urlId) {
              
             $response = array(
             	"success" => false,
@@ -97,8 +92,8 @@ class ItpMetaControllerTag extends JControllerForm {
             "title"=> JText::_( 'COM_ITPMETA_SUCCESS' ),
             "text" => JText::_( 'COM_ITPMETA_TAG_SAVED' ),
             "data" => array(
-                "id"    => (int)$itemId,
-                "url_id"=> (int)$ulrId
+                "item_id"  => (int)$itemId,
+                "url_id"   => (int)$urlId
             )
         );
             

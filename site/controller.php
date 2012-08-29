@@ -34,8 +34,8 @@ class ItpMetaController extends JController {
         // Set the default view name and format from the Request.
         // Note we are using catid to avoid collisions with the router and the return page.
         // Frontend is a bit messier than the backend.
-        $viewName  = JRequest::getCmd('view', '');
-        JRequest::setVar('view', $viewName);
+        $viewName  = JFactory::getApplication()->input->getCmd('view', 'empty');
+        JFactory::getApplication()->input->set('view', $viewName);
 
         $safeurlparams = array();
 

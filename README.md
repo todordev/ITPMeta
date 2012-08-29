@@ -12,6 +12,8 @@ v3.0
 -----------
 * Ported to Joomla! 2.5
 * Added global tags
+* Added a new video tag - og:secure_url
+* Added a locale tags - og:locale, og:locale:alternate
 * Improved
 
 v2.2

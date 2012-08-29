@@ -83,7 +83,7 @@ class ItpMetaVersion {
      * 
      * @var string
      */
-    public $backlink   = '<div style="width:100%; text-align: left; font-size: xx-small; margin-top: 10px;"><a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">Joomla! meta</a></div>';
+    public $backlink   = '<div style="width:100%; text-align: center; font-size: xx-small; margin-top: 10px;"><a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">Joomla! meta tags</a></div>';
     
     /**
      * Developer

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset name="global" label="COM_ITPMETA_GLOBAL_TITLE" description="COM_ITPMETA_GLOBAL_PARAMS">
-        <field name="addGlobal" type="radio" default="0"  label="COM_ITPMETA_ADD_GLOBAL" description="COM_ITPMETA_ADD_GLOBAL_DESC" >
-           <option value="1">JYES</option>
+        <field name="add_opengraph_scheme" type="radio" default="1"  label="COM_ITPMETA_ADD_OPEN_GRAPH_SCHEME" description="COM_ITPMETA_ADD_OPEN_GRAPH_SCHEME_DESC" >
            <option value="0">JNO</option>
+           <option value="1">JYES</option>
        </field>
-       <field name="tags" type="textarea" rows="5" cols="60" default="" label="COM_ITPMETA_GLOBAL_TAGS" description="COM_ITPMETA_GLOBAL_TAGS_DESC" filter="raw" />
     </fieldset>
 </config>

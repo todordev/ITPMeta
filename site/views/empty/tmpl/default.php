@@ -11,30 +11,7 @@
  * other free or open source software licenses.
  */
 
-// No direct access
+// no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
-
-class ITPMetaViewTags extends JView {
-    
-    protected $items;
-    
-    /**
-     * Display the view
-     */
-    public function display($tpl = null){
-        
-        $app = JFactory::getApplication();
-        /** @var $app JAdministrator **/
-        
-        $model            = $this->getModel();
-        $model->setState("url_id", $app->input->get("url_id"));
-        
-        $this->items      = $model->getItems();
-
-        parent::display($tpl);
-        
-    }
-    
-}
+?>
+<?php echo $this->version->backlink;?>

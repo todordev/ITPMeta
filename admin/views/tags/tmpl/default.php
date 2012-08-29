@@ -13,14 +13,13 @@
 
 // No direct access
 defined('_JEXEC') or die;
-$modalRel = "{handler: 'iframe',  size: {x: 600, y: 550}}";
 ?>
 <?php if(!empty($this->items)){?>
     <?php foreach($this->items as $tag){?>
     <div class="itpm-tag-item" >
     	<div id="itpmtag_<?php echo $tag["id"]; ?>">
-            <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=tag&tmpl=component&tag=ogtitle&id=".$tag["id"])?>" class="itpm-url-tag" rel="<?php echo $modalRel;?>">
-            <?php echo JString::substr($this->escape($tag["output"]),0,255);?>...
+            <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=tag&tmpl=component&id=".$tag["id"])?>" class="itpm-url-tag" >
+            <?php echo $this->escape($tag["title"]);?>
             </a>
             <div class="itpm-tag-actions">
                 <img 

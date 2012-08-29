@@ -14,7 +14,7 @@
 // No direct access
 defined('_JEXEC') or die;
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_itpmeta'); ?>" method="post" name="adminForm" id="tag-form" class="form-validate" autocomplete="off">
+<form action="<?php echo JRoute::_('index.php?option=com_itpmeta'); ?>" method="post" name="tagForm" id="tag-form" class="form-validate" autocomplete="off">
 
 <fieldset>
 	<div class="fltrt">
@@ -41,22 +41,12 @@ defined('_JEXEC') or die;
     <div class="width-100 fltlft">
         <fieldset class="adminform">
             <legend><?php echo JText::_("COM_ITPMETA_ADD_EDIT_TAG"); ?></legend>
-<?php 
-switch($this->tag) {
-    
-    case "ogtitle":
-        $this->tagValue = '<meta property="og:title" content="{PAGE_TITLE}" />';
-        echo $this->loadTemplate("one");
-        break;
-        
-    default:
-        echo JText::_("COM_ITPMETA_INVALID_TAG");
-        break;
-} ?>
+            <?php 
+            echo $this->loadTemplate("form");
+            ?>
 		</fieldset>
 	</div>
     <div class="clr"></div>
     <input type="hidden" name="task" value="" id="task"/>
-    <input type="hidden" name="format" value="raw" />
     <?php echo JHtml::_('form.token'); ?>
 </form>

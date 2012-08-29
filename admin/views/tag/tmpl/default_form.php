@@ -15,6 +15,13 @@
 defined('_JEXEC') or die;
 ?>
 
+<ul class="adminformlist">
+    <li><?php echo $this->form->getLabel('title'); ?>
+    <?php echo $this->form->getInput('title'); ?></li>
+    <li><?php echo $this->form->getLabel('tag_id'); ?>
+    <?php echo $this->form->getInput('tag_id'); ?></li>
+</ul>
+
 <div class="clr"></div>
 <?php echo $this->form->getLabel('content'); ?>
 <div class="clr"></div>
@@ -23,7 +30,7 @@ defined('_JEXEC') or die;
 <div class="clr"></div>
 <?php echo $this->form->getLabel('tag'); ?>
 <div class="clr"></div>
-<?php echo $this->form->getInput('tag', null, $this->tagValue); ?>
+<?php echo $this->form->getInput('tag'); ?>
 
 <div class="clr"></div>
 <?php echo $this->form->getLabel('output'); ?>
@@ -31,9 +38,5 @@ defined('_JEXEC') or die;
 <?php echo $this->form->getInput('output'); ?>
 
 <div class="clr"></div>
-<ul class="adminformlist">
-    <li><?php echo $this->form->getLabel('id'); ?>
-    <?php echo $this->form->getInput('id'); ?></li>
-    <li><?php echo $this->form->getInput('url_id'); ?></li>
-</ul>
+<?php echo $this->form->getInput('url_id'); ?>
         
