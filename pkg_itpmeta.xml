@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="package" version="2.5" method="upgrade">
 	<name>ITPMeta Packages</name>
-	<packagename>ITPMeta</packagename>
+	<packagename>itpmeta</packagename>
 	<creationDate>January, 2011</creationDate>
 	<author>Todor Iliev</author>
 	<authorEmail>todor@itprism.com</authorEmail>
