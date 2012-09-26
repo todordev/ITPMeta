@@ -96,12 +96,6 @@ class plgSystemItpMeta extends JPlugin {
             return;
         }
         
-        // Check component options
-        $params = JComponentHelper::getParams('com_itpmeta');
-		if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
-			return;
-        }
-        
 	    $document = JFactory::getDocument();
         /** @var $document JDocumentHTML **/
         
@@ -110,13 +104,17 @@ class plgSystemItpMeta extends JPlugin {
              return;   
         }
         
+	    // Check component options
+		if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
+			return;
+        }
+        
+        $params = JComponentHelper::getParams('com_itpmeta');
+        
         $buffer = JResponse::getBody();
         
-        // Add open graph namespace in the html element
-	    if($params->get("add_opengraph_scheme", 0)) {
-            $newHtmlAttr = '<html xmlns:og="http://ogp.me/ns#" '; 
-            $buffer = str_replace("<html", $newHtmlAttr, $buffer);
-        }
+        // Put open graph namespace in the HTML element
+        $buffer = $this->putNamespaces($params, $buffer);
         
         // Add backlink to the end of the page
         $version =  new ItpMetaVersion();
@@ -124,5 +122,67 @@ class plgSystemItpMeta extends JPlugin {
         $buffer = str_replace("</body>", $versionCode, $buffer);
         
         JResponse::setBody($buffer);
+	}
+	
+	/**
+	 * 
+	 * Generate and put namespace schemes to the HTML tag
+	 * @param object $params Component parameters
+	 * @param string $buffer Output buffer
+	 */
+	private function putNamespaces($params, $buffer) {
+	    
+	    $prefixes = array();
+	    $string   = 'prefix="{STRING}"';
+	    
+	    // OpenGraph namespace
+	    if($params->get("opengraph_scheme", 0)) {
+	        $prefixes[] = "og: http://ogp.me/ns#";
+        }
+        
+	    // Facebook namespace
+	    if($params->get("facebook_scheme", 0)) {
+	        $prefixes[] = "fb: http://ogp.me/ns/fb#";
+        }
+        
+	    // OpenGraph article namespace
+	    if($params->get("opengraph_article_scheme", 0)) {
+            $prefixes[] = "article: http://ogp.me/ns/article#";
+        }
+        
+	    // OpenGraph blog namespace
+	    if($params->get("opengraph_blog_scheme", 0)) {
+            $prefixes[] = "blog: http://ogp.me/ns/blog#";
+        }
+        
+	    // OpenGraph book namespace
+	    if($params->get("opengraph_book_scheme", 0)) {
+            $prefixes[] = "book: http://ogp.me/ns/book#";
+        }
+        
+	    // OpenGraph profile namespace
+	    if($params->get("opengraph_profile_scheme", 0)) {
+            $prefixes[] = "profile: http://ogp.me/ns/profile#";
+        }
+        
+	    // OpenGraph video namespace
+	    if($params->get("opengraph_video_scheme", 0)) {
+            $prefixes[] = "video: http://ogp.me/ns/video#";
+        }
+        
+	    // OpenGraph video namespace
+	    if($params->get("opengraph_website_scheme", 0)) {
+            $prefixes[] = "website: http://ogp.me/ns/website#";
+        }
+        
+        if(!empty($prefixes)) {
+            $prefix = implode(" ", $prefixes);
+            $string = str_replace("{STRING}", $prefix, $string);
+            
+            $newHtmlAttr = '<html '.$string; 
+            $buffer = str_replace("<html", $newHtmlAttr, $buffer);
+        }
+        
+        return $buffer;
 	}
 }

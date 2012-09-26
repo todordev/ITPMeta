@@ -34,7 +34,7 @@ class ItpMetaVersion {
      * 
      * @var integer
      */
-    public $devLevel  = '0';
+    public $devLevel  = '1';
     
     /**
      * Release Type
@@ -55,7 +55,7 @@ class ItpMetaVersion {
      * 
      * @var string
      */
-    public $releaseDate= '25-August-2012';
+    public $releaseDate= '26-September-2012';
     
     /**
      * License

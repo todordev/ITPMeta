@@ -57,7 +57,6 @@ $itemId = $this->form->getValue('id');
 <?php
 $pane =& JPane::getInstance('Sliders');
 echo $pane->startPane('ITPMetaPane');
-
 {
 ?>
 
@@ -73,7 +72,6 @@ echo $pane->startPane('ITPMetaPane');
 <?php echo $pane->endPanel(); ?>
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_LOCATION"), 'opengraph_location'); ?>
-
 <a class="itp-tag-btn" data-tag="oglatitude" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_LATITUDE");?>"><?php echo JText::_("COM_ITPMETA_TAG_LATITUDE");?></a>
 <a class="itp-tag-btn" data-tag="oglongitude" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_LONGITUDE");?>"><?php echo JText::_("COM_ITPMETA_TAG_LONGITUDE");?></a>
 <a class="itp-tag-btn" data-tag="ogstreetaddress" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_STREET_ADDRESS");?>"><?php echo JText::_("COM_ITPMETA_TAG_STREET_ADDRESS");?></a>
@@ -83,41 +81,74 @@ echo $pane->startPane('ITPMetaPane');
 <a class="itp-tag-btn" data-tag="ogcountry_name" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_COUNTRY_NAME");?>"><?php echo JText::_("COM_ITPMETA_TAG_COUNTRY_NAME");?></a>
 <a class="itp-tag-btn" data-tag="oglocale" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_LOCALE");?>"><?php echo JText::_("COM_ITPMETA_TAG_LOCALE");?></a>
 <a class="itp-tag-btn" data-tag="oglocale_alternate" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_LOCALE_ALTERNATE");?>"><?php echo JText::_("COM_ITPMETA_TAG_LOCALE_ALTERNATE");?></a>
-
 <?php echo $pane->endPanel(); ?>
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_CONTACT_INFORMATION"), 'opengraph_contact_info'); ?>
-
 <a class="itp-tag-btn" data-tag="ogemail" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MAIL");?>"><?php echo JText::_("COM_ITPMETA_TAG_MAIL");?></a>
 <a class="itp-tag-btn" data-tag="ogphone_number" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PHONE_NUMBER");?>"><?php echo JText::_("COM_ITPMETA_TAG_PHONE_NUMBER");?></a>
 <a class="itp-tag-btn" data-tag="ogfax_number" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_FAX_NUMBER");?>"><?php echo JText::_("COM_ITPMETA_TAG_FAX_NUMBER");?></a>
+<?php echo $pane->endPanel(); ?>
 
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_TAB"), 'opengraph_profile'); ?>
+<a class="itp-tag-btn" data-tag="ogprofile" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE");?></a>
+<a class="itp-tag-btn" data-tag="ogprofile_first_name" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_FIRST_NAME");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_FIRST_NAME");?></a>
+<a class="itp-tag-btn" data-tag="ogprofile_last_name" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_LAST_NAME");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_LAST_NAME");?></a>
+<a class="itp-tag-btn" data-tag="ogprofile_username" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_USERNAME");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_USERNAME");?></a>
+<a class="itp-tag-btn" data-tag="ogprofile_gender" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_GENDER");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_GENDER");?></a>
+<a class="itp-tag-btn" data-tag="ogprofile_fbprofile_id" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_FACEBOOK_ID");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_FACEBOOK_ID");?></a>
+<?php echo $pane->endPanel(); ?>
+
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE_TAB"), 'opengraph_article'); ?>
+<a class="itp-tag-btn" data-tag="ogarticle" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTICLE");?></a>
+<a class="itp-tag-btn" data-tag="ogarticle_published_time" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE_PUBLISHED_TIME");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTICLE_PUBLISHED_TIME");?></a>
+<a class="itp-tag-btn" data-tag="ogarticle_modified_time" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE_MODIFIED_TIME");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTICLE_MODIFIED_TIME");?></a>
+<a class="itp-tag-btn" data-tag="ogarticle_expiration_time" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE_EXPIRATION_TIME");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTICLE_EXPIRATION_TIME");?></a>
+<a class="itp-tag-btn" data-tag="ogarticle_author" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE_AUTHOR");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTICLE_AUTHOR");?></a>
+<a class="itp-tag-btn" data-tag="ogarticle_section" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE_SECTION");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTICLE_SECTION");?></a>
+<a class="itp-tag-btn" data-tag="ogarticle_tag" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTICLE_TAG");?></a>
+<?php echo $pane->endPanel(); ?>
+
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_TAB"), 'opengraph_book'); ?>
+<a class="itp-tag-btn" data-tag="ogbook" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK");?></a>
+<a class="itp-tag-btn" data-tag="ogbook_release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_RELEASE_DATE");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_RELEASE_DATE");?></a>
+<a class="itp-tag-btn" data-tag="ogbook_isbn" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_ISBN");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_ISBN");?></a>
+<a class="itp-tag-btn" data-tag="ogbook_author" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_AUTHOR");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_AUTHOR");?></a>
+<a class="itp-tag-btn" data-tag="ogbook_tag" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_TAG");?></a>
+<?php echo $pane->endPanel(); ?>
+
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_IMAGE_TAB"), 'opengraph_image'); ?>
+<a class="itp-tag-btn" data-tag="ogimage" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_IMAGE");?>"><?php echo JText::_("COM_ITPMETA_TAG_IMAGE");?></a>
+<a class="itp-tag-btn" data-tag="ogimage_width" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_IMAGE_WIDTH");?>"><?php echo JText::_("COM_ITPMETA_TAG_IMAGE_WIDTH");?></a>
+<a class="itp-tag-btn" data-tag="ogimage_height" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_IMAGE_HEIGHT");?>"><?php echo JText::_("COM_ITPMETA_TAG_IMAGE_HEIGHT");?></a>
 <?php echo $pane->endPanel(); ?>
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO"), 'opengraph_audio'); ?>
-
 <a class="itp-tag-btn" data-tag="ogaudio" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_AUDIO");?></a>
 <a class="itp-tag-btn" data-tag="ogaudio_title" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TAG_TITLE");?></a>
 <a class="itp-tag-btn" data-tag="ogaudio_artist" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTIST");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTIST");?></a>
 <a class="itp-tag-btn" data-tag="ogaudio_album" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ALBUM");?>"><?php echo JText::_("COM_ITPMETA_TAG_ALBUM");?></a>
 <a class="itp-tag-btn" data-tag="ogaudio_type" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TYPE");?>"><?php echo JText::_("COM_ITPMETA_TAG_TYPE");?></a>
-
 <?php echo $pane->endPanel(); ?>
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO"), 'opengraph_video'); ?>
-
 <a class="itp-tag-btn" data-tag="ogvideo" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO");?></a>
 <a class="itp-tag-btn" data-tag="ogvideo_height" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_HEIGHT");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_HEIGHT");?></a>
 <a class="itp-tag-btn" data-tag="ogvideo_width" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_WIDTH");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_WIDTH");?></a>
 <a class="itp-tag-btn" data-tag="ogvideo_type" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_TYPE");?>"><?php echo JText::_("COM_ITPMETA_TAG_TYPE");?></a>
 <a class="itp-tag-btn" data-tag="ogvideo_secure_url" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_SECURE_URL");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_SECURE_URL");?></a>
-
+<a class="itp-tag-btn" data-tag="ogvideo_release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_RELEASE_DATE");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_RELEASE_DATE");?></a>
+<a class="itp-tag-btn" data-tag="ogvideo_actor" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_ACTOR");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_ACTOR");?></a>
+<a class="itp-tag-btn" data-tag="ogvideo_actor_role" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_ACTOR_ROLE");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_ACTOR_ROLE");?></a>
+<a class="itp-tag-btn" data-tag="ogvideo_duration" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_DURATION");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_DURATION");?></a>
+<a class="itp-tag-btn" data-tag="ogvideo_director" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_DIRECTOR");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_DIRECTOR");?></a>
+<a class="itp-tag-btn" data-tag="ogvideo_writer" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_WRITER");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_WRITER");?></a>
+<a class="itp-tag-btn" data-tag="ogvideo_series" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_SERIES");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_SERIES");?></a>
+<a class="itp-tag-btn" data-tag="ogvideo_tag" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_TAG");?></a>
 <?php echo $pane->endPanel(); ?>
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_TYPES_WEBSITES"), 'websites'); ?>
 <a class="itp-tag-btn" data-tag="ogwebsite" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_WEBSITE");?>"><?php echo JText::_("COM_ITPMETA_TAG_WEBSITE");?></a>
 <a class="itp-tag-btn" data-tag="ogblog" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BLOG");?>"><?php echo JText::_("COM_ITPMETA_TAG_BLOG");?></a>
-<a class="itp-tag-btn" data-tag="ogarticle" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTICLE");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTICLE");?></a>
 <?php echo $pane->endPanel(); ?>
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_TYPES_ACTIVITIES"), 'activities'); ?>
@@ -184,6 +215,14 @@ echo $pane->startPane('ITPMetaPane');
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_FACEBOOK"), 'facebook'); ?>
 <a class="itp-tag-btn" data-tag="fbadmins" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_ADMINS");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_TAG_ADMINS");?></a>
 <a class="itp-tag-btn" data-tag="fbappid" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_APP_ID");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_TAG_APP_ID");?></a>
+<a class="itp-tag-btn" data-tag="fbcustom" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_CUSTOM");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_TAG_CUSTOM");?></a>
+<?php echo $pane->endPanel(); ?>
+
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS"), 'facebook_restrictions'); ?>
+<a class="itp-tag-btn" data-tag="fbrestrictions_country_allowed" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS_COUNTRY_ALLOWED");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS_TAG_COUNTRY_ALLOWED");?></a>
+<a class="itp-tag-btn" data-tag="fbrestrictions_country_disallowed" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS_COUNTRY_DISALLOWED");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS_TAG_COUNTRY_DISALLOWED");?></a>
+<a class="itp-tag-btn" data-tag="fbrestrictions_age" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS_AGE");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS_TAG_AGE");?></a>
+<a class="itp-tag-btn" data-tag="fbrestrictions_content" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS_CONTENT");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS_TAG_CONTENT");?></a>
 <?php echo $pane->endPanel(); ?>
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_SEO"), 'seo'); ?>

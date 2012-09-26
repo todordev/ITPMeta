@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset name="global" label="COM_ITPMETA_GLOBAL_TITLE" description="COM_ITPMETA_GLOBAL_PARAMS">
-        <field name="add_opengraph_scheme" type="radio" default="1"  label="COM_ITPMETA_ADD_OPEN_GRAPH_SCHEME" description="COM_ITPMETA_ADD_OPEN_GRAPH_SCHEME_DESC" >
+       <field name="facebook_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_FACEBOOK_SCHEME" description="COM_ITPMETA_ADD_FACEBOOK_SCHEME_DESC" >
+           <option value="0">JNO</option>
+           <option value="1">JYES</option>
+       </field>
+       <field name="opengraph_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_SCHEME_DESC" >
+           <option value="0">JNO</option>
+           <option value="1">JYES</option>
+       </field>
+       <field name="opengraph_article_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_ARTICLE_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_ARTICLE_SCHEME_DESC" >
+           <option value="0">JNO</option>
+           <option value="1">JYES</option>
+       </field>
+       <field name="opengraph_blog_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_BLOG_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_BLOG_SCHEME_DESC" >
+           <option value="0">JNO</option>
+           <option value="1">JYES</option>
+       </field>
+       <field name="opengraph_book_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_BOOK_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_BOOK_SCHEME_DESC" >
+           <option value="0">JNO</option>
+           <option value="1">JYES</option>
+       </field>
+       <field name="opengraph_profile_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_PROFILE_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_PROFILE_SCHEME_DESC" >
+           <option value="0">JNO</option>
+           <option value="1">JYES</option>
+       </field>
+       <field name="opengraph_video_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_VIDEO_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_VIDEO_SCHEME_DESC" >
+           <option value="0">JNO</option>
+           <option value="1">JYES</option>
+       </field>
+       <field name="opengraph_website_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_WEBSITE_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_WEBSITE_SCHEME_DESC" >
            <option value="0">JNO</option>
            <option value="1">JYES</option>
        </field>

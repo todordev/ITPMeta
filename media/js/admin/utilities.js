@@ -8,6 +8,7 @@
  * other free or open source software licenses.
 */
 
+
 function getTag(name){
 	  
 	var val = "";
@@ -84,6 +85,56 @@ function getTag(name){
 			val = '<meta property="og:fax_number" content="{EXAMPLE: +1-415-123-4567}"/>';
 			break;	
 			
+			
+		/* Article */
+		case "ogarticle":
+			val = '<meta property="og:type" content="article" />';
+		break;
+		case "ogarticle_published_time":
+			val = '<meta property="article:published_time" content="{DATETIME}"> ';
+		break;
+		case "ogarticle_modified_time":
+			val = '<meta property="article:modified_time" content="{DATETIME}"> ';
+		break;
+		case "ogarticle_expiration_time":
+			val = '<meta property="article:expiration_time" content="{DATETIME}">';
+		break;
+		case "ogarticle_author":
+			val = '<meta property="article:author" content="{URL_TO_AUTHOR_OBJECT}">';
+		break;
+		case "ogarticle_section":
+			val = '<meta property="article:section" content="{SECTION_OF_ARTICLE}">';
+		break;
+		case "ogarticle_tag":
+			val = '<meta property="article:tag" content="{KEYWORD}">';
+		break;
+		
+		/* Book */
+		case "ogbook":
+			val = '<meta property="og:type" content="book" />';
+		break;
+		case "ogbook_release_date":
+			val = '<meta property="book:release_date" content="{DATETIME}"> ';
+		break;
+		case "ogbook_author":
+			val = '<meta property="book:author" content="{WHO_WROTE_THIS}">';
+		break;
+		case "ogbook_isbn":
+			val = '<meta property="book:isbn" content="{ISBN_NUMBER}"> ';
+		break;
+		case "ogbook_tag":
+			val = '<meta property="book:tag" content="{KEYWORD}">';
+		break;
+		
+		
+		/* Image */
+		case "ogimage_width":
+			val = '<meta property="og:image:width" content="{SIZE}" />';
+		break;
+		case "ogimage_height":
+			val = '<meta property="og:image:height" content="{SIZE}" />';
+		break;
+		
 		/* Audio */
 		case "ogaudio_title":
 			val = '<meta property="og:audio:title" content="{EXAMPLE: Amazing Song}" />';
@@ -111,6 +162,50 @@ function getTag(name){
 		case "ogvideo_secure_url":
 			val = '<meta property="og:video:secure_url" content="{EXAMPLE: https://secure.example.com/awesome.swf}" />';
 		break;
+		case "ogvideo_release_date":
+			val = '<meta property="video:release_date" content="{DATETIME}">';
+		break;
+		case "ogvideo_actor":
+			val = '<meta property="video:actor"	content="{URL_TO_PROFILE}">';
+		break;
+		case "ogvideo_actor_role":
+			val = '<meta property="video:actor:role" content="{ROLE_IN_MOVE}" />';
+		break;
+		case "ogvideo_duration":
+			val = '<meta property="video:duration" content="{RUNTIME_IN_SECS}" />';
+		break;
+		case "ogvideo_director":
+			val = '<meta property="video:director" content="{URL_TO_PROFILE}" />';
+		break;
+		case "ogvideo_writer":
+			val = '<meta property="video:writer" content="{URL_TO_PROFILE}" />';
+		break;
+		case "ogvideo_series":
+			val = '<meta property="video:series" content="{URL_TO_VIDEO_TV_SHOW}" />';
+		break;
+		case "ogvideo_tag":
+			val = '<meta property="video:tag" content="{KEYWORD}" />';
+		break;
+		
+		/* Profile */
+		case "ogprofile":
+			val = '<meta property="og:type" content="profile" />';
+		break;
+		case "ogprofile_first_name":
+			val = '<meta property="profile:first_name" content="{FIRST_NAME}" />';
+		break;
+		case "ogprofile_last_name":
+			val = '<meta property="profile:last_name" content="{LAST_NAME}" />';
+		break;
+		case "ogprofile_username":
+			val = '<meta property="profile:username" content="{USERNAME}" />';
+		break;
+		case "ogprofile_gender":
+			val = '<meta property="profile:gender" content="{MALE_OR_FEMALE}" />';
+		break;
+		case "ogprofile_fbprofile_id":
+			val = '<meta property="fb:profile_id" content="{THIRD_PARTY_FB_UID}" />';
+		break;
 		
 		/* Websites */
 		case "ogwebsite":
@@ -118,9 +213,6 @@ function getTag(name){
 		break;
 		case "ogblog":
 			val = '<meta property="og:type" content="blog" />';
-		break;
-		case "ogarticle":
-			val = '<meta property="og:type" content="article" />';
 		break;
 		
 		/* Websites */
@@ -259,12 +351,29 @@ function getTag(name){
 		case "fbappid":
 			val = '<meta property="fb:app_id" content="{1234567}"/>';
 		break;
+		case "fbcustom":
+			val = '<meta property="YOUR_PROPERTY" content="{CUSTOM_CONTENT}"/>';
+		break;	
+		
+		/* Facebook restrictions */
+		case "fbrestrictions_country_allowed":
+			val = '<meta property="og:restrictions:country:allowed" content="{EXP: US}" />';
+		break;
+		case "fbrestrictions_country_disallowed":
+			val = '<meta property="og:restrictions:country:disallowed" content="{EXP: BG}" />';
+		break;
+		case "fbrestrictions_age":
+			val = '<meta property="og:restrictions:age" content="{EXAMPLE: 13+}"/>';
+		break;
+		case "fbrestrictions_content":
+			val = '<meta property="og:restrictions:content" content="{EXAMPLE: alcohol}"/>';
+		break;
 		
 		/* SEO */
 		case "seo_canonical":
 			val = '<link rel="canonical" href="{URL}" />';
-		break;			
-
+		break;	
+		
 		default:
 			break;
 	}

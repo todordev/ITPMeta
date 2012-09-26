@@ -34,6 +34,12 @@ defined('_JEXEC') or die;
             <span><?php echo JText::_("COM_ITPMETA_MANAGE_URLS")?></span> 
         </a>
     </div>
+    <div class="itp-cpitem">
+        <a href="http://itprism.com/help/32-itpmeta-opengraph-documentation-faq" target="_blank">
+        <img src="../media/com_itpmeta/images/help_48.png" alt="<?php echo JText::_("COM_ITPDONATE_HELP");?>" />
+            <span><?php echo JText::_("COM_ITPDONATE_HELP")?></span> 
+        </a>
+    </div>
 </div>
 <div id="itp-itprism">
     <a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank"><img src="../media/com_itpmeta/images/extension_logo.png" alt="<?php echo JText::_("COM_ITPMETA");?>" /></a>

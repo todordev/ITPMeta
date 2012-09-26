@@ -58,7 +58,7 @@ class ItpMetaModelTags extends JModel {
             ->select('id, title, tag, content, output')
             ->from('`#__itpm_tags`')
             ->where('url_id='.(int)$this->state->get('url_id'))
-            ->order("title ASC");
+            ->order("id ASC");
 
         $db->setQuery($query);
         $results = $db->loadAssocList();

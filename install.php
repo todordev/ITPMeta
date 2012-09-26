@@ -12,7 +12,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 /**
  * Script file of VipPortfolio component
