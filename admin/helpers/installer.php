@@ -24,7 +24,7 @@ class ItpMetaInstallHelper {
     }
     
     public static function endTable() {
-        echo "</div></table>";
+        echo "</table></div>";
     }
     
 	/**
