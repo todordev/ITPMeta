@@ -11,7 +11,6 @@
  * other free or open source software licenses.
  */
 
-jimport('joomla.log.log');
 jimport('joomla.utilities.arrayhelper');
 
 if(!defined("ITPMETA_COMPONENT_ADMINISTRATOR")) {
@@ -23,12 +22,3 @@ JLoader::register("ItpMetaVersion", ITPMETA_COMPONENT_ADMINISTRATOR . DIRECTORY_
 
 // Register Component helpers
 JLoader::register("ItpMetaHelper",ITPMETA_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "helper.php");
-
-// Add logger
-JLog::addLogger(
-     // Pass an array of configuration options
-    array(
-        // Set the name of the log file
-        'text_file' => 'error.php',
-     )
-);

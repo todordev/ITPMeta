@@ -28,6 +28,8 @@ $itemId = $this->form->getValue('id');
                 <?php echo $this->form->getInput('title'); ?></li>
                 <li><?php echo $this->form->getLabel('id'); ?>
                 <?php echo $this->form->getInput('id'); ?></li>
+                <li><?php echo $this->form->getLabel('name'); ?>
+                <?php echo $this->form->getInput('name'); ?></li>
             </ul>
             
             <div class="clr"></div>
@@ -144,6 +146,23 @@ echo $pane->startPane('ITPMetaPane');
 <a class="itp-tag-btn" data-tag="ogvideo_writer" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_WRITER");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_WRITER");?></a>
 <a class="itp-tag-btn" data-tag="ogvideo_series" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_SERIES");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_SERIES");?></a>
 <a class="itp-tag-btn" data-tag="ogvideo_tag" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_TAG");?></a>
+<?php echo $pane->endPanel(); ?>
+
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_TYPES_MUSIC"), 'opengraph_music'); ?>
+<a class="itp-tag-btn" data-tag="ogmusic_song" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_SONG_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_SONG");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_album" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ALBUM_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_ALBUM");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_playlist" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PLAYLIST_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_PLAYLIST");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_radio_station" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_RADIO_STATION_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_RADIO_STATION");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_duration" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_DURATION_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_DURATION");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_album" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_ALBUM_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_ALBUM");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_album_disc" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_ALBUM_DISC_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_ALBUM_DISC");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_album_track" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_ALBUM_TRACK_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_ALBUM_TRACK");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_musician" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSICIAN_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSICIAN");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_song" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_SONG");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_song_disc" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_DISC_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_SONG_DISC");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_song_track" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_TRACK_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_SONG_TRACK");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_RELEASE_DATE_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_RELEASE_DATE");?></a>
+<a class="itp-tag-btn" data-tag="ogmusic_music_creator" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_CREATOR_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_CREATOR");?></a>
 <?php echo $pane->endPanel(); ?>
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_TYPES_WEBSITES"), 'websites'); ?>

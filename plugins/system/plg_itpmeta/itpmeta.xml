@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system" method="upgrade">
-    <name>System - ITPMeta</name>
+    <name>PLG_SYSTEM_ITPMETA</name>
     <author>Todor Iliev</author>
     <creationDate>January, 2011</creationDate>
     <copyright>Copyright (C) 2010 Todor Iliev ( ITPrism.com ). All rights reserved.</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <authorEmail>todor@itprism.com</authorEmail>
     <authorUrl>http://itprism.com</authorUrl>
-    <version>3.1</version>
-	<description><![CDATA[
-<p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta" target="_blank">ITPMeta</a> plugin puts your code to the header of pages.</p>
-<p>Invest in the extension and help for its improvement. You can <a href="http://itprism.com/sponsorship" title="Sponsoring" target="_blank">sponsor the extension via SMS or PayPal</a>.</p>
-<p><a href="http://itprism.com/" target="_blank">Subscribe for the newsletter</a> to receive information about updates and new ITPrism extensions.</p>
-<p>Please, <a href="http://extensions.joomla.org/extensions/site-management/seo-a-metadata/15861" target="_blank">vote for the extension</a> on Joomla! Extensions Directory</p>
-	]]></description>
+    <version>3.2</version>
+	<description>PLG_SYSTEM_ITPMETA_DESC</description>
 	
+	<languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_system_itpmeta.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_system_itpmeta.sys.ini</language>
+    </languages>
+    
 	<files>
 		<filename plugin="itpmeta">itpmeta.php</filename>
 		<filename>index.html</filename>
 	</files>
+	
+	<help url="PLG_SYSTEM_ITPMETA_HELP_URL" />
+	
 	<config/>
 </extension>

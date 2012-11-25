@@ -17,6 +17,33 @@
  */
 class ItpMetaHelper {
 	
+	/**
+	 * Configure the Linkbar.
+	 *
+	 * @param	string	The name of the active view.
+	 * @since	1.6
+	 */
+	public static function addSubmenu($vName = 'cpanel') {
+	    
+	    JSubMenuHelper::addEntry(
+			JText::_('COM_ITPMETA_CPANEL_TITLE'),
+			'index.php?option=com_itpmeta&view=cpanel',
+			$vName == 'cpanel'
+		);
+		
+		JSubMenuHelper::addEntry(
+			JText::_('COM_ITPMETA_GLOBALS_TAGS'),
+			'index.php?option=com_itpmeta&view=globals',
+			$vName == 'globals'
+		);
+		
+		JSubMenuHelper::addEntry(
+			JText::_('COM_ITPMETA_MANAGE_URLS'),
+			'index.php?option=com_itpmeta&view=urls',
+			$vName == 'urls'
+		);
+	}
+	
     /**
      * Load Tags for specefic url
      * 

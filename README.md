@@ -1,6 +1,6 @@
 ITPMeta for Joomla! 
 ==========================
-( Version 3.1 )
+( Version 3.2 )
 --------------------------
 
 It is a Joomla! extension that puts meta tags into the site code. The component provides a list with predefined and popular meta tags. There are Open Graph,  Facebook, Google and other semantic tags.
@@ -8,16 +8,21 @@ It is a Joomla! extension that puts meta tags into the site code. The component 
 Changelog
 ---------
 
+v3.2
+-----------
+* Added Open Graph Music tags
+* Improved
+
 v3.1
 -----------
 * Added new OpenGraph tags
- * Facebook Restrictions tags
- * article tags
- * book tags
- * music tags
- * profile tags
- * new image tags
- * new video tags
+* Facebook Restrictions tags
+* article tags
+* book tags
+* music tags
+* profile tags
+* new image tags
+* new video tags
 * Added options using to setup the loading of namespace schemes
 * Improved
 

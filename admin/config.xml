@@ -29,6 +29,10 @@
            <option value="0">JNO</option>
            <option value="1">JYES</option>
        </field>
+       <field name="opengraph_music_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_MUSIC_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_MUSIC_SCHEME_DESC" >
+           <option value="0">JNO</option>
+           <option value="1">JYES</option>
+       </field>
        <field name="opengraph_website_scheme" type="radio" default="0"  label="COM_ITPMETA_ADD_OPENGRAPH_WEBSITE_SCHEME" description="COM_ITPMETA_ADD_OPENGRAPH_WEBSITE_SCHEME_DESC" >
            <option value="0">JNO</option>
            <option value="1">JYES</option>

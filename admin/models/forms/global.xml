@@ -3,6 +3,16 @@
 	<fieldset>
 	
 	   <field 
+            name="name" 
+            type="text" 
+            size="50"
+            label="COM_ITPMETA_NAME" 
+            description="COM_ITPMETA_NAME_DESC"
+            readonly="true" 
+            class="readonly"
+        />
+        
+	   <field 
             name="title" 
             type="text" 
             size="80"

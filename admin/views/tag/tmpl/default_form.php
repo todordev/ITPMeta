@@ -20,6 +20,8 @@ defined('_JEXEC') or die;
     <?php echo $this->form->getInput('title'); ?></li>
     <li><?php echo $this->form->getLabel('tag_id'); ?>
     <?php echo $this->form->getInput('tag_id'); ?></li>
+    <li><?php echo $this->form->getLabel('name'); ?>
+    <?php echo $this->form->getInput('name'); ?></li>
 </ul>
 
 <div class="clr"></div>

@@ -40,12 +40,13 @@ class ItpMetaControllerGlobal extends JControllerForm {
         /** @var $app JAdministrator **/
         
         // Initialize variables
-        $itemId  = $app->input->getInt("id");
         $msg     = "";
         $link    = "";
         
         // Gets the data from the form
         $data    = $app->input->post->get('jform', array(), 'array');
+        $itemId  = JArrayHelper::getValue($data, "id");
+        
         $model   = $this->getModel();
         
         // Validate the posted data.
@@ -80,7 +81,7 @@ class ItpMetaControllerGlobal extends JControllerForm {
 
         } catch ( Exception $e ) {
             JLog::add($e->getMessage());
-            throw new Exception(JText::_('ITP_ERROR_SYSTEM'));
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
         
         $msg  = JText::_('COM_ITPMETA_GLOBAL_TAG_SAVED');

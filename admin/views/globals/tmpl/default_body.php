@@ -25,10 +25,10 @@ defined('_JEXEC') or die;
     <td >
         <?php echo JString::substr($this->escape($item->output), 0, 128)."..."; ?>
     </td>
-    <td align="center">
+    <td class="center">
         <?php echo JHtml::_('jgrid.published', $item->published, $i, "globals."); ?>
     </td>
-    <td align="center">
+    <td class="center">
         <?php echo $item->id;?>
     </td>
 </tr>

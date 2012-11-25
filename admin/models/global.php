@@ -30,19 +30,6 @@ class ItpMetaModelGlobal extends JModelAdmin {
     protected $text_prefix = 'COM_ITPMETA';
     
     /**
-     * Constructor.
-     *
-     * @param   array   $config An optional associative array of configuration settings.
-     *
-     * @see     JController
-     * @since   1.6
-     */
-    public function __construct($config = array()){
-        parent::__construct($config);
-        
-    }
-    
-    /**
      * Returns a reference to the a Table object, always creating it.
      *
      * @param   type    The table type to instantiate
@@ -101,6 +88,7 @@ class ItpMetaModelGlobal extends JModelAdmin {
     public function save($data){
         
         $id         = JArrayHelper::getValue($data, "id", null);
+        $name       = JArrayHelper::getValue($data, "name", "");
         $title      = JArrayHelper::getValue($data, "title", "");
         $tag        = JArrayHelper::getValue($data, "tag", "");
         $content    = JArrayHelper::getValue($data, "content", "");
@@ -111,6 +99,7 @@ class ItpMetaModelGlobal extends JModelAdmin {
         $row = $this->getTable();
         $row->load($id);
         
+        $row->set("name",      $name);
         $row->set("title",     $title);
         $row->set("tag",       $tag);
         $row->set("content",   $content);

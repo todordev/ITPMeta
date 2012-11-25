@@ -19,7 +19,7 @@ require_once (JPATH_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR. "libraries" . D
 // Include dependencies
 jimport('joomla.application.component.controller');
 
-// Get an instance of the controller prefixed by HelloWorld
+// Get an instance of the controller
 $controller = JController::getInstance("ItpMeta");
 
 // Perform the Request task

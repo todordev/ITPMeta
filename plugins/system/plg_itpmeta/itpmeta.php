@@ -12,7 +12,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.helper');
 jimport('joomla.plugin.plugin');
@@ -170,9 +170,14 @@ class plgSystemItpMeta extends JPlugin {
             $prefixes[] = "video: http://ogp.me/ns/video#";
         }
         
-	    // OpenGraph video namespace
+	    // OpenGraph website namespace
 	    if($params->get("opengraph_website_scheme", 0)) {
             $prefixes[] = "website: http://ogp.me/ns/website#";
+        }
+        
+	    // OpenGraph music namespace
+	    if($params->get("opengraph_music_scheme", 0)) {
+            $prefixes[] = "music: http://ogp.me/ns/music#";
         }
         
         if(!empty($prefixes)) {

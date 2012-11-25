@@ -36,14 +36,14 @@ defined('_JEXEC') or die;
     </div>
     <div class="itp-cpitem">
         <a href="http://itprism.com/help/32-itpmeta-opengraph-documentation-faq" target="_blank">
-        <img src="../media/com_itpmeta/images/help_48.png" alt="<?php echo JText::_("COM_ITPDONATE_HELP");?>" />
-            <span><?php echo JText::_("COM_ITPDONATE_HELP")?></span> 
+        <img src="../media/com_itpmeta/images/help_48.png" alt="<?php echo JText::_("COM_ITPMETA_HELP");?>" />
+            <span><?php echo JText::_("COM_ITPMETA_HELP")?></span> 
         </a>
     </div>
 </div>
 <div id="itp-itprism">
     <a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank"><img src="../media/com_itpmeta/images/extension_logo.png" alt="<?php echo JText::_("COM_ITPMETA");?>" /></a>
-    <a href="http://itprism.com" title="<?php echo JText::_("ITP_PRODUCT");?>" target="_blank"><img src="../media/com_itpmeta/images/product_of_itprism.png" alt="<?php echo JText::_("ITP_PRODUCT");?>" /></a>
+    <a href="http://itprism.com" title="<?php echo JText::_("COM_ITPMETA_PRODUCT");?>" target="_blank"><img src="../media/com_itpmeta/images/product_of_itprism.png" alt="<?php echo JText::_("COM_ITPMETA_PRODUCT");?>" /></a>
     <p id="itp-vote-link" ><?php echo JText::_("COM_ITPMETA_YOUR_VOTE"); ?></p>
     <p id="itp-vote-link" ><?php echo JText::_("COM_ITPMETA_SPONSORSHIP"); ?></p>
     

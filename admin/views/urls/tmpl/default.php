@@ -33,49 +33,15 @@ defined('_JEXEC') or die;
     <div class="clr"> </div>
     
     <table class="adminlist">
-       <thead>
-        <tr>
-            <th width="15">
-                <input type="checkbox" name="checkall-toggle" value="" onclick="checkAll(this)" />
-            </th>
-            <th class="title">
-                <?php echo JHtml::_('grid.sort',  'COM_ITPMETA_URL', 'a.uri', $this->listDirn, $this->listOrder); ?>
-            </th>
-            <th width="30"><?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.published', $this->listDirn, $this->listOrder); ?></th>
-            <th width="15"><?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?></th>
-        </tr>
-       </thead>
-    <tfoot>
-        <tr>
-            <td colspan="4">
-                <?php echo $this->pagination->getListFooter(); ?>
-            </td>
-        </tr>
-    </tfoot>
-    <tbody>
-    <?php foreach ($this->items as $i => $item) {?>
-        <tr class="row<?php echo $i % 2; ?>">
-            <td class="center">
-                <?php echo JHtml::_('grid.id', $i, $item->id); ?>
-            </td>
-            <td >
-                <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=url&layout=edit&id=".$item->id);?>" ><?php echo $item->uri; ?></a>
-            </td>
-            <td align="center">
-                <?php echo JHtml::_('jgrid.published', $item->published, $i, "urls."); ?>
-            </td>
-            <td align="center">
-                <?php echo $item->id;?>
-            </td>
-        </tr>
-        <?php } ?>
-    </tbody>
-    </table>
+       <thead><?php echo $this->loadTemplate('head');?></thead>
+	   <tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
+	   <tbody><?php echo $this->loadTemplate('body');?></tbody>
+	</table>
 
-<input type="hidden" name="boxchecked" value="0" />
-<input type="hidden" name="task" value="" />
-<input type="hidden" name="filter_order" value="<?php echo $this->listOrder; ?>" />
-<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirn; ?>" />
-<?php echo JHtml::_('form.token'); ?>
+    <input type="hidden" name="boxchecked" value="0" />
+    <input type="hidden" name="task" value="" />
+    <input type="hidden" name="filter_order" value="<?php echo $this->listOrder; ?>" />
+    <input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirn; ?>" />
+    <?php echo JHtml::_('form.token'); ?>
 
 </form>

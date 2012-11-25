@@ -58,7 +58,7 @@ class ItpMetaControllerTag extends JControllerForm {
             $response = array(
             	"success" => false,
                 "title"=> JText::_( 'COM_ITPMETA_FAIL' ),
-                "text" => JText::_( 'ITP_ERROR_SYSTEM' ),
+                "text" => JText::_( 'COM_ITPMETA_ERROR_SYSTEM' ),
             );
                 
             echo json_encode($response);
@@ -72,7 +72,7 @@ class ItpMetaControllerTag extends JControllerForm {
             $response = array(
             	"success" => false,
                 "title"=> JText::_( 'COM_ITPMETA_FAIL' ),
-                "text" => JText::_( 'ITP_ERROR_SYSTEM' ),
+                "text" => JText::_( 'COM_ITPMETA_ERROR_SYSTEM' ),
             );
                 
             echo json_encode($response);
@@ -84,7 +84,7 @@ class ItpMetaControllerTag extends JControllerForm {
             $itemId = $model->save($validData);
         } catch ( Exception $e ) {
             JLog::add($e->getMessage());
-            throw new Exception(JText::_('ITP_ERROR_SYSTEM'));
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
         
         $response = array(

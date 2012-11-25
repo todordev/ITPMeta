@@ -35,6 +35,9 @@ class ITPMetaViewUrls extends JView {
         $this->listOrder = $listOrder;
         $this->listDirn  = $listDirn;
         
+        // Add submenu
+        ItpMetaHelper::addSubmenu($this->getName());
+        
         // Prepare actions
         $this->addToolbar();
         $this->setDocument();

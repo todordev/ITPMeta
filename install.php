@@ -57,6 +57,63 @@ class pkg_itpMetaInstallerScript {
      * @return void
      */
     public function postflight($type, $parent) {
-        echo JText::_("COM_ITPMETA_INSTALL_ENABLE_PLUGIN");
+        
+        if(strcmp($type, "install") == 0) {
+            
+            if(!defined("ITPMETA_COMPONENT_ADMINISTRATOR")) {
+                define("ITPMETA_COMPONENT_ADMINISTRATOR", JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . "components" . DIRECTORY_SEPARATOR ."com_itpmeta");
+            }
+            
+            // Register Component helpers
+            JLoader::register("ItpMetaInstallHelper", ITPMETA_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR."helpers".DIRECTORY_SEPARATOR."installer.php");
+            $this->bootstrap    = JPath::clean( JPATH_SITE.DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."com_itpmeta".DIRECTORY_SEPARATOR."css".DIRECTORY_SEPARATOR."bootstrap.min.css" );
+        
+            $style = '<style>'.file_get_contents($this->bootstrap).'</style>';
+            echo $style;
+            
+            // Start table with the information
+            ItpMetaInstallHelper::startTable();
+        
+            // Display result about verification for cURL library
+            $title  = JText::_("COM_ITPMETA_CURL_LIBRARY");
+            $info   = "";
+            if( !extension_loaded('curl') ) {
+                $info   = JText::_("COM_ITPMETA_CURL_INFO");
+                $result = array("type" => "important", "text" => JText::_("COM_ITPMETA_WARNING"));
+            } else {
+                $result = array("type" => "success"  , "text" => JText::_("JYES"));
+            }
+            ItpMetaInstallHelper::addRow($title, $result, $info);
+            
+            // Display result about verification Magic Quotes
+            $title  = JText::_("COM_ITPMETA_MAGIC_QUOTES");
+            $info   = "";
+            if( get_magic_quotes_gpc() ) {
+                $info   = JText::_("COM_ITPMETA_MAGIC_QUOTES_INFO");
+                $result = array("type" => "important", "text" => JText::_("JON"));
+            } else {
+                $result = array("type" => "success"  , "text" => JText::_("JOFF"));
+            }
+            ItpMetaInstallHelper::addRow($title, $result, $info);
+            
+            // End table
+            ItpMetaInstallHelper::endTable();
+            
+            ItpMetaInstallHelper::disableForignerKeys();
+            
+            // Global Tags
+            if(ItpMetaInstallHelper::isTableExist("tmp_#__itpm_global_tags")) {
+                ItpMetaInstallHelper::importGlobalTags();
+            }
+            
+            // URLs and Tags
+            if(ItpMetaInstallHelper::isTableExist("tmp_#__itpm_urls") AND ItpMetaInstallHelper::isTableExist("tmp_#__itpm_tags")) {
+                ItpMetaInstallHelper::importURLsAndTags();
+            }
+            
+            ItpMetaInstallHelper::enableForignerKeys();
+        }
+        
+        echo JText::sprintf("COM_ITPMETA_MESSAGE_ENABLE_PLUGINS", JRoute::_("index.php?option=com_plugins&view=plugins&filter_search=itpmeta"));
     }
 }

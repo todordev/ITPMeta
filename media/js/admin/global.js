@@ -32,6 +32,7 @@ window.addEvent('domready', function() {
 		var tag = getTag(tagType);
 		document.id("jform_tag").value    = tag;
 		document.id("jform_output").value = tag;
+		document.id("jform_name").value   = tagType;
 		
 		// Cleare fields
 		document.id("jform_content").value = "";

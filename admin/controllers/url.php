@@ -80,7 +80,7 @@ class ItpMetaControllerUrl extends JControllerForm {
 
         } catch ( Exception $e ) {
             JLog::add($e->getMessage());
-            throw new Exception(JText::_('ITP_ERROR_SYSTEM'));
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
         
         $msg  = JText::_('COM_ITPMETA_URL_SAVED');
