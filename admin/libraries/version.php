@@ -34,7 +34,7 @@ class ItpMetaVersion {
      * 
      * @var integer
      */
-    public $devLevel  = '2';
+    public $devLevel  = '5';
     
     /**
      * Release Type
@@ -55,7 +55,7 @@ class ItpMetaVersion {
      * 
      * @var string
      */
-    public $releaseDate= '25-November-2012';
+    public $releaseDate= '13-January-2013';
     
     /**
      * License
@@ -83,7 +83,7 @@ class ItpMetaVersion {
      * 
      * @var string
      */
-    public $backlink   = '<div style="width:100%; text-align: center; font-size: xx-small; margin-top: 10px;"><a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">Joomla! meta tags</a></div>';
+    public $backlink   = '<div style="width:100%; text-align: center; font-size: xx-small; margin-top: 10px;"><a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">Joomla! Open Graph tags</a></div>';
     
     /**
      * Developer
@@ -119,7 +119,7 @@ class ItpMetaVersion {
     /**
      *  Build short format of the vpversion text
      *
-     * @return string Short vpversion format
+     * @return string Short version format
      */
     public function getShortVersion() {
         return $this->release .'.'. $this->devLevel;

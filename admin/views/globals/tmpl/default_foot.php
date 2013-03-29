@@ -15,7 +15,7 @@
 defined('_JEXEC') or die;
 ?>
 <tr>
-	<td colspan="5">
+	<td colspan="6">
 		<?php echo $this->pagination->getListFooter(); ?>
 	</td>
 </tr>

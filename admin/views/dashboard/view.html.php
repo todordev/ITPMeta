@@ -12,11 +12,11 @@
  */
 
 // no direct access
-defined('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ItpMetaViewCpanel extends JView {
+class ItpMetaViewDashboard extends JView {
     
     protected $option;
     
@@ -28,6 +28,9 @@ class ItpMetaViewCpanel extends JView {
     public function display($tpl = null){
         
         $this->version = new ItpMetaVersion();
+        
+        // Add submenu
+        ItpMetaHelper::addSubmenu($this->getName());
         
         $this->addToolbar();
         $this->setDocument();
@@ -41,7 +44,11 @@ class ItpMetaViewCpanel extends JView {
      * @since   1.6
      */
     protected function addToolbar(){
-        JToolBarHelper::title(JText::_("COM_ITPMETA_CPANEL_TITLE"), 'itp-properties');
+        JToolBarHelper::title(JText::_("COM_ITPMETA_DASHBOARD"), 'itp-dashboard');
+        
+        // Help button
+        $bar = JToolBar::getInstance('toolbar');
+		$bar->appendButton('Link', 'help', JText::_('JHELP'), JText::_('COM_ITPMETA_HELP_URL'));
     }
     
 	/**
@@ -51,12 +58,13 @@ class ItpMetaViewCpanel extends JView {
 	 */
 	protected function setDocument() {
 	    
-	    JHtml::_('behavior.modal', 'a.modal');
-	    
-		$this->document->setTitle(JText::_('COM_ITPMETA_CPANEL_ADMINISTRATION'));
+		$this->document->setTitle(JText::_('COM_ITPMETA_DASHBOARD_ADMINISTRATION'));
 		
 		// Header styles
 		$this->document->addStyleSheet('../media/'.$this->option.'/css/bootstrap.min.css');
+		
+		// Load scripts
+		JHtml::_('behavior.modal', 'a.modal');
 	}
 	
 

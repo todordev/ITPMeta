@@ -45,7 +45,7 @@ class ItpMetaControllerGlobal extends JControllerForm {
         
         // Gets the data from the form
         $data    = $app->input->post->get('jform', array(), 'array');
-        $itemId  = JArrayHelper::getValue($data, "id");
+        $itemId  = JArrayHelper::getValue($data, "id", 0, "int");
         
         $model   = $this->getModel();
         
@@ -58,24 +58,32 @@ class ItpMetaControllerGlobal extends JControllerForm {
             throw new Exception($model->getError());
         }
         
+        // Test if the data is valid.
+        $validData = $model->validate($form, $data);
+
+        // Check for validation errors.
+        if ($validData === false) {
+            
+            $this->defaultLink .= "&view=".$this->view_item."&layout=edit";
+        
+            if($itemId) {
+                $this->defaultLink .= "&id=" . $itemId;
+            } 
+            
+            $this->setMessage($model->getError(), "notice");
+            $this->setRedirect(JRoute::_($this->defaultLink, false));
+            return;
+        }
+        
+        // Fix magic quotes
+        if(get_magic_quotes_gpc()) {
+            $validData["content"] = stripslashes($validData["content"]);
+            $validData["output"]  = stripslashes($validData["output"]);
+            $validData["tag"]     = stripslashes($validData["tag"]);
+            $validData["title"]   = stripslashes($validData["title"]);
+        }
+        
         try {
-            
-            // Test if the data is valid.
-            $validData = $model->validate($form, $data);
-    
-            // Check for validation errors.
-            if ($validData === false) {
-                
-                $this->defaultLink .= "&view=".$this->view_item."&layout=edit";
-            
-                if($itemId) {
-                    $this->defaultLink .= "&id=" . $itemId;
-                } 
-                
-                $this->setMessage($model->getError(), "notice");
-                $this->setRedirect(JRoute::_($this->defaultLink, false));
-                return;
-            }
             
             $itemId = $model->save($validData);
 

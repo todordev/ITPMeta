@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+	   
+        <field 
+            name="after_body_tag" type="textarea" class="textinput"
+            label="COM_ITPMETA_AFTER_BODY"
+            description="COM_ITPMETA_AFTER_BODY_DESC"
+            filter="raw"
+        />
+        
+        <field 
+            name="before_body_tag" type="textarea" class="textinput"
+            label="COM_ITPMETA_BEFORE_BODY_CLOSING"
+            description="COM_ITPMETA_BEFORE_BODY_CLOSING_DESC"
+            filter="raw"
+        />
+        
+        <field name="url_id" type="hidden" default="0" />
+        
+	</fieldset>
+</form>

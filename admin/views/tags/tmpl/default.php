@@ -14,23 +14,30 @@
 // No direct access
 defined('_JEXEC') or die;
 ?>
-<?php if(!empty($this->items)){?>
-    <?php foreach($this->items as $tag){?>
-    <div class="itpm-tag-item" >
-    	<div id="itpmtag_<?php echo $tag["id"]; ?>">
-            <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=tag&tmpl=component&id=".$tag["id"])?>" class="itpm-url-tag" >
-            <?php echo $this->escape($tag["title"]);?>
-            </a>
-            <div class="itpm-tag-actions">
-                <img 
+<?php 
+
+if(!empty($this->items)){?>
+	<table class="table table-striped table-hover table-bordered" id="itpm-tags-table">
+    	<tbody>
+        <?php foreach($this->items as $tag){?>
+        <tr id="itpmtag_<?php echo $tag["id"]; ?>" data-id="<?php echo $tag["id"]; ?> ">
+        	<td class="dragHandle"></td>
+        	<td>
+            	<a data-tag-id="<?php echo $tag["id"];?>" href="#" class="itpm-url-tag" >
+                <?php echo $this->escape($tag["title"]);?>
+                </a>
+        	</td>
+        	<td class="itpm-tag-actions">
+            	<img 
                 src="../media/com_itpmeta/images/remove.png" 
                 alt="<?php JText::_("COM_ITPMETA_DELETE");?>"
                 class="remove_tag"
                 data-tag-id="<?php echo $tag["id"]; ?>"
                 />
-            </div>
-        </div>
-    </div>
-    <div class="clear"></div>
-    <?php }?>
+        	</td>
+        </tr>
+        
+        <?php }?>
+        </tbody>
+    </table>
 <?php }?>

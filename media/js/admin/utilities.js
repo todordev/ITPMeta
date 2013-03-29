@@ -85,7 +85,6 @@ function getTag(name){
 			val = '<meta property="og:fax_number" content="{EXAMPLE: +1-415-123-4567}"/>';
 			break;	
 			
-			
 		/* Article */
 		case "ogarticle":
 			val = '<meta property="og:type" content="article" />';
@@ -126,7 +125,6 @@ function getTag(name){
 			val = '<meta property="book:tag" content="{KEYWORD}">';
 		break;
 		
-		
 		/* Image */
 		case "ogimage_width":
 			val = '<meta property="og:image:width" content="{SIZE}" />';
@@ -147,6 +145,54 @@ function getTag(name){
 		break;
 		case "ogaudio_type":
 			val = '<meta property="og:audio:type" content="{EXAMPLE: application/mp3}" />';
+		break;
+		
+		/* Music */
+		case "ogmusic_song":
+			val = '<meta property="og:type" content="music.song" />';
+		break;
+		case "ogmusic_album":
+			val = '<meta property="og:type" content="music.album" />';
+		break;
+		case "ogmusic_playlist":
+			val = '<meta property="og:type" content="music.playlist" />';
+		break;
+		case "ogmusic_radio_station":
+			val = '<meta property="og:type" content="music:radio_station" />';
+			break;
+		
+		case "ogmusic_music_duration":
+			val = '<meta property="music:duration" content="{DURATION}" />';
+		break;
+		
+		case "ogmusic_music_album":
+			val = '<meta property="music:album" content="{ALBUM}" />';
+		break;
+		
+		case "ogmusic_music_album_disc":
+			val = '<meta property="music:album:disc" content="{ALBUM_DISC}" />';
+		break;
+		case "ogmusic_music_album_track":
+			val = '<meta property="music:album:track" content="{ALBUM_TRACK}" />';
+		break;
+		case "ogmusic_musician":
+			val = '<meta property="music:musician" content="{MUSICITAN}" />';
+		break;
+		
+		case "ogmusic_music_song":
+			val = '<meta property="music:song" content="{MUSIC_SONG}" />';
+		break;
+		case "ogmusic_music_song_disc":
+			val = '<meta property="music:song:disc" content="{MUSIC_SONG_DISC}" />';
+		break;
+		case "ogmusic_music_song_track":
+			val = '<meta property="music:song:track" content="{MUSIC_SONG_TRACK}" />';
+		break;
+		case "ogmusic_music_release_date":
+			val = '<meta property="music:release_date" content="{RELEASE_DATE}" />';
+		break;
+		case "ogmusic_music_creator":
+			val = '<meta property="music:creator" content="{CREATOR}" />';
 		break;
 		
 		/* Video */
@@ -185,57 +231,6 @@ function getTag(name){
 		break;
 		case "ogvideo_tag":
 			val = '<meta property="video:tag" content="{KEYWORD}" />';
-		break;
-		
-		/* Music */
-		case "ogmusic_song":
-			val = '<meta property="og:type" content="music.song" />';
-		break;
-		
-		case "ogmusic_album":
-			val = '<meta property="og:type" content="music.album" />';
-		break;
-		
-		case "ogmusic_playlist":
-			val = '<meta property="og:type" content="music.playlist" />';
-		break;
-		
-		case "ogmusic_radio_station":
-			val = '<meta property="og:type" content="music:radio_station" />';
-			break;
-			
-		case "ogmusic_music_duration":
-			val = '<meta property="music:duration" content="{DURATION}" />';
-		break;
-		
-		case "ogmusic_music_album":
-			val = '<meta property="music:album" content="{ALBUM}" />';
-		break;
-		
-		case "ogmusic_music_album_disc":
-			val = '<meta property="music:album:disc" content="{ALBUM_DISC}" />';
-		break;
-		case "ogmusic_music_album_track":
-			val = '<meta property="music:album:track" content="{ALBUM_TRACK}" />';
-		break;
-		case "ogmusic_musician":
-			val = '<meta property="music:musician" content="{MUSICITAN}" />';
-		break;
-		
-		case "ogmusic_music_song":
-			val = '<meta property="music:song" content="{MUSIC_SONG}" />';
-		break;
-		case "ogmusic_music_song_disc":
-			val = '<meta property="music:song:disc" content="{MUSIC_SONG_DISC}" />';
-		break;
-		case "ogmusic_music_song_track":
-			val = '<meta property="music:song:track" content="{MUSIC_SONG_TRACK}" />';
-		break;
-		case "ogmusic_music_release_date":
-			val = '<meta property="music:release_date" content="{RELEASE_DATE}" />';
-		break;
-		case "ogmusic_music_creator":
-			val = '<meta property="music:creator" content="{CREATOR}" />';
 		break;
 		
 		/* Profile */
@@ -382,7 +377,6 @@ function getTag(name){
 			val = '<meta property="og:type" content="tv_show" />';
 		break;
 		
-		
 		/* Games */
 		case "oggame":
 			val = '<meta property="og:type" content="game" />';
@@ -393,7 +387,6 @@ function getTag(name){
 		case "game_points":
 			val = '<meta property="game:points" content="{POINTS FOR ACHIEVEMENT}" />';
 		break;
-		
 		
 		/* Facebook */
 		case "fbadmins":
@@ -424,6 +417,11 @@ function getTag(name){
 		case "seo_canonical":
 			val = '<link rel="canonical" href="{URL}" />';
 		break;	
+
+		/* Misc */
+		case "refresh":
+			val = '<meta http-equiv="refresh" content="{SECONDS;URL=}" />';
+		break;
 		
 		default:
 			break;
@@ -432,3 +430,5 @@ function getTag(name){
   return val;
   
 }
+
+

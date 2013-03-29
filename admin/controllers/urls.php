@@ -11,8 +11,8 @@
  * other free or open source software licenses.
  */
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die();
+// No direct access
+defined('_JEXEC') or die;
 
 jimport( 'joomla.application.component.controlleradmin' );
 
@@ -41,7 +41,84 @@ class ItpMetaControllerUrls extends JControllerAdmin {
         return $model;
     }
     
-    public function backToControlPanel() {
+    /**
+	 * Remove items.
+	 * 
+	 * @return  void
+	 * @since   11.1
+	 */
+	public function delete() {
+	    
+	    $app       = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+	    
+	    $cid       = $app->input->post->get("cid", array(), "array");
+	    $modelTags = $this->getModel("Tag");
+	    
+	    try {
+	        $modelTags->deleteByUrlId($cid);
+	        parent::delete();
+        } catch ( Exception $e ) {
+            JLog::add($e->getMessage());
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
+        }
+        
+        $msg  = JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid));
+        $this->setRedirect(JRoute::_($this->defaultLink."&view=urls", false), $msg);
+	    
+	}
+	
+	/**
+	 * Disable autoupdate
+	 * 
+	 * @return  void
+	 */
+	public function dautoupdate() {
+	    
+	    $app       = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+	    
+	    $cid       = $app->input->post->get("cid", array(), "array");
+	    $model     = $this->getModel();
+	    
+	    try {
+	        $model->updateAutoupdate($cid, 0);
+        } catch ( Exception $e ) {
+            JLog::add($e->getMessage());
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
+        }
+        
+        $msg  = JText::plural($this->text_prefix . '_N_ITEMS_AUTOUPDATE_DISABLED', count($cid));
+        $this->setRedirect(JRoute::_($this->defaultLink."&view=urls", false), $msg);
+	    
+	}
+	
+	/**
+	 * Enable autoupdate
+	 * 
+	 * @return  void
+	 */
+	public function eautoupdate() {
+	    
+	    $app       = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+	    
+	    $cid       = $app->input->post->get("cid", array(), "array");
+	    $model     = $this->getModel();
+	    
+	    try {
+	        $model->updateAutoupdate($cid, 1);
+        } catch ( Exception $e ) {
+            JLog::add($e->getMessage());
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
+        }
+        
+        $msg  = JText::plural($this->text_prefix . '_N_ITEMS_AUTOUPDATE_ENABLED', count($cid));
+        $this->setRedirect(JRoute::_($this->defaultLink."&view=urls", false), $msg);
+	    
+	}
+	
+    public function backToDashboard() {
         $this->setRedirect( JRoute::_($this->defaultLink, false) );
     }
     

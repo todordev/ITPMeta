@@ -12,7 +12,7 @@
  */
 
 // Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 jimport( 'joomla.application.component.controlleradmin' );
 
@@ -42,7 +42,7 @@ class ItpMetaControllerGlobals extends JControllerAdmin {
         return $model;
     }
     
-    public function backToControlPanel() {
+    public function backToDashboard() {
         $this->setRedirect( JRoute::_($this->defaultLink, false) );
     }
     

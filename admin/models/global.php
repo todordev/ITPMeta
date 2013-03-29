@@ -105,11 +105,41 @@ class ItpMetaModelGlobal extends JModelAdmin {
         $row->set("content",   $content);
         $row->set("output",    $output);
         $row->set("published", $published);
+        
+        // Prepare the row for saving
+		$this->prepareTable($row);
+		
         $row->store();
         
         return $row->id;
     
     }
     
+	/**
+	 * Prepare and sanitise the table prior to saving.
+	 *
+	 * @since	1.6
+	 */
+	protected function prepareTable(&$table) {
+	    
+        // get maximum order number
+		if (empty($table->id)) {
+
+			// Set ordering to the last item if not set
+			if (empty($table->ordering)) {
+				$db     = JFactory::getDbo();
+				$query  = $db->getQuery(true);
+				$query
+				    ->select("MAX(ordering)")
+				    ->from("#__itpm_global_tags");
+				
+			    $db->setQuery($query, 0, 1);
+				$max   = $db->loadResult();
+
+				$table->ordering = $max+1;
+			}
+		}
+        
+	}
     
 }

@@ -25,23 +25,25 @@ defined('_JEXEC') or die;
         <div class="filter-select fltrt">
             <select name="filter_published" class="inputbox" onchange="this.form.submit()">
                 <option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>
-                <?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.published'), true);?>
+                <?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array("archived" => false, "trash"=>false)), 'value', 'text', $this->state->get('filter.published'), true);?>
             </select>
-           
         </div>
     </fieldset>
-    <div class="clr"> </div>
     
     <table class="adminlist">
        <thead><?php echo $this->loadTemplate('head');?></thead>
-	   <tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
 	   <tbody><?php echo $this->loadTemplate('body');?></tbody>
+	   <tfoot><?php echo $this->loadTemplate('foot');?></tfoot>
 	</table>
-
+	
     <input type="hidden" name="boxchecked" value="0" />
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="filter_order" value="<?php echo $this->listOrder; ?>" />
     <input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirn; ?>" />
     <?php echo JHtml::_('form.token'); ?>
-
 </form>
+
+<div id="itpm-tags-list" style="display: none;">
+	<div id="sq-box">
+	</div>
+</div>

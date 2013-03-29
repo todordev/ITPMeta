@@ -31,9 +31,7 @@ class ItpMetaModelGlobals extends JModelList {
             $config['filter_fields'] = array(
                 'id', 'a.id',
             	'title', 'a.title',
-            	'tag', 'a.tag',
-                'content', 'a.content',
-                'output', 'a.output',
+            	'ordering', 'a.ordering',
             	'published', 'a.published',
             );
         }
@@ -62,7 +60,7 @@ class ItpMetaModelGlobals extends JModelList {
         $this->setState('params', $params);
 
         // List state information.
-        parent::populateState('a.id', 'asc');
+        parent::populateState('a.ordering', 'asc');
     }
 
     /**
@@ -101,10 +99,11 @@ class ItpMetaModelGlobals extends JModelList {
         $query->select(
             $this->getState(
                 'list.select',
-                'a.id, a.title, a.tag, a.content, a.output, a.published' 
+                'a.id, a.title, a.tag, a.content, a.output, ' .
+                'a.ordering, a.published' 
             )
         );
-        $query->from('`#__itpm_global_tags` AS a');
+        $query->from($db->quoteName("#__itpm_global_tags").' AS a');
 
         // Filter by published state
         $published = $this->getState('filter.published');
@@ -126,12 +125,18 @@ class ItpMetaModelGlobals extends JModelList {
         }
 
         // Add the list ordering clause.
-        $orderCol   = $this->state->get('list.ordering');
-        $orderDirn  = $this->state->get('list.direction');
-        
-        $query->order($db->getEscaped($orderCol.' '.$orderDirn));
+        $orderString = $this->getOrderString();
+        $query->order($db->escape($orderString));
 
         return $query;
     }
+    
+    protected function getOrderString() {
+        $orderCol   = $this->getState('list.ordering');
+        $orderDirn  = $this->getState('list.direction');
+        
+        return $orderCol.' '.$orderDirn;
+    }
+    
     
 }

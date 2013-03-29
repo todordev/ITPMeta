@@ -34,6 +34,8 @@ class ITPMetaViewTag extends JView {
         $this->item   = $this->get('Item');
         $this->form   = $this->get('Form');
         
+        $this->legendTitle = (!$this->form->getValue("tag_id")) ? JText::_("COM_ITPMETA_ADD_TAG") : JText::_("COM_ITPMETA_EDIT_TAG");
+        
         parent::display($tpl);
         
     }

@@ -29,11 +29,13 @@ class ITPMetaViewGlobals extends JView {
         $this->pagination = $this->get('Pagination');
         
         // Prepare filters
-        $listOrder  = $this->escape($this->state->get('list.ordering'));
-        $listDirn   = $this->escape($this->state->get('list.direction'));
+        $listOrder        = $this->escape($this->state->get('list.ordering'));
+        $listDirn         = $this->escape($this->state->get('list.direction'));
+        $saveOrder        = (strcmp($listOrder, 'a.ordering') != 0 ) ? false : true;
         
-        $this->listOrder = $listOrder;
-        $this->listDirn  = $listDirn;
+        $this->listOrder  = $listOrder;
+        $this->listDirn   = $listDirn;
+        $this->saveOrder  = $saveOrder;
         
         // Add submenu
         ItpMetaHelper::addSubmenu($this->getName());
@@ -53,16 +55,17 @@ class ITPMetaViewGlobals extends JView {
     protected function addToolbar(){
         
         // Set toolbar items for the page
+        JToolBarHelper::title(JText::_('COM_ITPMETA_GLOBAL_TAGS_MANAGER'), 'itp-globals');
+        
         JToolBarHelper::addNew('global.add');
         JToolBarHelper::editList('global.edit');
         JToolBarHelper::divider();
-        JToolBarHelper::title(JText::_('COM_ITPMETA_GLOBAL_TAGS_MANAGER'), 'itp-globals');
         JToolBarHelper::publishList("globals.publish");
         JToolBarHelper::unpublishList("globals.unpublish");
         JToolBarHelper::divider();
         JToolBarHelper::deleteList(JText::_("COM_ITPMETA_DELETE_ITEMS_QUESTION"), "globals.delete");
         JToolBarHelper::divider();
-        JToolBarHelper::custom('globals.backToControlPanel', "itp-properties-back", "", JText::_("COM_ITPMETA_CPANEL_TITLE"), false);
+        JToolBarHelper::custom('globals.backToDashboard', "itp-dashboard-back", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
     }
 
 	/**

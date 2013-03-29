@@ -18,10 +18,10 @@ defined('_JEXEC') or die;
     <th width="3%">
         <input type="checkbox" name="checkall-toggle" value="" onclick="checkAll(this)" />
     </th>
-    <th class="left">
+    <th class="title">
         <?php echo JHtml::_('grid.sort',  'COM_ITPMETA_URL', 'a.uri', $this->listDirn, $this->listOrder); ?>
     </th>
-    <th width="10%"><?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.published', $this->listDirn, $this->listOrder); ?></th>
+    <th width="5%">&nbsp;</th>
+    <th width="10%"><?php echo JHtml::_('grid.sort',  'JSTATUS', 'a.published', $this->listDirn, $this->listOrder); ?></th>
     <th width="3%"><?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?></th>
 </tr>
-	  

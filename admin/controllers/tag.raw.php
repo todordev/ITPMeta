@@ -62,7 +62,7 @@ class ItpMetaControllerTag extends JControllerForm {
             );
                 
             echo json_encode($response);
-            return;
+            JFactory::getApplication()->close();
         }
         
         // Validate URL ID
@@ -76,7 +76,15 @@ class ItpMetaControllerTag extends JControllerForm {
             );
                 
             echo json_encode($response);
-            return;
+            JFactory::getApplication()->close();
+        }
+        
+        // Fix Magic Quotes
+        if(get_magic_quotes_gpc()) {
+            $validData["content"] = stripslashes($validData["content"]);
+            $validData["output"]  = stripslashes($validData["output"]);
+            $validData["tag"]     = stripslashes($validData["tag"]);
+            $validData["title"]   = stripslashes($validData["title"]);
         }
         
         // Save the item
@@ -98,7 +106,7 @@ class ItpMetaControllerTag extends JControllerForm {
         );
             
         echo json_encode($response);
-        return;
+        JFactory::getApplication()->close();
         
     }
     
@@ -110,23 +118,17 @@ class ItpMetaControllerTag extends JControllerForm {
         
         // Initialize variables
         $itemId  = $app->input->post->get("id");
+        $pks     = array($itemId);
         
         try {
             
-            // Get the model
             $model = $this->getModel();
-            $model->delete($itemId);
+            $model->delete($pks);
             
         } catch ( Exception $e ) {
             JLog::add($e->getMessage());
             throw new Exception($e->getMessage());
         }
-        
-//        $this->success = true;
-//        $this->title   = JText::_( 'COM_ITPMETA_SUCCESS' );
-//        $this->text    = JText::_( 'COM_ITPMETA_TAG_DELETED' );
-//        $this->data    = array("item_id"=>$itemId);
-        
         
         $response = array(
         	"success" => true,
@@ -136,7 +138,7 @@ class ItpMetaControllerTag extends JControllerForm {
         );
         
         echo json_encode($response);
-        
+        JFactory::getApplication()->close();
     }
     
 }

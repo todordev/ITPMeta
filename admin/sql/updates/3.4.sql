@@ -1,0 +1,7 @@
+SET FOREIGN_KEY_CHECKS=0;
+
+ALTER TABLE `#__itpm_tags` DROP `published`;
+
+ALTER TABLE `#__itpm_urls` ADD `autoupdate` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT '1' AFTER `published`;
+
+SET FOREIGN_KEY_CHECKS=1;

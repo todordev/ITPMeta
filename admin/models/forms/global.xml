@@ -37,7 +37,6 @@
         
         <field 
             name="content" type="textarea" class="textinput"
-            rows="5"
             label="COM_ITPMETA_CONTENT" 
             description="COM_ITPMETA_CONTENT_DESC"
         />
@@ -46,14 +45,12 @@
             name="tag" type="textarea"
             label="COM_ITPMETA_TAG" 
             description="COM_ITPMETA_TAG_DESC" 
-            rows="5"
             class="readonly"
             filter="raw"
         />
         
         <field 
             name="output" type="textarea" class="textinput"
-            rows="5"
             label="COM_ITPMETA_OUTPUT"
             description="COM_ITPMETA_OUTPUT_DESC"  
             required="true"

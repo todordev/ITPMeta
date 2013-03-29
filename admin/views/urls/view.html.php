@@ -22,18 +22,26 @@ class ITPMetaViewUrls extends JView {
     protected $pagination;
     protected $state;
     
+    protected $option;
+    
+    public function __construct($config) {
+        parent::__construct($config);
+        $this->option = JFactory::getApplication()->input->get("option");
+    }
+    
     public function display($tpl = null){
         
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
         
-        // Prepare filters
-        $listOrder  = $this->escape($this->state->get('list.ordering'));
-        $listDirn   = $this->escape($this->state->get('list.direction'));
+        $this->numbers    = $this->get("Numbers");
         
-        $this->listOrder = $listOrder;
-        $this->listDirn  = $listDirn;
+        // Prepare filters
+        $this->listOrder  = $this->escape($this->state->get('list.ordering'));
+        $this->listDirn   = $this->escape($this->state->get('list.direction'));
+        
+        $this->version    = new ItpMetaVersion();
         
         // Add submenu
         ItpMetaHelper::addSubmenu($this->getName());
@@ -53,16 +61,17 @@ class ITPMetaViewUrls extends JView {
     protected function addToolbar(){
         
         // Set toolbar items for the page
+        JToolBarHelper::title(JText::_('COM_ITPMETA_URL_MANAGER'), 'itp-urls');
+        
         JToolBarHelper::addNew('url.add');
         JToolBarHelper::editList('url.edit');
         JToolBarHelper::divider();
-        JToolBarHelper::title(JText::_('COM_ITPMETA_URL_MANAGER'), 'itp-urls');
         JToolBarHelper::publishList("urls.publish");
         JToolBarHelper::unpublishList("urls.unpublish");
         JToolBarHelper::divider();
         JToolBarHelper::deleteList(JText::_("COM_ITPMETA_DELETE_ITEMS_QUESTION"), "urls.delete");
         JToolBarHelper::divider();
-        JToolBarHelper::custom('urls.backToControlPanel', "itp-properties-back", "", JText::_("COM_ITPMETA_CPANEL_TITLE"), false);
+        JToolBarHelper::custom('urls.backToDashboard', "itp-dashboard-back", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
     }
 
 	/**
@@ -71,7 +80,21 @@ class ITPMetaViewUrls extends JView {
 	 * @return void
 	 */
 	protected function setDocument() {
+	    
 		$this->document->setTitle(JText::_('COM_ITPMETA_URLS_MANAGER_TITLE'));
+		
+		// Add behaviors
+        JHTML::_('behavior.framework');
+        JHtml::_('behavior.tooltip');
+        JHTML::_('behavior.modal');
+        
+        // Add styles
+        $this->document->addStyleSheet('../media/'.$this->option.'/css/bootstrap.min.css');
+        
+        // Add scripts
+        $version = $this->version->getShortVersion();
+        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js?v='.$version);
+        
 	}
 	
 }

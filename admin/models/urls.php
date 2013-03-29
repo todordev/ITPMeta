@@ -48,12 +48,12 @@ class ItpMetaModelUrls extends JModelList {
     protected function populateState($ordering = null, $direction = null) {
 
         // Load the filter state.
-        $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
-        $this->setState('filter.search', $search);
+        $value  = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+        $this->setState('filter.search', $value);
 
-        $published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '', 'string');
-        $this->setState('filter.published', $published);
-
+        $value  = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '', 'string');
+        $this->setState('filter.published', $value);
+        
         // Load the parameters.
         $params = JComponentHelper::getParams('com_itpmeta');
         $this->setState('params', $params);
@@ -77,7 +77,7 @@ class ItpMetaModelUrls extends JModelList {
         
         // Compile the store id.
         $id.= ':' . $this->getState('filter.search');
-        $id.= ':' . $this->getState('filter.published');
+        $id.= ':' . $this->getState('filter.state');
 
         return parent::getStoreId($id);
     }
@@ -98,19 +98,19 @@ class ItpMetaModelUrls extends JModelList {
         $query->select(
             $this->getState(
                 'list.select',
-                'a.id, a.uri, a.published' 
+                'a.id, a.uri, a.published'
             )
         );
-        $query->from('`#__itpm_urls` AS a');
+        $query->from($db->quoteName("#__itpm_urls").' AS a');
 
-        // Filter by published state
+        // Filter by state
         $published = $this->getState('filter.published');
         if (is_numeric($published)) {
             $query->where('a.published = '.(int) $published);
         } else if ($published === '') {
             $query->where('(a.published IN (0, 1))');
         }
-
+        
         // Filter by search in title
         $search = $this->getState('filter.search');
         if (!empty($search)) {
@@ -123,12 +123,69 @@ class ItpMetaModelUrls extends JModelList {
         }
 
         // Add the list ordering clause.
-        $orderCol   = $this->state->get('list.ordering');
-        $orderDirn  = $this->state->get('list.direction');
-        
-        $query->order($db->escape($orderCol.' '.$orderDirn));
+        $orderString = $this->getOrderString();
+        $query->order($db->escape($orderString));
 
         return $query;
+    }
+        
+    public function getNumbers() {
+        
+        // Get a storage key.
+		$storeNumbers = $this->getStoreId("numbers");
+
+		// Try to load the data from internal storage.
+		if (isset($this->cache[$storeNumbers])) {
+			return $this->cache[$storeNumbers];
+		}
+            
+        // Get a storage key for current items
+		$storeData = $this->getStoreId();
+
+		// Try to load the data from internal storage.
+		if (isset($this->cache[$storeData])){
+			$data = $this->cache[$storeData];
+		} else {
+		    $data = $this->getItems();
+		}
+		
+		$itemsIds = array();
+		foreach( $data as $item ) {
+		    $itemsIds[] = $item->id;
+		}
+		
+		// Get the number of projects in categories
+		$results = array();
+		if(!empty($itemsIds)) {
+            $db     = JFactory::getDbo();
+            $query  = $db->getQuery(true);
+            
+            $query
+                ->select("url_id, COUNT(*) AS number")
+                ->from($db->quoteName("#__itpm_tags"))
+                ->where("url_id IN (" . implode(",", $itemsIds) . ")")
+                ->group("url_id");
+            
+            $db->setQuery($query);
+            $results = $db->loadAssocList("url_id", "number");
+            
+            if(!$results) {
+                $results = array(); 
+            }
+		}
+        
+        // Add the items to the internal cache.
+		$this->cache[$storeNumbers] = $results;
+
+		return $this->cache[$storeNumbers];
+        
+    }
+    
+    protected function getOrderString() {
+        $orderCol   = $this->getState('list.ordering');
+        $orderDirn  = $this->getState('list.direction');
+        
+        return $orderCol.' '.$orderDirn;
     }
     
 }

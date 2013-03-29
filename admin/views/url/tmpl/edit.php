@@ -10,32 +10,32 @@
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
-
 // no direct access
 defined('_JEXEC') or die;
-$itemId = $this->form->getValue('id');
 ?>
 <div id="itpm-left-side-form">
-<form action="<?php echo JRoute::_('index.php?option=com_itpmeta'); ?>" method="post" name="adminForm" id="url-form" class="form-validate">
-    <div class="width-80 fltlft">
-        <fieldset class="adminform">
-            <legend><?php echo JText::_("COM_ITPMETA_URL_DATA"); ?></legend>
-            <ul class="adminformlist">
-                <li><?php echo $this->form->getLabel('uri'); ?>
-                <?php echo $this->form->getInput('uri'); ?></li>
-                <li><?php echo $this->form->getLabel('published'); ?>
-                <?php echo $this->form->getInput('published'); ?></li>
-                <li><?php echo $this->form->getLabel('id'); ?>
-                <?php echo $this->form->getInput('id'); ?></li>
-            </ul>
-        </fieldset>
-    </div>
-    <div class="clr"></div>
-    <input type="hidden" name="task" value="" />
-    <?php echo JHtml::_('form.token'); ?>
-</form>
-
-<?php if(!empty($itemId)) { ?>
+    <form action="<?php echo JRoute::_('index.php?option=com_itpmeta'); ?>" method="post" name="adminForm" id="url-form" class="form-validate">
+        <div class="width-100 fltlft">
+            <fieldset class="adminform">
+                <legend><?php echo JText::_("COM_ITPMETA_URL_DATA"); ?></legend>
+                <ul class="adminformlist">
+                    <li><?php echo $this->form->getLabel('uri'); ?>
+                    <?php echo $this->form->getInput('uri'); ?></li>
+                    <li><?php echo $this->form->getLabel('published'); ?>
+                    <?php echo $this->form->getInput('published'); ?></li>
+                    <li><?php echo $this->form->getLabel('autoupdate'); ?>
+                    <?php echo $this->form->getInput('autoupdate'); ?></li>
+                    <li><?php echo $this->form->getLabel('id'); ?>
+                    <?php echo $this->form->getInput('id'); ?></li>
+                </ul>
+            </fieldset>
+        </div>
+        <div class="clr"></div>
+        <input type="hidden" name="task" value="" />
+        <?php echo JHtml::_('form.token'); ?>
+    </form>
+    
+    <?php if(!empty($this->itemId)) { ?>
 	<div class="clr"></div>
     <div id="itpm-tags-box">
         <h1><?php echo JText::_("COM_ITPMETA_TAGS")?></h1>
@@ -43,17 +43,16 @@ $itemId = $this->form->getValue('id');
         </div>
     </div>
     <div class="clr"></div>
-<?php } else {?>
-<p class="sticky"><?php echo JText::_("COM_ITPMETA_NOTE_NO_TAGS")?></p>
-<?php }?>
+    <?php } else {?>
+    <p class="sticky"><?php echo JText::_("COM_ITPMETA_NOTE_NO_TAGS")?></p>
+    <?php }?>
 </div>
 
-<?php if(!empty($itemId)) { ?>
+<?php if(!empty($this->itemId)) { ?>
 <div id="itmp-tags">
 <?php
 $pane =& JPane::getInstance('Sliders');
 echo $pane->startPane('ITPMetaPane');
-
 {
 ?>
 
@@ -119,7 +118,7 @@ echo $pane->startPane('ITPMetaPane');
 <a class="itp-tag-btn" data-tag="ogimage_height" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_IMAGE_HEIGHT");?>"><?php echo JText::_("COM_ITPMETA_TAG_IMAGE_HEIGHT");?></a>
 <?php echo $pane->endPanel(); ?>
 
-<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO"), 'opengraph_audio'); ?>
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_SWITCH_TITLE"), 'opengraph_audio'); ?>
 <a class="itp-tag-btn" data-tag="ogaudio" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_AUDIO");?></a>
 <a class="itp-tag-btn" data-tag="ogaudio_title" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TAG_TITLE");?></a>
 <a class="itp-tag-btn" data-tag="ogaudio_artist" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTIST");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTIST");?></a>
@@ -127,7 +126,7 @@ echo $pane->startPane('ITPMetaPane');
 <a class="itp-tag-btn" data-tag="ogaudio_type" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TYPE");?>"><?php echo JText::_("COM_ITPMETA_TAG_TYPE");?></a>
 <?php echo $pane->endPanel(); ?>
 
-<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO"), 'opengraph_video'); ?>
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_OPEN_GRAPH_SWITCH_VIDEO_TITLE"), 'opengraph_video'); ?>
 <a class="itp-tag-btn" data-tag="ogvideo" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO");?></a>
 <a class="itp-tag-btn" data-tag="ogvideo_height" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_HEIGHT");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_HEIGHT");?></a>
 <a class="itp-tag-btn" data-tag="ogvideo_width" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_WIDTH");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_WIDTH");?></a>
@@ -243,6 +242,10 @@ echo $pane->startPane('ITPMetaPane');
 <a class="itp-tag-btn" data-tag="seo_canonical" data-tag-title="<?php echo JText::_("COM_ITPMETA_SEO_CANONICAL");?>"><?php echo JText::_("COM_ITPMETA_TAG_CANONICAL");?></a>
 <?php echo $pane->endPanel(); ?>
 
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_MISC"), 'misc'); ?>
+<a class="itp-tag-btn" data-tag="refresh" data-tag-title="<?php echo JText::_("COM_ITPMETA_REFRESH");?>"><?php echo JText::_("COM_ITPMETA_REFRESH_TAG");?></a>
+<?php echo $pane->endPanel(); ?>
+
 <?php 
 }
 echo $pane->endPane();
@@ -250,7 +253,13 @@ echo $pane->endPane();
 ?>
 </div>
 <?php }?>
+
 <div id="itpm-tags-form" style="display: none;">
 	<div id="sq-box">
+	</div>
+</div>
+
+<div id="itpm-scritps-form" style="display: none;">
+	<div id="sq-scripts-box">
 	</div>
 </div>

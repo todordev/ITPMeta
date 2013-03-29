@@ -39,7 +39,7 @@ class ItpMetaController extends JController {
         // Add component style
         $document->addStyleSheet('../media/'.$this->option.'/css/style.css');
         
-        $viewName      = JFactory::getApplication()->input->getCmd('view', 'cpanel');
+        $viewName      = JFactory::getApplication()->input->getCmd('view', 'dashboard');
         JFactory::getApplication()->input->set("view", $viewName);
 
         parent::display();

@@ -16,11 +16,6 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modeladmin');
 
-/**
- * It is a project model
- * 
- * @author Todor Iliev
- */
 class ItpMetaModelUrl extends JModelAdmin {
     
     /**
@@ -38,7 +33,7 @@ class ItpMetaModelUrl extends JModelAdmin {
      * @return  JTable  A database object
      * @since   1.6
      */
-    public function getTable($type = 'url', $prefix = 'ItpMetaTable', $config = array()){
+    public function getTable($type = 'Url', $prefix = 'ItpMetaTable', $config = array()){
         return JTable::getInstance($type, $prefix, $config);
     }
     
@@ -89,19 +84,42 @@ class ItpMetaModelUrl extends JModelAdmin {
         
         $id         = JArrayHelper::getValue($data, "id", null);
         $uri        = JArrayHelper::getValue($data, "uri", "");
+        $afterBody  = JArrayHelper::getValue($data, "after_body_tag", "");
+        $beforeBody = JArrayHelper::getValue($data, "before_body_tag", "");
         $published  = JArrayHelper::getValue($data, "published", 0);
         
         // Load item data
         $row = $this->getTable();
         $row->load($id);
         
-        $row->set("uri", $uri);
-        $row->set("published", $published);
+        $row->set("uri",             $uri);
+        $row->set("after_body_tag",  $afterBody);
+        $row->set("before_body_tag", $beforeBody);
+        $row->set("published",       $published);
+        
         $row->store();
         
         return $row->id;
     
     }
     
+    public function isUriExist($uri) {
+        
+        $db     = $this->getDbo();
+        /** @var $db JDatabaseMySQLi **/
+        
+        $query  = $db->getQuery(true);
+
+        // Select the required fields from the table.
+        $query
+            ->select('COUNT(*)')
+            ->from('`#__itpm_urls`')
+            ->where('uri='.$db->quote($uri));
+
+        $db->setQuery($query, 0, 1);
+        
+        return (bool)$db->loadResult();
+        
+    }
     
 }

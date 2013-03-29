@@ -40,7 +40,6 @@ class ItpMetaControllerUrl extends JControllerForm {
         /** @var $app JAdministrator **/
         
         // Initialize variables
-        $itemId  = $app->input->getInt("id");
         $msg     = "";
         $link    = "";
         
@@ -57,27 +56,40 @@ class ItpMetaControllerUrl extends JControllerForm {
             throw new Exception($model->getError());
         }
         
-        try {
-            
-            // Test if the data is valid.
-            $validData = $model->validate($form, $data);
-    
-            // Check for validation errors.
-            if ($validData === false) {
-                
-                $this->defaultLink .= "&view=".$this->view_item."&layout=edit";
-            
-                if($itemId) {
-                    $this->defaultLink .= "&id=" . $itemId;
-                } 
-                
-                $this->setMessage($model->getError(), "notice");
-                $this->setRedirect(JRoute::_($this->defaultLink, false));
-                return;
-            }
-            
-            $itemId = $model->save($validData);
+        // Test if the data is valid.
+        $validData = $model->validate($form, $data);
+        $itemId    = JArrayHelper::getValue($validData, "id");
 
+        // Check for validation errors.
+        if ($validData === false) {
+            $this->defaultLink .= "&view=".$this->view_item."&layout=edit";
+        
+            if($itemId) {
+                $this->defaultLink .= "&id=" . $itemId;
+            } 
+            
+            $this->setMessage($model->getError(), "notice");
+            $this->setRedirect(JRoute::_($this->defaultLink, false));
+            return;
+        }
+            
+        // Check for existing URI
+        $uri = JArrayHelper::getValue($validData, "uri");
+        if(!$itemId AND $model->isUriExist($uri)) {
+            $this->defaultLink .= "&view=".$this->view_list;
+            $this->setMessage(JText::_("COM_ITPMETA_URI_EXISTS"), "notice");
+            $this->setRedirect(JRoute::_($this->defaultLink, false));
+            return;
+        }
+        
+        // Fix magic quotes
+        if(get_magic_quotes_gpc()) {
+            $validData["after_body_tag"] = stripslashes($validData["after_body_tag"]);
+            $validData["before_body_tag"]  = stripslashes($validData["before_body_tag"]);
+        }
+        
+        try {
+            $itemId = $model->save($validData);
         } catch ( Exception $e ) {
             JLog::add($e->getMessage());
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
@@ -127,7 +139,6 @@ class ItpMetaControllerUrl extends JControllerForm {
     
     /**
      * Cancel operations
-     *
      */
     public function cancel(){
         

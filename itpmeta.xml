@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade">
 	<name>com_itpmeta</name>
-	<creationDate>January, 2011</creationDate>
 	<author>Todor Iliev</author>
 	<authorEmail>todor@itprism.com</authorEmail>
 	<authorUrl>http://itprism.com</authorUrl>
 	<copyright>Copyright (C) 2010 Todor Iliev ( ITPrism.com )</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html</license>
-	<version>3.2</version>
+	<version>3.5</version>
+	<creationDate>13 January, 2013</creationDate>
 	<description>COM_ITPMETA_DESCRIPTION</description>
 
 	<install>
@@ -48,11 +48,6 @@
 	
 	<administration>
 		<menu img="../media/com_itpmeta/images/menu_icon_itpmeta.png" link="option=com_itpmeta">COM_ITPMETA</menu>
-		<submenu>
-			<menu img="../media/com_itpmeta/images/menu_icon_cpanel.png" link="option=com_itpmeta&amp;view=cpanel">COM_ITPMETA_CONTROL_PANEL</menu>
-			<menu img="../media/com_itpmeta/images/menu_icon_globals.png" link="option=com_itpmeta&amp;view=globals">COM_ITPMETA_GLOBALS_TAGS</menu>
-			<menu img="../media/com_itpmeta/images/menu_icon_urls.png" link="option=com_itpmeta&amp;view=urls">COM_ITPMETA_MANAGE_URLS</menu>
-		</submenu>
 		
 		<files folder="admin">		    		
 			<folder>controllers</folder>

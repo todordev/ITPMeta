@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-	   
+	
 	   <field 
             name="name" 
             type="text" 
@@ -20,6 +20,20 @@
             label="COM_ITPMETA_TITLE" 
         />
         
+        <field
+            name="published"
+            type="list"
+            label="JSTATUS"
+            description="COM_ITPMETA_FIELD_STATE_DESC"
+            class="inputbox"
+            size="1"
+            default="1">
+            <option
+                value="1">JPUBLISHED</option>
+            <option
+                value="0">JUNPUBLISHED</option>
+        </field>
+        
         <field 
            name="url_id" 
            type="hidden" 
@@ -28,20 +42,17 @@
         
         <field 
             name="content" type="textarea" class="textinput"
-            rows="5"
             label="COM_ITPMETA_CONTENT"
         />
             
         <field 
             name="tag" type="textarea" 
-            rows="5"
             label="COM_ITPMETA_TAG" 
             filter="raw"
         />
         
         <field 
             name="output" type="textarea" class="textinput"
-            rows="5"
             label="COM_ITPMETA_OUTPUT" 
             required="true"
             filter="raw"

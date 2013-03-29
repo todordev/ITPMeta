@@ -18,26 +18,18 @@ jimport('joomla.application.component.modellist');
 
 class ItpMetaModelTags extends JModel {
     
-    /**
-     * Constructor.
+    
+	/**
+     * Returns a reference to the a Table object, always creating it.
      *
-     * @param   array   An optional associative array of configuration settings.
-     * @see     JController
+     * @param   type    The table type to instantiate
+     * @param   string  A prefix for the table class name. Optional.
+     * @param   array   Configuration array for model. Optional.
+     * @return  JTable  A database object
      * @since   1.6
      */
-    public function __construct($config = array()) {
-        
-        if (empty($config['filter_fields'])) {
-            $config['filter_fields'] = array(
-                'id', 'a.id',
-                'title', 'a.title',
-                'tag', 'a.tag',
-                'content', 'a.content',
-                'output', 'a.output'
-            );
-        }
-        
-        parent::__construct($config);
+    public function getTable($type = 'Tag', $prefix = 'ItpMetaTable', $config = array()){
+        return JTable::getInstance($type, $prefix, $config);
     }
     
    /**
@@ -46,9 +38,8 @@ class ItpMetaModelTags extends JModel {
      * @return  JDatabaseQuery
      * @since   1.6
      */
-    public function getItems() {
+    public function getItems($urlId) {
         
-        // Create a new query object.
         $db     = $this->getDbo();
         /** @var $db JDatabaseMySQLi **/
         $query  = $db->getQuery(true);
@@ -57,8 +48,8 @@ class ItpMetaModelTags extends JModel {
         $query
             ->select('id, title, tag, content, output')
             ->from('`#__itpm_tags`')
-            ->where('url_id='.(int)$this->state->get('url_id'))
-            ->order("id ASC");
+            ->where('url_id='.(int)$urlId)
+            ->order("ordering ASC");
 
         $db->setQuery($query);
         $results = $db->loadAssocList();
@@ -68,6 +59,30 @@ class ItpMetaModelTags extends JModel {
         }
         
         return $results;
+    }
+    
+    /**
+     * 
+     * Save the new order of tag
+     * @param array $order
+     */
+    public function saveOrder($order) {
+        
+        $i = 1;
+        foreach( $order as $itemId ) {
+            
+            // Load item data
+            $row = $this->getTable();
+            $row->load($itemId);
+            
+            if(!empty($row->id)) {
+                $row->set("ordering", $i);
+                $row->store();
+                $i++;
+            }
+            
+        }
+        
     }
     
 }

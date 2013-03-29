@@ -22,10 +22,10 @@ $itemId = $this->form->getValue('id');
             <legend><?php echo JText::_("COM_ITPMETA_TAG_DATA"); ?></legend>
             
             <ul class="adminformlist">
-                <li><?php echo $this->form->getLabel('published'); ?>
-                <?php echo $this->form->getInput('published'); ?></li>
                 <li><?php echo $this->form->getLabel('title'); ?>
                 <?php echo $this->form->getInput('title'); ?></li>
+                <li><?php echo $this->form->getLabel('published'); ?>
+                <?php echo $this->form->getInput('published'); ?></li>
                 <li><?php echo $this->form->getLabel('id'); ?>
                 <?php echo $this->form->getInput('id'); ?></li>
                 <li><?php echo $this->form->getLabel('name'); ?>
@@ -246,6 +246,10 @@ echo $pane->startPane('ITPMetaPane');
 
 <?php echo $pane->startPanel(JText::_("COM_ITPMETA_SEO"), 'seo'); ?>
 <a class="itp-tag-btn" data-tag="seo_canonical" data-tag-title="<?php echo JText::_("COM_ITPMETA_SEO_CANONICAL");?>"><?php echo JText::_("COM_ITPMETA_TAG_CANONICAL");?></a>
+<?php echo $pane->endPanel(); ?>
+
+<?php echo $pane->startPanel(JText::_("COM_ITPMETA_MISC"), 'misc'); ?>
+<a class="itp-tag-btn" data-tag="refresh" data-tag-title="<?php echo JText::_("COM_ITPMETA_REFRESH");?>"><?php echo JText::_("COM_ITPMETA_REFRESH_TAG");?></a>
 <?php echo $pane->endPanel(); ?>
 
 <?php 

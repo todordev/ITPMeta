@@ -12,7 +12,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modeladmin');
 
@@ -67,37 +67,31 @@ class ItpMetaModelTag extends JModelAdmin {
     protected function loadFormData(){
         
         $app = JFactory::getApplication();
-        /** @var $app JAdministrator **/
+		/** @var $app JAdministrator **/
         
         // Check the session for previously entered form data.
         $data = $app->getUserState($this->option.'.edit.tag.data', array());
-        
         if(empty($data)){
             $data = $this->getItem();
         }
         
-        if(is_object($data)) {
-            $data = JArrayHelper::fromObject($data);
-        }
-        
         $urlId = $app->input->get("url_id", null);
-        if($urlId AND !JArrayHelper::getValue($data, "url_id")) {
-            $data["url_id"] = $urlId;
+        if($urlId AND empty($data->url_id)) {
+            $data->url_id = $urlId;
         }
         
-        if(!empty($data["id"])) {
-            $data["tag_id"] = $data["id"];
+        if(!empty($data->id)) {
+            $data->tag_id   = $data->id;
         }
         
         return $data;
     }
 
-    
 	/**
      * Save an item
      * 
      * @param $data        All data for the category in an array
-     * 
+     * @return integer Item ID
      */
     public function save($data){
         
@@ -107,23 +101,96 @@ class ItpMetaModelTag extends JModelAdmin {
         $tag        = JArrayHelper::getValue($data, "tag", "");
         $content    = JArrayHelper::getValue($data, "content", "");
         $output     = JArrayHelper::getValue($data, "output", "");
-        $urlId      = JArrayHelper::getValue($data, "url_id", null);
+        $urlId      = JArrayHelper::getValue($data, "url_id", 0);
         
         // Load item data
         $row = $this->getTable();
         $row->load($id);
         
-        $row->set("name",    $name);
-        $row->set("title",   $title);
-        $row->set("tag",     $tag);
-        $row->set("content", $content);
-        $row->set("output",  $output);
-        $row->set("url_id",  $urlId);
+        $row->set("name",        $name);
+        $row->set("title",       $title);
+        $row->set("tag",         $tag);
+        $row->set("content",     $content);
+        $row->set("output",      $output);
+        $row->set("url_id",      $urlId);
         
+        // Prepare the row for saving
+		$this->prepareTable($row);
+		
         $row->store();
         
         return $row->id;
     
     }
     
+	/**
+	 * Prepare and sanitise the table prior to saving.
+	 *
+	 * @since	1.6
+	 */
+	protected function prepareTable(&$table) {
+	    
+        // get maximum order number
+		if (empty($table->id)) {
+
+			// Set ordering to the last item if not set
+			if (empty($table->ordering)) {
+				$db     = JFactory::getDbo();
+				$query  = $db->getQuery(true);
+				$query
+				    ->select("MAX(ordering)")
+				    ->from("#__itpm_tags")
+				    ->where("url_id =".$table->url_id);
+				
+			    $db->setQuery($query, 0, 1);
+				$max   = $db->loadResult();
+
+				$table->ordering = $max+1;
+			}
+		}
+        
+	}
+    
+    /**
+     * 
+     * Delete tags based on URL id
+     * @param array $pks URLs ids
+     */
+    public function deleteByUrlId(&$pks) {
+        
+        JArrayHelper::toInteger($pks);
+        
+        if(!empty($pks)) {
+            
+            $db     = $this->getDbo();
+            /** @var $db JDatabaseMySQLi **/
+            
+            $query  = $db->getQuery(true);
+    
+            // Select the required fields from the table.
+            $query
+                ->delete()
+                ->from($db->quoteName('#__itpm_tags'))
+                ->where('url_id IN ('.implode(",", $pks).')');
+    
+            $db->setQuery($query);
+            $db->query();
+        }
+        
+    }
+    
+	/**
+	 * A protected method to get a set of ordering conditions.
+	 *
+	 * @param	object	A record object.
+	 *
+	 * @return	array	An array of conditions to add to add to ordering queries.
+	 * @since	1.6
+	 */
+	protected function getReorderConditions($table){
+		$condition = array();
+		$condition[] = 'url_id = '.(int) $table->url_id;
+		return $condition;
+	}
+	
 }

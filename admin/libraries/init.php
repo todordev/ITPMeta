@@ -21,4 +21,4 @@ if(!defined("ITPMETA_COMPONENT_ADMINISTRATOR")) {
 JLoader::register("ItpMetaVersion", ITPMETA_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . "libraries" . DIRECTORY_SEPARATOR . "version.php");
 
 // Register Component helpers
-JLoader::register("ItpMetaHelper",ITPMETA_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "helper.php");
+JLoader::register("ItpMetaHelper",ITPMETA_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "itpmeta.php");

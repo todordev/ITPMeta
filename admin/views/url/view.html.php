@@ -37,11 +37,16 @@ class ItpMetaViewUrl extends JView {
      */
     public function display($tpl = null){
         
-        $this->state  = $this->get('State');
-        $this->item   = $this->get('Item');
-        $this->form   = $this->get('Form');
+        $this->state   = $this->get('State');
+        $this->item    = $this->get('Item');
+        $this->form    = $this->get('Form');
 
-        $this->params = $this->state->get("params");
+        $this->params  = $this->state->get("params");
+        
+        // Get URL ID
+        $this->itemId  = $this->form->getValue('id');
+        
+        $this->version = new ItpMetaVersion();
          
         // Prepare actions, behaviors, scritps and document
         $this->addToolbar();
@@ -60,12 +65,18 @@ class ItpMetaViewUrl extends JView {
         JFactory::getApplication()->input->set('hidemainmenu', true);
 
         $isNew = ($this->item->id == 0);
-        $this->documentTitle= $isNew ? JText::_('COM_ITPMETA_ADD_URL')
+        $this->documentTitle= $isNew  ? JText::_('COM_ITPMETA_ADD_URL')
                                       : JText::_('COM_ITPMETA_EDIT_URL');
 
         JToolBarHelper::apply('url.apply');
         JToolBarHelper::save2new('url.save2new');
         JToolBarHelper::save('url.save');
+        JToolBarHelper::divider();
+        
+        if(!$isNew) {
+            JToolBarHelper::custom("url.scritps", "itp-scripts-32", "", JText::_("COM_ITPMETA_SCRIPTS"), false);
+            JToolBarHelper::divider();
+        }
         
         if(!$isNew){
             JToolBarHelper::cancel('url.cancel', 'JTOOLBAR_CANCEL');
@@ -79,21 +90,27 @@ class ItpMetaViewUrl extends JView {
 
     protected function setDocument() {
         
-        // Add behaviors
+        // Add styles
+        $this->document->addStyleSheet('../media/'.$this->option.'/js/messageclass/message.css');
+        $this->document->addStyleSheet('../media/'.$this->option.'/css/bootstrap.min.css');
+        $this->document->addStyleSheet('../media/'.$this->option.'/css/style.css');
+        
+        // Add scripts
         JHTML::_('behavior.framework');
         JHtml::_('behavior.tooltip');
         JHtml::_('behavior.formvalidation');
         JHTML::_('behavior.modal');
         
-        // Add styles
-        $this->document->addStyleSheet('../media/'.$this->option.'/js/messageclass/message.css');
+        $this->document->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/jquery/noconflict.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/jquery/jquery.tablednd.js');
         
-        // Add JS libraries
         $this->document->addScript('../media/'.$this->option.'/js/messageclass/message.js');
-        
-        // Add scripts
-        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js');
-        $this->document->addScript('../media/'.$this->option.'/js/admin/url.js');
+
+        $version = $this->version->getShortVersion();
+        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js?v='.$version);
+        $this->document->addScript('../media/'.$this->option.'/js/admin/helper.js?v='.$version);
+        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js?v='.$version);
         
         
     }

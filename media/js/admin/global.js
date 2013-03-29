@@ -45,7 +45,7 @@ window.addEvent('domready', function() {
 	    
 	    var pattern   = new RegExp("{.*}");
 	    var str       = new String(this.value);
-	    output.value  = tag.replace(pattern, str.stripTags().clean());
+	    output.value  = tag.replace(pattern, str.stripTags().clean().replace(/"/g, "&quot;"));
 	    
     });
     

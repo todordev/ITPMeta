@@ -14,7 +14,9 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<?php foreach ($this->items as $i => $item) {?>
+<?php foreach ($this->items as $i => $item) {
+    $ordering  = ($this->listOrder == 'a.ordering');
+?>
 <tr class="row<?php echo $i % 2; ?>">
     <td class="center">
         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
@@ -24,6 +26,26 @@ defined('_JEXEC') or die;
     </td>
     <td >
         <?php echo JString::substr($this->escape($item->output), 0, 128)."..."; ?>
+    </td>
+    <td class="order">
+        <?php
+            $disabled = $this->saveOrder ?  '' : 'disabled="disabled"';
+            if($this->saveOrder) {
+            if ($this->listDirn == 'asc') {
+                $showOrderUpIcon = (isset($this->items[$i-1]) AND (!empty($this->items[$i-1]->ordering)) AND ( $item->ordering >= $this->items[$i-1]->ordering )) ;
+                $showOrderDownIcon = (isset($this->items[$i+1]) AND ($item->ordering <= $this->items[$i+1]->ordering));
+            ?>
+                <span><?php echo $this->pagination->orderUpIcon($i, $showOrderUpIcon, 'globals.orderup', 'JLIB_HTML_MOVE_UP', $ordering); ?></span>
+                <span><?php echo $this->pagination->orderDownIcon($i, $this->pagination->total, $showOrderDownIcon, 'globals.orderdown', 'JLIB_HTML_MOVE_DOWN', $ordering); ?></span>
+            <?php } elseif ($this->listDirn == 'desc') {
+                $showOrderUpIcon = (isset($this->items[$i-1]) AND ($item->ordering <= $this->items[$i-1]->ordering));
+                $showOrderDownIcon = (isset($this->items[$i+1]) AND (!empty($this->items[$i+1]->ordering)) AND ($item->ordering >= $this->items[$i+1]->ordering)); 
+            ?>
+                <span><?php echo $this->pagination->orderUpIcon($i, $showOrderUpIcon, 'globals.orderdown', 'JLIB_HTML_MOVE_UP', $ordering); ?></span>
+                <span><?php echo $this->pagination->orderDownIcon($i, $this->pagination->total, $showOrderDownIcon, 'globals.orderup', 'JLIB_HTML_MOVE_DOWN', $ordering); ?></span>
+            <?php } 
+        }?>
+        <input type="text" name="order[]" size="5" value="<?php echo $item->ordering;?>" <?php echo $disabled ?> class="text-area-order" />
     </td>
     <td class="center">
         <?php echo JHtml::_('jgrid.published', $item->published, $i, "globals."); ?>
