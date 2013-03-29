@@ -107,10 +107,6 @@ class pkg_itpMetaInstallerScript {
             $result = array("type" => "success"  , "text" => JText::_("COM_ITPMETA_INSTALLED"));
             ItpMetaInstallHelper::addRow(JText::_("COM_ITPMETA_SYSTEM_ITPMETA"), $result, JText::_("COM_ITPMETA_PLUGIN"));
             
-            // System - ITPMeta - Tags
-            $result = array("type" => "success"  , "text" => JText::_("COM_ITPMETA_INSTALLED"));
-            ItpMetaInstallHelper::addRow(JText::_("COM_ITPMETA_SYSTEM_ITPMETA_TAGS"), $result, JText::_("COM_ITPMETA_PLUGIN"));
-            
             // End table
             ItpMetaInstallHelper::endTable();
             
