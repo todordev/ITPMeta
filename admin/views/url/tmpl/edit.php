@@ -23,8 +23,6 @@ defined('_JEXEC') or die;
                     <?php echo $this->form->getInput('uri'); ?></li>
                     <li><?php echo $this->form->getLabel('published'); ?>
                     <?php echo $this->form->getInput('published'); ?></li>
-                    <li><?php echo $this->form->getLabel('autoupdate'); ?>
-                    <?php echo $this->form->getInput('autoupdate'); ?></li>
                     <li><?php echo $this->form->getLabel('id'); ?>
                     <?php echo $this->form->getInput('id'); ?></li>
                 </ul>

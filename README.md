@@ -1,4 +1,4 @@
-ITPMeta Pro for Joomla! 
+ITPMeta Lite for Joomla! 
 ==========================
 ( Version 3.5 )
 --------------------------
@@ -10,7 +10,7 @@ Changelog
 
 v3.5
 -----------
-* Improved plugins "System - ITPMeta"
+* Improved the plugin "System - ITPMeta"
 * Improved 
 
 v3.4

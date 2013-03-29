@@ -46,7 +46,6 @@ class plgSystemItpMeta extends JPlugin {
 	}
     
 	/**
-	 * 
 	 * Put tags into the HEAD tag
 	 */
 	public function onBeforeCompileHead() {

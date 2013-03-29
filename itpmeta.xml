@@ -59,7 +59,6 @@
 			<folder>views</folder>		
 			<filename>controller.php</filename>
 			<filename>index.html</filename>
-			<filename>config.xml</filename> 
 			<filename>itpmeta.php</filename>
 		</files>
 		
