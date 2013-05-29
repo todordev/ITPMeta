@@ -135,11 +135,6 @@ class plgSystemItpMeta extends JPlugin {
         // Add code after body tag and before closing body tag
         $buffer = $this->putAdditionalCode($buffer);
         
-        // Add backlink to the end of the page
-        $version     =  new ItpMetaVersion();
-        $versionCode = $version->backlink . "</body>";
-        $buffer      = str_replace("</body>", $versionCode, $buffer);
-        
         JResponse::setBody($buffer);
         
 	}
