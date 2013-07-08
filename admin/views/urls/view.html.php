@@ -43,6 +43,9 @@ class ITPMetaViewUrls extends JView {
         
         $this->version    = new ItpMetaVersion();
         
+        // Load HTML helpe
+        JHtml::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'html');
+        
         // Add submenu
         ItpMetaHelper::addSubmenu($this->getName());
         
@@ -61,7 +64,7 @@ class ITPMetaViewUrls extends JView {
     protected function addToolbar(){
         
         // Set toolbar items for the page
-        JToolBarHelper::title(JText::_('COM_ITPMETA_URL_MANAGER'), 'itp-urls');
+        JToolBarHelper::title(JText::_('COM_ITPMETA_URLS_MANAGER'), 'itp-urls');
         
         JToolBarHelper::addNew('url.add');
         JToolBarHelper::editList('url.edit');
@@ -71,7 +74,7 @@ class ITPMetaViewUrls extends JView {
         JToolBarHelper::divider();
         JToolBarHelper::deleteList(JText::_("COM_ITPMETA_DELETE_ITEMS_QUESTION"), "urls.delete");
         JToolBarHelper::divider();
-        JToolBarHelper::custom('urls.backToDashboard', "itp-dashboard-back", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
+        JToolBarHelper::custom('dashboard.backToDashboard', "itp-dashboard-back", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
     }
 
 	/**
@@ -81,19 +84,22 @@ class ITPMetaViewUrls extends JView {
 	 */
 	protected function setDocument() {
 	    
+	    $version = $this->version->getShortVersion();
+	    
 		$this->document->setTitle(JText::_('COM_ITPMETA_URLS_MANAGER_TITLE'));
 		
-		// Add behaviors
-        JHTML::_('behavior.framework');
-        JHtml::_('behavior.tooltip');
-        JHTML::_('behavior.modal');
+		// Styles
+		$this->document->addStylesheet('../media/'.$this->option.'/css/bootstrap.min.css');
+		
+        // Scripts
+		JHTML::_('behavior.framework');
+		JHtml::_('behavior.tooltip');
+		
+		$this->document->addScript('../media/'.$this->option.'/js/jquery.js');
+		$this->document->addScript('../media/'.$this->option.'/js/noconflict.js');
+        $this->document->addScript('../media/'.$this->option.'/js/bootstrap.min.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js');
         
-        // Add styles
-        $this->document->addStyleSheet('../media/'.$this->option.'/css/bootstrap.min.css');
-        
-        // Add scripts
-        $version = $this->version->getShortVersion();
-        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js?v='.$version);
         
 	}
 	

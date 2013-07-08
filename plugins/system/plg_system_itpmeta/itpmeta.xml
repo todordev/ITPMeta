@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="system" method="upgrade">
+    <name>PLG_SYSTEM_ITPMETA</name>
+    <author>Todor Iliev</author>
+    <copyright>Copyright (C) 2010 Todor Iliev ( ITPrism.com ). All rights reserved.</copyright>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <authorEmail>todor@itprism.com</authorEmail>
+    <authorUrl>http://itprism.com</authorUrl>
+    <version>3.7</version>
+    <creationDate>07 July, 2013</creationDate>
+	<description>PLG_SYSTEM_ITPMETA_DESC</description>
+	
+	<languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_system_itpmeta.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_system_itpmeta.sys.ini</language>
+    </languages> 
+	
+	<files>
+		<filename plugin="itpmeta">itpmeta.php</filename>
+		<filename>index.html</filename>
+	</files>
+	
+	<help url="PLG_SYSTEM_ITPMETA_HELP_URL" />
+	
+	<config>
+        <fields name="params">
+            <fieldset name="basic">
+		       <field name="tags_position" type="list" default="0" label="PLG_SYSTEM_ITPMETA_TAGS_POSITION" description="PLG_SYSTEM_ITPMETA_TAGS_POSITION_DESC" >
+                  <option value="0">PLG_SYSTEM_ITPMETA_STANDARD</option>
+                  <option value="1">PLG_SYSTEM_ITPMETA_AFTER_HEAD</option>
+                  <option value="2">PLG_SYSTEM_ITPMETA_AFTER_TITLE</option>
+               </field>
+	       </fieldset>
+	       
+	       <fieldset name="schemes" label="PLG_SYSTEM_ITPMETA_SCHEMAS_TITLE">
+		        <field name="facebook_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_FACEBOOK_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_FACEBOOK_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+		       <field name="opengraph_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+		       <field name="opengraph_article_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_ARTICLE_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_ARTICLE_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+		       <field name="opengraph_blog_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_BLOG_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_BLOG_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+		       <field name="opengraph_book_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_BOOK_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_BOOK_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+		       <field name="opengraph_profile_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_PROFILE_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_PROFILE_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+		       <field name="opengraph_video_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_VIDEO_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_VIDEO_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+		       <field name="opengraph_music_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_MUSIC_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_MUSIC_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+		       <field name="opengraph_website_scheme" type="radio" default="0"  label="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_WEBSITE_SCHEMA" description="PLG_SYSTEM_ITPMETA_ADD_OPENGRAPH_WEBSITE_SCHEMA_DESC" class="btn-group" >
+		           <option value="0">JNO</option>
+		           <option value="1">JYES</option>
+		       </field>
+	      </fieldset>
+	    
+        </fields>
+    </config>
+</extension>

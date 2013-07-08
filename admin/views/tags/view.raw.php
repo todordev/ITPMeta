@@ -18,23 +18,18 @@ jimport('joomla.application.component.view');
 
 class ITPMetaViewTags extends JView {
     
+    protected $urlId;
     protected $items;
     
-    /**
-     * Display the view
-     */
     public function display($tpl = null){
         
         $app = JFactory::getApplication();
         /** @var $app JAdministrator **/
         
-        $model         = $this->getModel();
-        $urlId         = $app->input->get("url_id");
+        $this->urlId      = $app->input->get->get("url_id");
+        $this->items      = ItpMetaHelper::getTags($this->urlId);
         
-        $this->items   = $model->getItems($urlId);
-
         parent::display($tpl);
-        
     }
     
 }

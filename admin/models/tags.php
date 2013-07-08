@@ -16,20 +16,70 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
 
-class ItpMetaModelTags extends JModel {
+class ItpMetaModelTags extends JModelList {
     
     
 	/**
-     * Returns a reference to the a Table object, always creating it.
+     * Constructor.
      *
-     * @param   type    The table type to instantiate
-     * @param   string  A prefix for the table class name. Optional.
-     * @param   array   Configuration array for model. Optional.
-     * @return  JTable  A database object
+     * @param   array   An optional associative array of configuration settings.
+     * @see     JController
      * @since   1.6
      */
-    public function getTable($type = 'Tag', $prefix = 'ItpMetaTable', $config = array()){
-        return JTable::getInstance($type, $prefix, $config);
+    public function __construct($config = array()) {
+        
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = array(
+                'id', 'a.id',
+                'title', 'a.title',
+                'ordering', 'a.ordering'
+            );
+        }
+        
+        parent::__construct($config);
+    }
+    
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @since   1.6
+     */
+    protected function populateState($ordering = null, $direction = null) {
+
+        $app = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+        
+        // Load the parameters.
+        $params = JComponentHelper::getParams('com_itpmeta');
+        $this->setState('params', $params);
+        
+        // URL ID
+        $value = $app->getUserStateFromRequest("url.id", "id", 0, "int");
+        $this->setState('filter.url_id', $value);
+        
+        // List state information.
+        parent::populateState('a.ordering', 'asc');
+    }
+
+    /**
+     * Method to get a store id based on model configuration state.
+     *
+     * This is necessary because the model is used by the component and
+     * different modules that might need different sets of data or different
+     * ordering requirements.
+     *
+     * @param   string      $id A prefix for the store id.
+     * @return  string      A store id.
+     * @since   1.6
+     */
+    protected function getStoreId($id = '') {
+        
+        // Compile the store id.
+        $id.= ':' . $this->getState('filter.url_id');
+
+        return parent::getStoreId($id);
     }
     
    /**
@@ -38,51 +88,37 @@ class ItpMetaModelTags extends JModel {
      * @return  JDatabaseQuery
      * @since   1.6
      */
-    public function getItems($urlId) {
+    protected function getListQuery() {
         
+        // Create a new query object.
         $db     = $this->getDbo();
-        /** @var $db JDatabaseMySQLi **/
         $query  = $db->getQuery(true);
 
         // Select the required fields from the table.
-        $query
-            ->select('id, title, tag, content, output')
-            ->from('`#__itpm_tags`')
-            ->where('url_id='.(int)$urlId)
-            ->order("ordering ASC");
+        $query->select(
+            $this->getState(
+                'list.select',
+                'a.id, a.title, a.type, a.tag, a.content, a.output, a.ordering'
+            )
+        );
+        $query->from($db->quoteName("#__itpm_tags").' AS a');
 
-        $db->setQuery($query);
-        $results = $db->loadAssocList();
+        // Filter by URL ID
+        $urlId = $this->getState('filter.url_id');
+        $query->where(' a.url_id = '.(int)$urlId);
         
-        if(!$results) {
-            $results = array();
-        }
-        
-        return $results;
+        // Add the list ordering clause.
+        $orderString = $this->getOrderString();
+        $query->order($db->escape($orderString));
+
+        return $query;
     }
     
-    /**
-     * 
-     * Save the new order of tag
-     * @param array $order
-     */
-    public function saveOrder($order) {
+    protected function getOrderString() {
+        $orderCol   = $this->getState('list.ordering');
+        $orderDirn  = $this->getState('list.direction');
         
-        $i = 1;
-        foreach( $order as $itemId ) {
-            
-            // Load item data
-            $row = $this->getTable();
-            $row->load($itemId);
-            
-            if(!empty($row->id)) {
-                $row->set("ordering", $i);
-                $row->store();
-                $i++;
-            }
-            
-        }
-        
+        return $orderCol.' '.$orderDirn;
     }
     
 }

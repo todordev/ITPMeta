@@ -27,47 +27,19 @@ class ItpMetaControllerTag extends JControllerForm {
 		return $model;
 	}
 	
-	/**
-     * Save an item
-     *
-     */
-    public function save() {
-        
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+    public function saveAjax() {
         
         $app = JFactory::getApplication();
         /** @var $app JAdministrator **/
         
         // Get the data from the form
-        $data    = $app->input->post->get('jform', array(), 'array');
+        $itemId  = $app->input->post->get('pk', 0, 'uint');
+        $content = $app->input->post->get('value', "", "raw");
+        $content = htmlentities($content, ENT_QUOTES, "UTF-8");
+        
         $model   = $this->getModel();
         
-        // Validate the posted data.
-        // Sometimes the form needs some posted data, such as for plugins and modules.
-        $form = $model->getForm($data, false);
-        /** @var $form JForm **/
-       
-        if (!$form) {
-            throw new Exception($model->getError());
-        }
-        
-        // Validate the data
-        $validData = $model->validate($form, $data);
-        if ($validData === false) {
-             
-            $response = array(
-            	"success" => false,
-                "title"=> JText::_( 'COM_ITPMETA_FAIL' ),
-                "text" => JText::_( 'COM_ITPMETA_ERROR_SYSTEM' ),
-            );
-                
-            echo json_encode($response);
-            JFactory::getApplication()->close();
-        }
-        
-        // Validate URL ID
-        $urlId = JArrayHelper::getValue($validData, "url_id");
-        if (!$urlId) {
+        if (!$itemId OR !$content) {
              
             $response = array(
             	"success" => false,
@@ -81,15 +53,12 @@ class ItpMetaControllerTag extends JControllerForm {
         
         // Fix Magic Quotes
         if(get_magic_quotes_gpc()) {
-            $validData["content"] = stripslashes($validData["content"]);
-            $validData["output"]  = stripslashes($validData["output"]);
-            $validData["tag"]     = stripslashes($validData["tag"]);
-            $validData["title"]   = stripslashes($validData["title"]);
+            $validData["content"] = stripslashes($content);
         }
         
         // Save the item
         try {
-            $itemId = $model->save($validData);
+            $data = $model->saveAjax($itemId, $content);
         } catch ( Exception $e ) {
             JLog::add($e->getMessage());
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
@@ -97,48 +66,14 @@ class ItpMetaControllerTag extends JControllerForm {
         
         $response = array(
         	"success" => true,
-            "title"=> JText::_( 'COM_ITPMETA_SUCCESS' ),
-            "text" => JText::_( 'COM_ITPMETA_TAG_SAVED' ),
-            "data" => array(
-                "item_id"  => (int)$itemId,
-                "url_id"   => (int)$urlId
-            )
+            "title"   => JText::_( 'COM_ITPMETA_SUCCESS' ),
+            "text"    => JText::_( 'COM_ITPMETA_TAG_SAVED' ),
+            "data"    => $data
         );
             
         echo json_encode($response);
         JFactory::getApplication()->close();
         
-    }
-    
-
-    public function remove() {
-        
-        $app = JFactory::getApplication();
-        /** @var $app JAdministrator **/
-        
-        // Initialize variables
-        $itemId  = $app->input->post->get("id");
-        $pks     = array($itemId);
-        
-        try {
-            
-            $model = $this->getModel();
-            $model->delete($pks);
-            
-        } catch ( Exception $e ) {
-            JLog::add($e->getMessage());
-            throw new Exception($e->getMessage());
-        }
-        
-        $response = array(
-        	"success" => true,
-            "title"=> JText::_( 'COM_ITPMETA_SUCCESS' ),
-            "text" => JText::_( 'COM_ITPMETA_TAG_DELETED' ),
-            "data" => array("item_id"=>$itemId)
-        );
-        
-        echo json_encode($response);
-        JFactory::getApplication()->close();
     }
     
 }

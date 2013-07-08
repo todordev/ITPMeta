@@ -14,9 +14,6 @@
 // no direct access
 defined('_JEXEC') or die;
 
-/**
- * Script file of VipPortfolio component
- */
 class pkg_itpMetaInstallerScript {
     
     /**
@@ -58,59 +55,71 @@ class pkg_itpMetaInstallerScript {
      */
     public function postflight($type, $parent) {
         
-        if(strcmp($type, "install") == 0) {
-            
-            if(!defined("ITPMETA_COMPONENT_ADMINISTRATOR")) {
-                define("ITPMETA_COMPONENT_ADMINISTRATOR", JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . "components" . DIRECTORY_SEPARATOR ."com_itpmeta");
-            }
-            
-            // Register Component helpers
-            JLoader::register("ItpMetaInstallHelper", ITPMETA_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR."helpers".DIRECTORY_SEPARATOR."installer.php");
-        
-            $this->bootstrap    = JPath::clean( JPATH_SITE.DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."com_itpmeta".DIRECTORY_SEPARATOR."css".DIRECTORY_SEPARATOR."bootstrap.min.css" );
-        
-            $style = '<style>'.file_get_contents($this->bootstrap).'</style>';
-            echo $style;
-            
-            // Start table with the information
-            ItpMetaInstallHelper::startTable();
-        
-            // Requirements
-            ItpMetaInstallHelper::addRowHeading(JText::_("COM_ITPMETA_MINIMUM_REQUIREMENTS"));
-            
-            // Display result about verification for cURL library
-            $title  = JText::_("COM_ITPMETA_CURL_LIBRARY");
-            $info   = "";
-            if( !extension_loaded('curl') ) {
-                $info   = JText::_("COM_ITPMETA_CURL_INFO");
-                $result = array("type" => "important", "text" => JText::_("JOFF"));
-            } else {
-                $result = array("type" => "success"  , "text" => JText::_("JON"));
-            }
-            ItpMetaInstallHelper::addRow($title, $result, $info);
-            
-            // Display result about verification Magic Quotes
-            $title  = JText::_("COM_ITPMETA_MAGIC_QUOTES");
-            $info   = "";
-            if( get_magic_quotes_gpc() ) {
-                $info   = JText::_("COM_ITPMETA_MAGIC_QUOTES_INFO");
-                $result = array("type" => "important", "text" => JText::_("JON"));
-            } else {
-                $result = array("type" => "success"  , "text" => JText::_("JOFF"));
-            }
-            ItpMetaInstallHelper::addRow($title, $result, $info);
-            
-            // Installed extensions
-            ItpMetaInstallHelper::addRowHeading(JText::_("COM_ITPMETA_INSTALLED_EXTENSIONS"));
-            
-            // System - ITPMeta
-            $result = array("type" => "success"  , "text" => JText::_("COM_ITPMETA_INSTALLED"));
-            ItpMetaInstallHelper::addRow(JText::_("COM_ITPMETA_SYSTEM_ITPMETA"), $result, JText::_("COM_ITPMETA_PLUGIN"));
-            
-            // End table
-            ItpMetaInstallHelper::endTable();
-            
+        if(!defined("ITPMETA_PATH_COMPONENT_ADMINISTRATOR")) {
+            define("ITPMETA_PATH_COMPONENT_ADMINISTRATOR", JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . "components" . DIRECTORY_SEPARATOR ."com_itpmeta");
         }
+        
+        // Register Component helpers
+        JLoader::register("ItpMetaInstallHelper", ITPMETA_PATH_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR."helpers".DIRECTORY_SEPARATOR."install.php");
+    
+        $this->bootstrap    = JPath::clean( JPATH_SITE.DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."com_itpmeta".DIRECTORY_SEPARATOR."css".DIRECTORY_SEPARATOR."old_bootstrap.min.css" );
+    
+        $style = '<style>'.file_get_contents($this->bootstrap).'</style>';
+        echo $style;
+        
+        // Start table with the information
+        ItpMetaInstallHelper::startTable();
+    
+        // Requirements
+        ItpMetaInstallHelper::addRowHeading(JText::_("COM_ITPMETA_MINIMUM_REQUIREMENTS"));
+        
+        // Display result about verification for cURL library
+        $title  = JText::_("COM_ITPMETA_CURL_LIBRARY");
+        $info   = "";
+        if( !extension_loaded('curl') ) {
+            $info   = JText::_("COM_ITPMETA_CURL_INFO");
+            $result = array("type" => "important", "text" => JText::_("JOFF"));
+        } else {
+            $result = array("type" => "success"  , "text" => JText::_("JON"));
+        }
+        ItpMetaInstallHelper::addRow($title, $result, $info);
+        
+        // Display result about verification Magic Quotes
+        $title  = JText::_("COM_ITPMETA_MAGIC_QUOTES");
+        $info   = "";
+        if( get_magic_quotes_gpc() ) {
+            $info   = JText::_("COM_ITPMETA_MAGIC_QUOTES_INFO");
+            $result = array("type" => "important", "text" => JText::_("JON"));
+        } else {
+            $result = array("type" => "success"  , "text" => JText::_("JOFF"));
+        }
+        ItpMetaInstallHelper::addRow($title, $result, $info);
+        
+        // Installed extensions
+        ItpMetaInstallHelper::addRowHeading(JText::_("COM_ITPMETA_INSTALLED_EXTENSIONS"));
+        
+        // System - ITPMeta
+        $result = array("type" => "success"  , "text" => JText::_("COM_ITPMETA_INSTALLED"));
+        ItpMetaInstallHelper::addRow(JText::_("COM_ITPMETA_SYSTEM_ITPMETA"), $result, JText::_("COM_ITPMETA_PLUGIN"));
+        
+        // System - ITPMeta - Tags
+        $result = array("type" => "success"  , "text" => JText::_("COM_ITPMETA_INSTALLED"));
+        ItpMetaInstallHelper::addRow(JText::_("COM_ITPMETA_SYSTEM_ITPMETA_TAGS"), $result, JText::_("COM_ITPMETA_PLUGIN"));
+        
+        // Display result about verification of installed ITPrism Library
+        jimport("itprism.version");
+        $title  = JText::_("COM_ITPMETA_ITPRISM_LIBRARY");
+        $info   = "";
+        if( !class_exists("ITPrismVersion") ) {
+            $info   = JText::_("COM_ITPMETA_ITPRISM_LIBRARY_DOWNLOAD");
+            $result = array("type" => "important", "text" => JText::_("JNO"));
+        } else {
+            $result = array("type" => "success", "text" => JText::_("JYES"));
+        }
+        ItpMetaInstallHelper::addRow($title, $result, $info);
+        
+        // End table
+        ItpMetaInstallHelper::endTable();
         
         echo JText::sprintf("COM_ITPMETA_MESSAGE_ENABLE_PLUGINS", JRoute::_("index.php?option=com_plugins&view=plugins&filter_search=itpmeta"));
     }

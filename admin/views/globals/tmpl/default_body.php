@@ -23,6 +23,7 @@ defined('_JEXEC') or die;
     </td>
     <td >
         <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=global&layout=edit&id=".$item->id);?>" ><?php echo $this->escape($item->title); ?></a>
+        <div class="small"><?php echo $this->escape($item->type); ?></div>
     </td>
     <td >
         <?php echo JString::substr($this->escape($item->output), 0, 128)."..."; ?>

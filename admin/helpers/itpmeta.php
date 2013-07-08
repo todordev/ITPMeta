@@ -16,13 +16,9 @@ defined('_JEXEC') or die;
 
 /**
  * It is the component helper class
- *
  */
 class ItpMetaHelper {
 	
-    static $params = null;
-    static $uri    = null;
-    
 	/**
 	 * Configure the Linkbar.
 	 *
@@ -44,7 +40,7 @@ class ItpMetaHelper {
 		);
 		
 		JSubMenuHelper::addEntry(
-			JText::_('COM_ITPMETA_MANAGE_URLS'),
+			JText::_('COM_ITPMETA_URLS_MANAGER'),
 			'index.php?option=com_itpmeta&view=urls',
 			$vName == 'urls'
 		);
@@ -57,126 +53,29 @@ class ItpMetaHelper {
 	
 	}
 	
-    /**
-     * Load tags for specific url
-     * 
-     * @param string    $url
-     * @return array    Tags
-     * 
-     */
-    public static function getTags($uriId = null){
-        
-        $db = JFactory::getDBO();
-        
-        if(!empty($uriId)) { // Get all tags ( global and URI )
-            $query = "
-            	( SELECT 
-            		a.output, a.ordering, a.name, 0 AS tmp_ordering
-        		FROM
-        			`#__itpm_global_tags` AS a
-    			WHERE
-    				a.published = 1 
-				)
-    				
-    			UNION
-    			
-            	( SELECT 
-            		a.output, a.ordering, a.name, 1 AS tmp_ordering
-        		FROM
-        			`#__itpm_tags` AS a
-    			WHERE
-    				a.url_id = ". (int)$uriId ." 
-             	)
-             	
-             	ORDER BY 
-					tmp_ordering, ordering ASC
-				
-             	";
-            
-        } else { // Get only global tags
-
-            $query = $db->getQuery(true);
-            $query
-                ->select("a.output, a.name")
-                ->from($db->quoteName("#__itpm_global_tags") . " AS a")
-                ->where("a.published = 1")
-                ->order("a.ordering ASC");
-        }
-        
-        $db->setQuery($query);
-        $result_ = $db->loadObjectList();
-        
-        // Prepare results. Replace global tags with the tags of current URI
-        // if there are same ones.
-        $result = array();
-        foreach( $result_ as $row ) {
-            if(!empty($row->name)) {
-                $result[$row->name] = $row;
-            } else {
-                $result[] = $row;
-            }
-        }
-        
-        return $result;
-        
-    }
-    
-    public static function getTagsByUriString($uriString) {
-        
-        $uri            = self::getUri($uriString);
-        if(empty($uri->id)) { // It will only load global tags
-            $tags       = self::getTags();
-        } else {
-            $tags       = self::getTags($uri->id);
-        }
-        
-        return $tags;
-    }
-    
-    public static function getUri($path) {
-        
-        if(!is_null(self::$uri)) {
-            return self::$uri;
-        }
-        
-        $db     = JFactory::getDbo();
-        $query  = $db->getQuery(true);
-        $query
-            ->select("a.id, a.uri, a.after_body_tag, a.before_body_tag, a.published")
-            ->from($db->quoteName("#__itpm_urls") ." AS a")
-            ->where("a.published = 1")
-            ->where("a.uri = " .$db->quote($path));
-            
-        $db->setQuery($query);
-        self::$uri = $db->loadObject();
-        
-        return self::$uri;
-    }
-    
-    public static function getParams() {
-        
-        if(self::$params == null) {
-            self::$params = JComponentHelper::getParams('com_itpmeta');
-        }
-        
-        return self::$params;
-    }
+	public static function getTags($uriId = null){
+	
+	    $db = JFactory::getDBO();
+	
+	    $query = $db->getQuery(true);
+	    $query
+    	    ->select("a.id, a.title, a.type")
+    	    ->from($db->quoteName("#__itpm_tags") . " AS a")
+    	    ->where("url_id = " .(int)$uriId)
+    	    ->order("a.ordering ASC");
+	
+	    $db->setQuery($query);
+	    $results = $db->loadObjectList();
+	
+	    return $results;
+	
+	}
    
-    public static function getUriByUriId($uriId) {
-       
-       $db = JFactory::getDBO();
-       /** @var $db JDatabaseMySQLi **/
-       $query = $db->getQuery(true);
-       
-       $query
-           ->select("id, uri")
-           ->from("#__itpm_urls")
-           ->where("id = ".$db->quote($uriId));
-       
-       $db->setQuery($query, 0, 1);
-       $result = $db->loadObject();
-       
-       return $result;
-   }
+    public static function getOutput($content, $tag) {
+	    
+	    $pattern = "/{.*}/i";
+	    return preg_replace($pattern, $content, $tag);
+	    
+	}
 	
 }

@@ -42,6 +42,8 @@ class ItpMetaViewGlobal extends JView {
 
         $this->params = $this->state->get("params");
          
+        $this->version = new ItpMetaVersion();
+        
         // Prepare actions, behaviors, scritps and document
         $this->addToolbar();
         $this->setDocument();
@@ -78,13 +80,18 @@ class ItpMetaViewGlobal extends JView {
 
     protected function setDocument() {
         
+        $version = $this->version->getShortVersion();
+        
         // Add behaviors
         JHtml::_('behavior.tooltip');
         JHtml::_('behavior.formvalidation');
         
         // Add scripts
-        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js');
-        $this->document->addScript('../media/'.$this->option.'/js/admin/global.js');
+        $this->document->addScript('../media/'.$this->option.'/js/jquery.js?v='.$version);
+        
+        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js?v='.$version);
+        $this->document->addScript('../media/'.$this->option.'/js/admin/tag_form.js?v='.$version);
+        $this->document->addScript('../media/'.$this->option.'/js/admin/global.js?v='.$version);
         
         
     }

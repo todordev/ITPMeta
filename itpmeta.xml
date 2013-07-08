@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade">
-	<name>com_itpmeta</name>
+	<name>COM_ITPMETA</name>
 	<author>Todor Iliev</author>
 	<authorEmail>todor@itprism.com</authorEmail>
 	<authorUrl>http://itprism.com</authorUrl>
 	<copyright>Copyright (C) 2010 Todor Iliev ( ITPrism.com )</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html</license>
-	<version>3.5</version>
-	<creationDate>13 January, 2013</creationDate>
+	<version>3.7</version>
+	<creationDate>07 July, 2013</creationDate>
 	<description>COM_ITPMETA_DESCRIPTION</description>
 
 	<install>
@@ -46,12 +46,17 @@
 		<filename>router.php</filename>
 	</files>
 	
+	<languages folder="site">
+        <language tag="en-GB">language/en-GB/en-GB.com_itpmeta.ini</language>
+    </languages>
+    
 	<administration>
 		<menu img="../media/com_itpmeta/images/menu_icon_itpmeta.png" link="option=com_itpmeta">COM_ITPMETA</menu>
 		
 		<files folder="admin">		    		
 			<folder>controllers</folder>
 			<folder>helpers</folder>
+			<folder>layouts</folder>
 			<folder>libraries</folder>
 			<folder>models</folder>
 			<folder>tables</folder>

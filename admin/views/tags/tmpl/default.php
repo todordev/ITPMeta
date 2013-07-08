@@ -1,7 +1,7 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Components
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -11,33 +11,22 @@
  * other free or open source software licenses.
  */
 
-// No direct access
+// no direct access
 defined('_JEXEC') or die;
 ?>
-<?php 
-
-if(!empty($this->items)){?>
-	<table class="table table-striped table-hover table-bordered" id="itpm-tags-table">
-    	<tbody>
-        <?php foreach($this->items as $tag){?>
-        <tr id="itpmtag_<?php echo $tag["id"]; ?>" data-id="<?php echo $tag["id"]; ?> ">
-        	<td class="dragHandle"></td>
-        	<td>
-            	<a data-tag-id="<?php echo $tag["id"];?>" href="#" class="itpm-url-tag" >
-                <?php echo $this->escape($tag["title"]);?>
+<?php if(!empty($this->items)) {?>
+<table class="table table-striped" id="tagsList">
+    <tbody>
+        <?php foreach ($this->items as $i => $item) { ?>
+        <tr>
+            <td class="nowrap">
+                <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=tag&layout=edit&id=".$item->id."&url_id=".(int)$this->urlId);?>" >
+                    <?php echo $this->escape($item->title); ?>
                 </a>
-        	</td>
-        	<td class="itpm-tag-actions">
-            	<img 
-                src="../media/com_itpmeta/images/remove.png" 
-                alt="<?php JText::_("COM_ITPMETA_DELETE");?>"
-                class="remove_tag"
-                data-tag-id="<?php echo $tag["id"]; ?>"
-                />
-        	</td>
+                <div class="small"><?php echo $this->escape($item->type); ?></div>
+            </td>
         </tr>
-        
-        <?php }?>
-        </tbody>
-    </table>
+        <?php } ?>
+    </tbody>
+</table>
 <?php }?>

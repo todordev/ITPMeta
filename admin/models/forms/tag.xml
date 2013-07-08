@@ -2,22 +2,18 @@
 <form>
 	<fieldset>
 	
-	   <field 
-            name="name" 
-            type="text" 
-            size="50"
-            label="COM_ITPMETA_NAME" 
-            description="COM_ITPMETA_NAME_DESC"
-            readonly="true" 
-            class="readonly"
+	   <field name="title" type="text" class="textinput input-xlarge"
+	       label="COM_ITPMETA_TITLE" 
+	       required="true" 
+           size="70"
         />
         
-	   <field 
-            name="title" 
+        <field 
+            name="type" 
             type="text" 
-            size="70"
-            class="textinput" 
-            label="COM_ITPMETA_TITLE" 
+            label="COM_ITPMETA_TYPE" 
+            readonly="true" 
+            class="readonly"
         />
         
         <field
@@ -33,12 +29,6 @@
             <option
                 value="0">JUNPUBLISHED</option>
         </field>
-        
-        <field 
-           name="url_id" 
-           type="hidden" 
-           default="0" 
-        />
         
         <field 
             name="content" type="textarea" class="textinput"
@@ -59,7 +49,7 @@
         />
         
         <field 
-           name="tag_id" 
+           name="id" 
            type="text" 
            default="0" 
            label="JGLOBAL_FIELD_ID_LABEL" 
@@ -67,6 +57,10 @@
            readonly="true" 
            class="readonly"
         />
+        
+        <field name="url_id" type="hidden" default="0" />
+        
+        <field name="name" type="hidden" />
         
 	</fieldset>
 </form>

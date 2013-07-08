@@ -14,7 +14,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.controlleradmin' );
+jimport("itprism.controller.admin");
 
 /**
  * ITPMeta URLs Controller
@@ -22,9 +22,7 @@ jimport( 'joomla.application.component.controlleradmin' );
  * @package     ITPrism Components
  * @subpackage  ITPMeta
   */
-class ItpMetaControllerUrls extends JControllerAdmin {
-    
-    private    $defaultLink = 'index.php?option=com_itpmeta';
+class ItpMetaControllerUrls extends ITPrismControllerAdmin {
     
     /**
      * @var     string  The prefix to use with controller messages.
@@ -52,6 +50,10 @@ class ItpMetaControllerUrls extends JControllerAdmin {
 	    $app       = JFactory::getApplication();
         /** @var $app JAdministrator **/
 	    
+	    $redurectData = array (
+            "view" => "urls"
+	    );
+	    
 	    $cid       = $app->input->post->get("cid", array(), "array");
 	    $modelTags = $this->getModel("Tag");
 	    
@@ -64,7 +66,7 @@ class ItpMetaControllerUrls extends JControllerAdmin {
         }
         
         $msg  = JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid));
-        $this->setRedirect(JRoute::_($this->defaultLink."&view=urls", false), $msg);
+        $this->displayMessage($msg, $redurectData);
 	    
 	}
 	
@@ -77,6 +79,10 @@ class ItpMetaControllerUrls extends JControllerAdmin {
 	    
 	    $app       = JFactory::getApplication();
         /** @var $app JAdministrator **/
+
+	    $redurectData = array (
+            "view" => "urls"
+	    );
 	    
 	    $cid       = $app->input->post->get("cid", array(), "array");
 	    $model     = $this->getModel();
@@ -89,7 +95,7 @@ class ItpMetaControllerUrls extends JControllerAdmin {
         }
         
         $msg  = JText::plural($this->text_prefix . '_N_ITEMS_AUTOUPDATE_DISABLED', count($cid));
-        $this->setRedirect(JRoute::_($this->defaultLink."&view=urls", false), $msg);
+        $this->displayMessage($msg, $redurectData);
 	    
 	}
 	
@@ -103,6 +109,10 @@ class ItpMetaControllerUrls extends JControllerAdmin {
 	    $app       = JFactory::getApplication();
         /** @var $app JAdministrator **/
 	    
+	    $redurectData = array (
+            "view" => "urls"
+	    );
+	    
 	    $cid       = $app->input->post->get("cid", array(), "array");
 	    $model     = $this->getModel();
 	    
@@ -114,12 +124,8 @@ class ItpMetaControllerUrls extends JControllerAdmin {
         }
         
         $msg  = JText::plural($this->text_prefix . '_N_ITEMS_AUTOUPDATE_ENABLED', count($cid));
-        $this->setRedirect(JRoute::_($this->defaultLink."&view=urls", false), $msg);
+        $this->displayMessage($msg, $redurectData);
 	    
 	}
 	
-    public function backToDashboard() {
-        $this->setRedirect( JRoute::_($this->defaultLink, false) );
-    }
-    
 }

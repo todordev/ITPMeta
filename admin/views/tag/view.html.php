@@ -14,6 +14,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
+jimport('joomla.html.pane');
 jimport('joomla.application.component.view');
 
 class ITPMetaViewTag extends JView {
@@ -22,23 +23,77 @@ class ITPMetaViewTag extends JView {
     protected $item;
     protected $form;
     
+    protected $documentTitle;
+    protected $option;
+    
+    public function __construct($config) {
+        parent::__construct($config);
+        $this->option = JFactory::getApplication()->input->get("option");
+    }
+    
     /**
      * Display the view
      */
     public function display($tpl = null){
         
-        $app = JFactory::getApplication();
-        /** @var $app JAdministrator **/
+        $this->state   = $this->get('State');
+        $this->item    = $this->get('Item');
+        $this->form    = $this->get('Form');
+
+        $this->params  = $this->state->get("params");
         
-        $this->state  = $this->get('State');
-        $this->item   = $this->get('Item');
-        $this->form   = $this->get('Form');
+        $this->version = new ItpMetaVersion();
         
-        $this->legendTitle = (!$this->form->getValue("tag_id")) ? JText::_("COM_ITPMETA_ADD_TAG") : JText::_("COM_ITPMETA_EDIT_TAG");
+        // Prepare actions, behaviors, scritps and document
+        $this->addToolbar();
+        $this->setDocument();
         
         parent::display($tpl);
         
     }
     
+	/**
+     * Add the page title and toolbar.
+     *
+     * @since   1.6
+     */
+    protected function addToolbar(){
+        
+        JFactory::getApplication()->input->set('hidemainmenu', true);
+
+        $isNew = ($this->item->id == 0);
+        $this->documentTitle= $isNew  ? JText::_('COM_ITPMETA_ADD_TAG')
+                                      : JText::_('COM_ITPMETA_EDIT_TAG');
+
+        JToolBarHelper::apply('tag.apply');
+        JToolBarHelper::save2new('tag.save2new');
+        JToolBarHelper::save('tag.save');
+        JToolBarHelper::divider();
+        
+        if(!$isNew){
+            JToolBarHelper::cancel('tag.cancel', 'JTOOLBAR_CANCEL');
+            JToolBarHelper::title($this->documentTitle, "itp-edit-tag");
+        }else{
+            JToolBarHelper::cancel('tag.cancel', 'JTOOLBAR_CLOSE');
+            JToolBarHelper::title($this->documentTitle, "itp-new-tag");
+        }
+        
+    }
+
+    protected function setDocument() {
+        
+        $version = $this->version->getShortVersion();
+        
+        // Add scripts
+        JHTML::_('behavior.framework');
+        JHtml::_('behavior.tooltip');
+        JHtml::_('behavior.formvalidation');
+        
+        $this->document->addScript('../media/'.$this->option.'/js/jquery.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js?v='.$version);
+        $this->document->addScript('../media/'.$this->option.'/js/admin/tag_form.js?v='.$version);
+        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js?v='.$version);
+        
+    }
     
 }

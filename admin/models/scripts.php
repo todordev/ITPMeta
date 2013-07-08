@@ -38,6 +38,22 @@ class ItpMetaModelScripts extends JModelAdmin {
     }
     
     /**
+	 * Stock method to auto-populate the model state.
+	 * @return  void
+	 * @since   12.2
+	 */
+	protected function populateState() {
+	    
+		parent::populateState();
+		
+		$app = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+        
+        $value = $app->getUserState("url.id");
+        $this->setState($this->getName().'.id', $value);
+	}
+	
+    /**
      * Method to get the record form.
      *
      * @param   array   $data       An optional array of data for the form to interogate.
@@ -65,18 +81,8 @@ class ItpMetaModelScripts extends JModelAdmin {
     protected function loadFormData(){
         // Check the session for previously entered form data.
         $data = JFactory::getApplication()->getUserState($this->option.'.edit.scripts.data', array());
-        
         if(empty($data)){
-            
-            $app = JFactory::getApplication();
-        	/** @var $app JAdministrator **/
-            
-            $itemId = $app->input->get->get("url_id", 0, "integer");
-            
-            $data   = $this->getItem($itemId);
-            if(empty($data->url_id)) {
-                $data->url_id = $itemId;
-            }
+            $data   = $this->getItem();
         }
         
         return $data;
@@ -87,11 +93,10 @@ class ItpMetaModelScripts extends JModelAdmin {
      * Save an item
      * 
      * @param $data        All data for the category in an array
-     * 
      */
     public function save($data){
         
-        $id         = JArrayHelper::getValue($data, "url_id", null);
+        $id         = JArrayHelper::getValue($data, "id", null);
         $afterBody  = JArrayHelper::getValue($data, "after_body_tag", "");
         $beforeBody = JArrayHelper::getValue($data, "before_body_tag", "");
         
@@ -102,8 +107,6 @@ class ItpMetaModelScripts extends JModelAdmin {
         $row->set("after_body_tag", $afterBody);
         $row->set("before_body_tag", $beforeBody);
         $row->store();
-        
-        return $row->id;
     
     }
     

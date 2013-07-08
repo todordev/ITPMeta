@@ -11,7 +11,9 @@
  * other free or open source software licenses.
  */
 
-defined('_JEXEC') or die('Restricted access');
+// no direct access
+defined('_JEXEC') or die;
+
 class ItpMetaTableTag extends JTable {
     
     public function __construct( $db ) {

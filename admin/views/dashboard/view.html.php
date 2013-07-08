@@ -27,6 +27,15 @@ class ItpMetaViewDashboard extends JView {
     
     public function display($tpl = null){
         
+        // Load ITPrism library version
+        jimport("itprism.version");
+        if(!class_exists("ITPrismVersion")) {
+            $this->itprismVersion = JText::_("COM_ITPMETA_ITPRISM_LIBRARY_DOWNLOAD");
+        } else {
+            $itprismVersion       = new ITPrismVersion();
+            $this->itprismVersion = $itprismVersion->getShortVersion();
+        }
+        
         $this->version = new ItpMetaVersion();
         
         // Add submenu
@@ -63,8 +72,6 @@ class ItpMetaViewDashboard extends JView {
 		// Header styles
 		$this->document->addStyleSheet('../media/'.$this->option.'/css/bootstrap.min.css');
 		
-		// Load scripts
-		JHtml::_('behavior.modal', 'a.modal');
 	}
 	
 

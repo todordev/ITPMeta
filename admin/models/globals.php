@@ -99,7 +99,7 @@ class ItpMetaModelGlobals extends JModelList {
         $query->select(
             $this->getState(
                 'list.select',
-                'a.id, a.title, a.tag, a.content, a.output, ' .
+                'a.id, a.title, a.type, a.tag, a.content, a.output, ' .
                 'a.ordering, a.published' 
             )
         );

@@ -7,7 +7,9 @@
 .icon-32-itp-urls-back { background-image: url(../images/urls_back_32.png); }
 .icon-48-itp-new-url     { background-image: url(../images/add_url_48.png); }
 .icon-48-itp-edit-url     { background-image: url(../images/edit_url_48.png); }
-.icon-32-itp-scripts-32     { background-image: url(../images/tags_32.png); }
+.icon-48-itp-scripts 	    { background-image: url(../images/scripts_48.png); }
+.icon-32-itp-scripts-32     { background-image: url(../images/scripts_32.png); }
+.icon-32-itp-tags-manager-32     { background-image: url(../images/tags_32.png); }
 .icon-48-itp-globals 	    { background-image: url(../images/globals_48.png); }
 .icon-48-itp-new-global     { background-image: url(../images/add_global_48.png); }
 .icon-48-itp-edit-global     { background-image: url(../images/edit_global_48.png); }
@@ -32,17 +34,12 @@ table.adminlist {
 	cursor: move;
 }
 
-.jgrid span.suspicious {
-    background-image: url("../images/icon_warning_16.png");
-}
-
 .tags_subtitle {
 	font-size: xx-small;
 	line-height: 10px;
 }
 
 .itp-tag-btn{
-  float:left;
   margin: 5px;
   padding: 5px;
   border: thin solid #575757;
@@ -51,6 +48,12 @@ table.adminlist {
   cursor: pointer;
   color: black !important;
   text-decoration: none !important;
+  display: blick;
+  float: left;
+}
+
+.help-block {
+	font-size: x-small;
 }
 
 #itpm-content{
@@ -111,7 +114,7 @@ table.adminlist {
 	height: 100px;
 }
 
-#url-scripts-form textarea {
+#scripts-form textarea {
 	width: 100% !important;
 	height: 200px !important;
 }
@@ -120,47 +123,6 @@ table.adminlist {
 	width: 100% !important;
 	height: 200px;
 }
-
-/*
-.sdbtn {
-	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f9f9f9), color-stop(1, #e9e9e9) );
-	background:-moz-linear-gradient( center top, #f9f9f9 5%, #e9e9e9 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9');
-	background-color:#f9f9f9;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #dcdcdc;
-	display:block;
-	color:#666666;
-	font-family:arial;
-	font-size:28px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:1px 1px 0px #ffffff;
-}
-
-.sdbtn:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e9e9e9), color-stop(1, #f9f9f9) );
-	background:-moz-linear-gradient( center top, #e9e9e9 5%, #f9f9f9 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9');
-	background-color:#e9e9e9;
-}
-.sdbtn:active {
-	position:relative;
-	top:1px;
-}
-
-.sdp {
-	font-size: medium; 
-	color: black;
-	margin: 20px 0px;
-}
-*/
 
 p.sticky {
     background: url("../images/note.png") no-repeat scroll left center #F6F6F6;
@@ -171,4 +133,88 @@ p.sticky {
     margin: 10px 0;
     padding: 20px 20px 10px 60px;
     font-size: medium;
+}
+
+.uri_title {
+	border: thin solid gray;
+	background-color: #fffacd;
+	padding:10px;
+	font-weight: bold;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+
+}
+
+.uri_title span {
+	float: left;
+}
+
+.fz-medium {
+	font-size: medium;
+}
+
+.itpm-radius3 {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: thin solid gray;
+	padding:10px;
+	text-wrap: normal;
+	font-size: small !important;
+}
+
+.itpmeditable-box {
+	cursor: pointer;
+	background-color: #fffaf0;
+	font-weight: bold;
+}
+
+.itpmoutput-box {
+	background-color: #eeeeee;
+	font-style: italic;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+
+.input-large {
+	width: 350px;
+	height: 100px;
+}
+
+.itpmeta-tags-toolbar {
+    background: -moz-linear-gradient(center top , #FFFFFF 0%, #EDEDED 100%) repeat scroll 0 0 transparent;
+    border-top: 1px solid #D3D3D3;
+    border-bottom: 1px solid #D3D3D3;
+    color: #0C192E;
+    padding: 10px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.itpmeta-tags-toolbar-title {
+     background: -moz-linear-gradient(center top , #FFFFFF 0%, #EDEDED 100%) repeat scroll 0 0 transparent;
+    border-top: 1px solid #D3D3D3;
+    color: #0C192E;
+    padding: 10px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.btn-success, .btn-danger {
+	color: #FFF !important;
+}
+
+#js-btn-edit-tag {
+	color: #000 !important;
 }

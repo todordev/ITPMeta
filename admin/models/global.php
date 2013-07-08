@@ -89,6 +89,7 @@ class ItpMetaModelGlobal extends JModelAdmin {
         
         $id         = JArrayHelper::getValue($data, "id", null);
         $name       = JArrayHelper::getValue($data, "name", "");
+        $type       = JArrayHelper::getValue($data, "type", "");
         $title      = JArrayHelper::getValue($data, "title", "");
         $tag        = JArrayHelper::getValue($data, "tag", "");
         $content    = JArrayHelper::getValue($data, "content", "");
@@ -99,8 +100,9 @@ class ItpMetaModelGlobal extends JModelAdmin {
         $row = $this->getTable();
         $row->load($id);
         
-        $row->set("name",      $name);
         $row->set("title",     $title);
+        $row->set("name",      $name);
+        $row->set("type",      $type);
         $row->set("tag",       $tag);
         $row->set("content",   $content);
         $row->set("output",    $output);
@@ -130,8 +132,8 @@ class ItpMetaModelGlobal extends JModelAdmin {
 				$db     = JFactory::getDbo();
 				$query  = $db->getQuery(true);
 				$query
-				    ->select("MAX(ordering)")
-				    ->from("#__itpm_global_tags");
+				    ->select("MAX(a.ordering)")
+				    ->from($db->quoteName("#__itpm_global_tags") . " AS a");
 				
 			    $db->setQuery($query, 0, 1);
 				$max   = $db->loadResult();

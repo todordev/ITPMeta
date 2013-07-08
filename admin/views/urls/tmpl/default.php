@@ -23,9 +23,9 @@ defined('_JEXEC') or die;
             <button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
         </div>
         <div class="filter-select fltrt">
-            <select name="filter_published" class="inputbox" onchange="this.form.submit()">
+            <select name="filter_state" class="inputbox" onchange="this.form.submit()">
                 <option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>
-                <?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array("archived" => false, "trash"=>false)), 'value', 'text', $this->state->get('filter.published'), true);?>
+                <?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array("archived" => false, "trash"=>false)), 'value', 'text', $this->state->get('filter.state'), true);?>
             </select>
         </div>
     </fieldset>
@@ -43,7 +43,14 @@ defined('_JEXEC') or die;
     <?php echo JHtml::_('form.token'); ?>
 </form>
 
-<div id="itpm-tags-list" style="display: none;">
-	<div id="sq-box">
-	</div>
+<div class="modal hide fade" id="js-tags-list-modal">
+    <div class="modal-header">
+        <h3><?php echo JText::_("COM_ITPMETA_TAGS");?></h3>
+    </div>
+    <div class="modal-body" id="js-tags-list-body">
+        
+    </div>
+    <div class="modal-footer">
+        <a href="javascript: void(0);" class="btn" id="js-tags-list-close-btn"><?php echo JText::_("JTOOLBAR_CLOSE");?></a>
+    </div>
 </div>

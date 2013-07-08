@@ -1,0 +1,3 @@
+ALTER TABLE `#__itpm_urls` ADD `parent_menu_id` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT 'This URI is connected to that menu item.' AFTER `autoupdate`;
+ALTER TABLE `#__itpm_urls` ADD `menu_id` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT 'This is the menu item of current URI.' AFTER `parent_menu_id`;
+ALTER TABLE `#__itpm_urls` ADD `primary_url` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT '0' AFTER `menu_id`;

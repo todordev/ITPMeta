@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
         <input type="checkbox" name="checkall-toggle" value="" onclick="checkAll(this)" />
     </th>
     <th class="title">
-        <?php echo JHtml::_('grid.sort',  'COM_ITPMETA_URL', 'a.uri', $this->listDirn, $this->listOrder); ?>
+        <?php echo JHtml::_('grid.sort',  'COM_ITPMETA_URI_STRING', 'a.uri', $this->listDirn, $this->listOrder); ?>
     </th>
     <th width="5%">&nbsp;</th>
     <th width="10%"><?php echo JHtml::_('grid.sort',  'JSTATUS', 'a.published', $this->listDirn, $this->listOrder); ?></th>

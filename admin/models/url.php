@@ -84,18 +84,16 @@ class ItpMetaModelUrl extends JModelAdmin {
         
         $id         = JArrayHelper::getValue($data, "id", null);
         $uri        = JArrayHelper::getValue($data, "uri", "");
-        $afterBody  = JArrayHelper::getValue($data, "after_body_tag", "");
-        $beforeBody = JArrayHelper::getValue($data, "before_body_tag", "");
         $published  = JArrayHelper::getValue($data, "published", 0);
+        $autoupdate = JArrayHelper::getValue($data, "autoupdate", 0);
         
         // Load item data
         $row = $this->getTable();
         $row->load($id);
         
         $row->set("uri",             $uri);
-        $row->set("after_body_tag",  $afterBody);
-        $row->set("before_body_tag", $beforeBody);
         $row->set("published",       $published);
+        $row->set("autoupdate",      $autoupdate);
         
         $row->store();
         
@@ -113,13 +111,34 @@ class ItpMetaModelUrl extends JModelAdmin {
         // Select the required fields from the table.
         $query
             ->select('COUNT(*)')
-            ->from('`#__itpm_urls`')
-            ->where('uri='.$db->quote($uri));
+            ->from($db->quoteName('#__itpm_urls') . " AS a")
+            ->where('a.uri='.$db->quote($uri));
 
         $db->setQuery($query, 0, 1);
         
         return (bool)$db->loadResult();
         
+    }
+    
+    public function updateAutoupdate($pks, $state) {
+        
+		$pks    = (array)$pks;
+		JArrayHelper::toInteger($pks);
+		$state  = (!$state) ? 0 : 1;
+
+        $db     = JFactory::getDbo();
+        $query  = $db->getQuery(true);
+        
+        $query
+            ->update($db->quoteName("#__itpm_urls") . " AS a")
+            ->set("a.autoupdate = " . (int)$state)
+            ->where("a.id IN (" . implode(",", $pks) . ")");
+        
+        $db->setQuery($query);
+        $db->query();
+
+		return true;
+		
     }
     
 }

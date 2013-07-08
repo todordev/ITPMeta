@@ -31,6 +31,7 @@ class ItpMetaModelUrls extends JModelList {
             $config['filter_fields'] = array(
                 'id', 'a.id',
                 'uri', 'a.uri',
+            	'autoupdate', 'a.autoupdate',
                 'published', 'a.published'
             );
         }
@@ -51,8 +52,11 @@ class ItpMetaModelUrls extends JModelList {
         $value  = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
         $this->setState('filter.search', $value);
 
-        $value  = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '', 'string');
-        $this->setState('filter.published', $value);
+        $value  = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
+        $this->setState('filter.state', $value);
+        
+        $value  = $this->getUserStateFromRequest($this->context.'.filter.autoupdate', 'filter_autoupdate', '', 'string');
+        $this->setState('filter.autoupdate', $value);
         
         // Load the parameters.
         $params = JComponentHelper::getParams('com_itpmeta');
@@ -98,17 +102,25 @@ class ItpMetaModelUrls extends JModelList {
         $query->select(
             $this->getState(
                 'list.select',
-                'a.id, a.uri, a.published'
+                'a.id, a.uri, a.published, a.autoupdate'
             )
         );
         $query->from($db->quoteName("#__itpm_urls").' AS a');
 
         // Filter by state
-        $published = $this->getState('filter.published');
+        $published = $this->getState('filter.state');
         if (is_numeric($published)) {
             $query->where('a.published = '.(int) $published);
         } else if ($published === '') {
             $query->where('(a.published IN (0, 1))');
+        }
+        
+        // Filter by Autoupdate state
+        $autoupdate = $this->getState('filter.autoupdate');
+        if (is_numeric($autoupdate)) {
+            $query->where('a.autoupdate = '.(int) $autoupdate);
+        } else if ($autoupdate === '') {
+            $query->where('(a.autoupdate IN (0, 1))');
         }
         
         // Filter by search in title
@@ -161,10 +173,10 @@ class ItpMetaModelUrls extends JModelList {
             $query  = $db->getQuery(true);
             
             $query
-                ->select("url_id, COUNT(*) AS number")
-                ->from($db->quoteName("#__itpm_tags"))
-                ->where("url_id IN (" . implode(",", $itemsIds) . ")")
-                ->group("url_id");
+                ->select("a.url_id, COUNT(*) AS number")
+                ->from($db->quoteName("#__itpm_tags") . " AS a")
+                ->where("a.url_id IN (" . implode(",", $itemsIds) . ")")
+                ->group("a.url_id");
             
             $db->setQuery($query);
             $results = $db->loadAssocList("url_id", "number");
@@ -188,4 +200,26 @@ class ItpMetaModelUrls extends JModelList {
         return $orderCol.' '.$orderDirn;
     }
     
+	/**
+     * Load data when search URLs using typehead
+     * @param string $string
+     */
+    public static function getAutoupdateUrls($string) {
+	    
+	    $db     = JFactory::getDbo();
+		$query  = $db->getQuery(true);
+		
+		$search = $db->quote($db->escape($string, true).'%');
+		
+		$query
+		    ->select("a.id, a.uri AS name")
+		    ->from($db->quoteName("#__itpm_urls") . " AS a")
+		    ->where("a.uri LIKE " . $search);
+		
+	    $db->setQuery($query, 0, 8);
+		$results = $db->loadAssocList();
+		
+		return (array)$results;
+		
+	}
 }

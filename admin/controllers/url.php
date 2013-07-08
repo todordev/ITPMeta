@@ -14,7 +14,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controllerform');
+jimport('itprism.controller.form.backend');
 
 /**
  * Url controller class.
@@ -23,14 +23,10 @@ jimport('joomla.application.component.controllerform');
  * @subpackage	ITPMeta
  * @since		1.6
  */
-class ItpMetaControllerUrl extends JControllerForm {
-    
-    // Check the table in so it can be edited.... we are done with it anyway
-    private $defaultLink = 'index.php?option=com_itpmeta';
+class ItpMetaControllerUrl extends ITPrismControllerFormBackend {
     
     /**
      * Save an item
-     *
      */
     public function save() {
         
@@ -39,12 +35,15 @@ class ItpMetaControllerUrl extends JControllerForm {
         $app = JFactory::getApplication();
         /** @var $app JAdministrator **/
         
-        // Initialize variables
-        $msg     = "";
-        $link    = "";
-        
         // Gets the data from the form
         $data    = $app->input->post->get('jform', array(), 'array');
+        $itemId  = JArrayHelper::getValue($data, "id", 0, "int");
+        
+        $redirectData = array(
+            "task" => $this->getTask(),
+            "id"   => $itemId
+        );
+        
         $model   = $this->getModel();
         
         // Validate the posted data.
@@ -62,23 +61,14 @@ class ItpMetaControllerUrl extends JControllerForm {
 
         // Check for validation errors.
         if ($validData === false) {
-            $this->defaultLink .= "&view=".$this->view_item."&layout=edit";
-        
-            if($itemId) {
-                $this->defaultLink .= "&id=" . $itemId;
-            } 
-            
-            $this->setMessage($model->getError(), "notice");
-            $this->setRedirect(JRoute::_($this->defaultLink, false));
+            $this->displayNotice($form->getErrors(), $redirectData);
             return;
         }
             
         // Check for existing URI
         $uri = JArrayHelper::getValue($validData, "uri");
         if(!$itemId AND $model->isUriExist($uri)) {
-            $this->defaultLink .= "&view=".$this->view_list;
-            $this->setMessage(JText::_("COM_ITPMETA_URI_EXISTS"), "notice");
-            $this->setRedirect(JRoute::_($this->defaultLink, false));
+            $this->displayWarning(JText::_("COM_ITPMETA_ERROR_URI_EXISTS"), array("view" => $this->view_list));
             return;
         }
         
@@ -89,62 +79,17 @@ class ItpMetaControllerUrl extends JControllerForm {
         }
         
         try {
+            
             $itemId = $model->save($validData);
+            $redirectData["id"] = $itemId;
+            
         } catch ( Exception $e ) {
             JLog::add($e->getMessage());
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
         
-        $msg  = JText::_('COM_ITPMETA_URL_SAVED');
-        $link = $this->prepareRedirectLink($itemId);
+        $this->displayMessage(JText::_('COM_ITPMETA_URL_SAVED'), $redirectData);
         
-        $this->setRedirect(JRoute::_($link, false), $msg);
-        
-    }
-    
-	/**
-     * 
-     * Prepare redirect link. 
-     * If has clicked apply, will be redirected to edit form and will be loaded the item data
-     * If has clicked save2new, will be redirected to edit form, and you will be able to add a new record
-     * If has clicked save, will be redirected to the list of items
-     *
-     * @param integer $itemId 
-     */
-    protected function prepareRedirectLink($itemId = 0) {
-        
-        $task = $this->getTask();
-        $link = $this->defaultLink;
-        
-        // Prepare redirection
-        switch($task) {
-            case "apply":
-                $link .= "&view=".$this->view_item."&layout=edit";
-                if(!empty($itemId)) {
-                    $link .= "&id=" . (int)$itemId; 
-                }
-                break;
-                
-            case "save2new":
-                $link .= "&view=".$this->view_item."&layout=edit";
-                break;
-                
-            default:
-                $link .= "&view=".$this->view_list;
-                break;
-        }
-        
-        return $link;
-    }
-    
-    /**
-     * Cancel operations
-     */
-    public function cancel(){
-        
-        $msg = "";
-        $this->setRedirect(JRoute::_($this->defaultLink . "&view=".$this->view_list, false), $msg);
-    
     }
     
 }

@@ -14,39 +14,24 @@
 // No direct access
 defined('_JEXEC') or die;
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_itpmeta'); ?>" method="post" name="tagForm" id="url-scripts-form" class="form-validate" autocomplete="off">
-
-    <fieldset>
-    	<div class="fltrt">
-    		<img src="../media/com_itpmeta/images/ajax-loader.gif" style="display: none;" id="ajax_loader" />
-    		<button type="button" id="apply_btn"><?php echo JText::_('JAPPLY');?></button>
-    		<button type="button" id="save_btn"><?php echo JText::_('JSAVE');?></button>
-    		<button type="button" id="close_btn"><?php echo JText::_('JCANCEL');?></button>
-    	</div>
-    	<div class="configuration" >
-    		<?php echo JText::_("COM_ITPMETA_PAGE_SCRIPTS_MANAGER") ?>
-    	</div>
-    </fieldset>
-    <div id="system-message-container1" style="display:none;">
-        <dl id="system-message">
-        <dt class="message"><?php echo JText::_("COM_ITPMETA_MESSAGE");?></dt>
-            <dd class="message" id="message_style">
-            	<ul>
-            		<li id="message_container"></li>
-            	</ul>
-            </dd>
-        </dl>
-    </div>
-
-    <div class="width-100 fltlft">
+<form action="<?php echo JRoute::_('index.php?option=com_itpmeta'); ?>" method="post" name="tagForm" id="scripts-form" class="form-validate" autocomplete="off">
+    <div class="width-50 fltlft">
         <fieldset class="adminform">
             <legend><?php echo JText::_("COM_ITPMETA_EDIT_SCRIPT"); ?></legend>
-            <?php 
-            echo $this->loadTemplate("form");
-            ?>
+            <div class="clearfix"></div>
+            <?php echo $this->form->getLabel('after_body_tag'); ?>
+            <div class="clearfix"></div>
+            <?php echo $this->form->getInput('after_body_tag'); ?>
+            
+            <div class="clearfix"></div>
+            <?php echo $this->form->getLabel('before_body_tag'); ?>
+            <div class="clearfix"></div>
+            <?php echo $this->form->getInput('before_body_tag'); ?>
+            
 		</fieldset>
 	</div>
-    <div class="clr"></div>
+    <div class="clearfix"></div>
+    <?php echo $this->form->getInput('id'); ?>
     <input type="hidden" name="task" value="" id="task"/>
     <?php echo JHtml::_('form.token'); ?>
 </form>

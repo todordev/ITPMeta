@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 jimport( 'joomla.application.component.controlleradmin' );
 
 /**
- * ITPMeta URLs Controller
+ * Global Tags controller class.
  *
  * @package     ITPrism Components
  * @subpackage  ITPMeta
@@ -40,10 +40,6 @@ class ItpMetaControllerGlobals extends JControllerAdmin {
         
         $model = parent::getModel($name, $prefix, $config);
         return $model;
-    }
-    
-    public function backToDashboard() {
-        $this->setRedirect( JRoute::_($this->defaultLink, false) );
     }
     
 }

@@ -33,11 +33,14 @@ class ItpMetaController extends JController {
 
     public function display( ) {
 
+        $version = new ItpMetaVersion();
+        $version = $version->getShortVersion();
+        
         $document = JFactory::getDocument();
         /** @var $document JDocumentHtml **/
         
         // Add component style
-        $document->addStyleSheet('../media/'.$this->option.'/css/style.css');
+        $document->addStyleSheet('../media/'.$this->option.'/css/style.css?v='.$version);
         
         $viewName      = JFactory::getApplication()->input->getCmd('view', 'dashboard');
         JFactory::getApplication()->input->set("view", $viewName);

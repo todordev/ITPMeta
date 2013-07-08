@@ -11,20 +11,18 @@
  * other free or open source software licenses.
  */
 
-// Check to ensure this file is included in Joomla!
+// No direct access
 defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.controlleradmin' );
+jimport('itprism.controller.admin');
 
 /**
- * ITPMeta URLs Controller
+ * Tags Controller
  *
  * @package     ITPrism Components
  * @subpackage  ITPMeta
   */
-class ItpMetaControllerTags extends JControllerAdmin {
-    
-    private    $defaultLink = 'index.php?option=com_itpmeta';
+class ItpMetaControllerTags extends ITPrismControllerAdmin {
     
     /**
      * @var     string  The prefix to use with controller messages.
@@ -41,8 +39,140 @@ class ItpMetaControllerTags extends JControllerAdmin {
         return $model;
     }
     
-    public function backToDashboard() {
-        $this->setRedirect( JRoute::_($this->defaultLink, false) );
+    /**
+     * Removes an item.
+     * @return  void
+     *
+     * @since   12.2
+     */
+    public function delete() {
+    
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+    
+        $app = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+    
+        // Gets the data from the form
+        $cid    = $app->input->post->get('cid', array(), 'array');
+        JArrayHelper::toInteger($cid);
+    
+        $urlId  = $app->getUserState("url.id");
+    
+        $redirectData = array(
+            "view"   => "url",
+            "layout" => "edit",
+            "id"     => $urlId
+        );
+    
+        if(!$cid) {
+            $this->displayWarning(JText::_("COM_ITPMETA_ERROR_INVALID_ITEMS"), $redirectData);
+            return;
+        }
+    
+        try {
+    
+            $model = $this->getModel();
+            $model->delete($cid);
+    
+        } catch ( Exception $e ) {
+            JLog::add($e->getMessage());
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
+        }
+    
+        $msg = JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid));
+        $this->displayMessage($msg, $redirectData);
+    
     }
-   
+    
+    /**
+     * Reorder items
+     *
+     */
+    public function reorder() {
+    
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+    
+        $app = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+    
+        // Gets the data from the form
+        $ids    = $app->input->post->get('cid', array(), 'array');
+        $inc    = ($this->getTask() == 'orderup') ? -1 : +1;
+        $urlId  = $app->getUserState("url.id");
+        
+        JArrayHelper::toInteger($ids);
+    
+        $redirectData = array(
+            "view"   => "url",
+            "layout" => "edit",
+            "id"     => $urlId
+        );
+    
+        if(!$ids) {
+            $this->displayWarning(JText::_("COM_ITPMETA_ERROR_INVALID_ITEMS"), $redirectData);
+            return;
+        }
+    
+        try {
+    
+            $model = $this->getModel();
+            $model->reorder($ids, $inc);
+    
+        } catch ( Exception $e ) {
+            JLog::add($e->getMessage());
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
+        }
+    
+        $this->displayMessage(JText::_("COM_ITPMETA_SUCCESS_ORDERING_SAVED"), $redirectData);
+    
+    }
+    
+    /**
+     * Save new order
+     */
+    public function saveorder() {
+    
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+    
+        $app = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+    
+        // Gets the data from the form
+        $ids    = $app->input->post->get('cid', array(), 'array');
+        $order  = $app->input->post->get('order', array(), 'array');
+        
+        JArrayHelper::toInteger($ids);
+        JArrayHelper::toInteger($order);
+    
+        $urlId  = $app->getUserState("url.id");
+    
+        $redirectData = array(
+            "view"   => "url",
+            "layout" => "edit",
+            "id"     => $urlId
+        );
+    
+        if(!$ids OR !$order) {
+            $this->displayWarning(JText::_("COM_ITPMETA_ERROR_INVALID_ITEMS"), $redirectData);
+            return;
+        }
+    
+        try {
+    
+            $model = $this->getModel();
+            $model->saveorder($ids, $order);
+    
+        } catch ( Exception $e ) {
+            JLog::add($e->getMessage());
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
+        }
+    
+        $this->displayMessage(JText::_("COM_ITPMETA_SUCCESS_ORDERING_SAVED"), $redirectData);
+    
+    }
+    
+    
 }

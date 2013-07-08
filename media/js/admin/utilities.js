@@ -85,6 +85,7 @@ function getTag(name){
 			val = '<meta property="og:fax_number" content="{EXAMPLE: +1-415-123-4567}"/>';
 			break;	
 			
+			
 		/* Article */
 		case "ogarticle":
 			val = '<meta property="og:type" content="article" />';
@@ -125,6 +126,7 @@ function getTag(name){
 			val = '<meta property="book:tag" content="{KEYWORD}">';
 		break;
 		
+		
 		/* Image */
 		case "ogimage_width":
 			val = '<meta property="og:image:width" content="{SIZE}" />';
@@ -147,55 +149,10 @@ function getTag(name){
 			val = '<meta property="og:audio:type" content="{EXAMPLE: application/mp3}" />';
 		break;
 		
-		/* Music */
-		case "ogmusic_song":
-			val = '<meta property="og:type" content="music.song" />';
-		break;
-		case "ogmusic_album":
-			val = '<meta property="og:type" content="music.album" />';
-		break;
-		case "ogmusic_playlist":
-			val = '<meta property="og:type" content="music.playlist" />';
-		break;
-		case "ogmusic_radio_station":
-			val = '<meta property="og:type" content="music:radio_station" />';
-			break;
-		
-		case "ogmusic_music_duration":
-			val = '<meta property="music:duration" content="{DURATION}" />';
-		break;
-		
-		case "ogmusic_music_album":
-			val = '<meta property="music:album" content="{ALBUM}" />';
-		break;
-		
-		case "ogmusic_music_album_disc":
-			val = '<meta property="music:album:disc" content="{ALBUM_DISC}" />';
-		break;
-		case "ogmusic_music_album_track":
-			val = '<meta property="music:album:track" content="{ALBUM_TRACK}" />';
-		break;
-		case "ogmusic_musician":
-			val = '<meta property="music:musician" content="{MUSICITAN}" />';
-		break;
-		
-		case "ogmusic_music_song":
-			val = '<meta property="music:song" content="{MUSIC_SONG}" />';
-		break;
-		case "ogmusic_music_song_disc":
-			val = '<meta property="music:song:disc" content="{MUSIC_SONG_DISC}" />';
-		break;
-		case "ogmusic_music_song_track":
-			val = '<meta property="music:song:track" content="{MUSIC_SONG_TRACK}" />';
-		break;
-		case "ogmusic_music_release_date":
-			val = '<meta property="music:release_date" content="{RELEASE_DATE}" />';
-		break;
-		case "ogmusic_music_creator":
-			val = '<meta property="music:creator" content="{CREATOR}" />';
-		break;
-		
 		/* Video */
+		case "ogvideo_url":
+			val = '<meta property="og:video:url" content="{VIDEO_URL_SWF_ONLY}" />';
+		break;
 		case "ogvideo_height":
 			val = '<meta property="og:video:height" content="{EXAMPLE: 640}" />';
 		break;
@@ -253,6 +210,50 @@ function getTag(name){
 			val = '<meta property="fb:profile_id" content="{THIRD_PARTY_FB_UID}" />';
 		break;
 		
+		/* Music */
+		case "ogmusic_song":
+			val = '<meta property="og:type" content="music.song" />';
+		break;
+		case "ogmusic_album":
+			val = '<meta property="og:type" content="music.album" />';
+		break;
+		case "ogmusic_playlist":
+			val = '<meta property="og:type" content="music.playlist" />';
+		break;
+		case "ogmusic_radio_station":
+			val = '<meta property="og:type" content="music:radio_station" />';
+			break;
+		case "ogmusic_music_duration":
+			val = '<meta property="music:duration" content="{DURATION}" />';
+		break;
+		case "ogmusic_music_album":
+			val = '<meta property="music:album" content="{ALBUM}" />';
+		break;
+		case "ogmusic_music_album_disc":
+			val = '<meta property="music:album:disc" content="{ALBUM_DISC}" />';
+		break;
+		case "ogmusic_music_album_track":
+			val = '<meta property="music:album:track" content="{ALBUM_TRACK}" />';
+		break;
+		case "ogmusic_musician":
+			val = '<meta property="music:musician" content="{MUSICITAN}" />';
+		break;
+		case "ogmusic_music_song":
+			val = '<meta property="music:song" content="{MUSIC_SONG}" />';
+		break;
+		case "ogmusic_music_song_disc":
+			val = '<meta property="music:song:disc" content="{MUSIC_SONG_DISC}" />';
+		break;
+		case "ogmusic_music_song_track":
+			val = '<meta property="music:song:track" content="{MUSIC_SONG_TRACK}" />';
+		break;
+		case "ogmusic_music_release_date":
+			val = '<meta property="music:release_date" content="{RELEASE_DATE}" />';
+		break;
+		case "ogmusic_music_creator":
+			val = '<meta property="music:creator" content="{CREATOR}" />';
+		break;
+		
 		/* Websites */
 		case "ogwebsite":
 			val = '<meta property="og:type" content="website" />';
@@ -261,7 +262,7 @@ function getTag(name){
 			val = '<meta property="og:type" content="blog" />';
 		break;
 		
-		/* Websites */
+		/* Activities */
 		case "ogactivity":
 			val = '<meta property="og:type" content="activity" />';
 		break;
@@ -388,6 +389,7 @@ function getTag(name){
 			val = '<meta property="game:points" content="{POINTS FOR ACHIEVEMENT}" />';
 		break;
 		
+		
 		/* Facebook */
 		case "fbadmins":
 			val = '<meta property="fb:admins" content="{USER_ID1, USER_ID2}"/>';
@@ -413,11 +415,129 @@ function getTag(name){
 			val = '<meta property="og:restrictions:content" content="{EXAMPLE: alcohol}"/>';
 		break;
 		
+		/* Twitter basic */
+		case "twitter_card_summary":
+			val = '<meta property="twitter:card" content="summary" />';
+		break;
+		
+		case "twitter_card_photo":
+			val = '<meta property="twitter:card" content="photo" />';
+		break;
+		
+		case "twitter_card_player":
+			val = '<meta property="twitter:card" content="player" />';
+		break;
+		
+		case "twitter_card_title":
+			val = '<meta property="twitter:title" content="{MAX_70_SYMBOLS}" />';
+		break;
+		
+		case "twitter_card_description":
+			val = '<meta property="twitter:description" content="{DESCRIPTION}" />';
+		break;
+		
+		case "twitter_card_url":
+			val = '<meta property="twitter:url" content="{URL}" />';
+		break;
+		
+		case "twitter_card_image":
+			val = '<meta property="twitter:image" content="{URL}" />';
+		break;
+		
+		case "twitter_card_image_src":
+			val = '<meta property="twitter:image:src" content="{URL}" />';
+		break;
+		
+		case "twitter_card_player_url":
+			val = '<meta property="twitter:player" content="{HTTPS_URL}" />';
+		break;
+		
+		/* Twitter advanced */
+		case "twitter_card_site":
+			val = '<meta property="twitter:site" content="{TWITTER_USERNAME}" />';
+		break;
+		
+		case "twitter_card_site_id":
+			val = '<meta property="twitter:site:id" content="{USER_TWITTER_ID}" />';
+		break;
+		
+		case "twitter_card_creater":
+			val = '<meta property="twitter:creator" content="{TWITTER_USERNAME}" />';
+		break;
+		
+		case "twitter_card_creater_id":
+			val = '<meta property="twitter:creator:id" content="{USER_TWITTER_ID}" />';
+		break;
+		
+		case "twitter_card_image_width":
+			val = '<meta property="twitter:image:width" content="{IMAGE_WIDTH}" />';
+		break;
+		
+		case "twitter_card_image_height":
+			val = '<meta property="twitter:image:height" content="{HEIGHT}" />';
+		break;
+		
+		case "twitter_card_player_width":
+			val = '<meta property="twitter:player:width" content="{WIDTH}" />';
+		break;
+		
+		case "twitter_card_player_height":
+			val = '<meta property="twitter:player:height" content="{HEIGHT}" />';
+		break;
+		
+		case "twitter_card_player_stream":
+			val = '<meta property="twitter:player:stream" content="{STREAM}" />';
+		break;
+		
+		/* Google */
+		case "google_notranslate":
+			val = '<meta name="google" content="notranslate" />';
+		break;
+		
+		case "google_site_verification":
+			val = '<meta name="google-site-verification" content="{CONTENT}" />';
+		break;
+		
+		case "google_plus_author":
+			val = '<link rel="author" href="{URL}" />';
+		break;
+		
+		case "google_plus_publisher":
+			val = '<link rel="publisher" href="{URL}" />';
+		break;
+		
+		/* Bing */
+		case "bing_site_verification":
+			val = '<meta name="msvalidate.01" content="{CODE}" />';
+		break;
+		
+		/* Alexa */
+		case "alexa_site_verification":
+			val = '<meta name="alexaVerifyID" content="{CODE}" />';
+		break;
+		
+		/* Robots */
+		case "robots":
+			val = '<meta name="robots" content="{CONTENT}" />';
+		break;
+		case "googlebot":
+			val = '<meta name="googlebot" content="{CONTENT}" />';
+		break;
+		case "googlebot_news":
+			val = '<meta name="googlebot-news" content="{CONTENT}" />';
+		break;
+		case "slurp":
+			val = '<meta name="Slurp" content="{CONTENT}" />';
+		break;
+		case "bingbot":
+			val = '<meta name="bingbot" content="{CONTENT}" />';
+		break;
+		
 		/* SEO */
 		case "seo_canonical":
 			val = '<link rel="canonical" href="{URL}" />';
 		break;	
-
+		
 		/* Misc */
 		case "refresh":
 			val = '<meta http-equiv="refresh" content="{SECONDS;URL=}" />';

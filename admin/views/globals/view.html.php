@@ -37,6 +37,8 @@ class ITPMetaViewGlobals extends JView {
         $this->listDirn   = $listDirn;
         $this->saveOrder  = $saveOrder;
         
+        $this->version    = new ItpMetaVersion();
+        
         // Add submenu
         ItpMetaHelper::addSubmenu($this->getName());
         
@@ -65,7 +67,7 @@ class ITPMetaViewGlobals extends JView {
         JToolBarHelper::divider();
         JToolBarHelper::deleteList(JText::_("COM_ITPMETA_DELETE_ITEMS_QUESTION"), "globals.delete");
         JToolBarHelper::divider();
-        JToolBarHelper::custom('globals.backToDashboard', "itp-dashboard-back", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
+        JToolBarHelper::custom('dashboard.backToDashboard', "itp-dashboard-back", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
     }
 
 	/**
@@ -74,7 +76,7 @@ class ITPMetaViewGlobals extends JView {
 	 * @return void
 	 */
 	protected function setDocument() {
-		$this->document->setTitle(JText::_('COM_ITPMETA_GLOBAL_TAGS_MANAGER_TITLE'));
+		$this->document->setTitle(JText::_('COM_ITPMETA_GLOBAL_TAGS_MANAGER'));
 	}
 	
 }

@@ -18,6 +18,9 @@ jimport('joomla.application.component.modeladmin');
 
 class ItpMetaModelTag extends JModelAdmin {
     
+    const AUTOUPDATE_DISABLED = 0;
+    const AUTOUPDATE_ENABLED  = 1;
+    
     /**
      * @var     string  The prefix to use with controller messages.
      * @since   1.6
@@ -37,6 +40,22 @@ class ItpMetaModelTag extends JModelAdmin {
         return JTable::getInstance($type, $prefix, $config);
     }
     
+	/**
+	 * Stock method to auto-populate the model state.
+	 * @return  void
+	 * @since   12.2
+	 */
+	protected function populateState() {
+	    
+		parent::populateState();
+		
+		$app = JFactory::getApplication();
+        /** @var $app JAdministrator **/
+        
+        $value = $app->getUserStateFromRequest("url.id", "url_id");
+        $this->setState($this->getName().'.url_id', $value);
+	}
+	
     /**
      * Method to get the record form.
      *
@@ -75,13 +94,9 @@ class ItpMetaModelTag extends JModelAdmin {
             $data = $this->getItem();
         }
         
-        $urlId = $app->input->get("url_id", null);
-        if($urlId AND empty($data->url_id)) {
-            $data->url_id = $urlId;
-        }
-        
-        if(!empty($data->id)) {
-            $data->tag_id   = $data->id;
+        // Set URL id
+        if(empty($data->url_id)) {
+            $data->url_id = $this->getState($this->getName().".url_id", 0);
         }
         
         return $data;
@@ -95,27 +110,35 @@ class ItpMetaModelTag extends JModelAdmin {
      */
     public function save($data){
         
-        $id         = JArrayHelper::getValue($data, "tag_id", null);
-        $name       = JArrayHelper::getValue($data, "name", "");
-        $title      = JArrayHelper::getValue($data, "title", "");
-        $tag        = JArrayHelper::getValue($data, "tag", "");
-        $content    = JArrayHelper::getValue($data, "content", "");
-        $output     = JArrayHelper::getValue($data, "output", "");
-        $urlId      = JArrayHelper::getValue($data, "url_id", 0);
+        $id         = JArrayHelper::getValue($data, "id");
+        $name       = JArrayHelper::getValue($data, "name");
+        $type       = JArrayHelper::getValue($data, "type");
+        $title      = JArrayHelper::getValue($data, "title");
+        $tag        = JArrayHelper::getValue($data, "tag");
+        $content    = JArrayHelper::getValue($data, "content");
+        $output     = JArrayHelper::getValue($data, "output");
+        $urlId      = JArrayHelper::getValue($data, "url_id");
         
         // Load item data
         $row = $this->getTable();
         $row->load($id);
         
-        $row->set("name",        $name);
+        // Disable autoupdate if there is a difference 
+        // between new and old values
+        $this->disableAutoupdate($row, $title, $content);
+        
+        // Save new data
+        
         $row->set("title",       $title);
+        $row->set("name",        $name);
+        $row->set("type",        $type);
         $row->set("tag",         $tag);
         $row->set("content",     $content);
         $row->set("output",      $output);
         $row->set("url_id",      $urlId);
         
         // Prepare the row for saving
-		$this->prepareTable($row);
+		$this->prepareTable($row, $title, $content);
 		
         $row->store();
         
@@ -138,9 +161,9 @@ class ItpMetaModelTag extends JModelAdmin {
 				$db     = JFactory::getDbo();
 				$query  = $db->getQuery(true);
 				$query
-				    ->select("MAX(ordering)")
-				    ->from("#__itpm_tags")
-				    ->where("url_id =".$table->url_id);
+				    ->select("MAX(a.ordering)")
+				    ->from($db->quoteName("#__itpm_tags") . " AS a")
+				    ->where("a.url_id =". (int)$table->url_id);
 				
 			    $db->setQuery($query, 0, 1);
 				$max   = $db->loadResult();
@@ -151,9 +174,56 @@ class ItpMetaModelTag extends JModelAdmin {
         
 	}
     
+	
+	/**
+	 * Disable auto update if user edit the tag content.
+	 * 
+	 * @param object $table
+	 * @param string $title
+	 * @param string $content
+	 */
+	protected function disableAutoupdate($table, $title, $content) {
+	    
+		if( !empty($table->id) ) {
+		    
+		    $urlTable = $this->getTable("Url");
+		    $urlTable->load($table->url_id);
+		    
+    	    if( 
+    	        $urlTable->autoupdate 
+    	        AND 
+	            ( (strcmp($title, $table->title) != 0) OR (strcmp($content, $table->content) != 0) )
+	        ) {
+    		    
+    		    $urlTable->autoupdate = self::AUTOUPDATE_DISABLED;
+    		    $urlTable->store();
+    		    
+    		    $app = JFactory::getApplication();
+				/** @var $app JAdministrator **/
+    		    
+    		    $app->enqueueMessage(JText::_("COM_ITPMETA_AUTOUPDATE_DISABLED"), "notice");
+    		}
+		}
+		
+	}
+	
+	/**
+	 * A protected method to get a set of ordering conditions.
+	 *
+	 * @param	object	A record object.
+	 *
+	 * @return	array	An array of conditions to add to add to ordering queries.
+	 * @since	1.6
+	 */
+	protected function getReorderConditions($table){
+		$condition = array();
+		$condition[] = 'url_id = '.(int) $table->url_id;
+		return $condition;
+	}
+	
     /**
-     * 
      * Delete tags based on URL id
+     * 
      * @param array $pks URLs ids
      */
     public function deleteByUrlId(&$pks) {
@@ -179,18 +249,40 @@ class ItpMetaModelTag extends JModelAdmin {
         
     }
     
-	/**
-	 * A protected method to get a set of ordering conditions.
-	 *
-	 * @param	object	A record object.
-	 *
-	 * @return	array	An array of conditions to add to add to ordering queries.
-	 * @since	1.6
-	 */
-	protected function getReorderConditions($table){
-		$condition = array();
-		$condition[] = 'url_id = '.(int) $table->url_id;
-		return $condition;
-	}
+    /**
+     * 
+     * This method saves the content and 
+     * it is used from "inline" editing by AJAX.
+     * 
+     * @param integer $itemId
+     * @param string $content
+     */
+    public function saveAjax($itemId, $content) {
+        
+        // Load item data
+        $row = $this->getTable();
+        $row->load($itemId);
+        
+        if(empty($row->id)) {
+            return null;
+        }
+
+        // Generate output
+        $output = ItpMetaHelper::getOutput($content, $row->tag);
+        
+        $row->set("content",     $content);
+        $row->set("output",      $output);
+        
+        $row->store();
+
+        // Prepare result that will be returned
+        $result          = new stdClass();
+        $result->id      = $row->id;
+        $result->content = $row->content;
+        $result->output  = $row->output;
+        
+        return $result;
+        
+    }
 	
 }
