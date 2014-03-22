@@ -3,38 +3,42 @@
  * @package      ITPMeta
  * @subpackage   Libraries
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 defined('JPATH_PLATFORM') or die;
 
 abstract class ItpMetaExtension {
 
-    /**
-     * @var JSite
-     */
     protected $db;
+    
     protected $uri;
     protected $view;
     protected $task;
     protected $menuItemId;
     
+    protected $genMetaDesc = false;
+    
     protected $data;
     
+    abstract public function getData();
+    
     public function __construct($uri, $options) {
-        $this->db         = JFactory::getDbo();
-        $this->uri        = $uri;
-        $this->view       = JArrayHelper::getValue($options, "view");
-        $this->task       = JArrayHelper::getValue($options, "task");
-        $this->menuItemId = JArrayHelper::getValue($options, "menu_item_id");
+        
+        $this->uri         = $uri;
+        $this->view        = JArrayHelper::getValue($options, "view");
+        $this->task        = JArrayHelper::getValue($options, "task");
+        $this->menuItemId  = JArrayHelper::getValue($options, "menu_item_id");
+        $this->genMetaDesc = JArrayHelper::getValue($options, "generate_metadesc", false, "bool");
+        
     }
     
-    public static function getDataByMenuItem($menuItemId) {
+    public function setDb(JDatabase $db) {
+        $this->db = $db;
+    }
+    
+    protected static function getDataByMenuItem($menuItemId) {
         
         $data              = array();
         
@@ -55,6 +59,34 @@ abstract class ItpMetaExtension {
         
     }
     
-    abstract public function getData();
+    protected function clean($content) {
+        
+        $content = strip_tags($content);
+        
+        return JString::trim(preg_replace('/\r|\n/', ' ', $content));
+    }
+    
+    protected function prepareMetaDesc($content) {
+    
+        $minLength = 50;
+        $length    = 160;
+        $strLength = JString::strlen($content);
+        
+        $metaDesc  = "";
+        
+        $content   = $this->clean($content);
+    
+        if($minLength <= JString::strlen($content)) {
+    
+            if($strLength > $length) {
+                $pos      = JString::strpos($content, ' ', $length);
+                $metaDesc = JString::substr($content, 0, $pos);
+            } else {
+                $metaDesc = $content;
+            }
+        }
+    
+        return $metaDesc;
+    
+    }
 }
-

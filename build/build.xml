@@ -3,7 +3,7 @@
 	<description>ITPMeta Lite Ant Build File</description>
 
 	<!-- load variables from config file -->
-	<property name="cfg.configFile" location="antconfig.txt" />
+	<property name="cfg.configFile" location="antconfig_j3.txt" />
 	<loadproperties srcfile="${cfg.configFile}" />
 
 	<!-- auto values but should be checked -->
@@ -12,10 +12,8 @@
 	
 	<!-- destination directories -->
 	<property name="cfg.adminDestDir" location="${cfg.pkgDir}/admin" />
-	<property name="cfg.adminLanguageDestDir" location="${cfg.pkgDir}/admin/language" />
 	<property name="cfg.mediaDestDir" location="${cfg.pkgDir}/media" />
 	<property name="cfg.siteDestDir" location="${cfg.pkgDir}/site" />
-	<property name="cfg.siteLanguageFilesDir" location="${cfg.pkgDir}/site/language" />
 	<property name="cfg.librariesDestDir" location="${cfg.pkgDir}/libraries" />
 	
 	<property name="cfg.pluginsDestDir" location="${cfg.pkgDir}/plugins" />
@@ -27,10 +25,6 @@
 	<property name="cfg.mediaSourceDir" location="${cfg.sourceDir}/media" />
 	<property name="cfg.librariesSourceDir" location="${cfg.sourceDir}/libraries" />
 
-	<!-- language source -->
-	<property name="cfg.adminLanguageSourceDir" location="${cfg.sourceDir}/administrator/language/en-GB" />
-	<property name="cfg.siteLanguageSourceDir" location="${cfg.sourceDir}/language/en-GB" />
-
 	<!-- plugins source -->
     <property name="cfg.pluginsSourceDir" location="${cfg.sourceDir}/plugins" />
 	
@@ -39,12 +33,10 @@
 	
 	<target name="build" depends="init, build_component, info" />
 
-	<target name="init" description="creates nessecary directory to build with">
+	<target name="init" description="creates necessary directory to build with">
 		<mkdir dir="${cfg.pkgDir}/admin" />
-		<mkdir dir="${cfg.pkgDir}/admin/language" />
 		<mkdir dir="${cfg.pkgDir}/media" />
 		<mkdir dir="${cfg.pkgDir}/site" />
-		<mkdir dir="${cfg.pkgDir}/site/language" />
 		<mkdir dir="${cfg.pkgDir}/libraries" />
 		<mkdir dir="${cfg.pkgDir}/packages" />
 		<mkdir dir="${cfg.pkgDir}/modules" />
@@ -52,7 +44,6 @@
 		
 		<!-- plugins -->
 		<mkdir dir="${cfg.pkgDir}/plugins/system/plg_system_itpmeta" />
-		<mkdir dir="${cfg.pkgDir}/plugins/system/plg_system_itpmeta/language" />
 		
 	</target>
 
@@ -83,17 +74,6 @@
 		</fileset>
 	</copy>
 
-	<!-- copy admin language files of the componet -->
-	<copy file="${cfg.adminLanguageSourceDir}/en-GB.${cfg.comName}.ini" todir="${cfg.adminLanguageDestDir}/en-GB/" />
-	<copy file="${cfg.adminLanguageSourceDir}/en-GB.${cfg.comName}.sys.ini" todir="${cfg.adminLanguageDestDir}/en-GB/" />
-	<copy file="${cfg.adminLanguageSourceDir}/index.html" todir="${cfg.adminLanguageDestDir}/" />
-	<copy file="${cfg.adminLanguageSourceDir}/index.html" todir="${cfg.adminLanguageDestDir}/en-GB/" />
-
-	<!-- copy site language files of the componet -->
-	<copy file="${cfg.siteLanguageSourceDir}/en-GB.${cfg.comName}.ini" todir="${cfg.siteLanguageFilesDir}/en-GB/" />
-	<copy file="${cfg.siteLanguageSourceDir}/index.html" todir="${cfg.siteLanguageFilesDir}/" />
-	<copy file="${cfg.siteLanguageSourceDir}/index.html" todir="${cfg.siteLanguageFilesDir}/en-GB/" />
-
 	<!-- copy main files of the componet -->
     <copy file="${cfg.adminSourceDir}/${cfg.comName}/install.php" todir="${cfg.pkgDir}" />
     <copy file="${cfg.adminSourceDir}/${cfg.comName}/README.md" todir="${cfg.pkgDir}" />
@@ -117,12 +97,6 @@
             <include name="**/*" />
         </fileset>
     </copy>
-	
-	<!-- copy plugin language files of system/itpmeta -->
-    <copy file="${cfg.adminLanguageSourceDir}/en-GB.plg_system_itpmeta.ini" todir="${cfg.pluginsDestDir}/system/plg_system_itpmeta/language/en-GB" />
-    <copy file="${cfg.adminLanguageSourceDir}/en-GB.plg_system_itpmeta.sys.ini" todir="${cfg.pluginsDestDir}/system/plg_system_itpmeta/language/en-GB" />
-    <copy file="${cfg.adminLanguageSourceDir}/index.html" todir="${cfg.pluginsDestDir}/system/plg_system_itpmeta/language" />
-    <copy file="${cfg.adminLanguageSourceDir}/index.html" todir="${cfg.pluginsDestDir}/system/plg_system_itpmeta/language/en-GB/" />
 	
 	<!-- END COPY PLUGINS -->
 	

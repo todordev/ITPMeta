@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -20,12 +16,6 @@ class ItpMetaModelTag extends JModelAdmin {
     
     const AUTOUPDATE_DISABLED = 0;
     const AUTOUPDATE_ENABLED  = 1;
-    
-    /**
-     * @var     string  The prefix to use with controller messages.
-     * @since   1.6
-     */
-    protected $text_prefix = 'COM_ITPMETA';
     
     /**
      * Returns a reference to the a Table object, always creating it.
@@ -98,15 +88,15 @@ class ItpMetaModelTag extends JModelAdmin {
         if(empty($data->url_id)) {
             $data->url_id = $this->getState($this->getName().".url_id", 0);
         }
-        
+            
         return $data;
     }
 
 	/**
      * Save an item
      * 
-     * @param $data        All data for the category in an array
-     * @return integer Item ID
+     * @param $data    All data for the category in an array.
+     * 
      */
     public function save($data){
         
@@ -124,11 +114,10 @@ class ItpMetaModelTag extends JModelAdmin {
         $row->load($id);
         
         // Disable autoupdate if there is a difference 
-        // between new and old values
+        // between new and old values.
         $this->disableAutoupdate($row, $title, $content);
         
         // Save new data
-        
         $row->set("title",       $title);
         $row->set("name",        $name);
         $row->set("type",        $type);
@@ -138,7 +127,7 @@ class ItpMetaModelTag extends JModelAdmin {
         $row->set("url_id",      $urlId);
         
         // Prepare the row for saving
-		$this->prepareTable($row, $title, $content);
+		$this->prepareTable($row);
 		
         $row->store();
         
@@ -151,18 +140,18 @@ class ItpMetaModelTag extends JModelAdmin {
 	 *
 	 * @since	1.6
 	 */
-	protected function prepareTable(&$table) {
+	protected function prepareTable($table) {
 	    
         // get maximum order number
-		if (empty($table->id)) {
+		if (!$table->id) {
 
 			// Set ordering to the last item if not set
-			if (empty($table->ordering)) {
+			if (!$table->ordering) {
 				$db     = JFactory::getDbo();
 				$query  = $db->getQuery(true);
 				$query
 				    ->select("MAX(a.ordering)")
-				    ->from($db->quoteName("#__itpm_tags") . " AS a")
+				    ->from($db->quoteName("#__itpm_tags", "a"))
 				    ->where("a.url_id =". (int)$table->url_id);
 				
 			    $db->setQuery($query, 0, 1);
@@ -171,9 +160,8 @@ class ItpMetaModelTag extends JModelAdmin {
 				$table->ordering = $max+1;
 			}
 		}
-        
+		
 	}
-    
 	
 	/**
 	 * Disable auto update if user edit the tag content.
@@ -206,7 +194,7 @@ class ItpMetaModelTag extends JModelAdmin {
 		}
 		
 	}
-	
+    
 	/**
 	 * A protected method to get a set of ordering conditions.
 	 *
@@ -241,7 +229,7 @@ class ItpMetaModelTag extends JModelAdmin {
             $query
                 ->delete()
                 ->from($db->quoteName('#__itpm_tags'))
-                ->where('url_id IN ('.implode(",", $pks).')');
+                ->where($db->quoteName('url_id') .' IN (' .implode(",", $pks). ')');
     
             $db->setQuery($query);
             $db->query();
@@ -259,30 +247,33 @@ class ItpMetaModelTag extends JModelAdmin {
      */
     public function saveAjax($itemId, $content) {
         
-        // Load item data
-        $row = $this->getTable();
-        $row->load($itemId);
+        jimport("itpmeta.tag.base");
+        $tag = new ITPMetaTag($itemId);
+        $tag->setDb(JFactory::getDbo());
+        $tag->load();
         
-        if(empty($row->id)) {
+        if(!$tag->getId()) {
             return null;
         }
-
-        // Generate output
-        $output = ItpMetaHelper::getOutput($content, $row->tag);
         
-        $row->set("content",     $content);
-        $row->set("output",      $output);
-        
-        $row->store();
+        $tag->setContent($content);
+        $tag->save();
 
         // Prepare result that will be returned
         $result          = new stdClass();
-        $result->id      = $row->id;
-        $result->content = $row->content;
-        $result->output  = $row->output;
+        $result->id      = $tag->getId();
+        $result->content = $tag->getContent();
+        $result->output  = $tag->getOutput();
+        
+        // Get URL.
+        jimport("itpmeta.url");
+        $uri = new ITPMetaUri($tag->getUrlId());
+        $uri->setDb(JFactory::getDbo());
+        $uri->load();
+        
+        $result->autoupdate = $uri->isAutoupdate();
         
         return $result;
         
     }
-	
 }

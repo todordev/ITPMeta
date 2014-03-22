@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -22,12 +18,6 @@ jimport('joomla.application.component.modeladmin');
  * @author Todor Iliev
  */
 class ItpMetaModelGlobal extends JModelAdmin {
-    
-    /**
-     * @var     string  The prefix to use with controller messages.
-     * @since   1.6
-     */
-    protected $text_prefix = 'COM_ITPMETA';
     
     /**
      * Returns a reference to the a Table object, always creating it.
@@ -122,7 +112,7 @@ class ItpMetaModelGlobal extends JModelAdmin {
 	 *
 	 * @since	1.6
 	 */
-	protected function prepareTable(&$table) {
+	protected function prepareTable($table) {
 	    
         // get maximum order number
 		if (empty($table->id)) {
@@ -133,7 +123,7 @@ class ItpMetaModelGlobal extends JModelAdmin {
 				$query  = $db->getQuery(true);
 				$query
 				    ->select("MAX(a.ordering)")
-				    ->from($db->quoteName("#__itpm_global_tags") . " AS a");
+				    ->from($db->quoteName("#__itpm_global_tags", "a"));
 				
 			    $db->setQuery($query, 0, 1);
 				$max   = $db->loadResult();

@@ -6,21 +6,29 @@
             description="JGLOBAL_FIELD_ID_DESC"/>
             
         <field 
-            name="uri" type="text" class="inputbox"
-            size="100" 
+            name="uri" type="text" class="span12"
             label="COM_ITPMETA_URI_STRING" 
             description="COM_ITPMETA_URI_STRING_DESC"
-            required="true" 
-        />
+            required="true"
+         />
         
         <field
-            name="published" type="list" class="inputbox"
+            name="published" type="radio" class="btn-group"
             label="JSTATUS"
             description="COM_ITPMETA_FIELD_STATE_DESC"
             size="1"
             default="1">
             <option value="0">JUNPUBLISHED</option>
             <option value="1">JPUBLISHED</option>
+        </field>
+        
+        <field
+            name="autoupdate" type="radio" class="btn-group"
+            label="COM_ITPMETA_AUTOUPDATE"
+            description="COM_ITPMETA_AUTOUPDATE_DESC"
+            default="1">
+            <option value="0">JOFF</option>
+            <option value="1">JON</option>
         </field>
         
 	</fieldset>

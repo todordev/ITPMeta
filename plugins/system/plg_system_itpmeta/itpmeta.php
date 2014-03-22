@@ -3,12 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Plugins
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -16,32 +12,85 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.helper');
 jimport('joomla.plugin.plugin');
+jimport("itpmeta.init");
 
 /**
-* ITPMeta plugin
+* This plugin puts tags to the page code.
 *
 * @package 		ITPMeta
 * @subpackage	Plugins
 */
 class plgSystemItpMeta extends JPlugin {
 	
-    const   COLLECTION_TYPE_STRICT     = 1;
+    /**
+     * These are tags that won't be overridden.
+     * 
+     * @var array
+     */
+    private $notOverridden = array("google_alternate");
     
-    private $uriString = "";
+    /**
+     * Get clean URI.
+     * 
+     * @return string
+     */
+    protected function getUri() {
+        
+        $filter     = JFilterInput::getInstance();
+        
+        $uri        = JUri::getInstance();
+        $uriString  = $uri->toString(array('path', 'query'));
+        $uriString  = $filter->clean($uriString);
+        
+        // Load tags for current address
+        $itpUri  = ITPMetaUri::getInstance($uriString, JFactory::getDbo());
+        $itpUri->setNotOverridden($this->notOverridden);
+        
+        return $itpUri;
+        
+    }
     
-    public function init() {
-	    
-        jimport("itpmeta.uri");
+    private function isRestricted() {
+         
+        $app = JFactory::getApplication();
+        /** @var $app JSite **/
+    
+        if($app->isAdmin()) {
+            return true;
+        }
+    
+        $document = JFactory::getDocument();
+        /** @var $document JDocumentHTML **/
+    
+        $type = $document->getType();
+        if(strcmp("html", $type) != 0) {
+            return true;
+        }
+    
+        // It works only for GET request
+        $method = $app->input->getMethod();
+        if(strcmp("GET", $method) !== 0) {
+            return true;
+        }
+    
+        // Check component enabled
+        if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
+            return true;
+        }
+    
+        // Get current URI and load tags for current address.
+        $itpUri  = $this->getUri();
+         
+        // Return if the URI is not published.
+        if(!$itpUri->isPublished()) {
+            return true;
+        }
         
-	    // Get current URI
-        $uri  = JUri::getInstance();
-        $this->uriString  = $uri->toString(array('path', 'query'));
-        
-	}
-	
+        return false;
+    }
+    
 	/**
-	 * Put tags into the HEAD tag
-	 * 
+	 * Put tags into the HEAD tag.
 	 */
 	public function onBeforeCompileHead() {
 	    
@@ -50,24 +99,23 @@ class plgSystemItpMeta extends JPlugin {
 	        return;
 	    }
 	    
-	    // Initialize URI string
-	    $this->init();
-	    
         // If user want to put tags after the <head> tag
-        // leave from this method. It is the method that puts tags to the head standardly.
+        // leave from this method. It is the method that puts tags to the head no.
         if($this->params->get("tags_position", 0)) {
             return;
         }
         
-        $document = JFactory::getDocument();
-        /** @var $document JDocumentHTML **/
+        // Get current URI and load tags for current address.
+        $itpUri  = $this->getUri();
         
-        // Load tags for current address
-        $itpUri  = ITPMetaUri::getInstance($this->uriString);
         $tags    = $itpUri->getTags();
         
         // Add metadata
         if(!empty($tags)) {
+            
+            $document = JFactory::getDocument();
+            /** @var $document JDocumentHTML **/
+            
             foreach($tags as $tag) {
                 $tag->output = JString::trim($tag->output);
                 if(!empty($tag->output)) {
@@ -102,7 +150,7 @@ class plgSystemItpMeta extends JPlugin {
         }
         
         // Put open graph namespace in the HTML element
-        $buffer = $this->putNamespaces($this->params, $buffer);
+        $buffer = $this->putNamespaces($buffer, $this->params);
         
         // Add code after body tag and before closing body tag
         $buffer = $this->putAdditionalCode($buffer);
@@ -111,42 +159,17 @@ class plgSystemItpMeta extends JPlugin {
         
 	}
 	
-	private function isRestricted() {
-	    
-	    $app = JFactory::getApplication();
-        /** @var $app JSite **/
-
-        if($app->isAdmin()) {
-            return true;
-        }
-        
-        $document = JFactory::getDocument();
-        /** @var $document JDocumentHTML **/
-        
-        $type = $document->getType();
-        if(strcmp("html",$type) != 0) {
-             return true;   
-        }
-        
-        // It works only for GET request
-        $method = $app->input->getMethod();
-        if(strcmp("GET", $method) !== 0) {
-            return true;
-        }
-        
-        // Check component enabled
-	    if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
-            return true;
-        }
-        
-        return false;
-	}
-	
-	
+	/**
+	 * Put tags after opening HEAD tag.
+	 *
+	 * @param string $buffer
+	 * @return string
+	 */
 	private function putAfterHead($buffer) {
 	    
-	    // Load tags for current address
-	    $itpUri  = ITPMetaUri::getInstance($this->uriString);
+	    // Get current URI and load tags for current address.
+	    $itpUri  = $this->getUri();
+	    
 	    $tags    = $itpUri->getTags();
 	    
         if(empty($tags)) {
@@ -176,10 +199,17 @@ class plgSystemItpMeta extends JPlugin {
         return $buffer;
 	} 
 	
+	/**
+	 * Put tags after tag TITLE.
+	 * 
+	 * @param string $buffer
+	 * @return string
+	 */
 	private function putAfterTitle($buffer) {
 	    
-	    // Load tags for current address
-        $itpUri  = ITPMetaUri::getInstance($this->uriString);
+	    // Get current URI and load tags for current address.
+        $itpUri  = $this->getUri();
+        
         $tags    = $itpUri->getTags();
         
         if(empty($tags)) {
@@ -212,24 +242,29 @@ class plgSystemItpMeta extends JPlugin {
 	 */
 	private function putAdditionalCode($buffer) {
 	    
-	    $itpUri = ITPMetaUri::getInstance($this->uriString);
+	    // Get current URI and load tags for current address.
+        $itpUri  = $this->getUri();
 	    
 	    // If the URI does not exist or not published
 	    // we don't change the buffer
-	    if(!$itpUri->id) {
+	    if(!$itpUri->getId()) {
 	        return $buffer;
 	    }
 	    
-	    if(!empty($itpUri->after_body_tag)) {
+	    // After BODY tag.
+	    $script = $itpUri->getScript("after");
+	    if(!empty($script)) {
 	        $matches = array();
 	        if(preg_match('/(<body.*?>)/i', $buffer, $matches)) {
-	            $afterBody = $matches[0]."\n".$itpUri->after_body_tag;
+	            $afterBody = $matches[0]."\n".$script;
 	            $buffer = str_replace($matches[0], $afterBody, $buffer);
 	        }
 	    }
 	    
-	    if(!empty($itpUri->before_body_tag)) {
-            $beforeBody  = "\n".$itpUri->before_body_tag."\n</body>";
+	    // Before BODY tag.
+	    $script = $itpUri->getScript("before");
+	    if(!empty($script)) {
+            $beforeBody  = "\n".$script."\n</body>";
             $buffer     = str_replace("</body>", $beforeBody, $buffer);
 	    }
 	    
@@ -242,7 +277,7 @@ class plgSystemItpMeta extends JPlugin {
 	 * @param object $params Component parameters
 	 * @param string $buffer Output buffer
 	 */
-	private function putNamespaces($params, $buffer) {
+	private function putNamespaces($buffer, $params) {
 	    
 	    $prefixes = array();
 	    
@@ -266,9 +301,19 @@ class plgSystemItpMeta extends JPlugin {
             $prefixes[] = "blog: http://ogp.me/ns/blog#";
         }
         
+	    // OpenGraph blog namespace
+	    if($params->get("opengraph_business_scheme", 0)) {
+            $prefixes[] = "business: http://ogp.me/ns/business#";
+        }
+        
+	    // OpenGraph blog namespace
+	    if($params->get("opengraph_product_scheme", 0)) {
+            $prefixes[] = "product: http://ogp.me/ns/product#";
+        }
+        
 	    // OpenGraph book namespace
 	    if($params->get("opengraph_book_scheme", 0)) {
-            $prefixes[] = "book: http://ogp.me/ns/book#";
+            $prefixes[] = "books: http://ogp.me/ns/books#";
         }
         
 	    // OpenGraph profile namespace
@@ -301,6 +346,7 @@ class plgSystemItpMeta extends JPlugin {
             
             $newHtmlAttr = '<html '.$string; 
             $buffer   = str_replace("<html", $newHtmlAttr, $buffer);
+            
         }
         
         return $buffer;

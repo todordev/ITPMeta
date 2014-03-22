@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -17,7 +13,6 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.modellist');
 
 class ItpMetaModelTags extends JModelList {
-    
     
 	/**
      * Constructor.
@@ -58,7 +53,7 @@ class ItpMetaModelTags extends JModelList {
         // URL ID
         $value = $app->getUserStateFromRequest("url.id", "id", 0, "int");
         $this->setState('filter.url_id', $value);
-        
+
         // List state information.
         parent::populateState('a.ordering', 'asc');
     }
@@ -101,11 +96,11 @@ class ItpMetaModelTags extends JModelList {
                 'a.id, a.title, a.type, a.tag, a.content, a.output, a.ordering'
             )
         );
-        $query->from($db->quoteName("#__itpm_tags").' AS a');
+        $query->from($db->quoteName("#__itpm_tags", "a"));
 
         // Filter by URL ID
         $urlId = $this->getState('filter.url_id');
-        $query->where(' a.url_id = '.(int)$urlId);
+        $query->where('a.url_id = '.(int)$urlId);
         
         // Add the list ordering clause.
         $orderString = $this->getOrderString();

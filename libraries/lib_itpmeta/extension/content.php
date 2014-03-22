@@ -3,12 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Libraries
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 defined('JPATH_PLATFORM') or die;
@@ -21,24 +17,14 @@ jimport("itpmeta.extension");
  */
 class ItpMetaExtensionContent extends ItpMetaExtension {
 
-    /**
-     * @var JSite
-     */
     protected $db;
+    
     protected $uri;
     protected $view;
     protected $task;
     protected $menuItemId;
     
     protected $data;
-    
-    public function __construct($uri, $options) {
-        $this->db         = JFactory::getDbo();
-        $this->uri        = $uri;
-        $this->view       = JArrayHelper::getValue($options, "view");
-        $this->task       = JArrayHelper::getValue($options, "task");
-        $this->menuItemId = JArrayHelper::getValue($options, "menu_item_id");
-    }
     
     public function getData() {
         
@@ -80,13 +66,14 @@ class ItpMetaExtensionContent extends ItpMetaExtension {
             return null;
         }
         
-        $data   = array();
+        $excluded = array("params", "description");
+        $data     = array();
         
         $query  = $this->db->getQuery(true);
         
         $query
-            ->select("a.id, a.title, a.params, a.metadesc, a.created_time AS created, a.modified_time AS modified")
-            ->from($this->db->quoteName("#__categories"). " AS a")
+            ->select("a.title, a.description, a.params, a.metadesc, a.created_time AS created, a.modified_time AS modified")
+            ->from($this->db->quoteName("#__categories", "a"))
             ->where("a.id=".(int)$categoryId);
             
         $this->db->setQuery($query);
@@ -95,11 +82,24 @@ class ItpMetaExtensionContent extends ItpMetaExtension {
         if(!empty($result)) {
             
             foreach($result as $key => $value) {
-                $data[$key] = $value;
+                if(!in_array($key, $excluded)) {
+                    $data[$key] = $value;
+                }
             }
             
-            $params         = json_decode($data["params"]);
-            $data["image"]  = $params->image;
+            // Get image
+            $params         = json_decode($result["params"]);
+            $data["image"]  = null;
+            
+            if(!empty($params->image)) {
+                $data["image"]  = $params->image;
+            }
+            
+            if(!$data["metadesc"] AND !empty($this->genMetaDesc)) {
+                $data["metadesc"] = $this->prepareMetaDesc($result["description"]);
+            }
+            
+            unset($result);
         }
         
         return $data;
@@ -115,14 +115,15 @@ class ItpMetaExtensionContent extends ItpMetaExtension {
             return null;
         }
         
+        $excluded = array("params", "description");
         $data   = array();
         
         $query  = $this->db->getQuery(true);
         
         $query
-            ->select("a.id, a.title, a.images, a.metadesc, a.created, a.modified")
-            ->from($this->db->quoteName("#__content"). " AS a")
-            ->where("a.id=".(int)$articleId);
+            ->select("a.title, a.introtext, a.fulltext, a.images, a.metadesc, a.created, a.modified")
+            ->from($this->db->quoteName("#__content", "a"))
+            ->where("a.id = ".(int)$articleId);
             
         $this->db->setQuery($query);
         $result = $this->db->loadAssoc();
@@ -130,11 +131,13 @@ class ItpMetaExtensionContent extends ItpMetaExtension {
         if(!empty($result)) {
 
             foreach($result as $key => $value) {
-                $data[$key] = $value;
+                if(!in_array($key, $excluded)) {
+                    $data[$key] = $value;
+                }
             }
             
             $data["image"] = "";
-            $images        = json_decode($data["images"], true);
+            $images        = json_decode($result["images"], true);
             if(isset($images["image_intro"]) AND !empty($images["image_intro"])) {
                 $data["image"] = $images["image_intro"];
             }
@@ -142,6 +145,19 @@ class ItpMetaExtensionContent extends ItpMetaExtension {
             if(isset($images["image_fulltext"]) AND !empty($images["image_fulltext"])) {
                 $data["image"] = $images["image_fulltext"];
             }
+            
+            // Generate description
+            if(!$data["metadesc"] AND !empty($this->genMetaDesc)) {
+                
+                $data["metadesc"] = $this->prepareMetaDesc($result["introtext"]);
+                
+                if(!$data["metadesc"]) {
+                    $data["metadesc"] = $this->prepareMetaDesc($result["fulltext"]);
+                }
+                
+            }
+            
+            unset($result);
         }
         
         return $data;

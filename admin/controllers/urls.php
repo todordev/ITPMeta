@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // No direct access
@@ -24,11 +20,16 @@ jimport("itprism.controller.admin");
   */
 class ItpMetaControllerUrls extends ITPrismControllerAdmin {
     
-    /**
-     * @var     string  The prefix to use with controller messages.
-     * @since   1.6
-     */
-    protected $text_prefix = 'COM_ITPMETA';
+    public function __construct($config = array()) {
+    
+        parent::__construct($config);
+    
+        // Define task mappings.
+    
+        // Value = 0
+        $this->registerTask('disableau', 'enableau');
+    
+    }
     
     /**
      * Proxy for getModel.
@@ -41,7 +42,7 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin {
     
     /**
 	 * Remove items.
-	 * 
+	 *
 	 * @return  void
 	 * @since   11.1
 	 */
@@ -50,9 +51,9 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin {
 	    $app       = JFactory::getApplication();
         /** @var $app JAdministrator **/
 	    
-	    $redurectData = array (
+	    $redurectOptions = array (
             "view" => "urls"
-	    );
+        );
 	    
 	    $cid       = $app->input->post->get("cid", array(), "array");
 	    $modelTags = $this->getModel("Tag");
@@ -66,36 +67,7 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin {
         }
         
         $msg  = JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid));
-        $this->displayMessage($msg, $redurectData);
-	    
-	}
-	
-	/**
-	 * Disable autoupdate
-	 * 
-	 * @return  void
-	 */
-	public function dautoupdate() {
-	    
-	    $app       = JFactory::getApplication();
-        /** @var $app JAdministrator **/
-
-	    $redurectData = array (
-            "view" => "urls"
-	    );
-	    
-	    $cid       = $app->input->post->get("cid", array(), "array");
-	    $model     = $this->getModel();
-	    
-	    try {
-	        $model->updateAutoupdate($cid, 0);
-        } catch ( Exception $e ) {
-            JLog::add($e->getMessage());
-            throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
-        }
-        
-        $msg  = JText::plural($this->text_prefix . '_N_ITEMS_AUTOUPDATE_DISABLED', count($cid));
-        $this->displayMessage($msg, $redurectData);
+        $this->displayMessage($msg, $redurectOptions);
 	    
 	}
 	
@@ -104,27 +76,48 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin {
 	 * 
 	 * @return  void
 	 */
-	public function eautoupdate() {
+	public function enableau() {
 	    
-	    $app       = JFactory::getApplication();
-        /** @var $app JAdministrator **/
+	    // Check for request forgeries
+	    JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 	    
-	    $redurectData = array (
+	    $redurectOptions = array (
             "view" => "urls"
 	    );
 	    
-	    $cid       = $app->input->post->get("cid", array(), "array");
-	    $model     = $this->getModel();
+	    $cid       = $this->input->post->get("cid", array(), "array");
+	    JArrayHelper::toInteger($cid);
+	    
+	    $data  = array(
+            'enableau'    => 1,
+            'disableau' => 0
+	    );
+	    
+	    $task  = $this->getTask();
+	    $value = JArrayHelper::getValue($data, $task, 0, 'int');
+	    
+	    if (empty($cid)) {
+	        $this->displayNotice(JText::_($this->text_prefix . '_ERROR_NO_ITEM_SELECTED'), $redurectOptions);
+	        return;
+	    }
 	    
 	    try {
-	        $model->updateAutoupdate($cid, 1);
+	        
+	        $model     = $this->getModel();
+	        $model->updateAutoupdate($cid, $value);
+	        
         } catch ( Exception $e ) {
             JLog::add($e->getMessage());
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
         
-        $msg  = JText::plural($this->text_prefix . '_N_ITEMS_AUTOUPDATE_ENABLED', count($cid));
-        $this->displayMessage($msg, $redurectData);
+        if ($value == 1) {
+            $msg = $this->text_prefix . '_N_ITEMS_AUTOUPDATE_ENABLED';
+        } else {
+            $msg = $this->text_prefix . '_N_ITEMS_AUTOUPDATE_DISABLED';
+        }
+        
+        $this->displayMessage(JText::plural($msg, count($cid)), $redurectOptions);
 	    
 	}
 	

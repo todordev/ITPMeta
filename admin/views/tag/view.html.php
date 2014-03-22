@@ -1,23 +1,18 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // No direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.html.pane');
 jimport('joomla.application.component.view');
 
-class ITPMetaViewTag extends JView {
+class ITPMetaViewTag extends JViewLegacy {
     
 	protected $state;
     protected $item;
@@ -42,17 +37,14 @@ class ITPMetaViewTag extends JView {
 
         $this->params  = $this->state->get("params");
         
-        $this->version = new ItpMetaVersion();
-        
         // Prepare actions, behaviors, scritps and document
         $this->addToolbar();
         $this->setDocument();
         
         parent::display($tpl);
-        
     }
     
-	/**
+    /**
      * Add the page title and toolbar.
      *
      * @since   1.6
@@ -72,27 +64,27 @@ class ITPMetaViewTag extends JView {
         
         if(!$isNew){
             JToolBarHelper::cancel('tag.cancel', 'JTOOLBAR_CANCEL');
-            JToolBarHelper::title($this->documentTitle, "itp-edit-tag");
+            JToolBarHelper::title($this->documentTitle);
         }else{
             JToolBarHelper::cancel('tag.cancel', 'JTOOLBAR_CLOSE');
-            JToolBarHelper::title($this->documentTitle, "itp-new-tag");
+            JToolBarHelper::title($this->documentTitle);
         }
         
     }
 
     protected function setDocument() {
         
-        $version = $this->version->getShortVersion();
-        
         // Add scripts
         JHTML::_('behavior.framework');
         JHtml::_('behavior.tooltip');
         JHtml::_('behavior.formvalidation');
         
-        $this->document->addScript('../media/'.$this->option.'/js/jquery.js');
-        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js?v='.$version);
-        $this->document->addScript('../media/'.$this->option.'/js/admin/tag_form.js?v='.$version);
-        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js?v='.$version);
+        JHtml::_('formbehavior.chosen', 'select');
+        JHtml::_('bootstrap.framework');
+
+        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/tag_form.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js');
         
     }
     

@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -16,7 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ITPMetaViewUrls extends JView {
+class ITPMetaViewUrls extends JViewLegacy {
     
     protected $items;
     protected $pagination;
@@ -37,23 +33,40 @@ class ITPMetaViewUrls extends JView {
         
         $this->numbers    = $this->get("Numbers");
         
-        // Prepare filters
-        $this->listOrder  = $this->escape($this->state->get('list.ordering'));
-        $this->listDirn   = $this->escape($this->state->get('list.direction'));
-        
-        $this->version    = new ItpMetaVersion();
-        
-        // Load HTML helpe
+        // Load HTML helper
         JHtml::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'html');
+        
+        $this->prepareSorting();
         
         // Add submenu
         ItpMetaHelper::addSubmenu($this->getName());
         
         // Prepare actions
         $this->addToolbar();
+        $this->addSidebar();
         $this->setDocument();
         
         parent::display($tpl);
+    }
+    
+	/**
+     * 
+     * Prepare sortable fields, sort values and filters. 
+     */
+    protected function prepareSorting() {
+        
+        // Prepare filters
+        $this->listOrder  = $this->escape($this->state->get('list.ordering'));
+        $this->listDirn   = $this->escape($this->state->get('list.direction'));
+        $this->saveOrder  = (strcmp($this->listOrder, 'a.ordering') != 0 ) ? false : true;
+        
+        $this->sortFields = array(
+			'a.published'  => JText::_('JSTATUS'),
+        	'a.autoupdate' => JText::_('COM_ITPMETA_AUTOUPDATE'),
+        	'a.uri'        => JText::_('COM_ITPMETA_URI_STRING'),
+            'a.id'         => JText::_('JGRID_HEADING_ID')
+		);
+        
     }
     
     /**
@@ -64,7 +77,7 @@ class ITPMetaViewUrls extends JView {
     protected function addToolbar(){
         
         // Set toolbar items for the page
-        JToolBarHelper::title(JText::_('COM_ITPMETA_URLS_MANAGER'), 'itp-urls');
+        JToolBarHelper::title(JText::_('COM_ITPMETA_URLS_MANAGER'));
         
         JToolBarHelper::addNew('url.add');
         JToolBarHelper::editList('url.edit');
@@ -74,9 +87,33 @@ class ITPMetaViewUrls extends JView {
         JToolBarHelper::divider();
         JToolBarHelper::deleteList(JText::_("COM_ITPMETA_DELETE_ITEMS_QUESTION"), "urls.delete");
         JToolBarHelper::divider();
-        JToolBarHelper::custom('dashboard.backToDashboard', "itp-dashboard-back", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
+        JToolBarHelper::custom('dashboard.backToDashboard', "dashboard", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
     }
 
+	/**
+     * 
+     * Add a menu on the sidebar of page
+     */
+    protected function addSidebar() {
+        
+        JHtmlSidebar::setAction('index.php?option='.$this->option.'&view='.$this->getName());
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_PUBLISHED'),
+			'filter_state',
+			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array("archived" => false, "trash"=>false)), 'value', 'text', $this->state->get('filter.state'), true)
+		);
+		
+		JHtmlSidebar::addFilter(
+			JText::_('COM_ITPMETA_SELECT_AUTOUPDATE'),
+			'filter_autoupdate',
+			JHtml::_('select.options', JHtml::_('itpmeta.enabledOptions'), 'value', 'text', $this->state->get('filter.autoupdate'), true)
+		);
+		
+		$this->sidebar = JHtmlSidebar::render();
+
+    }
+    
 	/**
 	 * Method to set up the document properties
 	 *
@@ -84,22 +121,22 @@ class ITPMetaViewUrls extends JView {
 	 */
 	protected function setDocument() {
 	    
-	    $version = $this->version->getShortVersion();
-	    
 		$this->document->setTitle(JText::_('COM_ITPMETA_URLS_MANAGER_TITLE'));
 		
-		// Styles
-		$this->document->addStylesheet('../media/'.$this->option.'/css/bootstrap.min.css');
+		// Load language string in JavaScript
+		JText::script('COM_ITPMETA_ERROR_NO_ITEM_SELECTED');
 		
-        // Scripts
-		JHTML::_('behavior.framework');
-		JHtml::_('behavior.tooltip');
-		
-		$this->document->addScript('../media/'.$this->option.'/js/jquery.js');
-		$this->document->addScript('../media/'.$this->option.'/js/noconflict.js');
-        $this->document->addScript('../media/'.$this->option.'/js/bootstrap.min.js');
-        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js');
+		// Add behaviors
+        JHTML::_('behavior.framework');
+        JHtml::_('behavior.tooltip');
+        JHTML::_('behavior.modal');
         
+        JHtml::_('behavior.multiselect');
+        JHtml::_('formbehavior.chosen', 'select');
+        JHtml::_('bootstrap.tooltip');
+        
+        JHtml::_("itprism.ui.joomla_list");
+        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js');
         
 	}
 	

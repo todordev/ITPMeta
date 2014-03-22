@@ -1,36 +1,40 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Library
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
-// no direct access
-defined('_JEXEC') or die;
+defined('JPATH_PLATFORM') or die;
 
-/**
- * It is the component helper class
- */
-class ItpMetaTags {
+class ItpMetaTags implements Iterator, Countable, ArrayAccess {
 	
-    protected $db;
-    protected $uri;
-    protected $tags = array();
+    protected $items  = array();
     
-    public function __construct(ITPMetaUri $uri) {
-        
-        $this->db  = JFactory::getDbo();
-        $this->uri = $uri;
-        
-        if(!empty($uri->id)) {
-            $this->load();
-        }
+    /**
+     * Database driver.
+     *
+     * @var JDatabaseMySQLi
+    */
+    protected $db;
+    
+    protected $position = 0;
+    
+    protected $uriId;
+    
+    public function __construct($uriId = 0) {
+        $this->uriId = (int)$uriId;
+    }
+    
+    /**
+     * Initialize the object.
+     *
+     * @param JDatabase Database object.
+     */
+    public function setDb(JDatabase $db) {
+        $this->db = $db;
     }
     
     /**
@@ -43,25 +47,69 @@ class ItpMetaTags {
         $query  = $this->db->getQuery(true);
         $query
             ->select("a.id, a.name, a.type, a.title, a.tag, a.content, a.output, a.ordering, a.url_id")
-            ->from($this->db->quoteName("#__itpm_tags") . " AS a")
-            ->where("a.url_id = " . (int)$this->uri->id);
+            ->from($this->db->quoteName("#__itpm_tags", "a"))
+            ->where("a.url_id = " . (int)$this->uriId);
     
         $this->db->setQuery($query);
         $results = $this->db->loadAssocList();
         
-        foreach( $results as $result ) {
+        foreach($results as $result) {
             $tag = new ITPMetaTag();
             $tag->bind($result);
-            $this->tags[] = $tag;
+            $this->items[] = $tag;
         }
         
     }
 	
+    public function rewind() {
+        $this->position = 0;
+    }
+    
+    public function current() {
+        return (!isset($this->items[$this->position])) ? null : $this->items[$this->position];
+    }
+    
+    public function key() {
+        return $this->position;
+    }
+    
+    public function next() {
+        ++$this->position;
+    }
+    
+    public function valid() {
+        return isset($this->items[$this->position]);
+    }
+    
+    public function count() {
+        return (int)count($this->items);
+    }
+    
+    public function offsetSet($offset, $value) {
+        if (is_null($offset)) {
+            $this->items[] = $value;
+        } else {
+            $this->items[$offset] = $value;
+        }
+    }
+    
+    public function offsetExists($offset) {
+        return isset($this->items[$offset]);
+    }
+    
+    public function offsetUnset($offset) {
+        unset($this->items[$offset]);
+    }
+    
+    public function offsetGet($offset) {
+        return isset($this->items[$offset]) ? $this->items[$offset] : null;
+    }
+    
     public function getTag($name) {
     
         $tag = null;
     
-        foreach($this->tags as $tagObject) {
+        foreach($this->items as $tagObject) {
             $tagName = $tagObject->getName();
             if(strcmp($name, $tagName) == 0) {
                 $tag = $tagObject;
@@ -73,9 +121,4 @@ class ItpMetaTags {
     
     }
     
-    public function getTags() {
-        return $this->tags;
-    }
-	
-   
 }

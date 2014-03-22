@@ -1,36 +1,33 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
 defined('_JEXEC') or die;
 ?>
 <tr>
-    <th width="3%">
-        <input type="checkbox" name="checkall-toggle" value="" onclick="checkAll(this)" />
-    </th>
+    <th width="1%" class="nowrap center hidden-phone">
+		<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $this->listDirn, $this->listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
+	</th>
+	<th width="1%" class="hidden-phone">
+		<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+	</th>
+	<th width="1%" style="min-width:55px" class="nowrap center">
+		<?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $this->listDirn, $this->listOrder); ?>
+	</th>
     <th class="title">
         <?php echo JHtml::_('grid.sort',  'COM_ITPMETA_TITLE', 'a.title', $this->listDirn, $this->listOrder); ?>
     </th>
-    <th>
+    <th class="nowrap hidden-phone">
         <?php echo JText::_("COM_ITPMETA_TAG"); ?>
     </th>
-    <th width="10%">
-        <?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ORDERING', 'a.ordering', $this->listDirn, $this->listOrder); ?>
-        <?php if ($this->saveOrder) {?>
-        <?php echo JHtml::_('grid.order',  $this->items, 'filesave.png', 'globals.saveorder'); ?>
-        <?php }?>
-    </th>
-    <th width="10%"><?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.published', $this->listDirn, $this->listOrder); ?></th>
-    <th width="3%"><?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?></th>
+    <th width="1%" class="nowrap center hidden-phone">
+		<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $this->listDirn, $this->listOrder); ?>
+	</th>
 </tr>
 	  

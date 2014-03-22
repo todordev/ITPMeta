@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -16,7 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ItpMetaViewDashboard extends JView {
+class ItpMetaViewDashboard extends JViewLegacy {
     
     protected $option;
     
@@ -42,6 +38,7 @@ class ItpMetaViewDashboard extends JView {
         ItpMetaHelper::addSubmenu($this->getName());
         
         $this->addToolbar();
+        $this->addSidebar();
         $this->setDocument();
         
         parent::display($tpl);
@@ -53,11 +50,18 @@ class ItpMetaViewDashboard extends JView {
      * @since   1.6
      */
     protected function addToolbar(){
-        JToolBarHelper::title(JText::_("COM_ITPMETA_DASHBOARD"), 'itp-dashboard');
+        JToolBarHelper::title(JText::_("COM_ITPMETA_DASHBOARD"));
         
         // Help button
         $bar = JToolBar::getInstance('toolbar');
 		$bar->appendButton('Link', 'help', JText::_('JHELP'), JText::_('COM_ITPMETA_HELP_URL'));
+    }
+    
+    /**
+     * Add a menu on the sidebar of page
+     */
+    protected function addSidebar() {
+		$this->sidebar = JHtmlSidebar::render();
     }
     
 	/**
@@ -66,12 +70,7 @@ class ItpMetaViewDashboard extends JView {
 	 * @return void
 	 */
 	protected function setDocument() {
-	    
 		$this->document->setTitle(JText::_('COM_ITPMETA_DASHBOARD_ADMINISTRATION'));
-		
-		// Header styles
-		$this->document->addStyleSheet('../media/'.$this->option.'/css/bootstrap.min.css');
-		
 	}
 	
 

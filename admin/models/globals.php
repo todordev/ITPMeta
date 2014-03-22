@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -52,8 +48,8 @@ class ItpMetaModelGlobals extends JModelList {
         $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
 
-        $published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '', 'string');
-        $this->setState('filter.published', $published);
+        $published = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
+        $this->setState('filter.state', $published);
 
         // Load the parameters.
         $params = JComponentHelper::getParams('com_itpmeta');
@@ -78,7 +74,7 @@ class ItpMetaModelGlobals extends JModelList {
         
         // Compile the store id.
         $id.= ':' . $this->getState('filter.search');
-        $id.= ':' . $this->getState('filter.published');
+        $id.= ':' . $this->getState('filter.state');
 
         return parent::getStoreId($id);
     }
@@ -103,10 +99,10 @@ class ItpMetaModelGlobals extends JModelList {
                 'a.ordering, a.published' 
             )
         );
-        $query->from($db->quoteName("#__itpm_global_tags").' AS a');
+        $query->from($db->quoteName("#__itpm_global_tags", "a"));
 
         // Filter by published state
-        $published = $this->getState('filter.published');
+        $published = $this->getState('filter.state');
         if (is_numeric($published)) {
             $query->where('a.published = '.(int) $published);
         } else if ($published === '') {

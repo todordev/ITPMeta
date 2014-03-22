@@ -2,10 +2,9 @@
 <form>
 	<fieldset>
 	
-	   <field name="title" type="text" class="textinput input-xlarge"
-	       label="COM_ITPMETA_TITLE" 
-	       required="true" 
-           size="70"
+	   <field name="title" type="text" class="input-xxlarge"
+            label="COM_ITPMETA_TITLE"
+            required="true" 
         />
         
         <field 
@@ -21,7 +20,6 @@
             type="list"
             label="JSTATUS"
             description="COM_ITPMETA_FIELD_STATE_DESC"
-            class="inputbox"
             size="1"
             default="1">
             <option
@@ -30,20 +28,20 @@
                 value="0">JUNPUBLISHED</option>
         </field>
         
-        <field 
-            name="content" type="textarea" class="textinput"
+        <field name="content" type="textarea"
             label="COM_ITPMETA_CONTENT"
+            description="COM_ITPMETA_FIELD_CONTENT_DESC"
         />
             
-        <field 
-            name="tag" type="textarea" 
+        <field name="tag" type="textarea" 
             label="COM_ITPMETA_TAG" 
+            description="COM_ITPMETA_FIELD_TAG_DESC"
             filter="raw"
         />
         
-        <field 
-            name="output" type="textarea" class="textinput"
+        <field name="output" type="textarea"
             label="COM_ITPMETA_OUTPUT" 
+            description="COM_ITPMETA_FIELD_OUTPUT_DESC"
             required="true"
             filter="raw"
         />
@@ -59,7 +57,6 @@
         />
         
         <field name="url_id" type="hidden" default="0" />
-        
         <field name="name" type="hidden" />
         
 	</fieldset>

@@ -3,63 +3,94 @@
  * @package      ITPrism Libraries
  * @subpackage   ITPrism Initializators
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPrism Library is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
+
+defined('JPATH_PLATFORM') or die;
 
 class ITPMetaUri {
     
-    /**
-     * @var JDatabaseMySQLi
-     */
     protected $db;
     
-    public $id;
-    public $uri;
-    public $after_body_tag    = null;
-    public $before_body_tag   = null;
-    public $published         = 0;
-    public $autoupdate        = 1;
-    public $menu_id           = 0;
-    public $parent_menu_id    = 0;
-    public $primary_url       = 0;
+    protected $id;
+    protected $uri;
+    protected $after_body_tag    = null;
+    protected $before_body_tag   = null;
+    protected $published         = 0;
+    protected $autoupdate        = 1;
+    protected $menu_id           = 0;
+    protected $parent_menu_id    = 0;
+    protected $primary_url       = 0;
     
-    protected $tags              = array();
+    protected $tags           = array();
+    
+    protected $notOverridden  = array();
     
     protected static $instances = array();
     
-	public function __construct($uri) {
-        
-        $this->db  = JFactory::getDbo();
-        $this->uri = $uri;
-        
-        $this->load();
-        
+	public function __construct($id = 0) {
+        $this->id  = $id;
     }
     
-    public static function getInstance($uri)  {
+    public function setDb(JDatabase $db) {
+        $this->db = $db;
+    }
+    
+    /**
+     * Create and return URI object.
+     * @param string $uri
+     * @param JDatabase $db
+     * @return NULL|ITPMetaUri
+     */
+    public static function getInstance($uri, JDatabase $db)  {
     
         // Generate hash index
         $index = md5($uri);
         
-        if (empty(self::$instances[$index])){
-            $item = new ITPMetaUri($uri);
+        if (empty(self::$instances[$index])) {
+            
+            $item = new ITPMetaUri();
+            $item->setDb($db);
+            $item->setUri($uri);
+            $item->loadByUri();
+            
             self::$instances[$index] = $item;
+            
         }
     
         return self::$instances[$index];
     }
     
+    /**
+     * Load data for the URI from database.
+     */
     public function load() {
+    
+        $query  = $this->db->getQuery(true);
+        $query
+        ->select("a.id, a.uri, a.after_body_tag, a.before_body_tag, a.published, a.autoupdate")
+        ->from($this->db->quoteName("#__itpm_urls", "a"))
+        ->where("a.id = " . (int)$this->id);
+    
+        $this->db->setQuery($query);
+        $result = $this->db->loadAssoc();
+    
+        if(!empty($result)) {
+            $this->bind($result);
+        }
+    
+    }
+    
+    /**
+     * Load data for the URI from database.
+     */
+    public function loadByUri() {
         
         $query  = $this->db->getQuery(true);
         $query
             ->select("a.id, a.uri, a.after_body_tag, a.before_body_tag, a.published, a.autoupdate")
-            ->from($this->db->quoteName("#__itpm_urls") . " AS a")
+            ->from($this->db->quoteName("#__itpm_urls", "a"))
             ->where("a.uri = " .$this->db->quote($this->uri));
             
         $this->db->setQuery($query);
@@ -71,9 +102,11 @@ class ITPMetaUri {
         
     }
     
-    public function bind(array $uri) {
-        foreach($uri as $key => $value) {
-            $this->$key = $value;
+    public function bind(array $data, $ignored = array()) {
+        foreach($data as $key => $value) {
+            if(!in_array($key, $ignored)) {
+                $this->$key = $value;
+            }
         }
     }
     
@@ -83,7 +116,7 @@ class ITPMetaUri {
             return $this->tags;
         }
         
-        if(!empty($this->id) AND $this->published) { // Get all tags ( global and URI )
+        if(!empty($this->id)) { // Get all tags ( global and URI )
             $query = "
             	( SELECT
             		a.output, a.ordering, a.name, 0 AS tmp_ordering
@@ -113,7 +146,7 @@ class ITPMetaUri {
             $query = $this->db->getQuery(true);
             $query
                 ->select("a.output, a.name")
-                ->from($this->db->quoteName("#__itpm_global_tags") . " AS a")
+                ->from($this->db->quoteName("#__itpm_global_tags", "a"))
                 ->where("a.published = 1")
                 ->order("a.ordering ASC");
         }
@@ -126,7 +159,14 @@ class ITPMetaUri {
         $result = array();
         foreach( $result_ as $row ) {
             if(!empty($row->name)) {
-                $result[$row->name] = $row;
+                
+                // Check for existing value in the array for not overridden values
+                if(!in_array($row->name, $this->notOverridden)) {
+                    $result[$row->name] = $row;
+                } else {
+                    $result[] = $row;
+                }
+                
             } else {
                 $result[] = $row;
             }
@@ -149,11 +189,30 @@ class ITPMetaUri {
         return (bool)$this->published;
     }
     
-    public function save() {
+    public function setUri($uri) {
+        $this->uri = $uri;
+        return $this;
+    }
+    
+    public function getScript($type) {
         
-       $this->db = JFactory::getDBO();
-       /** @var $this->db JDatabaseMySQLi **/
-       $query = $this->db->getQuery(true);
+        switch($type) {
+            
+            case "after":
+                return $this->after_body_tag;
+                break;
+                
+            case "before":
+                return $this->before_body_tag;
+                break;
+        }
+        
+        return null;
+    }
+    
+    public function save() {
+
+        $query = $this->db->getQuery(true);
        $query
            ->set("uri             = ". $this->db->quote($this->uri))
            ->set("after_body_tag  = ". $this->db->quote($this->after_body_tag))
@@ -169,9 +228,9 @@ class ITPMetaUri {
                ->insert($this->db->quoteName("#__itpm_urls"));
            
            $this->db->setQuery($query);
-           $this->db->query();
+           $this->db->execute();
            
-           $this->id = $this->db->insertid ();
+           $this->id = $this->db->insertid();
                
        } else { // Update a record
            $query
@@ -179,19 +238,18 @@ class ITPMetaUri {
                ->where($this->db->quoteName("id") ." = " . (int)$this->id);
            
            $this->db->setQuery($query);
-           $this->db->query();
+           $this->db->execute();
        }
        
     }
     
     /**
-     * Check for existing URI
-     * 
-     * @param string $uri
-     * @return boolean
+     * Set the tags that won't be overridden.
+     *
+     * @param array $data
      */
-    public function isUriExists() {
-        return (!$this->id) ? false : true;
+    public function setNotOverridden(array $data) {
+        $this->notOverridden = $data;
     }
 }
 

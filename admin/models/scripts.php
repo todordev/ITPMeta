@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -17,12 +13,6 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.modeladmin');
 
 class ItpMetaModelScripts extends JModelAdmin {
-    
-    /**
-     * @var     string  The prefix to use with controller messages.
-     * @since   1.6
-     */
-    protected $text_prefix = 'COM_ITPMETA';
     
     /**
      * Returns a reference to the a Table object, always creating it.
@@ -37,7 +27,7 @@ class ItpMetaModelScripts extends JModelAdmin {
         return JTable::getInstance($type, $prefix, $config);
     }
     
-    /**
+	/**
 	 * Stock method to auto-populate the model state.
 	 * @return  void
 	 * @since   12.2
@@ -107,7 +97,7 @@ class ItpMetaModelScripts extends JModelAdmin {
         $row->set("after_body_tag", $afterBody);
         $row->set("before_body_tag", $beforeBody);
         $row->store();
-    
+        
     }
     
 }

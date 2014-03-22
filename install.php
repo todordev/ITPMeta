@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -54,19 +50,14 @@ class pkg_itpMetaInstallerScript {
      * @return void
      */
     public function postflight($type, $parent) {
-        
+            
         if(!defined("ITPMETA_PATH_COMPONENT_ADMINISTRATOR")) {
-            define("ITPMETA_PATH_COMPONENT_ADMINISTRATOR", JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . "components" . DIRECTORY_SEPARATOR ."com_itpmeta");
+            define("ITPMETA_PATH_COMPONENT_ADMINISTRATOR", JPATH_ADMINISTRATOR .DIRECTORY_SEPARATOR. "components" .DIRECTORY_SEPARATOR. "com_itpmeta");
         }
         
         // Register Component helpers
         JLoader::register("ItpMetaInstallHelper", ITPMETA_PATH_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR."helpers".DIRECTORY_SEPARATOR."install.php");
     
-        $this->bootstrap    = JPath::clean( JPATH_SITE.DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."com_itpmeta".DIRECTORY_SEPARATOR."css".DIRECTORY_SEPARATOR."old_bootstrap.min.css" );
-    
-        $style = '<style>'.file_get_contents($this->bootstrap).'</style>';
-        echo $style;
-        
         // Start table with the information
         ItpMetaInstallHelper::startTable();
     
@@ -95,16 +86,15 @@ class pkg_itpMetaInstallerScript {
         }
         ItpMetaInstallHelper::addRow($title, $result, $info);
         
-        // Installed extensions
-        ItpMetaInstallHelper::addRowHeading(JText::_("COM_ITPMETA_INSTALLED_EXTENSIONS"));
-        
-        // System - ITPMeta
-        $result = array("type" => "success"  , "text" => JText::_("COM_ITPMETA_INSTALLED"));
-        ItpMetaInstallHelper::addRow(JText::_("COM_ITPMETA_SYSTEM_ITPMETA"), $result, JText::_("COM_ITPMETA_PLUGIN"));
-        
-        // System - ITPMeta - Tags
-        $result = array("type" => "success"  , "text" => JText::_("COM_ITPMETA_INSTALLED"));
-        ItpMetaInstallHelper::addRow(JText::_("COM_ITPMETA_SYSTEM_ITPMETA_TAGS"), $result, JText::_("COM_ITPMETA_PLUGIN"));
+        // Display result about verification FileInfo
+        $title  = JText::_("COM_ITPMETA_PHP_VERSION");
+        $info   = "";
+        if (version_compare(PHP_VERSION, '5.3.0') < 0) {
+            $result = array("type" => "important", "text" => JText::_("COM_ITPMETA_WARNING"));
+        } else {
+            $result = array("type" => "success", "text" => JText::_("JYES"));
+        }
+        ItpMetaInstallHelper::addRow($title, $result, $info);
         
         // Display result about verification of installed ITPrism Library
         jimport("itprism.version");
@@ -118,9 +108,16 @@ class pkg_itpMetaInstallerScript {
         }
         ItpMetaInstallHelper::addRow($title, $result, $info);
         
+        // Installed extensions
+        ItpMetaInstallHelper::addRowHeading(JText::_("COM_ITPMETA_INSTALLED_EXTENSIONS"));
+        
+        // System - ITPMeta
+        $result = array("type" => "success"  , "text" => JText::_("COM_ITPMETA_INSTALLED"));
+        ItpMetaInstallHelper::addRow(JText::_("COM_ITPMETA_SYSTEM_ITPMETA"), $result, JText::_("COM_ITPMETA_PLUGIN"));
+        
         // End table
         ItpMetaInstallHelper::endTable();
-        
+            
         echo JText::sprintf("COM_ITPMETA_MESSAGE_ENABLE_PLUGINS", JRoute::_("index.php?option=com_plugins&view=plugins&filter_search=itpmeta"));
     }
 }

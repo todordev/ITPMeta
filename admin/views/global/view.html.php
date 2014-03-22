@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -17,7 +13,7 @@ defined('_JEXEC') or die;
 jimport('joomla.html.pane');
 jimport('joomla.application.component.view');
 
-class ItpMetaViewGlobal extends JView {
+class ItpMetaViewGlobal extends JViewLegacy {
     
     protected $state;
     protected $item;
@@ -41,8 +37,6 @@ class ItpMetaViewGlobal extends JView {
         $this->form   = $this->get('Form');
 
         $this->params = $this->state->get("params");
-         
-        $this->version = new ItpMetaVersion();
         
         // Prepare actions, behaviors, scritps and document
         $this->addToolbar();
@@ -70,29 +64,26 @@ class ItpMetaViewGlobal extends JView {
     
         if(!$isNew){
             JToolBarHelper::cancel('global.cancel', 'JTOOLBAR_CANCEL');
-            JToolBarHelper::title($this->documentTitle, 'itp-edit-global');
+            JToolBarHelper::title($this->documentTitle);
         }else{
             JToolBarHelper::cancel('global.cancel', 'JTOOLBAR_CLOSE');
-            JToolBarHelper::title($this->documentTitle, 'itp-new-global');
+            JToolBarHelper::title($this->documentTitle);
         }
         
     }
 
     protected function setDocument() {
         
-        $version = $this->version->getShortVersion();
-        
         // Add behaviors
         JHtml::_('behavior.tooltip');
         JHtml::_('behavior.formvalidation');
         
+        JHtml::_('formbehavior.chosen', 'select');
+        
         // Add scripts
-        $this->document->addScript('../media/'.$this->option.'/js/jquery.js?v='.$version);
-        
-        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js?v='.$version);
-        $this->document->addScript('../media/'.$this->option.'/js/admin/tag_form.js?v='.$version);
-        $this->document->addScript('../media/'.$this->option.'/js/admin/global.js?v='.$version);
-        
+        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/tag_form.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/global.js');
         
     }
     

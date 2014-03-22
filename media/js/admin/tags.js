@@ -1,19 +1,16 @@
 /**
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <http://itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <http://itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
-*/
+ */
 
 jQuery(document).ready(function() {
 	
 	// Inline edit
 	
-	jQuery.fn.editable.defaults.mode = 'inline';
-	jQuery.fn.editableform.buttons   = '<button type="submit" class="editable-submit">ok</button> <button type="button" class="editable-cancel">cancel</button>';
+	jQuery.pnotify.defaults.history = false;
+	
+	jQuery.fn.editable.defaults.mode = 'popup';
 	
 	jQuery('.itpm-editable').editable({
         type: 'textarea',
@@ -36,6 +33,12 @@ jQuery(document).ready(function() {
         	
         	jQuery("#itpmo"+response.data.id).text(response.data.output);
         	
+        	ItpMetaHelper.displayMessageSuccess(response.title, response.text);
+        	
+        	if(response.data.autoupdate) {
+        		ItpMetaHelper.displayMessageInfo(Joomla.JText._('COM_ITPMETA_ADDITIONAL_INFORMATION'), Joomla.JText._('COM_ITPMETA_INFO_DISABLE_AUTOUPDATE'));
+        	}
+        	console.log(response.data);
         }
         
     });

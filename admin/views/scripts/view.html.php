@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // No direct access
@@ -16,9 +12,9 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ITPMetaViewScripts extends JView {
+class ITPMetaViewScripts extends JViewLegacy {
     
-	protected $state;
+    protected $state;
     protected $item;
     protected $form;
     
@@ -43,17 +39,14 @@ class ITPMetaViewScripts extends JView {
 
         $this->params  = $this->state->get("params");
         
-        $this->version = new ItpMetaVersion();
-         
         // Prepare actions, behaviors, scritps and document
         $this->addToolbar();
         $this->setDocument();
         
         parent::display($tpl);
-        
     }
     
-	/**
+    /**
      * Add the page title and toolbar.
      * @since   1.6
      */
@@ -65,22 +58,21 @@ class ITPMetaViewScripts extends JView {
         JToolBarHelper::save('scripts.save');
         JToolBarHelper::divider();
         JToolBarHelper::cancel('scripts.cancel', 'JTOOLBAR_CANCEL');
-        JToolBarHelper::title( JText::_('COM_ITPMETA_EDIT_SCRIPT'), 'itp-scripts');
+        JToolBarHelper::title( JText::_('COM_ITPMETA_EDIT_SCRIPT') );
         
     }
 
     protected function setDocument() {
-        
-        $version = $this->version->getShortVersion();
         
         // Add scripts
         JHTML::_('behavior.framework');
         JHtml::_('behavior.tooltip');
         JHtml::_('behavior.formvalidation');
         
-        $this->document->addScript('../media/'.$this->option.'/js/jquery.js');
-        $this->document->addScript('../media/'.$this->option.'/js/noconflict.js');
-        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js?v='.$version);
+        JHtml::_('bootstrap.framework');
+        JHtml::_('formbehavior.chosen', 'select');
+        
+        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js');
         
     }
     

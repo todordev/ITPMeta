@@ -1,20 +1,16 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.controller' );
+jimport( 'joomla.application.component.controllerlegacy' );
 
 /**
  * Control Panel Controller
@@ -22,7 +18,7 @@ jimport( 'joomla.application.component.controller' );
  * @package     ITPrism Components
  * @subpackage  ITPMeta
   */
-class ItpMetaController extends JController {
+class ItpMetaController extends JControllerLegacy {
     
     protected $option;
     
@@ -31,21 +27,19 @@ class ItpMetaController extends JController {
         $this->option = JFactory::getApplication()->input->getCmd("option");
 	}
 
-    public function display( ) {
+    public function display($cachable = false, $urlparams = array()) {
 
-        $version = new ItpMetaVersion();
-        $version = $version->getShortVersion();
-        
         $document = JFactory::getDocument();
         /** @var $document JDocumentHtml **/
         
         // Add component style
-        $document->addStyleSheet('../media/'.$this->option.'/css/style.css?v='.$version);
+        $document->addStyleSheet('../media/'.$this->option.'/css/style.css');
         
-        $viewName      = JFactory::getApplication()->input->getCmd('view', 'dashboard');
-        JFactory::getApplication()->input->set("view", $viewName);
+        $viewName      = $this->input->getCmd('view', 'dashboard');
+        $this->input->set("view", $viewName);
 
         parent::display();
+        
         return $this;
     }
 

@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="2.5" method="upgrade">
+<extension type="component" version="3.2" method="upgrade">
 	<name>COM_ITPMETA</name>
 	<author>Todor Iliev</author>
 	<authorEmail>todor@itprism.com</authorEmail>
 	<authorUrl>http://itprism.com</authorUrl>
-	<copyright>Copyright (C) 2010 Todor Iliev ( ITPrism.com )</copyright>
+	<copyright>Copyright (C) 2014 Todor Iliev ( ITPrism.com )</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html</license>
-	<version>3.7</version>
-	<creationDate>07 July, 2013</creationDate>
-	<description>COM_ITPMETA_DESCRIPTION</description>
+	<version>3.8</version>
+	<creationDate>22 March, 2014</creationDate>
+	<description><![CDATA[
+    <p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta" target="_blank">ITPMeta</a> is an easy way to put any code in the header of your site.</p>
+    <p><a href="http://itprism.com/" target="_blank">Subscribe for the newsletter</a> to receive information about updates and new ITPrism extensions.</p>
+    <p>Please, <a href="http://extensions.joomla.org/extensions/site-management/seo-a-metadata/meta-data/15861" target="_blank">vote for the extension</a> on Joomla! Extensions Directory</p>
+    ]]></description>
 
 	<install>
         <sql>
@@ -38,6 +42,7 @@
 	<!-- Site Main File Copy Section -->
 	<files folder="site">
 	    <folder>controllers</folder>
+        <folder>language</folder>
 	    <folder>models</folder>
 	    <folder>views</folder>     
 		<filename>controller.php</filename>
@@ -46,16 +51,13 @@
 		<filename>router.php</filename>
 	</files>
 	
-	<languages folder="site">
-        <language tag="en-GB">language/en-GB/en-GB.com_itpmeta.ini</language>
-    </languages>
-    
 	<administration>
-		<menu img="../media/com_itpmeta/images/menu_icon_itpmeta.png" link="option=com_itpmeta">COM_ITPMETA</menu>
+		<menu link="option=com_itpmeta">COM_ITPMETA</menu>
 		
 		<files folder="admin">		    		
 			<folder>controllers</folder>
 			<folder>helpers</folder>
+			<folder>language</folder>
 			<folder>layouts</folder>
 			<folder>libraries</folder>
 			<folder>models</folder>
@@ -66,11 +68,6 @@
 			<filename>index.html</filename>
 			<filename>itpmeta.php</filename>
 		</files>
-		
-		<languages folder="admin">
-			<language tag="en-GB">language/en-GB/en-GB.com_itpmeta.ini</language>
-			<language tag="en-GB">language/en-GB/en-GB.com_itpmeta.sys.ini</language>
-		</languages>
 		
 	</administration>
 </extension>

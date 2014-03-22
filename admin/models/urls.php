@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -31,7 +27,7 @@ class ItpMetaModelUrls extends JModelList {
             $config['filter_fields'] = array(
                 'id', 'a.id',
                 'uri', 'a.uri',
-            	'autoupdate', 'a.autoupdate',
+                'autoupdate', 'a.autoupdate',
                 'published', 'a.published'
             );
         }
@@ -80,8 +76,9 @@ class ItpMetaModelUrls extends JModelList {
     protected function getStoreId($id = '') {
         
         // Compile the store id.
-        $id.= ':' . $this->getState('filter.search');
-        $id.= ':' . $this->getState('filter.state');
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.state');
+        $id .= ':' . $this->getState('filter.autoupdate');
 
         return parent::getStoreId($id);
     }
@@ -105,7 +102,7 @@ class ItpMetaModelUrls extends JModelList {
                 'a.id, a.uri, a.published, a.autoupdate'
             )
         );
-        $query->from($db->quoteName("#__itpm_urls").' AS a');
+        $query->from($db->quoteName("#__itpm_urls", "a"));
 
         // Filter by state
         $published = $this->getState('filter.state');
@@ -141,6 +138,7 @@ class ItpMetaModelUrls extends JModelList {
         return $query;
     }
         
+    
     public function getNumbers() {
         
         // Get a storage key.
@@ -174,7 +172,7 @@ class ItpMetaModelUrls extends JModelList {
             
             $query
                 ->select("a.url_id, COUNT(*) AS number")
-                ->from($db->quoteName("#__itpm_tags") . " AS a")
+                ->from($db->quoteName("#__itpm_tags", "a"))
                 ->where("a.url_id IN (" . implode(",", $itemsIds) . ")")
                 ->group("a.url_id");
             
@@ -200,7 +198,7 @@ class ItpMetaModelUrls extends JModelList {
         return $orderCol.' '.$orderDirn;
     }
     
-	/**
+    /**
      * Load data when search URLs using typehead
      * @param string $string
      */
@@ -213,7 +211,7 @@ class ItpMetaModelUrls extends JModelList {
 		
 		$query
 		    ->select("a.id, a.uri AS name")
-		    ->from($db->quoteName("#__itpm_urls") . " AS a")
+		    ->from($db->quoteName("#__itpm_urls", "a"))
 		    ->where("a.uri LIKE " . $search);
 		
 	    $db->setQuery($query, 0, 8);
@@ -222,4 +220,5 @@ class ItpMetaModelUrls extends JModelList {
 		return (array)$results;
 		
 	}
+	    
 }

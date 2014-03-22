@@ -1,11 +1,7 @@
 /**
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <http://itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <http://itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
 */
 
 
@@ -68,7 +64,7 @@ function getTag(name){
 			val = '<meta property="og:country-name" content="{EXAMPLE: USA}"/>';
 			break;	
 		case "oglocale":
-			val = '<meta property="og:locale" content="{EXAMPLE: en_GB}"/>';
+			val = '<meta property="og:locale:locale" content="{EXAMPLE: en_GB}"/>';
 			break;	
 		case "oglocale_alternate":
 			val = '<meta property="og:locale:alternate" content="{EXAMPLE: fr_FR}"/>';
@@ -84,7 +80,6 @@ function getTag(name){
 		case "ogfax_number":
 			val = '<meta property="og:fax_number" content="{EXAMPLE: +1-415-123-4567}"/>';
 			break;	
-			
 			
 		/* Article */
 		case "ogarticle":
@@ -102,6 +97,9 @@ function getTag(name){
 		case "ogarticle_author":
 			val = '<meta property="article:author" content="{URL_TO_AUTHOR_OBJECT}">';
 		break;
+		case "ogarticle_publisher":
+			val = '<meta property="article:publisher" content="{URL_TO_PUBLISHER_OBJECT}">';
+			break;
 		case "ogarticle_section":
 			val = '<meta property="article:section" content="{SECTION_OF_ARTICLE}">';
 		break;
@@ -109,21 +107,48 @@ function getTag(name){
 			val = '<meta property="article:tag" content="{KEYWORD}">';
 		break;
 		
-		/* Book */
+		/* Books */
 		case "ogbook":
-			val = '<meta property="og:type" content="book" />';
+			val = '<meta property="og:type" content="books:book" />';
 		break;
 		case "ogbook_release_date":
-			val = '<meta property="book:release_date" content="{DATETIME}"> ';
+			val = '<meta property="books:release_date" content="{DATETIME}"> ';
 		break;
 		case "ogbook_author":
-			val = '<meta property="book:author" content="{WHO_WROTE_THIS}">';
+			val = '<meta property="books:author" content="{WHO_WROTE_THIS}">';
 		break;
 		case "ogbook_isbn":
-			val = '<meta property="book:isbn" content="{ISBN_NUMBER}"> ';
+			val = '<meta property="books:isbn" content="{ISBN_NUMBER}"> ';
 		break;
 		case "ogbook_tag":
-			val = '<meta property="book:tag" content="{KEYWORD}">';
+			val = '<meta property="books:tag" content="{KEYWORD}">';
+		break;
+		case "ogbook_genre":
+			val = '<meta property="books:genre" content="{GENRE}">';
+		break;
+		case "ogbook_initial_release_date":
+			val = '<meta property="books:initial_release_date" content="{DATE}">';
+		break;
+		case "ogbook_page_count":
+			val = '<meta property="books:page_count" content="{COUNT}">';
+		break;
+		case "ogbook_sample":
+			val = '<meta property="books:sample" content="{URL}">';
+		break;
+		case "ogbook_language_locale":
+			val = '<meta property="books:language:locale" content="{LOCALE}">';
+		break;
+		case "ogbook_language_alternate":
+			val = '<meta property="books:language:alternate" content="{ALTERNATE}">';
+		break;
+		case "ogbook_rating_value":
+			val = '<meta property="books:rating:value" content="{VALUE}">';
+		break;
+		case "ogbook_rating_scale":
+			val = '<meta property="books:rating:scale" content="{SCALE}">';
+		break;
+		case "ogbook_rating_normalized_value":
+			val = '<meta property="books:rating:normalized_value" content="{VALUE}">';
 		break;
 		
 		
@@ -209,6 +234,12 @@ function getTag(name){
 		case "ogprofile_fbprofile_id":
 			val = '<meta property="fb:profile_id" content="{THIRD_PARTY_FB_UID}" />';
 		break;
+		case "fbadmins":
+			val = '<meta property="fb:admins" content="{USER_ID1, USER_ID2}"/>';
+		break;
+		case "fbappid":
+			val = '<meta property="fb:app_id" content="{1234567}"/>';
+		break;
 		
 		/* Music */
 		case "ogmusic_song":
@@ -271,21 +302,45 @@ function getTag(name){
 		break;
 		
 		/* Business */
-		case "ogbar":
-			val = '<meta property="og:type" content="bar" />';
+		case "ogbusiness":
+			val = '<meta property="og:type" content="business:business" />';
 		break;
-		case "ogcompany":
-			val = '<meta property="og:type" content="company" />';
+		case "ogbusiness_street_address":
+			val = '<meta property="business:contact_data:street_address" content="{ADDRESS}" />';
 		break;
-		case "ogcafe":
-			val = '<meta property="og:type" content="cafe" />';
+		case "ogbusiness_locality":
+			val = '<meta property="business:contact_data:locality" content="{LOCALITY}" />';
 		break;
-		case "oghotel":
-			val = '<meta property="og:type" content="hotel" />';
+		case "ogbusiness_region":
+			val = '<meta property="business:contact_data:region" content="{REGION}" />';
 		break;
-		case "ogrestaurant":
-			val = '<meta property="og:type" content="restaurant" />';
+		case "ogbusiness_postal_code":
+			val = '<meta property="business:contact_data:postal_code" content="{POSTAL_CODE}" />';
 		break;
+		case "ogbusiness_country_name":
+			val = '<meta property="business:contact_data:country_name" content="{COUNTRY_NAME}" />';
+			break;
+		case "ogbusiness_email":
+			val = '<meta property="business:contact_data:email" content="{EMAIL}" />';
+			break;
+		case "ogbusiness_phone_number":
+			val = '<meta property="business:contact_data:phone_number" content="{PHONE_NUMBER}" />';
+			break;
+		case "ogbusiness_fax_number":
+			val = '<meta property="business:contact_data:fax_number" content="{FAX_NUMBER}" />';
+			break;
+		case "ogbusiness_website":
+			val = '<meta property="business:contact_data:website" content="{WEBSITE}" />';
+			break;
+		case "ogbusiness_hours_day":
+			val = '<meta property="business:hours:day" content="{VALUE}" />';
+			break;
+		case "ogbusiness_hours_start":
+			val = '<meta property="business:hours:start" content="{VALUE}" />';
+			break;
+		case "ogbusiness_hours_end":
+			val = '<meta property="business:hours:end" content="{VALUE}" />';
+			break;
 		
 		/* Groups */
 		case "ogcause":
@@ -338,19 +393,117 @@ function getTag(name){
 			val = '<meta property="og:type" content="public_figure" />';
 		break;
 		
-		/* Places */
-		case "ogcity":
-			val = '<meta property="og:type" content="city" />';
+		/* Place */
+		case "ogplacelatitude":
+			val = '<meta property="place:location:latitude" content="{LATITUDE}" />';
 		break;
-		case "ogcountry":
-			val = '<meta property="og:type" content="country" />';
+		case "ogplacelongitude":
+			val = '<meta property="place:location:longitude" content="{LONGITUDE}" />';
 		break;
-		case "oglandmark":
-			val = '<meta property="og:type" content="landmark" />';
+		case "ogplacealtitude":
+			val = '<meta property="place:location:altitude" content="{ALTITUDE}" />';
 		break;
-		case "ogstate_province":
-			val = '<meta property="og:type" content="state_province" />';
+		
+		/* Product */
+		case "ogproduct":
+			val = '<meta property="og:type" content="product" />';
 		break;
+		case "ogproduct_agegroup":
+			val = 'meta property="product:age_group" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_availability":
+			val = 'meta property="product:availability" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_brand":
+			val = 'meta property="product:brand" content="{TEXT}" /> ';
+			break;
+		case "ogproduct_category":
+			val = 'meta property="product:category" content="{CATEGORY}" /> ';
+			break;
+		case "ogproduct_color":
+			val = 'meta property="product:color" content="{COLOR}" /> ';
+			break;
+		case "ogproduct_condition":
+			val = 'meta property="product:condition" content="{CONDITION}" /> ';
+			break;
+		case "ogproduct_ean":
+			val = 'meta property="product:ean" content="{EAN}" /> ';
+			break;
+		case "ogproduct_expiration_time":
+			val = 'meta property="product:expiration_time" content="{TIME}" /> ';
+			break;
+		case "ogproduct_isbn":
+			val = 'meta property="product:isbn" content="{ISBN}" /> ';
+			break;
+		case "ogproduct_material":
+			val = 'meta property="product:material" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_mfrpartno":
+			val = 'meta property="product:mfr_part_no" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_pattern":
+			val = 'meta property="product:pattern" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_plural_title":
+			val = 'meta property="product:plural_title" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_priceamount":
+			val = 'meta property="product:price:amount" content="{AMOUNT}" /> ';
+			break;
+		case "ogproduct_pricecurrency":
+			val = 'meta property="product:price:currency" content="{CURRENCY}" /> ';
+			break;
+		case "ogproduct_product_link":
+			val = 'meta property="product:product_link" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_retailer":
+			val = 'meta property="product:retailer" content="{RETAILER}" /> ';
+			break;
+		case "ogproduct_retailer_category":
+			val = 'meta property="product:retailer_category" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_retailer_part_no":
+			val = 'meta property="product:retailer_part_no" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_sale_price_amount":
+			val = 'meta property="product:sale_price:amount" content="{AMOUNT}" /> ';
+			break;
+		case "ogproduct_sale_price_currency":
+			val = 'meta property="product:sale_price:currency" content="{CURRENCY}" /> ';
+			break;
+		case "ogproduct_sale_price_dates_start":
+			val = 'meta property="product:sale_price_dates:start" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_sale_price_dates_end":
+			val = 'meta property="product:sale_price_dates:end" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_shipping_cost_amount":
+			val = 'meta property="product:shipping_cost:amount" content="{AMOUNT}" /> ';
+			break;
+		case "ogproduct_shipping_cost_currency":
+			val = 'meta property="product:shipping_cost:currency" content="{CURRENCY}" /> ';
+			break;
+		case "ogproduct_shipping_weight_value":
+			val = 'meta property="product:shipping_weight:value" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_shipping_weight_units":
+			val = 'meta property="product:shipping_weight:units" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_size":
+			val = 'meta property="product:size" content="{SIZE}" /> ';
+			break;
+		case "ogproduct_target_gender":
+			val = 'meta property="product:target_gender" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_upc":
+			val = 'meta property="product:upc" content="{UPC}" /> ';
+			break;
+		case "ogproduct_weight_value":
+			val = 'meta property="product:weight:value" content="{VALUE}" /> ';
+			break;
+		case "ogproduct_weight_units":
+			val = 'meta property="product:weight:units" content="{UNITS}" /> ';
+			break;
 		
 		/* Products and Entertainment */
 		case "ogalbum":
@@ -364,9 +517,6 @@ function getTag(name){
 		break;
 		case "ogfood":
 			val = '<meta property="og:type" content="food" />';
-		break;
-		case "ogproduct":
-			val = '<meta property="og:type" content="product" />';
 		break;
 		case "ogsong":
 			val = '<meta property="og:type" content="song" />';
@@ -389,17 +539,6 @@ function getTag(name){
 			val = '<meta property="game:points" content="{POINTS FOR ACHIEVEMENT}" />';
 		break;
 		
-		
-		/* Facebook */
-		case "fbadmins":
-			val = '<meta property="fb:admins" content="{USER_ID1, USER_ID2}"/>';
-		break;
-		case "fbappid":
-			val = '<meta property="fb:app_id" content="{1234567}"/>';
-		break;
-		case "fbcustom":
-			val = '<meta property="YOUR_PROPERTY" content="{CUSTOM_CONTENT}"/>';
-		break;	
 		
 		/* Facebook restrictions */
 		case "fbrestrictions_country_allowed":
@@ -506,6 +645,10 @@ function getTag(name){
 			val = '<link rel="publisher" href="{URL}" />';
 		break;
 		
+		case "google_alternate":
+			val = '<link rel="alternate" href="{HREF}" hreflang="{HREF_LANG}" />';
+		break;
+		
 		/* Bing */
 		case "bing_site_verification":
 			val = '<meta name="msvalidate.01" content="{CODE}" />';
@@ -542,6 +685,77 @@ function getTag(name){
 		case "refresh":
 			val = '<meta http-equiv="refresh" content="{SECONDS;URL=}" />';
 		break;
+		case "opengraph":
+			val = '<link rel="opengraph" href="{DESTINATION_URL}" />';
+			break;
+		case "origin":
+			val = '<link rel="origin" href="{SOURCE_URL}" />';
+			break;
+		case "ogdeterminer":
+			val = '<meta property="og:determiner" content="{TEXT}" />';
+			break;
+		case "ogupdatedtime":
+			val = '<meta property="og:updated_time" content="{DATE}" />';
+			break;
+		case "ogseealso":
+			val = '<meta property="og:see_also" content="{URL}" />';
+			break;
+		case "ogttl":
+			val = '<meta property="og:ttl" content="{SECONDS}" />';
+			break;
+		case "fbcustom":
+			val = '<meta property="{YOUR_PROPERTY}" content="{CUSTOM_CONTENT}"/>';
+		break;	
+		case "ogobject":
+			val = '<meta property="og:type"   content="object" />';
+			break;	
+		
+		/* Dublin Core */
+		case "dublin_core_title":
+			val = '<meta name="DC.title" content="{TITLE}" />';
+		break;
+		case "dublin_core_description":
+			val = '<meta name="DC.description" content="{DESCRIPTION}" />';
+			break;
+		case "dublin_core_creator":
+			val = '<meta name="DC.creator" content="{NAME}" />';
+			break;
+		case "dublin_core_format":
+			val = '<meta name="DC.format" scheme="IMT" content="{FORMAT}" />';
+			break;
+		case "dublin_core_subject":
+			val = '<meta name="DC.subject" content="{SUBJECT}" />';
+			break;
+		case "dublin_core_publisher":
+			val = '<meta name="DC.publisher" content="{PUBLISHER}" />';
+			break;
+		case "dublin_core_identifier":
+			val = '<meta name="DC.identifier" content="{URL}" />';
+			break;
+		case "dublin_core_language":
+			val = '<meta name="DC.language" scheme="RFC1766" content="{CODE}" />';
+			break;
+		case "dublin_core_date":
+			val = '<meta name="DC.date" scheme="W3CDTF" content="{DATE}" />';
+			break;
+		case "dublin_core_date_modified":
+			val = '<meta name="DC.date.modified" scheme="W3CDTF" content="{DATE}" />';
+			break;
+		case "dublin_core_type":
+			val = '<meta name="DC.type" scheme="DCMIType" content="{TYPE}" />';
+			break;
+		case "dublin_core_source":
+			val = '<meta name="DC.source" content="{SOURCE}" />';
+			break;
+		case "dublin_core_relation":
+			val = '<meta name="DC.relation" content="{RELATION}" />';
+			break;
+		case "dublin_core_coverage":
+			val = '<meta name="DC.coverage" content="{COVERAGE}" />';
+			break;
+		case "dublin_core_rights":
+			val = '<meta name="DC.rights" content="{RIGHTS}" />';
+			break;
 		
 		default:
 			break;

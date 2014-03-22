@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -16,17 +12,42 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ITPMetaViewGlobals extends JView {
+class ITPMetaViewGlobals extends JViewLegacy {
 
     protected $state;
     protected $items;
     protected $pagination;
+    
+    protected $option;
+    
+    public function __construct($config){
+        parent::__construct($config);
+        $this->option = JFactory::getApplication()->input->get("option");
+    }
     
     public function display($tpl = null){
         
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
+        
+        $this->prepareSorting();
+
+        // Add submenu
+        ItpMetaHelper::addSubmenu($this->getName());
+        
+        // Prepare actions
+        $this->addToolbar();
+        $this->addSidebar();
+        $this->setDocument();
+        
+        parent::display($tpl);
+    }
+    
+    /**
+     * Prepare sortable fields, sort values and filters. 
+     */
+    protected function prepareSorting() {
         
         // Prepare filters
         $listOrder        = $this->escape($this->state->get('list.ordering'));
@@ -37,16 +58,18 @@ class ITPMetaViewGlobals extends JView {
         $this->listDirn   = $listDirn;
         $this->saveOrder  = $saveOrder;
         
-        $this->version    = new ItpMetaVersion();
+        if ($this->saveOrder) {
+        	$this->saveOrderingUrl = 'index.php?option='.$this->option.'&task='.$this->getName().'.saveOrderAjax&format=raw';
+        	JHtml::_('sortablelist.sortable', $this->getName().'List', 'adminForm', strtolower($listDirn), $this->saveOrderingUrl);
+        }
         
-        // Add submenu
-        ItpMetaHelper::addSubmenu($this->getName());
+        $this->sortFields = array(
+			'a.ordering'  => JText::_('JGRID_HEADING_ORDERING'),
+			'a.published' => JText::_('JSTATUS'),
+			'a.title'     => JText::_('JGLOBAL_TITLE'),
+			'a.id'        => JText::_('JGRID_HEADING_ID')
+		);
         
-        // Prepare actions
-        $this->addToolbar();
-        $this->setDocument();
-        
-        parent::display($tpl);
     }
     
     /**
@@ -57,7 +80,7 @@ class ITPMetaViewGlobals extends JView {
     protected function addToolbar(){
         
         // Set toolbar items for the page
-        JToolBarHelper::title(JText::_('COM_ITPMETA_GLOBAL_TAGS_MANAGER'), 'itp-globals');
+        JToolBarHelper::title(JText::_('COM_ITPMETA_GLOBAL_TAGS_MANAGER'));
         
         JToolBarHelper::addNew('global.add');
         JToolBarHelper::editList('global.edit');
@@ -67,16 +90,41 @@ class ITPMetaViewGlobals extends JView {
         JToolBarHelper::divider();
         JToolBarHelper::deleteList(JText::_("COM_ITPMETA_DELETE_ITEMS_QUESTION"), "globals.delete");
         JToolBarHelper::divider();
-        JToolBarHelper::custom('dashboard.backToDashboard', "itp-dashboard-back", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
+        JToolBarHelper::custom('dashboard.backToDashboard', "dashboard", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
     }
 
+    /**
+     * Add a menu on the sidebar of page
+     */
+    protected function addSidebar() {
+        
+        JHtmlSidebar::setAction('index.php?option='.$this->option.'&view='.$this->getName());
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_PUBLISHED'),
+			'filter_state',
+			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array("archived" => false, "trash"=>false)), 'value', 'text', $this->state->get('filter.state'), true)
+		);
+		
+		$this->sidebar = JHtmlSidebar::render();
+
+    }
+    
 	/**
 	 * Method to set up the document properties
 	 *
 	 * @return void
 	 */
 	protected function setDocument() {
+	    
 		$this->document->setTitle(JText::_('COM_ITPMETA_GLOBAL_TAGS_MANAGER'));
+		
+		// Scripts
+        JHtml::_('behavior.multiselect');
+        JHtml::_('formbehavior.chosen', 'select');
+        JHtml::_('bootstrap.tooltip');
+        
+        JHtml::_("itprism.ui.joomla_list");
 	}
 	
 }

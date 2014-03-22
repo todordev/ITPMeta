@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -17,12 +13,6 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.modeladmin');
 
 class ItpMetaModelUrl extends JModelAdmin {
-    
-    /**
-     * @var     string  The prefix to use with controller messages.
-     * @since   1.6
-     */
-    protected $text_prefix = 'COM_ITPMETA';
     
     /**
      * Returns a reference to the a Table object, always creating it.
@@ -111,7 +101,7 @@ class ItpMetaModelUrl extends JModelAdmin {
         // Select the required fields from the table.
         $query
             ->select('COUNT(*)')
-            ->from($db->quoteName('#__itpm_urls') . " AS a")
+            ->from($db->quoteName('#__itpm_urls', "a"))
             ->where('a.uri='.$db->quote($uri));
 
         $db->setQuery($query, 0, 1);
@@ -124,13 +114,14 @@ class ItpMetaModelUrl extends JModelAdmin {
         
 		$pks    = (array)$pks;
 		JArrayHelper::toInteger($pks);
+		
 		$state  = (!$state) ? 0 : 1;
 
         $db     = JFactory::getDbo();
         $query  = $db->getQuery(true);
         
         $query
-            ->update($db->quoteName("#__itpm_urls") . " AS a")
+            ->update($db->quoteName("#__itpm_urls", "a"))
             ->set("a.autoupdate = " . (int)$state)
             ->where("a.id IN (" . implode(",", $pks) . ")");
         

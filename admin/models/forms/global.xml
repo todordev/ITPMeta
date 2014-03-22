@@ -2,11 +2,7 @@
 <form>
 	<fieldset>
 	
-	   <field 
-            name="title" 
-            type="text" 
-            size="80"
-            class="textinput" 
+	   <field name="title" type="text"  class="input-xxlarge"
             label="COM_ITPMETA_TITLE" 
             description="COM_ITPMETA_GLOBAL_TAG_TITLE_DESC"
         />
@@ -19,22 +15,17 @@
             class="readonly"
         />
         
-	   <field
-            name="published"
-            type="list"
+	   <field name="published" type="radio" class="btn-group"
             label="JSTATUS"
             description="COM_ITPMETA_FIELD_STATE_DESC"
-            class="inputbox"
             size="1"
             default="1">
-            <option
-                value="1">JPUBLISHED</option>
-            <option
-                value="0">JUNPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+            <option value="1">JPUBLISHED</option>
         </field>
         
         <field 
-            name="content" type="textarea" class="textinput"
+            name="content" type="textarea" 
             label="COM_ITPMETA_CONTENT" 
             description="COM_ITPMETA_CONTENT_DESC"
         />
@@ -48,7 +39,7 @@
         />
         
         <field 
-            name="output" type="textarea" class="textinput"
+            name="output" type="textarea" 
             label="COM_ITPMETA_OUTPUT"
             description="COM_ITPMETA_OUTPUT_DESC"  
             required="true"

@@ -3,17 +3,13 @@
  * @package      ITPMeta
  * @subpackage   Libraries
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 defined('JPATH_PLATFORM') or die;
 
-jimport("itpmeta.extension");
+jimport("itpmeta.tag");
 
 /**
  * This helper provides functionality 
@@ -35,6 +31,8 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
         $sectionId   = JArrayHelper::getValue($parsed, "section_id");
         $categoryId  = JArrayHelper::getValue($parsed, "cat_id");
         
+        $userId      = JArrayHelper::getValue($parsed, "user_id");
+        
         $userCategoryId  = JArrayHelper::getValue($parsed, "ucat_id");
         
         // If missing ID I have to get information from menu item.
@@ -44,8 +42,10 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
             $view = "usercategory";
         } else if (!is_null($sectionId) AND !is_null($categoryId)) { // It is category
             $view = "category";
-        } else if (!is_null($sectionId) AND is_null($categoryId)) { // It is section
+        } else if (!is_null($sectionId) AND is_null($categoryId) AND is_null($userId)) { // It is section
             $view = "section";
+        } else if (!is_null($sectionId) AND !is_null($userId)) { // It is author profile
+            $view = "author";
         }
         
         switch($view) {
@@ -64,6 +64,10 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
 
             case "section":
                 $data = $this->getSectionData($sectionId);
+                break;
+                
+            case "author":
+                $data = $this->getAuthorData($userId, $sectionId);
                 break;
                 
             default: // Get menu item
@@ -90,8 +94,8 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
     
         $query  = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.title, a.metadesc, a.image, a.created_time AS created, a.modified_time AS modified")
-            ->from($this->db->quoteName("#__js_res_categories"). " AS a")
+            ->select("a.id, a.title, a.description, a.metadesc, a.image, a.created_time AS created, a.modified_time AS modified")
+            ->from($this->db->quoteName("#__js_res_categories", "a"))
             ->where("a.id=".(int)$categoryId);
     
         $this->db->setQuery($query);
@@ -102,7 +106,48 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
             foreach($result as $key => $value) {
                 $data[$key] = $value;
             }
+            unset($results);
+            
+            $data["metadesc"] = $this->clean($data["metadesc"]);
+            
+            // Generate meta description from textarea or HTML field.
+            if(!$data["metadesc"] AND !empty($this->genMetaDesc)) {
+                $data["metadesc"] = $this->prepareMetaDesc($data["description"]);
+            }
     
+        }
+    
+        return $data;
+        
+    }
+    
+	/**
+     * Extract data about category
+     */
+    public function getAuthorData($userId, $sectionId) {
+        
+        if(!$userId) {
+            return null;
+        }
+    
+        $data   = array();
+    
+        $query  = $this->db->getQuery(true);
+        $query
+            ->select("a.name, b.name AS section")
+            ->from($this->db->quoteName("#__users", "a"))
+            ->from($this->db->quoteName("#__js_res_sections", "b"))
+            ->where("a.id = ".(int)$userId)
+            ->where("b.id = ".(int)$sectionId);
+    
+        $this->db->setQuery($query);
+        $result = $this->db->loadAssoc();
+    
+        if(!empty($result)) {
+    
+            $data["title"]    = JText::sprintf("LIB_ITPMETA_VIEW_USER_TITLE", $result["name"]);
+            $data["metadesc"] = JText::sprintf("LIB_ITPMETA_VIEW_SECTION_USER_METADESC", $result["section"], $result["name"]);
+            
         }
     
         return $data;
@@ -122,8 +167,8 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
     
         $query  = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.name AS title, a.params, a.ctime AS created, a.mtime AS modified")
-            ->from($this->db->quoteName("#__js_res_category_user"). " AS a")
+            ->select("a.id, a.name AS title, a.description, a.params, a.ctime AS created, a.mtime AS modified")
+            ->from($this->db->quoteName("#__js_res_category_user", "a"))
             ->where("a.id=".(int)$categoryId);
     
         $this->db->setQuery($query);
@@ -142,7 +187,16 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
     
             $data["metadesc"]  = JArrayHelper::getValue($params, "meta_descr");
             $data["image"]     = JArrayHelper::getValue($params, "image");
-    
+            unset($params);
+            unset($result);
+            
+            $data["metadesc"] = $this->clean($data["metadesc"]);
+            
+            // Generate meta description from textarea or HTML field.
+            if(!$data["metadesc"] AND !empty($this->genMetaDesc)) {
+                $data["metadesc"] = $this->prepareMetaDesc($data["description"]);
+            }
+            
         }
     
         return $data;
@@ -150,7 +204,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
     }
     
 	/**
-     * Extract data about item
+     * Extract data about item.
      */
     public function getItemData($itemId) {
         
@@ -162,8 +216,8 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
         
         $query  = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.title, a.meta_descr AS metadesc, a.ctime AS created, a.mtime AS modified, a.fields")
-            ->from($this->db->quoteName("#__js_res_record"). " AS a")
+            ->select("a.id, a.title, a.meta_descr AS metadesc, a.ctime AS created, a.mtime AS modified")
+            ->from($this->db->quoteName("#__js_res_record", "a"))
             ->where("a.id=".(int)$itemId);
             
         $this->db->setQuery($query);
@@ -171,28 +225,21 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
         
         if(!empty($result)) {
 
-            $imageData = array();
-            
-            $fields    = $result["fields"];
-            unset($result["fields"]);
-            
+            // Prepare data
             foreach($result as $key => $value) {
-                $data[$key] = $value;
+                $data[$key] = JString::trim($value);
             }
+            unset($results);
             
-            $fields = json_decode($fields, true);
-            if(!empty($fields)) {
-                
-                foreach($fields as $field_) {
-                    $field = @json_decode($field_, true);
-                    if(is_array($field) AND isset($field["image"])) {
-                        $imageData = $field;
-                        break;
-                    }
-                }
+            $data["metadesc"] = $this->clean($data["metadesc"]);
+            
+            // Get images
+            $data["image"] = $this->getItemImage($itemId);
+            
+            // Generate meta description from textarea or HTML field.
+            if(!$data["metadesc"] AND !empty($this->genMetaDesc)) {
+                $data["metadesc"] = $this->getItemDescription($itemId);
             }
-            
-            $data["image"] = JArrayHelper::getValue($imageData, "image");
             
         }
         
@@ -200,9 +247,97 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
         
     }
     
+    /**
+     * Get image of an item from database.
+     * 
+     * @param integer $itemId
+     * @return NULL|string
+     */
+    protected function getItemImage($itemId) {
+        
+        $imageData = array();
+        
+        // Get images
+        $query  = $this->db->getQuery(true);
+        $query
+            ->select("a.field_label AS title, a.field_value AS image")
+            ->from($this->db->quoteName("#__js_res_record_values", "a"))
+            ->where("a.record_id  = ". (int)$itemId)
+            ->where("a.field_type = ". $this->db->quote("image"));
+        
+        $this->db->setQuery($query);
+        $results = $this->db->loadAssocList();
+        
+        if(!empty($results)) {
+            $imageData = array_shift($results);
+            unset($results);
+        }
+        
+        return JArrayHelper::getValue($imageData, "image");
+        
+    }
     
     /**
-     * Extract data about section
+     * Generate meta description from textarea or HTML fields.
+     * 
+     * @param integer $itemId
+     * @return string
+     */
+    public function getItemDescription($itemId) {
+        
+        $metaDesc = "";
+        
+        // Get images
+        $query  = $this->db->getQuery(true);
+        $query
+            ->select("a.field_type AS type, a.field_value AS text")
+            ->from($this->db->quoteName("#__js_res_record_values", "a"))
+            ->where("a.record_id  = ". (int)$itemId)
+            ->where("(a.field_type = ". $this->db->quote("html") ." OR "."a.field_type = ". $this->db->quote("textarea").")");
+        
+        $this->db->setQuery($query);
+        $results = $this->db->loadAssocList();
+        
+        if(!empty($results)) {
+            
+            $htmlFields     = array();
+            $textAreaFields = array();
+            
+            foreach($results as $value) {
+                if(strcmp("html", $value["type"]) == 0) {
+                    $htmlFields[] = $value;
+                } else {
+                    $textAreaFields[] = $value;
+                }
+            }
+            
+            // Generate meta description from HTML field.
+            foreach($htmlFields as $value) {
+                $metaDesc = $this->prepareMetaDesc($value["text"]);
+                if(!empty($metaDesc)) { break; }
+            }
+            
+            // Generate meta description from TextArea field.
+            if(!$metaDesc) {
+
+                foreach($textAreaFields as $value) {
+                    $metaDesc = $this->prepareMetaDesc($value["text"]);
+                    if(!empty($metaDesc)) { break; }
+                }
+                
+            }
+            
+            unset($htmlFields);
+            unset($textAreaFields);
+            unset($results);
+        }
+        
+        
+        return $metaDesc;
+    }
+    
+    /**
+     * Extract data about section.
      */
     public function getSectionData($sectionId) {
     
@@ -215,7 +350,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension {
         $query  = $this->db->getQuery(true);
         $query
         ->select("a.id, a.title, a.description")
-            ->from($this->db->quoteName("#__js_res_sections"). " AS a")
+            ->from($this->db->quoteName("#__js_res_sections", "a"))
             ->where("a.id=".(int)$sectionId);
     
         $this->db->setQuery($query);

@@ -1,14 +1,10 @@
 <?php
 /**
- * @package      ITPrism Components
- * @subpackage   ITPMeta
+ * @package      ITPMeta
+ * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2010 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * ITPMeta is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
  */
 
 // no direct access
@@ -17,7 +13,7 @@ defined('_JEXEC') or die;
 jimport('joomla.html.pane');
 jimport('joomla.application.component.view');
 
-class ItpMetaViewUrl extends JView {
+class ItpMetaViewUrl extends JViewLegacy {
     
     protected $state;
     protected $item;
@@ -30,7 +26,6 @@ class ItpMetaViewUrl extends JView {
         parent::__construct($config);
         $this->option = JFactory::getApplication()->input->get("option");
     }
-    
     
     /**
      * Display the view
@@ -50,8 +45,6 @@ class ItpMetaViewUrl extends JView {
         $this->itemId  = $this->state->get($this->getName().".id");
         $app->setUserState("url.id", $this->itemId);
         
-        $this->version = new ItpMetaVersion();
-         
         // Prepare actions, behaviors, scritps and document
         $this->addToolbar();
         $this->setDocument();
@@ -59,50 +52,63 @@ class ItpMetaViewUrl extends JView {
         // Prepare Tags List
         if(!empty($this->itemId)) {
             $modelTags    = JModelLegacy::getInstance("Tags", "ItpMetaModel", array('ignore_request' => false));
-            $this->items       = $modelTags->getItems();
-            $this->pagination  = $modelTags->getPagination();
+            $this->items  = $modelTags->getItems();
         
-            $this->prepareTagsList($modelTags);
+            $this->prepareSorting($modelTags);
+            $this->prepareTagsList();
         
         }
         
         parent::display($tpl);
     }
     
-    protected function prepareTagsList($modelTags) {
+    /**
+     * Prepare sortable fields, sort values and filters.
+     * 
+     */
+    protected function prepareSorting($modelTags) {
     
-        $tagsState        = $modelTags->getState();
+        $tagsState = $modelTags->getState();
         
         // Prepare filters
         $this->listOrder  = $this->escape($tagsState->get('list.ordering'));
         $this->listDirn   = $this->escape($tagsState->get('list.direction'));
         $this->saveOrder  = (strcmp($this->listOrder, 'a.ordering') != 0 ) ? false : true;
-        
-        $version = $this->version->getShortVersion();
     
+        if ($this->saveOrder) {
+            $this->saveOrderingUrl = 'index.php?option='.$this->option.'&task=tags.saveOrderAjax&format=raw';
+            JHtml::_('sortablelist.sortable', 'tagsList', 'tagsForm', strtolower($this->listDirn), $this->saveOrderingUrl);
+        }
+    
+    }
+    
+    protected function prepareTagsList() {
+        
         // Load language string in JavaScript
         JText::script('COM_ITPMETA_EDIT_CONTENT');
         JText::script('COM_ITPMETA_ERROR_MAKE_SELECTION');
         JText::script('COM_ITPMETA_DELETE_ITEMS_QUESTION');
-    
+        JText::script('COM_ITPMETA_INFO_DISABLE_AUTOUPDATE');
+        JText::script('COM_ITPMETA_ADDITIONAL_INFORMATION');
+        
         // Load HTML helper
         JHtml::addIncludePath(ITPRISM_PATH_LIBRARY.'/ui/helpers');
         JHtml::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'html');
-    
-        // Styles
-        $this->document->addStylesheet('../media/'.$this->option.'/css/bootstrap.min.css');
         
         // Scripts
-        $this->document->addScript('../media/'.$this->option.'/js/bootstrap.min.js');
+        JHTML::_('behavior.framework');
+        JHtml::_('behavior.multiselect');
+        
+        JHtml::_('bootstrap.framework');
+        JHtml::_('formbehavior.chosen', 'select');
+        JHtml::_('bootstrap.tooltip');
         
         JHTML::_("itprism.ui.pnotify");
         JHTML::_("itprism.ui.bootstrap_editable");
         
-        $this->document->addScript('../media/'.$this->option.'/js/admin/tags.js?v='.$version);
+        $this->document->addScript('../media/'.$this->option.'/js/admin/tags.js');
         
-    
     }
-    
     
     /**
      * Add the page title and toolbar.
@@ -129,36 +135,37 @@ class ItpMetaViewUrl extends JView {
     		
     		// Go to script manager
     		$link = JRoute::_('index.php?option=com_itpmeta&view=scripts&layout=edit', false );
-    		$bar->appendButton('Link', 'itp-scripts-32', JText::_("COM_ITPMETA_SCRIPTS"), $link);
+    		$bar->appendButton('Link', 'cog', JText::_("COM_ITPMETA_SCRIPTS"), $link);
     		
             JToolBarHelper::divider();
-            
         }
         
         if(!$isNew){
             JToolBarHelper::cancel('url.cancel', 'JTOOLBAR_CANCEL');
-            JToolBarHelper::title($this->documentTitle, 'itp-edit-url');
+            JToolBarHelper::title($this->documentTitle);
         }else{
             JToolBarHelper::cancel('url.cancel', 'JTOOLBAR_CLOSE');
-            JToolBarHelper::title($this->documentTitle, 'itp-new-url');
+            JToolBarHelper::title($this->documentTitle);
         }
         
     }
 
     protected function setDocument() {
         
-        $version = $this->version->getShortVersion();
+        // Add styles
+        $this->document->addStyleSheet('../media/'.$this->option.'/css/style.css');
         
         // Add scripts
         JHTML::_('behavior.framework');
         JHtml::_('behavior.tooltip');
         JHtml::_('behavior.formvalidation');
         
-        $this->document->addScript('../media/'.$this->option.'/js/jquery.js');
-        $this->document->addScript('../media/'.$this->option.'/js/noconflict.js');
-        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js?v='.$version);
-        $this->document->addScript('../media/'.$this->option.'/js/admin/helper.js?v='.$version);
-        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js?v='.$version);
+        JHtml::_('bootstrap.framework');
+        JHtml::_('formbehavior.chosen', 'select');
+        
+        $this->document->addScript('../media/'.$this->option.'/js/admin/utilities.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/helper.js');
+        $this->document->addScript('../media/'.$this->option.'/js/admin/'.$this->getName().'.js');
         
     }
     
