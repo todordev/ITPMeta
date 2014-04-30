@@ -10,10 +10,10 @@
 // no direct access
 defined('_JEXEC') or die;
 
-class ItpMetaTableGlobal extends JTable {
-    
-    public function __construct( $db ) {
-        parent::__construct( '#__itpm_global_tags', 'id', $db );
+class ItpMetaTableGlobal extends JTable
+{
+    public function __construct(JDatabaseDriver $db)
+    {
+        parent::__construct('#__itpm_global_tags', 'id', $db);
     }
-    
 }

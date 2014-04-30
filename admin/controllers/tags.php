@@ -17,69 +17,66 @@ jimport('itprism.controller.admin');
  *
  * @package     ITPrism Components
  * @subpackage  ITPMeta
-  */
-class ItpMetaControllerTags extends ITPrismControllerAdmin {
-    
-    /**
-     * @var     string  The prefix to use with controller messages.
-     * @since   1.6
-     */
-    protected $text_prefix = 'COM_ITPMETA';
-    
+ */
+class ItpMetaControllerTags extends ITPrismControllerAdmin
+{
+
     /**
      * Proxy for getModel.
      * @since   1.6
      */
-    public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true)) {
+    public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
+    {
         $model = parent::getModel($name, $prefix, $config);
+
         return $model;
     }
-    
+
     /**
-     * Removes an item.
+     * Remove an item.
+     *
+     * @throws  Exception
      * @return  void
      *
      * @since   12.2
      */
-    public function delete() {
-        
+    public function delete()
+    {
         // Check for request forgeries
         JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
-    
+
         $app = JFactory::getApplication();
-        /** @var $app JAdministrator **/
-        
+        /* @var $app JApplicationAdministrator */
+
         // Gets the data from the form
-        $cid    = $app->input->post->get('cid', array(), 'array');
+        $cid = $this->input->post->get('cid', array(), 'array');
         JArrayHelper::toInteger($cid);
-        
-        $urlId  = $app->getUserState("url.id");
-        
+
+        $urlId = $app->getUserState("url.id");
+
         $redirectData = array(
             "view"   => "url",
             "layout" => "edit",
             "id"     => $urlId
         );
-        
-        if(!$cid) {
+
+        if (!$cid) {
             $this->displayWarning(JText::_("COM_ITPMETA_ERROR_INVALID_ITEMS"), $redirectData);
+
             return;
         }
-        
+
         try {
-            
+
             $model = $this->getModel();
             $model->delete($cid);
-        
-        } catch ( Exception $e ) {
+
+        } catch (Exception $e) {
             JLog::add($e->getMessage());
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
-        
+
         $msg = JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid));
         $this->displayMessage($msg, $redirectData);
-        
     }
-    
-    
 }

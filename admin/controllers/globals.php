@@ -17,24 +17,18 @@ jimport('joomla.application.component.controlleradmin');
  *
  * @package     ITPrism Components
  * @subpackage  ITPMeta
-  */
-class ItpMetaControllerGlobals extends JControllerAdmin {
-    
-    private    $defaultLink = 'index.php?option=com_itpmeta';
-    
-    /**
-     * @var     string  The prefix to use with controller messages.
-     * @since   1.6
-     */
-    protected $text_prefix = 'COM_ITPMETA';
-    
+ */
+class ItpMetaControllerGlobals extends JControllerAdmin
+{
+
     /**
      * Proxy for getModel.
      * @since   1.6
      */
-    public function getModel($name = 'Global', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true)) {
+    public function getModel($name = 'Global', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
+    {
         $model = parent::getModel($name, $prefix, $config);
+
         return $model;
     }
-    
 }

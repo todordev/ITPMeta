@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
 		if (task == 'url.cancel' || document.formvalidator.isValid(document.id('url-form'))) {
             Joomla.submitform(task, document.getElementById('url-form'));
         }
-    }
+    };
 	
 	/**
 	 * Attach event to "Edit" button.

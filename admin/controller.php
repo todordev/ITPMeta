@@ -10,37 +10,37 @@
 // no direct access
 defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.controllerlegacy' );
+jimport('joomla.application.component.controllerlegacy');
 
 /**
- * Control Panel Controller
+ * Dashboard Controller
  *
- * @package     ITPrism Components
- * @subpackage  ITPMeta
-  */
-class ItpMetaController extends JControllerLegacy {
-    
+ * @package     ITPMeta
+ * @subpackage  Component
+ */
+class ItpMetaController extends JControllerLegacy
+{
     protected $option;
-    
-	public function __construct($config = array())	{
-		parent::__construct($config);
+
+    public function __construct($config = array())
+    {
+        parent::__construct($config);
         $this->option = JFactory::getApplication()->input->getCmd("option");
-	}
+    }
 
-    public function display($cachable = false, $urlparams = array()) {
-
+    public function display($cachable = false, $urlparams = array())
+    {
         $document = JFactory::getDocument();
-        /** @var $document JDocumentHtml **/
-        
+        /** @var $document JDocumentHtml * */
+
         // Add component style
-        $document->addStyleSheet('../media/'.$this->option.'/css/style.css');
-        
-        $viewName      = $this->input->getCmd('view', 'dashboard');
+        $document->addStyleSheet('../media/' . $this->option . '/css/style.css');
+
+        $viewName = $this->input->getCmd('view', 'dashboard');
         $this->input->set("view", $viewName);
 
         parent::display();
-        
+
         return $this;
     }
-
 }

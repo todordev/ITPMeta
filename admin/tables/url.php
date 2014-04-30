@@ -10,10 +10,10 @@
 // no direct access
 defined('_JEXEC') or die;
 
-class ItpMetaTableUrl extends JTable {
-    
-    public function __construct( $db ) {
-        parent::__construct( '#__itpm_urls', 'id', $db );
+class ItpMetaTableUrl extends JTable
+{
+    public function __construct(JDatabaseDriver $db)
+    {
+        parent::__construct('#__itpm_urls', 'id', $db);
     }
-    
 }

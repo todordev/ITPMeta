@@ -263,6 +263,9 @@ function getTag(name){
 		case "ogmusic_music_album_disc":
 			val = '<meta property="music:album:disc" content="{ALBUM_DISC}" />';
 		break;
+        case "ogmusic_music_album_url":
+            val = '<meta property="music:album:url" content="{ALBUM_URL}" />';
+            break;
 		case "ogmusic_music_album_track":
 			val = '<meta property="music:album:track" content="{ALBUM_TRACK}" />';
 		break;
@@ -278,12 +281,27 @@ function getTag(name){
 		case "ogmusic_music_song_track":
 			val = '<meta property="music:song:track" content="{MUSIC_SONG_TRACK}" />';
 		break;
+        case "ogmusic_music_song_url":
+            val = '<meta property="music:song:url" content="{MUSIC_SONG_URL}" />';
+            break;
 		case "ogmusic_music_release_date":
 			val = '<meta property="music:release_date" content="{RELEASE_DATE}" />';
 		break;
 		case "ogmusic_music_creator":
 			val = '<meta property="music:creator" content="{CREATOR}" />';
 		break;
+        case "ogmusic_music_song_count":
+            val = '<meta property="music:song_count" content="{NUMBER}" />';
+            break;
+        case "ogmusic_music_preview_url":
+            val = '<meta property="music:preview_url:url" content="{URL}" />';
+            break;
+        case "ogmusic_music_preview_secure_url":
+            val = '<meta property="music:preview_url:secure_url" content="{SECURE_URL}" />';
+            break;
+        case "ogmusic_music_preview_type":
+            val = '<meta property="music:preview_url:type" content="{TYPE}" />';
+            break;
 		
 		/* Websites */
 		case "ogwebsite":
@@ -558,35 +576,39 @@ function getTag(name){
 		case "twitter_card_summary":
 			val = '<meta property="twitter:card" content="summary" />';
 		break;
-		
+        case "twitter_card_summary_large_image":
+            val = '<meta property="twitter:card" content="summary_large_image" />';
+            break;
+        case "twitter_card_gallery":
+            val = '<meta property="twitter:card" content="gallery" />';
+            break;
+        case "twitter_card_product":
+            val = '<meta property="twitter:card" content="product" />';
+            break;
+        case "twitter_card_app":
+            val = '<meta property="twitter:card" content="app" />';
+            break;
 		case "twitter_card_photo":
 			val = '<meta property="twitter:card" content="photo" />';
 		break;
-		
 		case "twitter_card_player":
 			val = '<meta property="twitter:card" content="player" />';
 		break;
-		
 		case "twitter_card_title":
 			val = '<meta property="twitter:title" content="{MAX_70_SYMBOLS}" />';
 		break;
-		
 		case "twitter_card_description":
 			val = '<meta property="twitter:description" content="{DESCRIPTION}" />';
 		break;
-		
 		case "twitter_card_url":
 			val = '<meta property="twitter:url" content="{URL}" />';
 		break;
-		
 		case "twitter_card_image":
 			val = '<meta property="twitter:image" content="{URL}" />';
 		break;
-		
 		case "twitter_card_image_src":
 			val = '<meta property="twitter:image:src" content="{URL}" />';
 		break;
-		
 		case "twitter_card_player_url":
 			val = '<meta property="twitter:player" content="{HTTPS_URL}" />';
 		break;
@@ -595,38 +617,54 @@ function getTag(name){
 		case "twitter_card_site":
 			val = '<meta property="twitter:site" content="{TWITTER_USERNAME}" />';
 		break;
-		
 		case "twitter_card_site_id":
 			val = '<meta property="twitter:site:id" content="{USER_TWITTER_ID}" />';
 		break;
-		
 		case "twitter_card_creater":
 			val = '<meta property="twitter:creator" content="{TWITTER_USERNAME}" />';
 		break;
-		
 		case "twitter_card_creater_id":
 			val = '<meta property="twitter:creator:id" content="{USER_TWITTER_ID}" />';
 		break;
-		
 		case "twitter_card_image_width":
 			val = '<meta property="twitter:image:width" content="{IMAGE_WIDTH}" />';
 		break;
-		
 		case "twitter_card_image_height":
 			val = '<meta property="twitter:image:height" content="{HEIGHT}" />';
 		break;
-		
 		case "twitter_card_player_width":
 			val = '<meta property="twitter:player:width" content="{WIDTH}" />';
 		break;
-		
 		case "twitter_card_player_height":
 			val = '<meta property="twitter:player:height" content="{HEIGHT}" />';
 		break;
-		
-		case "twitter_card_player_stream":
-			val = '<meta property="twitter:player:stream" content="{STREAM}" />';
+        case "twitter_card_player_stream":
+            val = '<meta property="twitter:player:stream" content="{STREAM}" />';
+            break;
+		case "twitter_card_image_0":
+			val = '<meta property="twitter:image0" content="{URL}" />';
 		break;
+        case "twitter_card_image_1":
+            val = '<meta property="twitter:image1" content="{URL}" />';
+            break;
+        case "twitter_card_image_2":
+            val = '<meta property="twitter:image2" content="{URL}" />';
+            break;
+        case "twitter_card_image_3":
+            val = '<meta property="twitter:image3" content="{URL}" />';
+            break;
+        case "twitter_card_data_1":
+            val = '<meta property="twitter:data1" content="{URL}" />';
+            break;
+        case "twitter_card_data_2":
+            val = '<meta property="twitter:data2" content="{URL}" />';
+            break;
+        case "twitter_card_label_1":
+            val = '<meta property="twitter:label1" content="{URL}" />';
+            break;
+        case "twitter_card_label_2":
+            val = '<meta property="twitter:labe2" content="{URL}" />';
+            break;
 		
 		/* Google */
 		case "google_notranslate":
@@ -708,7 +746,10 @@ function getTag(name){
 		break;	
 		case "ogobject":
 			val = '<meta property="og:type"   content="object" />';
-			break;	
+			break;
+        case "ogquick_election":
+            val = '<meta property="og:type"   content="quick_election.election" />';
+            break;
 		
 		/* Dublin Core */
 		case "dublin_core_title":

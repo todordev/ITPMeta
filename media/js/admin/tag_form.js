@@ -26,7 +26,7 @@ jQuery(document).ready(function() {
 		jQuery("#jform_content").val("");
 	});
 	
-	jQuery("#jform_content").on("keyup", function(event) {
+	jQuery("#jform_content").on("keyup", function() {
 		
 	    var pattern   = new RegExp("{.*?}", "g");
 	    var str       = new String(jQuery(this).val());

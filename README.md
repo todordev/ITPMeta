@@ -1,6 +1,6 @@
-ITPMeta Lite for Joomla! 
+ITPMeta Pro for Joomla! 
 ==========================
-( Version 3.8 )
+( Version 3.9 )
 - - -
 
 It is a Joomla! extension that puts meta tags into the site code. The component provides a list with predefined and popular meta tags. There are Open Graph, Facebook, Google, Twitter Card and other semantic tags.
@@ -8,10 +8,18 @@ It is a Joomla! extension that puts meta tags into the site code. The component 
 Changelog
 ---------
 
+###v3.9
+* Added some new tags.
+* Added statistical information on the dashboard.
+* Added functionality to plugin "ITPMeta - Tags" to generate Dublin Core tags.
+* Added support for extension CrowdFunding, SocialCommunity, User Ideas and ITP Donate. The plugin ITPMeta Tags generates meta tags for those extensions.
+* Fixed some issues.
+* Improved.
+
 ###v3.8
 * It was copied all tags from Pro release to Lite one.
 * The functionality that adding urls automatically was moved from the plugin to another one.
-* Langauge files were moved to the component folder.
+* Language files were moved to the component folder.
 * Added option to select default image.
 * Added option to enable and disable generating tags for extensions.
 * Improved collecting data from K2 (com_k2).

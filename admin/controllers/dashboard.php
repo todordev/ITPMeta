@@ -10,36 +10,38 @@
 // No direct access
 defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.controller' );
+jimport('joomla.application.component.controller');
 
 /**
- * ITPMeta Dashboard Controller
+ * ITPMeta dashboard Controller.
  *
- * @package     ITPrism Components
- * @subpackage  ITPMeta
-  */
-class ItpMetaControllerDashboard extends JControllerLegacy {
-    
-    private    $defaultLink = 'index.php?option=com_itpmeta';
-    
+ * @package     ITPMeta
+ * @subpackage  Component
+ */
+class ItpMetaControllerDashboard extends JControllerLegacy
+{
+
+    private $defaultLink = 'index.php?option=com_itpmeta';
+
     /**
      * @var     string  The prefix to use with controller messages.
      * @since   1.6
      */
     protected $text_prefix = 'COM_ITPMETA';
-    
+
     /**
      * Proxy for getModel.
      * @since   1.6
      */
-    public function getModel($name = 'Dashboard', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true)) {
-        
+    public function getModel($name = 'Dashboard', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
+    {
         $model = parent::getModel($name, $prefix, $config);
+
         return $model;
     }
-    
-    public function backToDashboard() {
-        $this->setRedirect( JRoute::_($this->defaultLink."&view=dashboard", false) );
+
+    public function backToDashboard()
+    {
+        $this->setRedirect(JRoute::_($this->defaultLink . "&view=dashboard", false));
     }
-    
 }

@@ -12,24 +12,23 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ITPMetaViewTags extends JViewLegacy {
-    
+class ITPMetaViewTags extends JViewLegacy
+{
     protected $urlId;
     protected $items;
-    
-    public function display($tpl = null){
-        
+
+    public function display($tpl = null)
+    {
         $app = JFactory::getApplication();
-        /** @var $app JAdministrator **/
-        
-        $this->urlId      = $app->input->get->get("url_id");
-        
+        /** @var $app JApplicationAdministrator * */
+
+        $this->urlId = $app->input->get->get("url_id");
+
         jimport("itpmeta.tags");
-        $this->items      = new ItpMetaTags($this->urlId);
+        $this->items = new ItpMetaTags($this->urlId);
         $this->items->setDb(JFactory::getDbo());
         $this->items->load();
-        
+
         parent::display($tpl);
     }
-    
 }

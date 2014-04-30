@@ -11,34 +11,34 @@ jQuery(document).ready(function() {
 	jQuery.pnotify.defaults.history = false;
 	
 	jQuery.fn.editable.defaults.mode = 'popup';
-	
+
 	jQuery('.itpm-editable').editable({
         type: 'textarea',
         url: 'index.php?option=com_itpmeta&task=tag.saveAjax&format=raw',
         title: Joomla.JText._('COM_ITPMETA_EDIT_CONTENT'),
         ajaxOptions: {
             type: 'post',
-            dataType: 'text json',
+            dataType: 'text json'
         },
         display: function(value, response) {
         	
         	jQuery(this).text(response.data.content);
         	
         },
-        success: function(response, newValue) {
+        success: function(response) {
         	
-        	if(!response.success) {
-        		return response.text;
-        	}
-        	
-        	jQuery("#itpmo"+response.data.id).text(response.data.output);
-        	
-        	ItpMetaHelper.displayMessageSuccess(response.title, response.text);
-        	
-        	if(response.data.autoupdate) {
-        		ItpMetaHelper.displayMessageInfo(Joomla.JText._('COM_ITPMETA_ADDITIONAL_INFORMATION'), Joomla.JText._('COM_ITPMETA_INFO_DISABLE_AUTOUPDATE'));
-        	}
-        	console.log(response.data);
+        	if (response.success) {
+
+                jQuery("#itpmo"+response.data.id).text(response.data.output);
+
+                ITPrismUIHelper.displayMessageSuccess(response.title, response.text);
+
+                if (response.data.autoupdate) {
+                    ITPrismUIHelper.displayMessageInfo(Joomla.JText._('COM_ITPMETA_ADDITIONAL_INFORMATION'), Joomla.JText._('COM_ITPMETA_INFO_DISABLE_AUTOUPDATE'));
+                }
+
+            }
+
         }
         
     });

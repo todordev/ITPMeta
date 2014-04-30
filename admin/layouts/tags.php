@@ -64,7 +64,7 @@ defined('_JEXEC') or die;?>
     <a class="itp-tag-btn" data-tag="ogprofile_last_name" data-tag-type="profile:last_name" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_LAST_NAME");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_LAST_NAME");?></a>
     <a class="itp-tag-btn" data-tag="ogprofile_username" data-tag-type="profile:username" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_USERNAME");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_USERNAME");?></a>
     <a class="itp-tag-btn" data-tag="ogprofile_gender" data-tag-type="profile:gender" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_GENDER");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_GENDER");?></a>
-    <a class="itp-tag-btn" data-tag="ogprofile_fbprofile_id" data-tag-type="fb:profile_id" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_FACEBOOK_ID");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_FACEBOOK_ID");?></a>
+    <a class="itp-tag-btn" data-tag="ogprofile_fbprofile_id" data-tag-type="fb:profile_id" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_PROFILE_PROFILE_ID");?>"><?php echo JText::_("COM_ITPMETA_TAG_PROFILE_PROFILE_ID");?></a>
     <a class="itp-tag-btn" data-tag="fbadmins" data-tag-type="fb:admins" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_ADMINS");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_TAG_ADMINS");?></a>
     <a class="itp-tag-btn" data-tag="fbappid" data-tag-type="fb:app_id" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_APP_ID");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_TAG_APP_ID");?></a>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
@@ -73,12 +73,12 @@ defined('_JEXEC') or die;?>
     <a class="itp-tag-btn" data-tag="ogaudio" data-tag-type="og:audio" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_AUDIO");?></a>
     <a class="itp-tag-btn" data-tag="ogaudio_title" data-tag-type="og:audio:title" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TAG_TITLE");?></a>
     <a class="itp-tag-btn" data-tag="ogaudio_artist" data-tag-type="og:audio:artist" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ARTIST");?>"><?php echo JText::_("COM_ITPMETA_TAG_ARTIST");?></a>
-    <a class="itp-tag-btn" data-tag="ogaudio_album" data-tag-type="og:audio:album" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_ALBUM");?>"><?php echo JText::_("COM_ITPMETA_TAG_ALBUM");?></a>
+    <a class="itp-tag-btn" data-tag="ogaudio_album" data-tag-type="og:audio:album" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_ALBUM_TAG_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TAG_ALBUM");?></a>
     <a class="itp-tag-btn" data-tag="ogaudio_type" data-tag-type="og:audio:type" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_AUDIO_TYPE");?>"><?php echo JText::_("COM_ITPMETA_TAG_TYPE");?></a>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_TAB"), 'opengraph_video'); ?>
-    <a class="itp-tag-btn" data-tag="ogvideo" data-tag-type="og:video" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO");?></a>
+    <a class="itp-tag-btn" data-tag="ogvideo" data-tag-type="og:video" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_TAG_VIDEO_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO");?></a>
     <a class="itp-tag-btn" data-tag="ogvideo_url" data-tag-type="og:video:url" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_URL");?>"><?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_URL_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogvideo_width" data-tag-type="og:video:width" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_WIDTH");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_WIDTH");?></a>
     <a class="itp-tag-btn" data-tag="ogvideo_height" data-tag-type="og:video:height" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_VIDEO_HEIGHT");?>"><?php echo JText::_("COM_ITPMETA_TAG_VIDEO_HEIGHT");?></a>
@@ -102,13 +102,19 @@ defined('_JEXEC') or die;?>
     <a class="itp-tag-btn" data-tag="ogmusic_music_duration" data-tag-type="music:duration" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_DURATION_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_DURATION");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_music_album" data-tag-type="music:album" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_ALBUM_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_ALBUM");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_music_album_disc" data-tag-type="music:album:disc" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_ALBUM_DISC_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_ALBUM_DISC");?></a>
+    <a class="itp-tag-btn" data-tag="ogmusic_music_album_url" data-tag-type="music:album:url" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_ALBUM_URL_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_ALBUM_URL");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_music_album_track" data-tag-type="music:album:track" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_ALBUM_TRACK_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_ALBUM_TRACK");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_musician" data-tag-type="music:musician" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSICIAN_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSICIAN");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_music_song" data-tag-type="music:song" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_SONG");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_music_song_disc" data-tag-type="music:song:disc" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_DISC_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_SONG_DISC");?></a>
+    <a class="itp-tag-btn" data-tag="ogmusic_music_song_url" data-tag-type="music:song:url" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_URL_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_SONG_URL");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_music_song_track" data-tag-type="music:song:track" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_TRACK_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_SONG_TRACK");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_music_release_date" data-tag-type="music:release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_RELEASE_DATE_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_RELEASE_DATE");?></a>
     <a class="itp-tag-btn" data-tag="ogmusic_music_creator" data-tag-type="music:creator" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_CREATOR_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG_MUSIC_CREATOR");?></a>
+    <a class="itp-tag-btn" data-tag="ogmusic_music_song_count" data-tag-type="music:song_count" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_COUNT_TITLE");?>"><?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_SONG_COUNT");?></a>
+    <a class="itp-tag-btn" data-tag="ogmusic_music_preview_url" data-tag-type="music:preview_url:url" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_PREVIEW_URL_TITLE");?>"><?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_PREVIEW_URL");?></a>
+    <a class="itp-tag-btn" data-tag="ogmusic_music_preview_secure_url" data-tag-type="music:preview_url:secure_url" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_PREVIEW_SECURE_URL_TITLE");?>"><?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_PREVIEW_SECURE_URL");?></a>
+    <a class="itp-tag-btn" data-tag="ogmusic_music_preview_type" data-tag-type="music:preview_url:type" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_PREVIEW_TYPE_TITLE");?>"><?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_MUSIC_PREVIEW_TYPE");?></a>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_OPENGRAPH_BOOK_TAB"), 'opengraph_book'); ?>
@@ -249,22 +255,35 @@ defined('_JEXEC') or die;?>
     <a class="itp-tag-btn" data-tag="twitter_card_url" data-tag-type="twitter:url" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_URL");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_URL_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_image" data-tag-type="twitter:image" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_image_src" data-tag-type="twitter:image:src" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_SRC");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_SRC_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="twitter_card_player" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="twitter_card_player_url" data-tag-type="twitter:player" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_URL");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_URL_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_summary" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_SUMMARY");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_SUMMARY_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="twitter_card_photo" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PHOTO");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PHOTO_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_summary_large_image" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_SUMMARY_LARGE_IMAGE_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_SUMMARY_LARGE_IMAGE");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_photo" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PHOTO_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PHOTO_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_gallery" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_GALLERY_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_GALLERY");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_product" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PRODUCT_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PRODUCT");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_app" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_APP_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_APP");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_player" data-tag-type="twitter:card" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER");?></a>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
-    <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_TWITTER_CARD_ADVANCED"), 'twitter_card'); ?>
+    <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_TWITTER_CARD_ADVANCED"), 'twitter_card_advanced'); ?>
     <a class="itp-tag-btn" data-tag="twitter_card_site" data-tag-type="twitter:site" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_SITE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_SITE_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_site_id" data-tag-type="twitter:site:id" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_SITE_ID");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_SITE_ID_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_creater" data-tag-type="twitter:creator" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_CREATER");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_CREATER_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_creater_id" data-tag-type="twitter:creator:id" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_CREATER_ID");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_CREATER_ID_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_image_width" data-tag-type="twitter:image:width" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_WIDTH");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_WIDTH_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_image_height" data-tag-type="twitter:image:height" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_HEIGHT");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_HEIGHT_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_player_url" data-tag-type="twitter:player" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_URL");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_URL_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_player_width" data-tag-type="twitter:player:width" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_WIDTH");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_WIDTH_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_player_height" data-tag-type="twitter:player:height" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_HEIGHT");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_HEIGHT_TAG");?></a>
     <a class="itp-tag-btn" data-tag="twitter_card_player_stream" data-tag-type="twitter:player:stream" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_STREAM");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_PLAYER_STREAM_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_image_0" data-tag-type="twitter:image0" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_0_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_0");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_image_1" data-tag-type="twitter:image1" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_1_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_1");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_image_2" data-tag-type="twitter:image2" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_2_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_2");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_image_3" data-tag-type="twitter:image3" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_3_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_IMAGE_3");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_data_1" data-tag-type="twitter:data1" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_DATA_1_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_DATA_1");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_data_2" data-tag-type="twitter:data2" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_DATA_2_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_DATA_2");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_label_1" data-tag-type="twitter:label1" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_LABEL_1_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_LABEL_1");?></a>
+    <a class="itp-tag-btn" data-tag="twitter_card_label_2" data-tag-type="twitter:label2" data-tag-title="<?php echo JText::_("COM_ITPMETA_TWETTER_CARD_LABEL_2_TITLE");?>"><?php echo JText::_("COM_ITPMETA_TWETTER_CARD_LABEL_2");?></a>
+
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_DUBLIN_CORE"), 'dublin_core'); ?>
@@ -314,15 +333,16 @@ defined('_JEXEC') or die;?>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_MISC"), 'misc'); ?>
-    <a class="itp-tag-btn" data-tag="refresh" data-tag-type="refresh" data-tag-title="<?php echo JText::_("COM_ITPMETA_REFRESH");?>"><?php echo JText::_("COM_ITPMETA_REFRESH");?></a>
-    <a class="itp-tag-btn" data-tag="opengraph" data-tag-type="rel:opengraph" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH");?></a>
-    <a class="itp-tag-btn" data-tag="origin" data-tag-type="rel:origin" data-tag-title="<?php echo JText::_("COM_ITPMETA_ORIGIN");?>"><?php echo JText::_("COM_ITPMETA_ORIGIN");?></a>
+    <a class="itp-tag-btn" data-tag="refresh" data-tag-type="refresh" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_REFRESH_TAG_TITLE");?>"><?php echo JText::_("COM_ITPMETA_REFRESH");?></a>
+    <a class="itp-tag-btn" data-tag="opengraph" data-tag-type="rel:opengraph" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_OPENGRAPH_TAG_TITLE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH");?></a>
+    <a class="itp-tag-btn" data-tag="origin" data-tag-type="rel:origin" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_ORIGIN_TAG_TITLE");?>"><?php echo JText::_("COM_ITPMETA_ORIGIN");?></a>
     <a class="itp-tag-btn" data-tag="ogdeterminer" data-tag-type="og:determiner" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_DETERMINER");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_DETERMINER_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogupdatedtime" data-tag-type="og:updated_time" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_UPDATED_TIME");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_UPDATED_TIME_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogseealso" data-tag-type="og:see_also" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_SEE_ALSO");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_SEE_ALSO_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogttl" data-tag-type="og:ttl" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_TTL");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_TTL_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogobject" data-tag-type="og:type" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_OBJECT_TITLE");?>"><?php echo JText::_("COM_ITPMETA_OBJECT");?></a>
     <a class="itp-tag-btn" data-tag="fbcustom" data-tag-type="custom" data-tag-title="<?php echo JText::_("COM_ITPMETA_FACEBOOK_CUSTOM");?>"><?php echo JText::_("COM_ITPMETA_FACEBOOK_TAG_CUSTOM");?></a>
+    <a class="itp-tag-btn" data-tag="ogquick_election" data-tag-type="quick_election.election" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_QUICK_ELECTION_TITLE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_QUICK_ELECTION");?></a>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.endAccordion'); ?>

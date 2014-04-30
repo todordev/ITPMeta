@@ -44,7 +44,7 @@ jQuery(document).ready(function() {
 		
 	});
 	
-	jQuery("#js-tags-list-close-btn").on("click", function(event){
+	jQuery("#js-tags-list-close-btn").on("click", function(){
 		jQuery('#js-tags-list-modal').modal('hide');
 	});
 	
@@ -56,7 +56,7 @@ jQuery(document).ready(function() {
     	var hasSelectedItems = false;
     	
     	// Look for selected resources.
-    	var checkBoxes  = jQuery("#adminForm input:checkbox");
+    	var checkBoxes  = jQuery("#adminForm").find("input:checkbox");
 		jQuery.each(checkBoxes, function( index, value ) {
 			
 			if(jQuery(value).is(":checked")) {
@@ -66,7 +66,6 @@ jQuery(document).ready(function() {
 		});
 		
 		return hasSelectedItems;
-		
     }
     
 });

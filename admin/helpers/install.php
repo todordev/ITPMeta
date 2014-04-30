@@ -14,51 +14,56 @@ defined('_JEXEC') or die;
  * These class contains methods using for upgrading of the extensions
  *
  */
-class ItpMetaInstallHelper {
-	
-    public static function startTable() {
+class ItpMetaInstallHelper
+{
+
+    public static function startTable()
+    {
         echo '
         <div style="width: 600px;">
         <table class="table table-bordered table-striped">';
     }
-    
-    public static function endTable() {
+
+    public static function endTable()
+    {
         echo "</table></div>";
     }
-    
-    public static function addRowHeading($heading) {
-	    echo '
+
+    public static function addRowHeading($heading)
+    {
+        echo '
 	    <tr class="info">
-            <td colspan="3">'.$heading.'</td>
+            <td colspan="3">' . $heading . '</td>
         </tr>';
-	}
-	
-	/**
-	 * Display an HTML code for a row
-	 * 
-	 * @param string $title
-	 * @param array $result 
-	 * array(
-	 * 	type => success, important, warning,
-	 * 	text => yes, no, off, on, warning,...
-	 * )
-	 */
-	public static function addRow($title, $result, $info) {
-	    
-	    $outputType = JArrayHelper::getValue($result, "type", "");
-	    $outputText = JArrayHelper::getValue($result, "text", "");
-	    
-	    $output     = "";
-	    if(!empty($outputType) AND !empty($outputText)) {
-            $output = '<span class="label label-'.$outputType.'">'.$outputText.'</span>';	        
-	    }
-	        
-	    echo '
+    }
+
+    /**
+     * Display an HTML code for a row
+     *
+     * @param string $title
+     * @param array  $result
+     *    array(
+     *    type => success, important, warning,
+     *    text => yes, no, off, on, warning,...
+     *    )
+     * @param string $info
+     */
+    public static function addRow($title, $result, $info)
+    {
+
+        $outputType = JArrayHelper::getValue($result, "type", "");
+        $outputText = JArrayHelper::getValue($result, "text", "");
+
+        $output = "";
+        if (!empty($outputType) and !empty($outputText)) {
+            $output = '<span class="label label-' . $outputType . '">' . $outputText . '</span>';
+        }
+
+        echo '
 	    <tr>
-            <td>'.$title.'</td>
-            <td>'.$output.'</td>
-            <td>'.$info.'</td>
+            <td>' . $title . '</td>
+            <td>' . $output . '</td>
+            <td>' . $info . '</td>
         </tr>';
-	}
-    
+    }
 }

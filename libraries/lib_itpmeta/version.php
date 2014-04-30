@@ -9,95 +9,95 @@
 
 defined('JPATH_PLATFORM') or die;
 
-class ItpMetaVersion {
-	
+class ItpMetaVersion
+{
     /**
      * Extension name
-     * 
+     *
      * @var string
      */
-    public $product    = 'ITP Meta';
-    
+    public $product = 'ITP Meta';
+
     /**
      * Main Release Level
-     * 
+     *
      * @var integer
      */
-    public $release    = '3';
-    
+    public $release = '3';
+
     /**
      * Sub Release Level
-     * 
+     *
      * @var integer
      */
-    public $devLevel  = '8';
-    
+    public $devLevel = '9';
+
     /**
      * Release Type
-     * 
+     *
      * @var integer
      */
-    public $releaseType  = 'Lite';
-    
+    public $releaseType = 'Lite';
+
     /**
      * Development Status
-     * 
+     *
      * @var string
      */
     public $devStatus = 'Stable';
-    
+
     /**
      * Date
-     * 
+     *
      * @var string
      */
-    public $releaseDate= '22 March, 2014';
-    
+    public $releaseDate = '30 April, 2014';
+
     /**
      * License
-     * 
+     *
      * @var string
      */
-    public $license  = '<a href="http://www.gnu.org/copyleft/gpl.html" target="_blank">GNU/GPL</a>';
-    
+    public $license = '<a href="http://www.gnu.org/copyleft/gpl.html" target="_blank">GNU/GPL</a>';
+
     /**
      * Copyright Text
-     * 
+     *
      * @var string
      */
-    public $copyright  = '&copy; 2014 ITPrism. All rights reserved.';
-    
+    public $copyright = '&copy; 2014 ITPrism. All rights reserved.';
+
     /**
      * URL
-     * 
+     *
      * @var string
      */
-    public $url        = '<a href="#" target="_blank">ITP Meta</a>';
+    public $url = '<a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">ITP Meta</a>';
 
     /**
      * Backlink
-     * 
+     *
      * @var string
      */
-    public $backlink   = '<div style="width:100%; text-align: center; font-size: xx-small; margin-top: 10px;"><a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">Joomla! open graph</a></div>';
-    
+    public $backlink = '<div style="width:100%; text-align: center; font-size: xx-small; margin-top: 10px;"><a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">Joomla! open graph</a></div>';
+
     /**
      * Developer
-     * 
+     *
      * @var string
      */
-    public $developer  = '<a href="http://itprism.com" target="_blank">ITPrism</a>';
-    
+    public $developer = '<a href="http://itprism.com" target="_blank">ITPrism</a>';
+
     /**
      *  Build long format of the verion text
      *
      * @return string Long format vpversion
      */
-    public function getLongVersion() {
-        
-    	return 
-    	   $this->product .' '. $this->release .'.'. $this->devLevel .' ' . 
-    	   $this->devStatus . ' '. $this->releaseDate;
+    public function getLongVersion()
+    {
+        return
+            $this->product . ' ' . $this->release . '.' . $this->devLevel . ' ' .
+            $this->devStatus . ' ' . $this->releaseDate;
     }
 
     /**
@@ -105,20 +105,20 @@ class ItpMetaVersion {
      *
      * @return string Long format version
      */
-    public function getMediumVersion() {
-        
-    	return 
-    	   $this->release .'.'. $this->devLevel .' ' . 
-    	   $this->releaseType . ' ( ' .$this->devStatus . ' )';
-    } 
-    
+    public function getMediumVersion()
+    {
+        return
+            $this->release . '.' . $this->devLevel . ' ' .
+            $this->releaseType . ' ( ' . $this->devStatus . ' )';
+    }
+
     /**
      *  Build short format of the vpversion text
      *
      * @return string Short version format
      */
-    public function getShortVersion() {
-        return $this->release .'.'. $this->devLevel;
+    public function getShortVersion()
+    {
+        return $this->release . '.' . $this->devLevel;
     }
-
 }

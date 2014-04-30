@@ -12,29 +12,32 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
 
-class ItpMetaModelGlobals extends JModelList {
-    
+class ItpMetaModelGlobals extends JModelList
+{
+
     /**
      * Constructor.
      *
-     * @param   array   An optional associative array of configuration settings.
+     * @param   array $config An optional associative array of configuration settings.
+     *
      * @see     JController
      * @since   1.6
      */
-    public function __construct($config = array()) {
-        
+    public function __construct($config = array())
+    {
+
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                 'id', 'a.id',
-            	'title', 'a.title',
-            	'ordering', 'a.ordering',
-            	'published', 'a.published',
+                'title', 'a.title',
+                'ordering', 'a.ordering',
+                'published', 'a.published',
             );
         }
-        
+
         parent::__construct($config);
     }
-    
+
     /**
      * Method to auto-populate the model state.
      *
@@ -42,13 +45,13 @@ class ItpMetaModelGlobals extends JModelList {
      *
      * @since   1.6
      */
-    protected function populateState($ordering = null, $direction = null) {
-
+    protected function populateState($ordering = null, $direction = null)
+    {
         // Load the filter state.
-        $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
 
-        $published = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
+        $published = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string');
         $this->setState('filter.state', $published);
 
         // Load the parameters.
@@ -66,37 +69,38 @@ class ItpMetaModelGlobals extends JModelList {
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param   string      $id A prefix for the store id.
+     * @param   string $id A prefix for the store id.
+     *
      * @return  string      A store id.
      * @since   1.6
      */
-    protected function getStoreId($id = '') {
-        
+    protected function getStoreId($id = '')
+    {
         // Compile the store id.
-        $id.= ':' . $this->getState('filter.search');
-        $id.= ':' . $this->getState('filter.state');
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.state');
 
         return parent::getStoreId($id);
     }
-    
-   /**
+
+    /**
      * Build an SQL query to load the list data.
      *
      * @return  JDatabaseQuery
      * @since   1.6
      */
-    protected function getListQuery() {
-        
+    protected function getListQuery()
+    {
         // Create a new query object.
-        $db     = $this->getDbo();
-        $query  = $db->getQuery(true);
+        $db    = $this->getDbo();
+        $query = $db->getQuery(true);
 
         // Select the required fields from the table.
         $query->select(
             $this->getState(
                 'list.select',
                 'a.id, a.title, a.type, a.tag, a.content, a.output, ' .
-                'a.ordering, a.published' 
+                'a.ordering, a.published'
             )
         );
         $query->from($db->quoteName("#__itpm_global_tags", "a"));
@@ -104,8 +108,8 @@ class ItpMetaModelGlobals extends JModelList {
         // Filter by published state
         $published = $this->getState('filter.state');
         if (is_numeric($published)) {
-            $query->where('a.published = '.(int) $published);
-        } else if ($published === '') {
+            $query->where('a.published = ' . (int)$published);
+        } elseif ($published === '') {
             $query->where('(a.published IN (0, 1))');
         }
 
@@ -113,10 +117,10 @@ class ItpMetaModelGlobals extends JModelList {
         $search = $this->getState('filter.search');
         if (!empty($search)) {
             if (stripos($search, 'id:') === 0) {
-                $query->where('a.id = '.(int) substr($search, 3));
+                $query->where('a.id = ' . (int)substr($search, 3));
             } else {
-                $search = $db->quote('%'.$db->escape($search, true).'%');
-                $query->where('(a.title LIKE '.$search.')');
+                $search = $db->quote('%' . $db->escape($search, true) . '%');
+                $query->where('(a.title LIKE ' . $search . ')');
             }
         }
 
@@ -126,13 +130,12 @@ class ItpMetaModelGlobals extends JModelList {
 
         return $query;
     }
-    
-    protected function getOrderString() {
-        $orderCol   = $this->getState('list.ordering');
-        $orderDirn  = $this->getState('list.direction');
-        
-        return $orderCol.' '.$orderDirn;
+
+    protected function getOrderString()
+    {
+        $orderCol  = $this->getState('list.ordering');
+        $orderDirn = $this->getState('list.direction');
+
+        return $orderCol . ' ' . $orderDirn;
     }
-    
-    
 }
