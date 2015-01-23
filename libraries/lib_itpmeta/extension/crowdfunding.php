@@ -3,7 +3,7 @@
  * @package      ITPMeta
  * @subpackage   Libraries
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
@@ -27,19 +27,18 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
     public function getData()
     {
         $app = JFactory::getApplication();
-        /** @var $app JApplicationSite * */
+        /** @var $app JApplicationSite */
 
         // Parse the URL
         $router = $app->getRouter();
         $parsed = $router->parse($this->uri);
 
-        $id = JArrayHelper::getValue($parsed, "id");
+        $id     = JArrayHelper::getValue($parsed, "id");
 
         switch ($this->view) {
 
-            case "discover":
-            case "featured":
-                $this->data = $this->getDiscoverData($id);
+            case "category":
+                $this->data = $this->getCategoryData($id);
                 break;
 
             case "backing":
@@ -52,7 +51,7 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
 
             case "project":
                 $userId = JFactory::getUser()->get("id");
-                if(!$userId) {
+                if (!$userId) {
                     $this->data = $this->getRaiseData();
                 }
                 break;
@@ -61,7 +60,10 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
                 $this->data = $this->getDetailsData($id);
                 break;
 
-            default: // Get menu item
+            case "discover":
+            case "featured":
+            case "categories":
+            default: // Get data from menu item.
                 if (!empty($this->menuItemId)) {
                     $this->data = $this->getDataByMenuItem($this->menuItemId);
                 }
@@ -70,25 +72,6 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
 
         return $this->data;
     }
-
-    /**
-     * Extract data about discover page or category.
-     *
-     * @param int $categoryId
-     *
-     * @return array
-     */
-    protected function getDiscoverData($categoryId)
-    {
-        if (!empty($categoryId)) {
-            $data = $this->getCategoryData($categoryId);
-        } else {
-            $data = $this->getDataByMenuItem($this->menuItemId);
-        }
-
-        return $data;
-    }
-
 
     /**
      * Extract data about raising capital page ( Intro Article ).

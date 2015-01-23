@@ -3,7 +3,7 @@
  * @package      ITPMeta
  * @subpackage   Libraries
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
@@ -16,7 +16,6 @@ jimport("itpmeta.extension");
  */
 class ItpMetaExtensionK2 extends ItpMetaExtension
 {
-
     protected $uri;
     protected $view;
     protected $task;
@@ -27,7 +26,7 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
     public function getData()
     {
         $app = JFactory::getApplication();
-        /** @var $app JApplicationSite * */
+        /** @var $app JApplicationSite */
 
         $data = array();
 

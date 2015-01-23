@@ -3,7 +3,7 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
@@ -16,6 +16,9 @@ defined('_JEXEC') or die;
 	</th>
 	<th width="1%" style="min-width:55px" class="nowrap center">
 		<?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $this->listDirn, $this->listOrder); ?>
+	</th>
+	<th width="1%" style="min-width:55px" class="nowrap center hidden-phone">
+	    <?php echo JHtml::_('grid.sort', 'COM_ITPMETA_AUTOUPDATE', 'a.autoupdate', $this->listDirn, $this->listOrder); ?>
 	</th>
     <th class="title">
         <?php echo JHtml::_('grid.sort',  'COM_ITPMETA_URI_STRING', 'a.uri', $this->listDirn, $this->listOrder); ?>

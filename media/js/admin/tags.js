@@ -21,8 +21,10 @@ jQuery(document).ready(function() {
             dataType: 'text json'
         },
         display: function(value, response) {
-        	
-        	jQuery(this).text(response.data.content);
+
+            if (response && response.success) {
+                jQuery(this).text(response.data.content);
+            }
         	
         },
         success: function(response) {

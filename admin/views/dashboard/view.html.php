@@ -3,14 +3,12 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
 // no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.view');
 
 class ItpMetaViewDashboard extends JViewLegacy
 {
@@ -60,7 +58,7 @@ class ItpMetaViewDashboard extends JViewLegacy
         jimport("itpmeta.statistics.urls.latest");
         $this->latest = new ITPMetaStatisticsUrlsLatest(JFactory::getDbo());
         $this->latest->load(5);
-//var_dump($this->latest);exit;
+
         // Get urls with scripts.
         jimport("itpmeta.statistics.urls.scripts");
         $this->urlsScripts = new ITPMetaStatisticsUrlsScripts(JFactory::getDbo());

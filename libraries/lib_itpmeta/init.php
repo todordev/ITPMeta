@@ -3,37 +3,37 @@
  * @package      ITPMeta
  * @subpackage   Libraries
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
 defined('JPATH_PLATFORM') or die;
 
 if (!defined("ITPMETA_PATH_COMPONENT_ADMINISTRATOR")) {
-    define("ITPMETA_PATH_COMPONENT_ADMINISTRATOR", JPATH_ADMINISTRATOR .DIRECTORY_SEPARATOR. "components" .DIRECTORY_SEPARATOR. "com_itpmeta");
+    define("ITPMETA_PATH_COMPONENT_ADMINISTRATOR", JPATH_ADMINISTRATOR ."/components/com_itpmeta");
 }
 
 if (!defined("ITPMETA_PATH_LIBRARY")) {
-    define("ITPMETA_PATH_LIBRARY", JPATH_LIBRARIES .DIRECTORY_SEPARATOR. "itpmeta");
+    define("ITPMETA_PATH_LIBRARY", JPATH_LIBRARIES ."/itpmeta");
 }
 
 // Import libraries
 jimport('joomla.utilities.arrayhelper');
 
 // Register component constants
-JLoader::register("ITPMetaConstants", ITPMETA_PATH_LIBRARY .DIRECTORY_SEPARATOR. "constants.php");
+JLoader::register("ITPMetaConstants", ITPMETA_PATH_LIBRARY ."/constants.php");
 
 // Register component libraries
-JLoader::register("ItpMetaVersion", ITPMETA_PATH_LIBRARY .DIRECTORY_SEPARATOR. "version.php");
+JLoader::register("ItpMetaVersion", ITPMETA_PATH_LIBRARY ."/version.php");
 
 // Register component helpers
-JLoader::register("ItpMetaHelper", ITPMETA_PATH_COMPONENT_ADMINISTRATOR .DIRECTORY_SEPARATOR. "helpers" .DIRECTORY_SEPARATOR. "itpmeta.php");
+JLoader::register("ItpMetaHelper", ITPMETA_PATH_COMPONENT_ADMINISTRATOR ."/helpers/itpmeta.php");
 
 // Register libraries
-JLoader::register("ItpMetaExtension", ITPMETA_PATH_LIBRARY .DIRECTORY_SEPARATOR. "extension.php");
-JLoader::register("ItpMetaTags", ITPMETA_PATH_LIBRARY .DIRECTORY_SEPARATOR. "tags.php");
-JLoader::register("ItpMetaTag", ITPMETA_PATH_LIBRARY .DIRECTORY_SEPARATOR. "tag.php");
-JLoader::register("ITPMetaUri", ITPMETA_PATH_LIBRARY .DIRECTORY_SEPARATOR. "uri.php");
+JLoader::register("ItpMetaExtension", ITPMETA_PATH_LIBRARY ."/extension.php");
+JLoader::register("ItpMetaTags", ITPMETA_PATH_LIBRARY ."/tags.php");
+JLoader::register("ItpMetaTag", ITPMETA_PATH_LIBRARY ."/tag.php");
+JLoader::register("ITPMetaUri", ITPMETA_PATH_LIBRARY ."/uri.php");
 
 // Load library language
 $lang = JFactory::getLanguage();

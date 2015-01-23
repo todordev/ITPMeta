@@ -3,7 +3,7 @@
  * @package      ITPMeta
  * @subpackage   Libraries
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
@@ -30,7 +30,7 @@ class ItpMetaVersion
      *
      * @var integer
      */
-    public $devLevel = '9';
+    public $devLevel = '10';
 
     /**
      * Release Type
@@ -51,7 +51,7 @@ class ItpMetaVersion
      *
      * @var string
      */
-    public $releaseDate = '30 April, 2014';
+    public $releaseDate = '21 January, 2015';
 
     /**
      * License
@@ -65,7 +65,7 @@ class ItpMetaVersion
      *
      * @var string
      */
-    public $copyright = '&copy; 2014 ITPrism. All rights reserved.';
+    public $copyright = '&copy; 2015 ITPrism. All rights reserved.';
 
     /**
      * URL

@@ -3,18 +3,15 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.modeladmin');
-
 class ItpMetaModelScripts extends JModelAdmin
 {
-
     /**
      * Returns a reference to the a Table object, always creating it.
      *
@@ -86,7 +83,7 @@ class ItpMetaModelScripts extends JModelAdmin
     /**
      * Save an item.
      *
-     * @param array $data  All data for the category in an array.
+     * @param array $data All data for the category in an array.
      *
      * @return int
      */
@@ -96,8 +93,12 @@ class ItpMetaModelScripts extends JModelAdmin
         $afterBody  = JArrayHelper::getValue($data, "after_body_tag");
         $beforeBody = JArrayHelper::getValue($data, "before_body_tag");
 
-        if(!$afterBody) { $afterBody = null; }
-        if(!$beforeBody) { $beforeBody = null; }
+        if (!$afterBody) {
+            $afterBody = null;
+        }
+        if (!$beforeBody) {
+            $beforeBody = null;
+        }
 
         // Load item data
         $row = $this->getTable();

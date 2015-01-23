@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="3.2" method="upgrade">
+<extension type="component" version="3.3" method="upgrade">
 	<name>COM_ITPMETA</name>
 	<author>Todor Iliev</author>
 	<authorEmail>todor@itprism.com</authorEmail>
 	<authorUrl>http://itprism.com</authorUrl>
-	<copyright>Copyright (C) 2014 Todor Iliev ( ITPrism.com )</copyright>
+	<copyright>Copyright (C) 2015 Todor Iliev ( ITPrism.com )</copyright>
 	<license>http://www.gnu.org/copyleft/gpl.html</license>
-	<version>3.9</version>
-	<creationDate>30 April, 2014</creationDate>
+	<version>3.10</version>
+	<creationDate>21 January, 2015</creationDate>
 	<description><![CDATA[
     <p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta" target="_blank">ITPMeta</a> is an easy way to put any code in the header of your site.</p>
     <p><a href="http://itprism.com/" target="_blank">Subscribe for the newsletter</a> to receive information about updates and new ITPrism extensions.</p>
@@ -60,7 +60,6 @@
 			<folder>helpers</folder>
 			<folder>language</folder>
 			<folder>layouts</folder>
-			<folder>libraries</folder>
 			<folder>models</folder>
 			<folder>tables</folder>
 			<folder>sql</folder>

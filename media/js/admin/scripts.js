@@ -7,7 +7,7 @@
 jQuery(document).ready(function() {
 	
 	Joomla.submitbutton = function(task) {
-        if (task == 'scripts.cancel' || document.formvalidator.isValid(document.id('scripts-form'))) {
+        if (task == 'scripts.cancel' || document.formvalidator.isValid(document.getElementById('scripts-form'))) {
             Joomla.submitform(task, document.getElementById('scripts-form'));
         }
     }

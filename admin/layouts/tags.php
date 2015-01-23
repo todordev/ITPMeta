@@ -3,7 +3,7 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
@@ -118,20 +118,20 @@ defined('_JEXEC') or die;?>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_OPENGRAPH_BOOK_TAB"), 'opengraph_book'); ?>
-    <a class="itp-tag-btn" data-tag="ogbook" data-tag-type="books:book" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_release_date" data-tag-type="books:release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_RELEASE_DATE");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_RELEASE_DATE");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_author" data-tag-type="books:author" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_AUTHOR");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_AUTHOR");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_isbn" data-tag-type="books:isbn" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_ISBN");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_ISBN");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_tag" data-tag-type="books:tag" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_genre" data-tag-type="books:genre" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_GENRE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_GENRE_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_initial_release_date" data-tag-type="books:initial_release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_INITIAL_RELEASE_DATE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_INITIAL_RELEASE_DATE_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_page_count" data-tag-type="books:page_count" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_PAGE_COUNT");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_PAGE_COUNT_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_sample" data-tag-type="books:sample" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_SAMPLE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_SAMPLE_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_language_locale" data-tag-type="books:language:locale" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_LANGUAGE_LOCALE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_LANGUAGE_LOCALE_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_language_alternate" data-tag-type="books:language:alternate" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_LANGUAGE_ALTERNATE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_LANGUAGE_ALTERNATE_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_rating_value" data-tag-type="books:rating:value" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_VALUE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_VALUE_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_rating_scale" data-tag-type="books:rating:scale" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_SCALE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_SCALE_TAG");?></a>
-    <a class="itp-tag-btn" data-tag="ogbook_rating_normalized_value" data-tag-type="books:rating:normalized_value" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_NORMALIZED_VALUE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_NORMALIZED_VALUE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_book" data-tag-type="books:book" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_release_date" data-tag-type="books:release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_RELEASE_DATE");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_RELEASE_DATE");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_author" data-tag-type="books:author" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_AUTHOR");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_AUTHOR");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_isbn" data-tag-type="books:isbn" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_ISBN");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_ISBN");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_tag" data-tag-type="books:tag" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_genre" data-tag-type="books:genre" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_GENRE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_GENRE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_initial_release_date" data-tag-type="books:initial_release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_INITIAL_RELEASE_DATE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_INITIAL_RELEASE_DATE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_page_count" data-tag-type="books:page_count" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_PAGE_COUNT");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_PAGE_COUNT_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_sample" data-tag-type="books:sample" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_SAMPLE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_SAMPLE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_language_locale" data-tag-type="books:language:locale" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_LANGUAGE_LOCALE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_LANGUAGE_LOCALE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_language_alternate" data-tag-type="books:language:alternate" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_LANGUAGE_ALTERNATE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_LANGUAGE_ALTERNATE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_rating_value" data-tag-type="books:rating:value" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_VALUE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_VALUE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_rating_scale" data-tag-type="books:rating:scale" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_SCALE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_SCALE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_rating_normalized_value" data-tag-type="books:rating:normalized_value" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_NORMALIZED_VALUE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_NORMALIZED_VALUE_TAG");?></a>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_OPENGRAPH_TYPES_BUSINESS"), 'business'); ?>

@@ -3,7 +3,7 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
@@ -24,6 +24,10 @@ defined('_JEXEC') or die;
 					<div class="controls"><?php echo $this->form->getInput('published'); ?></div>
                 </div>
                 <div class="control-group">
+					<div class="control-label"><?php echo $this->form->getLabel('autoupdate'); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('autoupdate'); ?></div>
+                </div>
+                <div class="control-group">
                     <div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
 					<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
                 </div>
@@ -35,7 +39,10 @@ defined('_JEXEC') or die;
         
         <?php if(!$this->itemId) { ?>
         <div class="clearfix"></div>
-        <p class="sticky"><?php echo JText::_("COM_ITPMETA_NOTE_NO_TAGS")?></p>
+        <p class="alert alert-info">
+            <i class="icon-info-sign"></i>
+            <?php echo JText::_("COM_ITPMETA_NOTE_NO_TAGS")?>
+        </p>
         <?php }?>
     </div>
     

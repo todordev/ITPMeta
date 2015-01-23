@@ -7,7 +7,7 @@
 jQuery(document).ready(function() {
 	
 	Joomla.submitbutton = function(task) {
-        if (task == 'tag.cancel' || document.formvalidator.isValid(document.id('tag-form'))) {
+        if (task == 'tag.cancel' || document.formvalidator.isValid(document.getElementById('tag-form'))) {
             Joomla.submitform(task, document.getElementById('tag-form'));
         }
     }

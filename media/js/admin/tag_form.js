@@ -29,9 +29,12 @@ jQuery(document).ready(function() {
 	jQuery("#jform_content").on("keyup", function() {
 		
 	    var pattern   = new RegExp("{.*?}", "g");
-	    var str       = new String(jQuery(this).val());
-	    
-	    // Get the tag 
+	    var str       = jQuery(this).val();
+
+		// Strip tags.
+		var str   	  = jQuery("<div>" + str + "</div>").text();
+
+	    // Get the tag
 	    var tag       = jQuery("#jform_tag").val();
 	    
 	    // If there is no matches, return.
@@ -44,25 +47,25 @@ jQuery(document).ready(function() {
 	    	
 	    	// Prepare non greedy pattern
 	    	var pattern  = new RegExp("{.*?}");
-	    	var rows 	 = str.stripTags().split("\n");
-	    	
+	    	var rows 	 = str.split("\n");
+
 	    	// If there are two lines, replace both places.
 	    	if(2 == rows.length ){
 	    		
-		    	var line1 = rows[0];
-		    	var line2 = rows[1];
+		    	var line1 = jQuery.trim(rows[0]);
+		    	var line2 = jQuery.trim(rows[1]);
 		    	
-		    	var tag 	  = tag.replace(pattern, line1.clean().replace(/"/g, "&quot;"));
-		    	var outputStr = tag.replace(pattern, line2.clean().replace(/"/g, "&quot;"));
+		    	var tag 	  = tag.replace(pattern, line1.replace(/"/g, "&quot;"));
+		    	var outputStr = tag.replace(pattern, line2.replace(/"/g, "&quot;"));
 		    	
 	    	} else { // Replace only first place
 	    		
 	    		var line1 	  = rows[0];
-	    		var outputStr = tag.replace(pattern, line1.clean().replace(/"/g, "&quot;"));
+	    		var outputStr = tag.replace(pattern, line1.replace(/"/g, "&quot;"));
 	    	}
 	    	
 	    } else { // Replace only first place
-	    	 var outputStr = tag.replace(pattern, str.stripTags().clean().replace(/"/g, "&quot;"));
+	    	var outputStr = tag.replace(pattern, jQuery.trim(str).replace(/"/g, "&quot;"));
 	    }
 	    
 	    // Update output

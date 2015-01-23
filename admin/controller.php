@@ -3,14 +3,12 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
 // no direct access
 defined('_JEXEC') or die;
-
-jimport('joomla.application.component.controllerlegacy');
 
 /**
  * Dashboard Controller
@@ -31,10 +29,10 @@ class ItpMetaController extends JControllerLegacy
     public function display($cachable = false, $urlparams = array())
     {
         $document = JFactory::getDocument();
-        /** @var $document JDocumentHtml * */
+        /** @var $document JDocumentHtml */
 
         // Add component style
-        $document->addStyleSheet('../media/' . $this->option . '/css/style.css');
+        $document->addStyleSheet('../media/' . $this->option . '/css/backend.style.css');
 
         $viewName = $this->input->getCmd('view', 'dashboard');
         $this->input->set("view", $viewName);

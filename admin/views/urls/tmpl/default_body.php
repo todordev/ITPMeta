@@ -3,7 +3,7 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2014 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 
@@ -19,6 +19,9 @@ defined('_JEXEC') or die;
     </td>
     <td class="center">
         <?php echo JHtml::_('jgrid.published', $item->published, $i, "urls."); ?>
+    </td>
+    <td class="center hidden-phone">
+        <?php echo JHtml::_('itpmeta.autoupdatestate', $item->autoupdate, $i); ?>
     </td>
     <td>
         <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=url&layout=edit&id=".$item->id);?>" ><?php echo $this->escape( $item->uri ); ?></a>

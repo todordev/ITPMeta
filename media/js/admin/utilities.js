@@ -108,46 +108,46 @@ function getTag(name){
 		break;
 		
 		/* Books */
-		case "ogbook":
+		case "ogbooks_book":
 			val = '<meta property="og:type" content="books:book" />';
 		break;
-		case "ogbook_release_date":
+		case "ogbooks_release_date":
 			val = '<meta property="books:release_date" content="{DATETIME}"> ';
 		break;
-		case "ogbook_author":
+		case "ogbooks_author":
 			val = '<meta property="books:author" content="{WHO_WROTE_THIS}">';
 		break;
-		case "ogbook_isbn":
+		case "ogbooks_isbn":
 			val = '<meta property="books:isbn" content="{ISBN_NUMBER}"> ';
 		break;
-		case "ogbook_tag":
+		case "ogbooks_tag":
 			val = '<meta property="books:tag" content="{KEYWORD}">';
 		break;
-		case "ogbook_genre":
+		case "ogbooks_genre":
 			val = '<meta property="books:genre" content="{GENRE}">';
 		break;
-		case "ogbook_initial_release_date":
+		case "ogbooks_initial_release_date":
 			val = '<meta property="books:initial_release_date" content="{DATE}">';
 		break;
-		case "ogbook_page_count":
+		case "ogbooks_page_count":
 			val = '<meta property="books:page_count" content="{COUNT}">';
 		break;
-		case "ogbook_sample":
+		case "ogbooks_sample":
 			val = '<meta property="books:sample" content="{URL}">';
 		break;
-		case "ogbook_language_locale":
+		case "ogbooks_language_locale":
 			val = '<meta property="books:language:locale" content="{LOCALE}">';
 		break;
-		case "ogbook_language_alternate":
+		case "ogbooks_language_alternate":
 			val = '<meta property="books:language:alternate" content="{ALTERNATE}">';
 		break;
-		case "ogbook_rating_value":
+		case "ogbooks_rating_value":
 			val = '<meta property="books:rating:value" content="{VALUE}">';
 		break;
-		case "ogbook_rating_scale":
+		case "ogbooks_rating_scale":
 			val = '<meta property="books:rating:scale" content="{SCALE}">';
 		break;
-		case "ogbook_rating_normalized_value":
+		case "ogbooks_rating_normalized_value":
 			val = '<meta property="books:rating:normalized_value" content="{VALUE}">';
 		break;
 		

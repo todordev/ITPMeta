@@ -8,7 +8,7 @@ jQuery(document).ready(function() {
 	
 	// Verify URL data when submit the form
 	Joomla.submitbutton = function(task) {
-		if (task == 'url.cancel' || document.formvalidator.isValid(document.id('url-form'))) {
+		if (task == 'url.cancel' || document.formvalidator.isValid(document.getElementById('url-form'))) {
             Joomla.submitform(task, document.getElementById('url-form'));
         }
     };
@@ -19,7 +19,7 @@ jQuery(document).ready(function() {
 	jQuery("#js-btn-edit-tag").on("click", function(event){
 		event.preventDefault();
 	
-		if (document.tagsForm.boxchecked.value==0) {
+		if (document.tagsForm.boxchecked.value == 0) {
 			alert(Joomla.JText._("COM_ITPMETA_ERROR_MAKE_SELECTION"));
 		} else { 
 			
@@ -49,7 +49,7 @@ jQuery(document).ready(function() {
 	jQuery("#js-btn-delete-tag").on("click", function(event){
 		event.preventDefault();
 	
-		if (document.tagsForm.boxchecked.value==0) {
+		if (document.tagsForm.boxchecked.value == 0) {
 			alert(Joomla.JText._("COM_ITPMETA_ERROR_MAKE_SELECTION"));
 		} else { 
 			
