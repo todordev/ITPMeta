@@ -21,10 +21,7 @@ jimport('itprism.controller.form.backend');
  */
 class ItpMetaControllerUrl extends ITPrismControllerFormBackend
 {
-    /**
-     * Save an item
-     */
-    public function save()
+    public function save($key = null, $urlVar = null)
     {
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 

@@ -16,12 +16,17 @@ class ItpMetaControllerTag extends JControllerForm
 {
     /**
      * Proxy for getModel.
+     *
+     * @param string $name
+     * @param string $prefix
+     * @param array $config
+     *
+     * @return ItpMetaModelTag
      * @since    1.6
      */
     public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
-
         return $model;
     }
 
@@ -30,6 +35,11 @@ class ItpMetaControllerTag extends JControllerForm
         // Get the data from the form
         $itemId  = $this->input->post->get('pk', 0, 'uint');
         $content = $this->input->post->get('value', "", "raw");
+
+        // Decode the content if there are encoded symbols.
+        $content = html_entity_decode($content, ENT_QUOTES, "UTF-8");
+
+        // Encode the content.
         $content = htmlentities($content, ENT_QUOTES, "UTF-8");
 
         // Fix Magic Quotes
@@ -43,12 +53,6 @@ class ItpMetaControllerTag extends JControllerForm
         $model = $this->getModel();
 
         if (!$itemId or !$content) {
-
-            $response = array(
-                "success" => false,
-                "title"   => JText::_('COM_ITPMETA_FAIL'),
-                "text"    => JText::_('COM_ITPMETA_ERROR_SYSTEM'),
-            );
 
             $response
                 ->setTitle(JText::_('COM_ITPMETA_FAIL'))

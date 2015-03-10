@@ -21,6 +21,14 @@ jimport("itpmeta.init");
 class plgSystemItpMeta extends JPlugin
 {
     /**
+     * A Registry object holding the parameters for the plugin
+     *
+     * @var    Joomla\Registry\Registry
+     * @since  1.5
+     */
+    public $params = null;
+
+    /**
      * These are tags that won't be overridden.
      *
      * @var array
@@ -273,7 +281,7 @@ class plgSystemItpMeta extends JPlugin
      * Generate and put namespace schemes to the HTML tag
      *
      * @param string    $buffer Output buffer
-     * @param JRegistry $params Component parameters
+     * @param Joomla\Registry\Registry $params Component parameters
      *                          
      * @return string
      */

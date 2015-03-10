@@ -47,11 +47,7 @@ class ITPMetaStatisticsBasic
             ->from($this->db->quoteName("#__itpm_urls", "a"));
 
         $this->db->setQuery($query);
-        $result = $this->db->loadResult();
-
-        if (!$result) {
-            $result = 0;
-        }
+        $result = (int)$this->db->loadResult();
 
         return $result;
     }
@@ -70,11 +66,7 @@ class ITPMetaStatisticsBasic
             ->from($this->db->quoteName("#__itpm_tags", "a"));
 
         $this->db->setQuery($query);
-        $result = $this->db->loadResult();
-
-        if (!$result) {
-            $result = 0;
-        }
+        $result = (int)$this->db->loadResult();
 
         return $result;
     }
@@ -93,11 +85,7 @@ class ITPMetaStatisticsBasic
             ->from($this->db->quoteName("#__itpm_global_tags", "a"));
 
         $this->db->setQuery($query);
-        $result = $this->db->loadResult();
-
-        if (!$result) {
-            $result = 0;
-        }
+        $result = (int)$this->db->loadResult();
 
         return $result;
     }

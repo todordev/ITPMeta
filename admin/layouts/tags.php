@@ -123,6 +123,7 @@ defined('_JEXEC') or die;?>
     <a class="itp-tag-btn" data-tag="ogbooks_author" data-tag-type="books:author" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_AUTHOR");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_AUTHOR");?></a>
     <a class="itp-tag-btn" data-tag="ogbooks_isbn" data-tag-type="books:isbn" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_ISBN");?>"><?php echo JText::_("COM_ITPMETA_TAG_BOOK_ISBN");?></a>
     <a class="itp-tag-btn" data-tag="ogbooks_tag" data-tag-type="books:tag" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_BOOK_TAG");?>"><?php echo JText::_("COM_ITPMETA_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_gender" data-tag-type="books:gender" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_GENDER");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_GENDER_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogbooks_genre" data-tag-type="books:genre" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_GENRE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_GENRE_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogbooks_initial_release_date" data-tag-type="books:initial_release_date" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_INITIAL_RELEASE_DATE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_INITIAL_RELEASE_DATE_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogbooks_page_count" data-tag-type="books:page_count" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_PAGE_COUNT");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_PAGE_COUNT_TAG");?></a>
@@ -132,6 +133,8 @@ defined('_JEXEC') or die;?>
     <a class="itp-tag-btn" data-tag="ogbooks_rating_value" data-tag-type="books:rating:value" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_VALUE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_VALUE_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogbooks_rating_scale" data-tag-type="books:rating:scale" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_SCALE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_SCALE_TAG");?></a>
     <a class="itp-tag-btn" data-tag="ogbooks_rating_normalized_value" data-tag-type="books:rating:normalized_value" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_NORMALIZED_VALUE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_RATING_NORMALIZED_VALUE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_official_site" data-tag-type="books:official_site" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_OFFICIAL_SITE");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_OFFICIAL_SITE_TAG");?></a>
+    <a class="itp-tag-btn" data-tag="ogbooks_official_site" data-tag-type="books:canonical_name" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_CANONICAL_NAME");?>"><?php echo JText::_("COM_ITPMETA_OPENGRAPH_BOOK_CANONICAL_NAME_TAG");?></a>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_OPENGRAPH_TYPES_BUSINESS"), 'business'); ?>
@@ -240,6 +243,7 @@ defined('_JEXEC') or die;?>
     <a class="itp-tag-btn" data-tag="oggame" data-tag-type="og:type" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_GAME");?>"><?php echo JText::_("COM_ITPMETA_TAG_GAME");?></a>
     <a class="itp-tag-btn" data-tag="oggame_achievement" data-tag-type="og:type" data-tag-title="<?php echo JText::_("COM_ITPMETA_OPEN_GRAPH_GAME_ACHIEVEMENT");?>"><?php echo JText::_("COM_ITPMETA_TAG_GAME_ACHIEVEMENT");?></a>
     <a class="itp-tag-btn" data-tag="game_points" data-tag-type="game:points" data-tag-title="<?php echo JText::_("COM_ITPMETA_GAME_POINTS");?>"><?php echo JText::_("COM_ITPMETA_TAG_GAME_POINTS");?></a>
+    <a class="itp-tag-btn" data-tag="game_secret" data-tag-type="game:secret" data-tag-title="<?php echo JText::_("COM_ITPMETA_GAME_SECRET");?>"><?php echo JText::_("COM_ITPMETA_GAME_SECRET_TAG");?></a>
     <?php echo JHtml::_('bootstrap.endSlide'); ?>
     
     <?php echo JHtml::_('bootstrap.addSlide', 'slide-tags', JText::_("COM_ITPMETA_FACEBOOK_RESTRICTIONS"), 'facebook_restrictions'); ?>

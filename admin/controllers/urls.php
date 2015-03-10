@@ -20,7 +20,6 @@ jimport("itprism.controller.admin");
  */
 class ItpMetaControllerUrls extends ITPrismControllerAdmin
 {
-
     public function __construct($config = array())
     {
         parent::__construct($config);
@@ -32,10 +31,6 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin
 
     }
 
-    /**
-     * Proxy for getModel.
-     * @since   1.6
-     */
     public function getModel($name = 'Url', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);

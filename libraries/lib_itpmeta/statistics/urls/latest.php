@@ -45,11 +45,7 @@ class ITPMetaStatisticsUrlsLatest extends ITPMetaStatisticsUrls implements Itera
 
         $this->db->setQuery($query, 0, (int)$limit);
 
-        $this->data = $this->db->loadAssocList();
-
-        if (!$this->data) {
-            $this->data = array();
-        }
+        $this->data = (array)$this->db->loadAssocList();
 
     }
 

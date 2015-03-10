@@ -83,7 +83,7 @@ class ITPMetaUri
             ->where("a.id = " . (int)$this->id);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
             $this->bind($result);
@@ -102,7 +102,7 @@ class ITPMetaUri
             ->where("a.uri = " . $this->db->quote($this->uri));
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
             $this->bind($result);
@@ -160,7 +160,7 @@ class ITPMetaUri
         }
 
         $this->db->setQuery($query);
-        $result_ = $this->db->loadObjectList();
+        $result_ = (array)$this->db->loadObjectList();
 
         // Prepare results. Replace global tags with the tags of current URI
         // if there are same ones.

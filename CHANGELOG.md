@@ -1,6 +1,14 @@
 ITP Meta Release Notes
 ==========================
 
+###v3.11
+* Added new tags
+  * books:gender
+  * books:official_site
+  * books:canonical_name
+  * game:secret
+* Fixed several bugs.
+
 ###v3.10
 * Fixed the tag editor.
 * Removed dependencies from MooTools.

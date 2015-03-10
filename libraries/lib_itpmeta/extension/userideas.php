@@ -100,6 +100,10 @@ class ItpMetaExtensionUserideas extends ItpMetaExtension
             }
         }
 
+        if (!is_array($data)) {
+            $data = array();
+        }
+
         return $data;
     }
 
@@ -122,7 +126,7 @@ class ItpMetaExtensionUserideas extends ItpMetaExtension
             ->where("a.id = " . (int)$itemId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 

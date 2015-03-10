@@ -123,6 +123,12 @@ function getTag(name){
 		case "ogbooks_tag":
 			val = '<meta property="books:tag" content="{KEYWORD}">';
 		break;
+        case "ogbooks_gender":
+            val = '<meta property="books:gender" content="{Female|Male}">';
+            break;
+        case "ogbooks_official_site":
+            val = '<meta property="books:official_site" content="{URL}">';
+            break;
 		case "ogbooks_genre":
 			val = '<meta property="books:genre" content="{GENRE}">';
 		break;
@@ -149,6 +155,9 @@ function getTag(name){
 		break;
 		case "ogbooks_rating_normalized_value":
 			val = '<meta property="books:rating:normalized_value" content="{VALUE}">';
+		break;
+        case "ogbooks_canonical_name":
+			val = '<meta property="books:canonical_name" content="{NAME}">';
 		break;
 		
 		
@@ -556,7 +565,9 @@ function getTag(name){
 		case "game_points":
 			val = '<meta property="game:points" content="{POINTS FOR ACHIEVEMENT}" />';
 		break;
-		
+        case "game_secret":
+            val = '<meta property="game:secret" content="{BOOLEAN}" />';
+        break;
 		
 		/* Facebook restrictions */
 		case "fbrestrictions_country_allowed":

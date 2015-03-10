@@ -60,7 +60,7 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
                 break;
 
             case "category":
-                $data = $this->getK2CategoryData($id);
+                $data = $this->getCategoryData($id, $view);
                 break;
 
             case "tag":
@@ -77,7 +77,10 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
                 }
 
                 break;
+        }
 
+        if (!is_array($data)) {
+            $data = array();
         }
 
         return $data;
@@ -135,7 +138,7 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
     protected function getUserData($parsed)
     {
         // Get menu item data.
-        $data     = $this->getDataByMenuItem($this->menuItemId);
+        $data = $this->getDataByMenuItem($this->menuItemId);
 
         // Get menu item.
         $app      = JFactory::getApplication();
@@ -146,12 +149,12 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
         $layout = JArrayHelper::getValue($menuItem->query, "layout");
         $userId = JArrayHelper::getValue($parsed, "id", 0, "int");
 
-        $user   = $this->getUser($userId);
+        $user = $this->getUser($userId);
 
         // Prepare title and meta description.
         if (strcmp("user", $layout) == 0) { // If there is a layout "user", that is a menu item "user".
-            $data["title"]      = JString::trim(JArrayHelper::getValue($data, "title"));
-            $data["metadesc"]   = JString::trim(JArrayHelper::getValue($data, "metadesc"));
+            $data["title"]    = JString::trim(JArrayHelper::getValue($data, "title"));
+            $data["metadesc"] = JString::trim(JArrayHelper::getValue($data, "metadesc"));
 
         } else { // Not menu item. Generate a title and meta description.
 
@@ -165,8 +168,7 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
 
         }
 
-        $data["image"] = $user["image"];
-
+        $data["image"] = JArrayHelper::getValue($user, "image");
         unset($user);
 
         return $data;
@@ -174,7 +176,7 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
 
     protected function getUser($userId)
     {
-        $data  = array();
+        $data = array();
 
         $query = $this->db->getQuery(true);
 
@@ -184,7 +186,7 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
             ->where("a.userID = " . (int)$userId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
@@ -209,14 +211,19 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
 
     /**
      * Extract data about category.
+     * 
+     * @param int $categoryId
+     * @param string $viewName
+     *
+     * @return array
      */
-    public function getK2CategoryData($categoryId)
+    public function getCategoryData($categoryId, $viewName = "category")
     {
-        if (!$categoryId) {
-            return null;
-        }
-
         $data = array();
+
+        if (!$categoryId) {
+            return $data;
+        }
 
         $query = $this->db->getQuery(true);
 
@@ -226,7 +233,7 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
             ->where("a.id=" . (int)$categoryId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
@@ -234,8 +241,33 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
             $data["modified"] = null;
             $data["title"]    = $result["title"];
 
+            // If it is a menu item, get menu item meta data.
+            $menuItem   = $this->getMenuItem($this->menuItemId);
+
+            // Use menu item title and description, if the items is set to a menu item.
+            if (
+                (strcmp("itemlist", $menuItem->query["view"]) == 0 and strcmp($viewName, $menuItem->query["task"]) == 0)
+                and
+                ($categoryId == (int)$menuItem->query["id"])) {
+
+                $menuItemData = $this->getDataByMenuItem($this->menuItemId);
+
+                // Get title
+                if (!empty($menuItemData["title"])) {
+                    $data["title"] = $menuItemData["title"];
+                }
+
+                // Get meta description
+                if (!empty($menuItemData["metadesc"])) {
+                    $data["metadesc"] = $menuItemData["metadesc"];
+                }
+
+            }
+
             // Prepare meta description.
-            $params           = json_decode($result["params"], true);
+            if (!empty($result["params"])) {
+                $params = (array)json_decode($result["params"], true);
+            }
             $data["metadesc"] = JArrayHelper::getValue($params, "catMetaDesc");
 
             if (!$data["metadesc"] and !empty($this->genMetaDesc)) {
@@ -250,7 +282,6 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
         }
 
         return $data;
-
     }
 
     /**
@@ -258,11 +289,11 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
      */
     public function getItemData($itemId)
     {
-        if (!$itemId) {
-            return null;
-        }
-
         $data = array();
+
+        if (!$itemId) {
+            return $data;
+        }
 
         $query = $this->db->getQuery(true);
 
@@ -272,7 +303,7 @@ class ItpMetaExtensionK2 extends ItpMetaExtension
             ->where("a.id=" . (int)$itemId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 

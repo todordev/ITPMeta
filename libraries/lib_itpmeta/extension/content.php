@@ -22,12 +22,14 @@ class ItpMetaExtensionContent extends ItpMetaExtension
     protected $task;
     protected $menuItemId;
 
-    protected $data;
+    protected $data = array();
 
     public function getData()
     {
         $app = JFactory::getApplication();
         /** @var $app JApplicationSite */
+
+        $data = array();
 
         // Parse the URL
         $router = $app->getRouter();
@@ -38,25 +40,33 @@ class ItpMetaExtensionContent extends ItpMetaExtension
         switch ($this->view) {
 
             case "article":
-                $this->data = $this->getArticleData($id);
+                $data = $this->getArticleData($id);
                 break;
 
             case "category":
-                $this->data = $this->getCategoryData($id);
+                $data = $this->getCategoryData($id);
                 break;
 
             default: // Get menu item
                 if (!empty($this->menuItemId)) {
-                    $this->data = $this->getDataByMenuItem($this->menuItemId);
+                    $data = $this->getDataByMenuItem($this->menuItemId);
                 }
                 break;
         }
 
-        return $this->data;
+        if (!is_array($data)) {
+            $data = array();
+        }
+
+        return $data;
     }
 
     /**
-     * Extract data about article
+     * Extract data about article.
+     *
+     * @param int $articleId
+     *
+     * @return array
      */
     protected function getArticleData($articleId)
     {
@@ -75,7 +85,7 @@ class ItpMetaExtensionContent extends ItpMetaExtension
             ->where("a.id = " . (int)$articleId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 

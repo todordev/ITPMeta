@@ -22,8 +22,6 @@ class ItpMetaExtensionItpdonate extends ItpMetaExtension
     protected $task;
     protected $menuItemId;
 
-    protected $data;
-
     public function getData()
     {
         $app = JFactory::getApplication();
@@ -34,26 +32,31 @@ class ItpMetaExtensionItpdonate extends ItpMetaExtension
         $parsed = $router->parse($this->uri);
 
         $id     = JArrayHelper::getValue($parsed, "id");
+        $data = array();
 
         switch ($this->view) {
 
             case "cause":
-                $this->data = $this->getCategoryData($id, "cause");
+                $data = $this->getCategoryData($id, "cause");
                 break;
 
             case "causes":
             case "sponsors":
             case "payment":
-                $this->data = $this->getDefaultData();
+                $data = $this->getDefaultData();
                 break;
 
             default: // Get menu item
                 if (!empty($this->menuItemId)) {
-                    $this->data = $this->getDataByMenuItem($this->menuItemId);
+                    $data = $this->getDataByMenuItem($this->menuItemId);
                 }
                 break;
         }
 
-        return $this->data;
+        if (!is_array($data)) {
+            $data = array();
+        }
+
+        return $data;
     }
 }

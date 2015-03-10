@@ -48,7 +48,7 @@ class ItpMetaTags implements Iterator, Countable, ArrayAccess
             ->where("a.url_id = " . (int)$this->uriId);
 
         $this->db->setQuery($query);
-        $results = $this->db->loadAssocList();
+        $results = (array)$this->db->loadAssocList();
 
         foreach ($results as $result) {
             $tag = new ITPMetaTag();

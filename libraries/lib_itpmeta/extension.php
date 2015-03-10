@@ -25,8 +25,6 @@ abstract class ItpMetaExtension
 
     protected $genMetaDesc = false;
 
-    protected $data;
-
     abstract public function getData();
 
     public function __construct($uri, $options)
@@ -108,7 +106,7 @@ abstract class ItpMetaExtension
                 ->where("a.id=" . (int)$categoryId);
 
             $this->db->setQuery($query);
-            $result = $this->db->loadAssoc();
+            $result = (array)$this->db->loadAssoc();
 
             if (!empty($result)) {
 

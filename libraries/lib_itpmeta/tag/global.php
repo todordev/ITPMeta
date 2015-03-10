@@ -28,7 +28,7 @@ class ITPMetaTagGlobal extends ITPMetaTag
             ->where("a.id = " . (int)$this->id);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
             $this->bind($result);
@@ -44,7 +44,7 @@ class ITPMetaTagGlobal extends ITPMetaTag
             ->where("a.name = " . $this->db->quote($name));
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
             $this->bind($result);
@@ -91,11 +91,8 @@ class ITPMetaTagGlobal extends ITPMetaTag
             ->from($this->db->quoteName("#__itpm_global_tags", "a"));
 
         $this->db->setQuery($query, 0, 1);
-        $max = $this->db->loadResult();
+        $max = (int)$this->db->loadResult();
 
-        if (!$max) {
-            $max = 0;
-        }
         $max = $max + 1;
 
         return $max;

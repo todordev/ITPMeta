@@ -22,8 +22,12 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
     protected $task;
     protected $menuItemId;
 
-    protected $data;
-
+    /**
+     * Return meta data about page.
+     * 
+     * @return array
+     * @throws Exception
+     */
     public function getData()
     {
         $app = JFactory::getApplication();
@@ -34,30 +38,33 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
         $parsed = $router->parse($this->uri);
 
         $id     = JArrayHelper::getValue($parsed, "id");
+        $screen = JArrayHelper::getValue($parsed, "screen");
+
+        $data   = array();
 
         switch ($this->view) {
 
             case "category":
-                $this->data = $this->getCategoryData($id);
+                $data = $this->getCategoryData($id);
                 break;
 
             case "backing":
-                $this->data = $this->getDefaultProjectData($id);
+                $data = $this->getDefaultProjectData($id);
                 break;
 
             case "embed":
-                $this->data = $this->getDefaultProjectData($id);
+                $data = $this->getDefaultProjectData($id);
                 break;
 
             case "project":
                 $userId = JFactory::getUser()->get("id");
                 if (!$userId) {
-                    $this->data = $this->getRaiseData();
+                    $data = $this->getRaiseData();
                 }
                 break;
 
             case "details":
-                $this->data = $this->getDetailsData($id);
+                $data = $this->getDetailsData($id, $screen);
                 break;
 
             case "discover":
@@ -65,12 +72,16 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
             case "categories":
             default: // Get data from menu item.
                 if (!empty($this->menuItemId)) {
-                    $this->data = $this->getDataByMenuItem($this->menuItemId);
+                    $data = $this->getDataByMenuItem($this->menuItemId);
                 }
                 break;
         }
 
-        return $this->data;
+        if (!is_array($data)) {
+            $data = array();
+        }
+        
+        return $data;
     }
 
     /**
@@ -96,7 +107,7 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
                 ->where("a.id = " . (int)$articleId);
 
             $this->db->setQuery($query);
-            $result = $this->db->loadAssoc();
+            $result = (array)$this->db->loadAssoc();
 
             if (!empty($result)) {
 
@@ -141,10 +152,11 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
      * Prepare project data for view details.
      *
      * @param int $projectId
+     * @param string $screen
      *
      * @return array
      */
-    protected function getDetailsData($projectId)
+    protected function getDetailsData($projectId, $screen = "")
     {
         $data = array();
 
@@ -175,7 +187,6 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
                 // If it is one of the following screens
                 $doc = JFactory::getDocument();
 
-                $screen         = JArrayHelper::getValue($parsed, "screen");
                 $projectScreens = array("updates", "comments", "funders");
 
                 // If it is screens updates, comments or funders, use document title.
@@ -250,7 +261,7 @@ class ItpMetaExtensionCrowdfunding extends ItpMetaExtension
                 ->where("a.id = " . (int)$projectId);
 
             $this->db->setQuery($query);
-            $result = $this->db->loadAssoc();
+            $result = (array)$this->db->loadAssoc();
 
             if (!empty($result)) {
 

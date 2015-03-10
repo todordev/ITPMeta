@@ -71,10 +71,9 @@ class ItpMetaExtensionSocialcommunity extends ItpMetaExtension
             ->where("a.id = " . (int)$userId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
-
             $data["title"]    = $result["title"];
 
             $data["created"]  = "";
@@ -90,6 +89,10 @@ class ItpMetaExtensionSocialcommunity extends ItpMetaExtension
             $data["image"] = JUri::root().$imagesFolder.$result["image"];
 
             unset($result);
+        }
+
+        if (!is_array($data)) {
+            $data = array();
         }
 
         return $data;

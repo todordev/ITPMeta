@@ -20,15 +20,9 @@ jimport('joomla.application.component.controlleradmin');
  */
 class ItpMetaControllerTags extends JControllerAdmin
 {
-
-    /**
-     * Proxy for getModel.
-     * @since   1.6
-     */
     public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
-
         return $model;
     }
 

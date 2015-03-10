@@ -21,11 +21,7 @@ jimport("itprism.controller.form.backend");
  */
 class ItpMetaControllerTag extends ITPrismControllerFormBackend
 {
-
-    /**
-     * Save an item
-     */
-    public function save()
+    public function save($key = null, $urlVar = null)
     {
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
@@ -43,7 +39,7 @@ class ItpMetaControllerTag extends ITPrismControllerFormBackend
         // Validate the posted data.
         // Sometimes the form needs some posted data, such as for plugins and modules.
         $form = $model->getForm($data, false);
-        /** @var $form JForm * */
+        /** @var $form JForm */
 
         if (!$form) {
             throw new Exception($model->getError());
@@ -119,10 +115,7 @@ class ItpMetaControllerTag extends ITPrismControllerFormBackend
         return $link;
     }
 
-    /**
-     * Cancel operations
-     */
-    public function cancel()
+    public function cancel($key = null)
     {
         $urlId = JFactory::getApplication()->getUserState("url.id");
         $this->setRedirect(JRoute::_($this->defaultLink . "&view=url&layout=edit&id=" . $urlId, false));

@@ -17,6 +17,12 @@ jimport("itpmeta.tag");
  */
 class ItpMetaExtensionCobalt extends ItpMetaExtension
 {
+    /**
+     * Return meta data about page.
+     *
+     * @return array
+     * @throws Exception
+     */
     public function getData()
     {
         $app = JFactory::getApplication();
@@ -33,7 +39,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
         $sectionId  = JArrayHelper::getValue($parsed, "section_id");
         $categoryId = JArrayHelper::getValue($parsed, "cat_id");
 
-        $userId = JArrayHelper::getValue($parsed, "user_id");
+        $userId     = JArrayHelper::getValue($parsed, "user_id");
 
         $userCategoryId = JArrayHelper::getValue($parsed, "ucat_id");
 
@@ -79,19 +85,27 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
                 break;
         }
 
+        if (!is_array($data)) {
+            $data = array();
+        }
+
         return $data;
     }
 
     /**
-     * Extract data about category
+     * Extract data about category.
+     *
+     * @param int $categoryId
+     *
+     * @return array
      */
     public function getCobaltCategoryData($categoryId)
     {
-        if (!$categoryId) {
-            return null;
-        }
-
         $data = array();
+
+        if (!$categoryId) {
+            return $data;
+        }
 
         $query = $this->db->getQuery(true);
         $query
@@ -100,7 +114,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
             ->where("a.id=" . (int)$categoryId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
@@ -123,15 +137,20 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
     }
 
     /**
-     * Extract data about category
+     * Extract data about category.
+     *
+     * @param int $userId
+     * @param int $sectionId
+     *
+     * @return array
      */
     public function getAuthorData($userId, $sectionId)
     {
-        if (!$userId) {
-            return null;
-        }
-
         $data = array();
+
+        if (!$userId) {
+            return $data;
+        }
 
         $query = $this->db->getQuery(true);
         $query
@@ -142,7 +161,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
             ->where("b.id = " . (int)$sectionId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
             $data["title"]    = JText::sprintf("LIB_ITPMETA_VIEW_USER_TITLE", $result["name"]);
@@ -153,15 +172,19 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
     }
 
     /**
-     * Extract data about user category
+     * Extract data about user category.
+     *
+     * @param int $categoryId
+     *
+     * @return array
      */
     public function getUserCategoryData($categoryId)
     {
-        if (!$categoryId) {
-            return null;
-        }
-
         $data = array();
+
+        if (!$categoryId) {
+            return $data;
+        }
 
         $query = $this->db->getQuery(true);
         $query
@@ -170,7 +193,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
             ->where("a.id=" . (int)$categoryId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
@@ -202,14 +225,18 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
 
     /**
      * Extract data about item.
+     *
+     * @param int $itemId
+     *
+     * @return array
      */
     public function getItemData($itemId)
     {
-        if (!$itemId) {
-            return null;
-        }
-
         $data = array();
+
+        if (!$itemId) {
+            return $data;
+        }
 
         $query = $this->db->getQuery(true);
         $query
@@ -218,7 +245,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
             ->where("a.id=" . (int)$itemId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
@@ -264,7 +291,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
             ->where("a.field_type = " . $this->db->quote("image"));
 
         $this->db->setQuery($query);
-        $results = $this->db->loadAssocList();
+        $results = (array)$this->db->loadAssocList();
 
         if (!empty($results)) {
             $imageData = array_shift($results);
@@ -294,7 +321,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
             ->where("(a.field_type = " . $this->db->quote("html") . " OR " . "a.field_type = " . $this->db->quote("textarea") . ")");
 
         $this->db->setQuery($query);
-        $results = $this->db->loadAssocList();
+        $results = (array)$this->db->loadAssocList();
 
         if (!empty($results)) {
 
@@ -339,14 +366,18 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
 
     /**
      * Extract data about section.
+     *
+     * @param int $sectionId
+     *
+     * @return array
      */
     public function getSectionData($sectionId)
     {
-        if (!$sectionId) {
-            return null;
-        }
-
         $data = array();
+
+        if (!$sectionId) {
+            return $data;
+        }
 
         $query = $this->db->getQuery(true);
         $query
@@ -355,7 +386,7 @@ class ItpMetaExtensionCobalt extends ItpMetaExtension
             ->where("a.id=" . (int)$sectionId);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 

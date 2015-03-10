@@ -21,11 +21,7 @@ jimport('itprism.controller.form.backend');
  */
 class ItpMetaControllerScripts extends ITPrismControllerFormBackend
 {
-
-    /**
-     * Save an item
-     */
-    public function save()
+    public function save($key = null, $urlVar = null)
     {
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
@@ -65,7 +61,6 @@ class ItpMetaControllerScripts extends ITPrismControllerFormBackend
         }
 
         $this->displayMessage(JText::_('COM_ITPMETA_SCRIPTS_SAVED'), $redirectData);
-
     }
 
     /**
@@ -81,7 +76,6 @@ class ItpMetaControllerScripts extends ITPrismControllerFormBackend
      */
     protected function prepareRedirectLink($data)
     {
-
         $task = $this->getTask();
         $link = $this->defaultLink;
 
@@ -104,11 +98,9 @@ class ItpMetaControllerScripts extends ITPrismControllerFormBackend
     /**
      * Cancel operation
      */
-    public function cancel()
+    public function cancel($key = null)
     {
         $urlId = JFactory::getApplication()->getUserState("url.id", 0);
-
         $this->setRedirect(JRoute::_($this->defaultLink . "&view=url&layout=edit&id=" . $urlId, false));
-
     }
 }

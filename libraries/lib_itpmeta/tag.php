@@ -85,7 +85,7 @@ class ITPMetaTag extends ITPMetaTagBase
             ->where("a.id = " . (int)$this->id);
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
             $this->bind($result);
@@ -101,7 +101,7 @@ class ITPMetaTag extends ITPMetaTagBase
             ->where("a.name = " . $this->db->quote($name));
 
         $this->db->setQuery($query);
-        $result = $this->db->loadAssoc();
+        $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
             $this->bind($result);
@@ -156,11 +156,8 @@ class ITPMetaTag extends ITPMetaTagBase
             ->where("a.url_id =" . $this->url_id);
 
         $this->db->setQuery($query, 0, 1);
-        $max = $this->db->loadResult();
+        $max = (int)$this->db->loadResult();
 
-        if (!$max) {
-            $max = 0;
-        }
         $max = $max + 1;
 
         return $max;
