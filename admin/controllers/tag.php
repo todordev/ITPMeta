@@ -10,8 +10,6 @@
 // No direct access
 defined('_JEXEC') or die;
 
-jimport("itprism.controller.form.backend");
-
 /**
  * Tag controller class.
  *
@@ -19,7 +17,7 @@ jimport("itprism.controller.form.backend");
  * @subpackage     Component
  * @since          1.6
  */
-class ItpMetaControllerTag extends ITPrismControllerFormBackend
+class ItpMetaControllerTag extends Prism\Controller\Form\Backend
 {
     public function save($key = null, $urlVar = null)
     {

@@ -62,9 +62,7 @@ defined('_JEXEC') or die;
                 </td>
                 <td class="hidden-phone">
                 	<div class="itpm-radius3 itpmeditable-box">
-                        <div class="itpm-editable" data-pk="<?php echo $item->id;?>" >
-                        <?php echo nl2br($this->escape($item->content)); ?>
-                        </div>
+                        <div class="itpm-editable" data-pk="<?php echo $item->id;?>" ><?php echo nl2br($this->escape($item->content)); ?></div>
                     </div>
                 </td>
                 <td class="hidden-phone">

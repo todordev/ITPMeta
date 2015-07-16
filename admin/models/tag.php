@@ -179,7 +179,7 @@ class ItpMetaModelTag extends JModelAdmin
             if ($urlTable->get("autoupdate")) {
 
                 if ((strcmp($title, $table->title) != 0) or (strcmp($content, $table->content) != 0)) {
-                    $urlTable->set("autoupdate", ITPMetaConstants::AUTOUPDATE_DISABLED);
+                    $urlTable->set("autoupdate", ItpMeta\Constants::AUTOUPDATE_DISABLED);
                     $urlTable->store();
 
                     $app = JFactory::getApplication();
@@ -246,17 +246,15 @@ class ItpMetaModelTag extends JModelAdmin
      */
     public function saveAjax($itemId, $content)
     {
-        jimport("itpmeta.tag.base");
-        $tag = new ITPMetaTag($itemId);
-        $tag->setDb(JFactory::getDbo());
-        $tag->load();
+        $tag = new ItpMeta\Tag\Tag(JFactory::getDbo());
+        $tag->load(array("id" => $itemId));
 
         if (!$tag->getId()) {
             return null;
         }
 
         $tag->setContent($content);
-        $tag->save();
+        $tag->store();
 
         // Prepare result that will be returned
         $result          = new stdClass();
@@ -265,10 +263,8 @@ class ItpMetaModelTag extends JModelAdmin
         $result->output  = $tag->getOutput();
 
         // Get URL.
-        jimport("itpmeta.url");
-        $uri = new ITPMetaUri($tag->getUrlId());
-        $uri->setDb(JFactory::getDbo());
-        $uri->load();
+        $uri = new ItpMeta\Uri(JFactory::getDbo());
+        $uri->load(array("uri_id" => $tag->getUrlId()));
 
         $result->autoupdate = $uri->isAutoupdate();
 

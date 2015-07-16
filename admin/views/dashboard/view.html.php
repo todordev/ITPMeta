@@ -27,7 +27,8 @@ class ItpMetaViewDashboard extends JViewLegacy
     protected $option;
 
     protected $version;
-    protected $itprismVersion;
+    protected $prismVersion;
+    protected $prismVersionLowerMessage;
 
     protected $sidebar;
 
@@ -39,35 +40,37 @@ class ItpMetaViewDashboard extends JViewLegacy
 
     public function display($tpl = null)
     {
-        // Load ITPrism library version
-        jimport("itprism.version");
-        if (!class_exists("ITPrismVersion")) {
-            $this->itprismVersion = JText::_("COM_ITPMETA_ITPRISM_LIBRARY_DOWNLOAD");
+        $this->version = new ItpMeta\Version();
+
+        // Load Prism library version
+        if (!class_exists("Prism\\Version")) {
+            $this->prismVersion = JText::_("COM_ITPMETA_ITPRISM_LIBRARY_DOWNLOAD");
         } else {
-            $itprismVersion       = new ITPrismVersion();
-            $this->itprismVersion = $itprismVersion->getShortVersion();
+            $prismVersion       = new Prism\Version();
+            $this->prismVersion = $prismVersion->getShortVersion();
+
+            if (version_compare($this->prismVersion, $this->version->requiredPrismVersion, "<")) {
+                $this->prismVersionLowerMessage = JText::_("COM_ITPMETA_PRISM_LIBRARY_LOWER_VERSION");
+            }
         }
 
-        jimport("itpmeta.statistics.basic");
-        $basic = new ITPMetaStatisticsBasic(JFactory::getDbo());
+        $basic = new ItpMeta\Statistics\Basic(JFactory::getDbo());
         $this->totalUrls        = $basic->getTotalUrls();
         $this->totalTags        = $basic->getTotalTags();
         $this->totalGlobalTags  = $basic->getTotalGlobalTags();
 
         // Get latest items.
         jimport("itpmeta.statistics.urls.latest");
-        $this->latest = new ITPMetaStatisticsUrlsLatest(JFactory::getDbo());
-        $this->latest->load(5);
+        $this->latest = new ItpMeta\Statistics\Urls\Latest(JFactory::getDbo());
+        $this->latest->load();
 
         // Get urls with scripts.
         jimport("itpmeta.statistics.urls.scripts");
-        $this->urlsScripts = new ITPMetaStatisticsUrlsScripts(JFactory::getDbo());
-        $this->urlsScripts->load(10);
+        $this->urlsScripts = new ItpMeta\Statistics\Urls\Scripts(JFactory::getDbo());
+        $this->urlsScripts->load(array("limit" => 10));
 
         $uri = JUri::getInstance();
         $this->domain = $uri->toString(array("scheme", "host"));
-
-        $this->version = new ItpMetaVersion();
 
         // Add submenu
         ItpMetaHelper::addSubmenu($this->getName());

@@ -25,7 +25,7 @@
   cursor: pointer;
   color: black !important;
   text-decoration: none !important;
-  display: blick;
+  display: block;
   float: left;
 }
 
@@ -168,4 +168,8 @@ h3.basic-stats {
     background: #ffe4c4 url(../../images/icon_stats.png) no-repeat left;
     margin:0;
     padding: 5px 0 5px 20px;
+}
+
+#js-tags-list-modal{
+    overflow: scroll;
 }

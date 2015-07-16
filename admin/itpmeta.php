@@ -10,8 +10,8 @@
 // no direct access
 defined('_JEXEC') or die;
 
-jimport("itprism.init");
-jimport("itpmeta.init");
+jimport("Prism.init");
+jimport("ItpMeta.init");
 
 // Get an instance of the controller prefixed
 $controller = JControllerLegacy::getInstance("ItpMeta");

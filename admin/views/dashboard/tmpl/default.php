@@ -38,7 +38,7 @@ defined('_JEXEC') or die;
                             <td style="max-width: 10px;"><?php echo $i + 1;?></td>
                             <td>
                                 <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=urls&filter_search=id:".(int)$this->latest[$i]["id"]);?>">
-                                    <?php echo JHtmlString::truncate(strip_tags($this->latest[$i]["uri"]), 96, ITPMetaConstants::NO_SPLIT); ?>
+                                    <?php echo JHtmlString::truncate(strip_tags($this->latest[$i]["uri"]), 96, ItpMeta\Constants::NO_SPLIT); ?>
                                 </a>
                             </td>
                             <td>
@@ -94,7 +94,7 @@ defined('_JEXEC') or die;
                             <td><?php echo $i + 1;?></td>
                             <td>
                                 <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=urls&filter_search=id:".(int)$this->urlsScripts[$i]["id"]);?>" >
-                                    <?php echo JHtmlString::truncate(strip_tags($this->urlsScripts[$i]["uri"]), 96, ITPMetaConstants::NO_SPLIT); ?>
+                                    <?php echo JHtmlString::truncate(strip_tags($this->urlsScripts[$i]["uri"]), 96, ItpMeta\Constants::NO_SPLIT); ?>
                                 </a>
                             </td>
                             <td>
@@ -115,7 +115,6 @@ defined('_JEXEC') or die;
         <a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank"><img src="../media/com_itpmeta/images/extension_logo.png" alt="<?php echo JText::_("COM_ITPMETA");?>" /></a>
         <a href="http://itprism.com" title="<?php echo JText::_("COM_ITPMETA_ITPRISM_PRODUCT");?>" target="_blank"><img src="../media/com_itpmeta/images/product_of_itprism.png" alt="<?php echo JText::_("COM_ITPMETA_ITPRISM_PRODUCT");?>" /></a>
         <p><?php echo JText::_("COM_ITPMETA_YOUR_VOTE"); ?></p>
-        <p><?php echo JText::_("COM_ITPMETA_SPONSORSHIP"); ?></p>
         <p><?php echo JText::_("COM_ITPMETA_SUBSCRIPTION"); ?></p>
         
         <table class="table table-striped">
@@ -129,8 +128,8 @@ defined('_JEXEC') or die;
                     <td><?php echo $this->version->releaseDate?></td>
                 </tr>
                 <tr>
-                    <td><?php echo JText::_("COM_ITPMETA_ITPRISM_LIBRARY_VERSION");?></td>
-                    <td><?php echo $this->itprismVersion;?></td>
+                    <td><?php echo JText::_("COM_ITPMETA_PRISM_LIBRARY_VERSION");?></td>
+                    <td><?php echo $this->prismVersion;?></td>
                 </tr>
                 <tr>
                     <td><?php echo JText::_("COM_ITPMETA_COPYRIGHT");?></td>
@@ -142,5 +141,10 @@ defined('_JEXEC') or die;
                 </tr>
             </tbody>
         </table>
+
+        <?php if (!empty($this->prismVersionLowerMessage)) {?>
+            <p class="alert alert-warning"><i class="icon-warning"></i> <?php echo $this->prismVersionLowerMessage; ?></p>
+        <?php } ?>
+        <p class="alert alert-info"><i class="icon-info"></i> <?php echo JText::_("COM_ITPMETA_HOW_TO_UPGRADE"); ?></p>
 	</div>
 </div>

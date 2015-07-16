@@ -10,15 +10,13 @@
 // No direct access
 defined('_JEXEC') or die;
 
-jimport('itprism.controller.admin');
-
 /**
  * Tags Controller
  *
  * @package     ITPrism Components
  * @subpackage  ITPMeta
  */
-class ItpMetaControllerTags extends ITPrismControllerAdmin
+class ItpMetaControllerTags extends Prism\Controller\Admin
 {
     public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
     {

@@ -49,7 +49,7 @@ class plgSystemItpMeta extends JPlugin
         $uriString = $filter->clean($uriString);
 
         // Load tags for current address
-        $itpUri = ITPMetaUri::getInstance($uriString, JFactory::getDbo());
+        $itpUri = ItpMeta\Uri::getInstance(JFactory::getDbo(), array("uri" => $uriString));
         $itpUri->setNotOverridden($this->notOverridden);
 
         return $itpUri;
@@ -59,14 +59,14 @@ class plgSystemItpMeta extends JPlugin
     private function isRestricted()
     {
         $app = JFactory::getApplication();
-        /** @var $app JApplicationSite * */
+        /** @var $app JApplicationSite */
 
         if ($app->isAdmin()) {
             return true;
         }
 
         $document = JFactory::getDocument();
-        /** @var $document JDocumentHTML * */
+        /** @var $document JDocumentHTML */
 
         $type = $document->getType();
         if (strcmp("html", $type) != 0) {
@@ -105,7 +105,7 @@ class plgSystemItpMeta extends JPlugin
 
         // Get current URI and load tags for current address.
         $itpUri = $this->getUri();
-        /** @var $itpUri ITPMetaUri */
+        /** @var $itpUri ItpMeta\Uri */
 
         $tags = $itpUri->getTags();
 
@@ -113,7 +113,7 @@ class plgSystemItpMeta extends JPlugin
         if (!empty($tags)) {
 
             $document = JFactory::getDocument();
-            /** @var $document JDocumentHTML * */
+            /** @var $document JDocumentHTML */
 
             foreach ($tags as $tag) {
                 $tag->output = JString::trim($tag->output);
@@ -137,7 +137,7 @@ class plgSystemItpMeta extends JPlugin
         }
 
         // Get document buffer
-        $buffer = JResponse::getBody();
+        $buffer = JFactory::getApplication()->getBody();
 
         switch ($this->params->get("tags_position", 0)) {
             case 1:
@@ -154,7 +154,7 @@ class plgSystemItpMeta extends JPlugin
         // Add code after body tag and before closing body tag
         $buffer = $this->putAdditionalCode($buffer);
 
-        JResponse::setBody($buffer);
+        JFactory::getApplication()->setBody($buffer);
 
     }
 
@@ -169,7 +169,7 @@ class plgSystemItpMeta extends JPlugin
     {
         // Get current URI and load tags for current address.
         $itpUri = $this->getUri();
-        /** @var $itpUri ITPMetaUri */
+        /** @var $itpUri ItpMeta\Uri */
 
         $tags = $itpUri->getTags();
 
@@ -211,7 +211,7 @@ class plgSystemItpMeta extends JPlugin
     {
         // Get current URI and load tags for current address.
         $itpUri = $this->getUri();
-        /** @var $itpUri ITPMetaUri */
+        /** @var $itpUri ItpMeta\Uri */
 
         $tags = $itpUri->getTags();
 
@@ -249,7 +249,7 @@ class plgSystemItpMeta extends JPlugin
     {
         // Get current URI and load tags for current address.
         $itpUri = $this->getUri();
-        /** @var $itpUri ITPMetaUri */
+        /** @var $itpUri ItpMeta\Uri */
 
         // If the URI does not exist or not published
         // we don't change the buffer

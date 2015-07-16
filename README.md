@@ -1,6 +1,6 @@
-ITPMeta Lite for Joomla! 
+ITPMeta Pro for Joomla! 
 ==========================
-( Version 3.11 )
+( Version 4.0 )
 - - -
 
 It is a Joomla! extension that puts meta tags into the site code. The component provides a list with predefined and popular meta tags. There are Open Graph, Facebook, Google, Twitter Card and other semantic tags.

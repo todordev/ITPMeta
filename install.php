@@ -67,10 +67,12 @@ class pkg_itpMetaInstallerScript
      */
     public function postflight($type, $parent)
     {
-
         if (!defined("ITPMETA_PATH_COMPONENT_ADMINISTRATOR")) {
             define("ITPMETA_PATH_COMPONENT_ADMINISTRATOR", JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . "components" . DIRECTORY_SEPARATOR . "com_itpmeta");
         }
+
+        jimport('Prism.init');
+        jimport('ItpMeta.init');
 
         // Register Component helpers
         JLoader::register("ItpMetaInstallHelper", ITPMETA_PATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "install.php");
@@ -103,7 +105,7 @@ class pkg_itpMetaInstallerScript
         }
         ItpMetaInstallHelper::addRow($title, $result, $info);
 
-        // Display result about verification FileInfo
+        // Display result about verification PHP version.
         $title = JText::_("COM_ITPMETA_PHP_VERSION");
         $info  = "";
         if (version_compare(PHP_VERSION, '5.3.0') < 0) {
@@ -113,12 +115,12 @@ class pkg_itpMetaInstallerScript
         }
         ItpMetaInstallHelper::addRow($title, $result, $info);
 
-        // Display result about verification of installed ITPrism Library
+        // Display result about verification of installed Prism Library
         jimport("itprism.version");
-        $title = JText::_("COM_ITPMETA_ITPRISM_LIBRARY");
+        $title = JText::_("COM_ITPMETA_PRISM_LIBRARY");
         $info  = "";
-        if (!class_exists("ITPrismVersion")) {
-            $info   = JText::_("COM_ITPMETA_ITPRISM_LIBRARY_DOWNLOAD");
+        if (!class_exists("Prism\\Version")) {
+            $info   = JText::_("COM_ITPMETA_PRISM_LIBRARY_DOWNLOAD");
             $result = array("type" => "important", "text" => JText::_("JNO"));
         } else {
             $result = array("type" => "success", "text" => JText::_("JYES"));
@@ -136,5 +138,18 @@ class pkg_itpMetaInstallerScript
         ItpMetaInstallHelper::endTable();
 
         echo JText::sprintf("COM_ITPMETA_MESSAGE_ENABLE_PLUGINS", JRoute::_("index.php?option=com_plugins&view=plugins&filter_search=itpmeta"));
+
+        if (!class_exists("Prism\\Version")) {
+            echo JText::_("COM_ITPMETA_MESSAGE_INSTALL_PRISM_LIBRARY");
+        } else {
+
+            if (class_exists("ItpMeta\\Version")) {
+                $prismVersion     = new Prism\Version();
+                $componentVersion = new ItpMeta\Version();
+                if (version_compare($prismVersion->getShortVersion(), $componentVersion->requiredPrismVersion)) {
+                    echo JText::_("COM_ITPMETA_MESSAGE_INSTALL_PRISM_LIBRARY");
+                }
+            }
+        }
     }
 }

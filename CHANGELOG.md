@@ -1,6 +1,10 @@
 ITP Meta Release Notes
 ==========================
 
+###v4.0
+* Improved code quality.
+* The library was rewritten.
+
 ###v3.11
 * Added new tags
   * books:gender

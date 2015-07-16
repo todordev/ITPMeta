@@ -10,15 +10,13 @@
 // No direct access
 defined('_JEXEC') or die;
 
-jimport("itprism.controller.admin");
-
 /**
  * ITPMeta URLs Controller
  *
  * @package     ITPrism Components
  * @subpackage  ITPMeta
  */
-class ItpMetaControllerUrls extends ITPrismControllerAdmin
+class ItpMetaControllerUrls extends Prism\Controller\Admin
 {
     public function __construct($config = array())
     {
@@ -28,13 +26,11 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin
 
         // Value = 0
         $this->registerTask('disableau', 'enableau');
-
     }
 
     public function getModel($name = 'Url', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
-
         return $model;
     }
 
@@ -47,7 +43,7 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin
      */
     public function delete()
     {
-        $redurectOptions = array(
+        $redirectOptions = array(
             "view" => "urls"
         );
 
@@ -63,8 +59,7 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin
         }
 
         $msg = JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid));
-        $this->displayMessage($msg, $redurectOptions);
-
+        $this->displayMessage($msg, $redirectOptions);
     }
 
     /**
@@ -78,7 +73,7 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin
         // Check for request forgeries
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-        $redurectOptions = array(
+        $redirectOptions = array(
             "view" => "urls"
         );
 
@@ -94,7 +89,7 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin
         $value = JArrayHelper::getValue($data, $task, 0, 'int');
 
         if (empty($cid)) {
-            $this->displayNotice(JText::_($this->text_prefix . '_ERROR_NO_ITEM_SELECTED'), $redurectOptions);
+            $this->displayNotice(JText::_($this->text_prefix . '_ERROR_NO_ITEM_SELECTED'), $redirectOptions);
 
             return;
         }
@@ -115,6 +110,6 @@ class ItpMetaControllerUrls extends ITPrismControllerAdmin
             $msg = $this->text_prefix . '_N_ITEMS_AUTOUPDATE_DISABLED';
         }
 
-        $this->displayMessage(JText::plural($msg, count($cid)), $redurectOptions);
+        $this->displayMessage(JText::plural($msg, count($cid)), $redirectOptions);
     }
 }

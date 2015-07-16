@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
     <tbody>
         <?php foreach ($this->items as $i => $item) { ?>
         <tr>
-            <td class="nowrap">
+            <td>
                 <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=tag&layout=edit&id=".$item->getId()."&url_id=".(int)$this->urlId);?>" >
                     <?php echo $this->escape($item->getTitle()); ?>
                 </a>

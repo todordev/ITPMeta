@@ -54,7 +54,7 @@ class ItpMetaViewUrl extends JViewLegacy
     public function display($tpl = null)
     {
         $app = JFactory::getApplication();
-        /** @var $app JApplicationAdministrator * */
+        /** @var $app JApplicationAdministrator */
 
         $this->state = $this->get('State');
         $this->item  = $this->get('Item');
@@ -77,7 +77,6 @@ class ItpMetaViewUrl extends JViewLegacy
 
             $this->prepareSorting($modelTags);
             $this->prepareTagsList();
-
         }
 
         parent::display($tpl);
@@ -90,7 +89,6 @@ class ItpMetaViewUrl extends JViewLegacy
      */
     protected function prepareSorting($modelTags)
     {
-
         $tagsState = $modelTags->getState();
 
         // Prepare filters
@@ -114,16 +112,11 @@ class ItpMetaViewUrl extends JViewLegacy
         JText::script('COM_ITPMETA_INFO_DISABLE_AUTOUPDATE');
         JText::script('COM_ITPMETA_ADDITIONAL_INFORMATION');
 
-        // Load HTML helper
-        JHtml::addIncludePath(ITPRISM_PATH_LIBRARY . '/ui/helpers');
-        JHtml::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'html');
-
         // Scripts
-        JHTML::_("itprism.ui.pnotify");
-        JHTML::_("itprism.ui.bootstrap_editable");
+        JHTML::_("Prism.ui.pnotify");
+        JHTML::_("Prism.ui.bootstrap2Editable");
 
         $this->document->addScript('../media/' . $this->option . '/js/admin/tags.js');
-
     }
 
     /**
@@ -172,7 +165,7 @@ class ItpMetaViewUrl extends JViewLegacy
         JHtml::_('behavior.formvalidation');
         JHtml::_('formbehavior.chosen', 'select');
 
-        JHtml::_('itprism.ui.joomla_helper');
+        JHtml::_('Prism.ui.joomlaHelper');
 
         $this->document->addScript('../media/' . $this->option . '/js/admin/utilities.js');
         $this->document->addScript('../media/' . $this->option . '/js/admin/' . $this->getName() . '.js');

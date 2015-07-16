@@ -20,7 +20,6 @@ jimport('joomla.application.component.controller');
  */
 class ItpMetaControllerDashboard extends JControllerLegacy
 {
-
     private $defaultLink = 'index.php?option=com_itpmeta';
 
     /**

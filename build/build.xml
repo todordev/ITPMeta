@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="itpmeta" default="build" basedir=".">
-	<description>ITPMeta Lite Ant Build File</description>
+	<description>ITPMeta Ant Build File</description>
 
 	<!-- load variables from config file -->
 	<property name="cfg.configFile" location="antconfig_j3.txt" />
@@ -46,7 +46,7 @@
 			<fileset dir="${cfg.pkgDir}/packages" includes="*"/>
 			
 			<fileset dir="${cfg.pkgDir}" includes="CHANGELOG.md"/>
-			<fileset dir="${cfg.pkgDir}" includes="${cfg.comName}.xml"/>
+			<fileset dir="${cfg.pkgDir}" includes="${cfg.name}.xml"/>
 			<fileset dir="${cfg.pkgDir}" includes="install.php"/>
 			<fileset dir="${cfg.pkgDir}" includes="${cfg.pkgName}.xml"/>
 			<fileset dir="${cfg.pkgDir}" includes="README.md"/>

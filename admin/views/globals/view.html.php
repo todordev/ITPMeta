@@ -139,6 +139,6 @@ class ITPMetaViewGlobals extends JViewLegacy
         JHtml::_('behavior.multiselect');
         JHtml::_('formbehavior.chosen', 'select');
 
-        JHtml::_("itprism.ui.joomla_list");
+        JHtml::_("Prism.ui.joomlaList");
     }
 }

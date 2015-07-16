@@ -436,100 +436,100 @@ function getTag(name){
 			val = '<meta property="og:type" content="product" />';
 		break;
 		case "ogproduct_agegroup":
-			val = 'meta property="product:age_group" content="{VALUE}" /> ';
+			val = '<meta property="product:age_group" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_availability":
-			val = 'meta property="product:availability" content="{VALUE}" /> ';
+			val = '<meta property="product:availability" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_brand":
-			val = 'meta property="product:brand" content="{TEXT}" /> ';
+			val = '<meta property="product:brand" content="{TEXT}" /> ';
 			break;
 		case "ogproduct_category":
-			val = 'meta property="product:category" content="{CATEGORY}" /> ';
+			val = '<meta property="product:category" content="{CATEGORY}" /> ';
 			break;
 		case "ogproduct_color":
-			val = 'meta property="product:color" content="{COLOR}" /> ';
+			val = '<meta property="product:color" content="{COLOR}" /> ';
 			break;
 		case "ogproduct_condition":
-			val = 'meta property="product:condition" content="{CONDITION}" /> ';
+			val = '<meta property="product:condition" content="{CONDITION}" /> ';
 			break;
 		case "ogproduct_ean":
-			val = 'meta property="product:ean" content="{EAN}" /> ';
+			val = '<meta property="product:ean" content="{EAN}" /> ';
 			break;
 		case "ogproduct_expiration_time":
-			val = 'meta property="product:expiration_time" content="{TIME}" /> ';
+			val = '<meta property="product:expiration_time" content="{TIME}" /> ';
 			break;
 		case "ogproduct_isbn":
-			val = 'meta property="product:isbn" content="{ISBN}" /> ';
+			val = '<meta property="product:isbn" content="{ISBN}" /> ';
 			break;
 		case "ogproduct_material":
-			val = 'meta property="product:material" content="{VALUE}" /> ';
+			val = '<meta property="product:material" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_mfrpartno":
-			val = 'meta property="product:mfr_part_no" content="{VALUE}" /> ';
+			val = '<meta property="product:mfr_part_no" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_pattern":
-			val = 'meta property="product:pattern" content="{VALUE}" /> ';
+			val = '<meta property="product:pattern" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_plural_title":
-			val = 'meta property="product:plural_title" content="{VALUE}" /> ';
+			val = '<meta property="product:plural_title" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_priceamount":
-			val = 'meta property="product:price:amount" content="{AMOUNT}" /> ';
+			val = '<meta property="product:price:amount" content="{AMOUNT}" /> ';
 			break;
 		case "ogproduct_pricecurrency":
-			val = 'meta property="product:price:currency" content="{CURRENCY}" /> ';
+			val = '<meta property="product:price:currency" content="{CURRENCY}" /> ';
 			break;
 		case "ogproduct_product_link":
-			val = 'meta property="product:product_link" content="{VALUE}" /> ';
+			val = '<meta property="product:product_link" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_retailer":
-			val = 'meta property="product:retailer" content="{RETAILER}" /> ';
+			val = '<meta property="product:retailer" content="{RETAILER}" /> ';
 			break;
 		case "ogproduct_retailer_category":
-			val = 'meta property="product:retailer_category" content="{VALUE}" /> ';
+			val = '<meta property="product:retailer_category" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_retailer_part_no":
-			val = 'meta property="product:retailer_part_no" content="{VALUE}" /> ';
+			val = '<meta property="product:retailer_part_no" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_sale_price_amount":
-			val = 'meta property="product:sale_price:amount" content="{AMOUNT}" /> ';
+			val = '<meta property="product:sale_price:amount" content="{AMOUNT}" /> ';
 			break;
 		case "ogproduct_sale_price_currency":
-			val = 'meta property="product:sale_price:currency" content="{CURRENCY}" /> ';
+			val = '<meta property="product:sale_price:currency" content="{CURRENCY}" /> ';
 			break;
 		case "ogproduct_sale_price_dates_start":
-			val = 'meta property="product:sale_price_dates:start" content="{VALUE}" /> ';
+			val = '<meta property="product:sale_price_dates:start" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_sale_price_dates_end":
-			val = 'meta property="product:sale_price_dates:end" content="{VALUE}" /> ';
+			val = '<meta property="product:sale_price_dates:end" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_shipping_cost_amount":
-			val = 'meta property="product:shipping_cost:amount" content="{AMOUNT}" /> ';
+			val = '<meta property="product:shipping_cost:amount" content="{AMOUNT}" /> ';
 			break;
 		case "ogproduct_shipping_cost_currency":
-			val = 'meta property="product:shipping_cost:currency" content="{CURRENCY}" /> ';
+			val = '<meta property="product:shipping_cost:currency" content="{CURRENCY}" /> ';
 			break;
 		case "ogproduct_shipping_weight_value":
-			val = 'meta property="product:shipping_weight:value" content="{VALUE}" /> ';
+			val = '<meta property="product:shipping_weight:value" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_shipping_weight_units":
-			val = 'meta property="product:shipping_weight:units" content="{VALUE}" /> ';
+			val = '<meta property="product:shipping_weight:units" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_size":
-			val = 'meta property="product:size" content="{SIZE}" /> ';
+			val = '<meta property="product:size" content="{SIZE}" /> ';
 			break;
 		case "ogproduct_target_gender":
-			val = 'meta property="product:target_gender" content="{VALUE}" /> ';
+			val = '<meta property="product:target_gender" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_upc":
-			val = 'meta property="product:upc" content="{UPC}" /> ';
+			val = '<meta property="product:upc" content="{UPC}" /> ';
 			break;
 		case "ogproduct_weight_value":
-			val = 'meta property="product:weight:value" content="{VALUE}" /> ';
+			val = '<meta property="product:weight:value" content="{VALUE}" /> ';
 			break;
 		case "ogproduct_weight_units":
-			val = 'meta property="product:weight:units" content="{UNITS}" /> ';
+			val = '<meta property="product:weight:units" content="{UNITS}" /> ';
 			break;
 		
 		/* Products and Entertainment */
@@ -585,96 +585,96 @@ function getTag(name){
 		
 		/* Twitter basic */
 		case "twitter_card_summary":
-			val = '<meta property="twitter:card" content="summary" />';
+			val = '<meta name="twitter:card" content="summary" />';
 		break;
         case "twitter_card_summary_large_image":
-            val = '<meta property="twitter:card" content="summary_large_image" />';
+            val = '<meta name="twitter:card" content="summary_large_image" />';
             break;
         case "twitter_card_gallery":
-            val = '<meta property="twitter:card" content="gallery" />';
+            val = '<meta name="twitter:card" content="gallery" />';
             break;
         case "twitter_card_product":
-            val = '<meta property="twitter:card" content="product" />';
+            val = '<meta name="twitter:card" content="product" />';
             break;
         case "twitter_card_app":
-            val = '<meta property="twitter:card" content="app" />';
+            val = '<meta name="twitter:card" content="app" />';
             break;
 		case "twitter_card_photo":
-			val = '<meta property="twitter:card" content="photo" />';
+			val = '<meta name="twitter:card" content="photo" />';
 		break;
 		case "twitter_card_player":
-			val = '<meta property="twitter:card" content="player" />';
+			val = '<meta name="twitter:card" content="player" />';
 		break;
 		case "twitter_card_title":
-			val = '<meta property="twitter:title" content="{MAX_70_SYMBOLS}" />';
+			val = '<meta name="twitter:title" content="{MAX_70_SYMBOLS}" />';
 		break;
 		case "twitter_card_description":
-			val = '<meta property="twitter:description" content="{DESCRIPTION}" />';
+			val = '<meta name="twitter:description" content="{DESCRIPTION}" />';
 		break;
 		case "twitter_card_url":
-			val = '<meta property="twitter:url" content="{URL}" />';
+			val = '<meta name="twitter:url" content="{URL}" />';
 		break;
 		case "twitter_card_image":
-			val = '<meta property="twitter:image" content="{URL}" />';
+			val = '<meta name="twitter:image" content="{URL}" />';
 		break;
 		case "twitter_card_image_src":
-			val = '<meta property="twitter:image:src" content="{URL}" />';
+			val = '<meta name="twitter:image:src" content="{URL}" />';
 		break;
 		case "twitter_card_player_url":
-			val = '<meta property="twitter:player" content="{HTTPS_URL}" />';
+			val = '<meta name="twitter:player" content="{HTTPS_URL}" />';
 		break;
 		
 		/* Twitter advanced */
 		case "twitter_card_site":
-			val = '<meta property="twitter:site" content="{TWITTER_USERNAME}" />';
+			val = '<meta name="twitter:site" content="{TWITTER_USERNAME}" />';
 		break;
 		case "twitter_card_site_id":
-			val = '<meta property="twitter:site:id" content="{USER_TWITTER_ID}" />';
+			val = '<meta name="twitter:site:id" content="{USER_TWITTER_ID}" />';
 		break;
 		case "twitter_card_creater":
-			val = '<meta property="twitter:creator" content="{TWITTER_USERNAME}" />';
+			val = '<meta name="twitter:creator" content="{TWITTER_USERNAME}" />';
 		break;
 		case "twitter_card_creater_id":
-			val = '<meta property="twitter:creator:id" content="{USER_TWITTER_ID}" />';
+			val = '<meta name="twitter:creator:id" content="{USER_TWITTER_ID}" />';
 		break;
 		case "twitter_card_image_width":
-			val = '<meta property="twitter:image:width" content="{IMAGE_WIDTH}" />';
+			val = '<meta name="twitter:image:width" content="{IMAGE_WIDTH}" />';
 		break;
 		case "twitter_card_image_height":
-			val = '<meta property="twitter:image:height" content="{HEIGHT}" />';
+			val = '<meta name="twitter:image:height" content="{HEIGHT}" />';
 		break;
 		case "twitter_card_player_width":
-			val = '<meta property="twitter:player:width" content="{WIDTH}" />';
+			val = '<meta name="twitter:player:width" content="{WIDTH}" />';
 		break;
 		case "twitter_card_player_height":
-			val = '<meta property="twitter:player:height" content="{HEIGHT}" />';
+			val = '<meta name="twitter:player:height" content="{HEIGHT}" />';
 		break;
         case "twitter_card_player_stream":
-            val = '<meta property="twitter:player:stream" content="{STREAM}" />';
+            val = '<meta name="twitter:player:stream" content="{STREAM}" />';
             break;
 		case "twitter_card_image_0":
-			val = '<meta property="twitter:image0" content="{URL}" />';
+			val = '<meta name="twitter:image0" content="{URL}" />';
 		break;
         case "twitter_card_image_1":
-            val = '<meta property="twitter:image1" content="{URL}" />';
+            val = '<meta name="twitter:image1" content="{URL}" />';
             break;
         case "twitter_card_image_2":
-            val = '<meta property="twitter:image2" content="{URL}" />';
+            val = '<meta name="twitter:image2" content="{URL}" />';
             break;
         case "twitter_card_image_3":
-            val = '<meta property="twitter:image3" content="{URL}" />';
+            val = '<meta name="twitter:image3" content="{URL}" />';
             break;
         case "twitter_card_data_1":
-            val = '<meta property="twitter:data1" content="{URL}" />';
+            val = '<meta name="twitter:data1" content="{URL}" />';
             break;
         case "twitter_card_data_2":
-            val = '<meta property="twitter:data2" content="{URL}" />';
+            val = '<meta name="twitter:data2" content="{URL}" />';
             break;
         case "twitter_card_label_1":
-            val = '<meta property="twitter:label1" content="{URL}" />';
+            val = '<meta name="twitter:label1" content="{URL}" />';
             break;
         case "twitter_card_label_2":
-            val = '<meta property="twitter:labe2" content="{URL}" />';
+            val = '<meta name="twitter:labe2" content="{URL}" />';
             break;
 		
 		/* Google */
@@ -814,7 +814,4 @@ function getTag(name){
 	}
   
   return val;
-  
 }
-
-

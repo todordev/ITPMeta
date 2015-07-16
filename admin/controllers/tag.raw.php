@@ -10,8 +10,6 @@
 // No direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controllerform');
-
 class ItpMetaControllerTag extends JControllerForm
 {
     /**
@@ -47,8 +45,7 @@ class ItpMetaControllerTag extends JControllerForm
             $content = stripslashes($content);
         }
 
-        jimport("itprism.response.json");
-        $response = new ITPrismResponseJson();
+        $response = new Prism\Response\Json();
 
         $model = $this->getModel();
 

@@ -153,7 +153,7 @@ class ITPMetaViewUrls extends JViewLegacy
         JHtml::_('behavior.multiselect');
         JHtml::_('formbehavior.chosen', 'select');
 
-        JHtml::_("itprism.ui.joomla_list");
+        JHtml::_("Prism.ui.joomlaList");
         $this->document->addScript('../media/' . $this->option . '/js/admin/' . $this->getName() . '.js');
     }
 }

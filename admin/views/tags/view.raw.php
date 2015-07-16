@@ -22,10 +22,8 @@ class ITPMetaViewTags extends JViewLegacy
 
         $this->urlId = $app->input->get->get("url_id");
 
-        jimport("itpmeta.tags");
-        $this->items = new ItpMetaTags($this->urlId);
-        $this->items->setDb(JFactory::getDbo());
-        $this->items->load();
+        $this->items = new ItpMeta\Tag\Tags(JFactory::getDbo());
+        $this->items->load(array("uri_id" => $this->urlId));
 
         parent::display($tpl);
     }

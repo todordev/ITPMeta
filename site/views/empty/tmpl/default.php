@@ -10,4 +10,4 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<?php echo $this->version->backlink;?>
+<?php echo $this->version->backlink; ?>

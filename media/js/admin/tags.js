@@ -8,8 +8,6 @@ jQuery(document).ready(function() {
 	
 	// Inline edit
 	
-	jQuery.pnotify.defaults.history = false;
-	
 	jQuery.fn.editable.defaults.mode = 'popup';
 
 	jQuery('.itpm-editable').editable({
@@ -33,10 +31,10 @@ jQuery(document).ready(function() {
 
                 jQuery("#itpmo"+response.data.id).text(response.data.output);
 
-                ITPrismUIHelper.displayMessageSuccess(response.title, response.text);
+                PrismUIHelper.displayMessageSuccess(response.title, response.text);
 
                 if (response.data.autoupdate) {
-                    ITPrismUIHelper.displayMessageInfo(Joomla.JText._('COM_ITPMETA_ADDITIONAL_INFORMATION'), Joomla.JText._('COM_ITPMETA_INFO_DISABLE_AUTOUPDATE'));
+                    PrismUIHelper.displayMessageInfo(Joomla.JText._('COM_ITPMETA_ADDITIONAL_INFORMATION'), Joomla.JText._('COM_ITPMETA_INFO_DISABLE_AUTOUPDATE'));
                 }
 
             }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="library" version="3.4" method="upgrade">
+	<name>ITPMeta Library</name>
+	<libraryname>ItpMeta</libraryname>
+	<author>Todor Iliev</author>
+	<authorEmail>todor@itprism.com</authorEmail>
+    <authorUrl>http://itprism.com</authorUrl>
+	<copyright>Copyright (C) 2015 Todor Iliev ( ITPrism.com ). All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<packager>ITPrism</packager>
+	<packagerurl>http://itprism.com</packagerurl>
+	<version>4.0</version>
+	<creationDate>16 July, 2015</creationDate>
+	<description>ITPMeta library is a collection of classes, which are used for managing URLs and tags.</description>
+	<files>
+        <folder>Extension</folder>
+        <folder>language</folder>
+        <folder>Statistics</folder>
+        <folder>Tag</folder>
+
+		<file>Constants.php</file>
+		<file>init.php</file>
+		<file>Uri.php</file>
+		<file>Version.php</file>
+	</files>
+</extension>
