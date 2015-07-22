@@ -35,7 +35,7 @@ class Crowdfunding extends Base
      *    "user_id" => 2
      * );
      *
-     * $extension = new ItpMeta\Extension\Content("/my-page", $options);
+     * $extension = new ItpMeta\Extension\Crowdfunding("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>

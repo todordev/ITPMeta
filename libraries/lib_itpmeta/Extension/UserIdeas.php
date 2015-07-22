@@ -35,7 +35,7 @@ class UserIdeas extends Base
      *    "id" => 1
      * );
      *
-     * $extension = new ItpMeta\Extension\Content("/my-page", $options);
+     * $extension = new ItpMeta\Extension\UserIdeas("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>

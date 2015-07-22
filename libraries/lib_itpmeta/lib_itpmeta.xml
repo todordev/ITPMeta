@@ -9,8 +9,8 @@
 	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<packager>ITPrism</packager>
 	<packagerurl>http://itprism.com</packagerurl>
-	<version>4.0</version>
-	<creationDate>16 July, 2015</creationDate>
+	<version>4.1</version>
+	<creationDate>22 July, 2015</creationDate>
 	<description>ITPMeta library is a collection of classes, which are used for managing URLs and tags.</description>
 	<files>
         <folder>Extension</folder>

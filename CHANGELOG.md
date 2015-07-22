@@ -1,6 +1,9 @@
 ITP Meta Release Notes
 ==========================
 
+###v4.1
+* Fixed some issues.
+
 ###v4.0
 * Improved code quality.
 * The library was rewritten.

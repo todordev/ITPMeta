@@ -35,7 +35,7 @@ class SocialCommunity extends Base
      *    "id" => 1
      * );
      *
-     * $extension = new ItpMeta\Extension\Content("/my-page", $options);
+     * $extension = new ItpMeta\Extension\SocialCommunity("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>

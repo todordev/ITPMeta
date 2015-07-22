@@ -35,7 +35,7 @@ class K2 extends Base
      *    "task" => "default"
      * );
      *
-     * $extension = new ItpMeta\Extension\Content("/my-page", $options);
+     * $extension = new ItpMeta\Extension\K2("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>

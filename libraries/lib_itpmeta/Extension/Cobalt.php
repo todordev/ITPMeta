@@ -32,7 +32,7 @@ class Cobalt extends Base
      *    "ucat_id" => 5
      * );
      *
-     * $extension = new ItpMeta\Extension\Content("/my-page", $options);
+     * $extension = new ItpMeta\Extension\Cobalt("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>
