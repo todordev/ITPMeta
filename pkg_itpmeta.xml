@@ -10,8 +10,8 @@
 	<url>http://itprism.com</url>
 	<packager>Todor Iliev</packager>
 	<packagerurl>http://itprism.com</packagerurl>
-	<version>4.1</version>
-	<creationDate>22 July, 2015</creationDate>
+	<version>4.2</version>
+	<creationDate>29 July, 2015</creationDate>
 	<description>
 	<![CDATA[
 	<p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta" target="_blank">ITPMeta</a> is an easy way to put any code in the header of your site.</p>
@@ -27,6 +27,6 @@
 	<scriptfile>install.php</scriptfile>
 
     <updateservers>
-        <server type="extension" priority="1" name="ITP Meta Updates ( from CDN )">http://cdn.itprism.com/updates/itpmeta.xml</server>
+        <server type="extension" priority="1" name="ITP Meta ( from CDN )">http://cdn.itprism.com/updates/itpmeta.xml</server>
     </updateservers>
 </extension>

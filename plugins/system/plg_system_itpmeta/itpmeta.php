@@ -10,7 +10,8 @@
 // no direct access
 defined('_JEXEC') or die;
 
-jimport("itpmeta.init");
+jimport("Prism.init");
+jimport("ItpMeta.init");
 
 /**
  * This plugin puts tags to the page code.

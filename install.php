@@ -146,7 +146,7 @@ class pkg_itpMetaInstallerScript
             if (class_exists("ItpMeta\\Version")) {
                 $prismVersion     = new Prism\Version();
                 $componentVersion = new ItpMeta\Version();
-                if (version_compare($prismVersion->getShortVersion(), $componentVersion->requiredPrismVersion)) {
+                if (version_compare($prismVersion->getShortVersion(), $componentVersion->requiredPrismVersion, "<")) {
                     echo JText::_("COM_ITPMETA_MESSAGE_INSTALL_PRISM_LIBRARY");
                 }
             }

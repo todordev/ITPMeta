@@ -1,6 +1,9 @@
 ITP Meta Release Notes
 ==========================
 
+###v4.2
+* Fixed bug in the plugin System - ItpMeta.
+
 ###v4.1
 * Fixed some issues.
 
