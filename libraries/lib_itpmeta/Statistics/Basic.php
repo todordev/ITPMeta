@@ -4,10 +4,10 @@
  * @subpackage   Statistics
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Statistics;
+namespace Itpmeta\Statistics;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -55,8 +55,8 @@ class Basic
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("COUNT(*)")
-            ->from($this->db->quoteName("#__itpm_urls", "a"));
+            ->select('COUNT(*)')
+            ->from($this->db->quoteName('#__itpm_urls', 'a'));
 
         $this->db->setQuery($query);
         $result = (int)$this->db->loadResult();
@@ -79,8 +79,8 @@ class Basic
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("COUNT(*)")
-            ->from($this->db->quoteName("#__itpm_tags", "a"));
+            ->select('COUNT(*)')
+            ->from($this->db->quoteName('#__itpm_tags', 'a'));
 
         $this->db->setQuery($query);
         $result = (int)$this->db->loadResult();
@@ -103,8 +103,8 @@ class Basic
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("COUNT(*)")
-            ->from($this->db->quoteName("#__itpm_global_tags", "a"));
+            ->select('COUNT(*)')
+            ->from($this->db->quoteName('#__itpm_global_tags', 'a'));
 
         $this->db->setQuery($query);
         $result = (int)$this->db->loadResult();

@@ -40,7 +40,7 @@ defined('_JEXEC') or die;
         <?php if(!$this->itemId) { ?>
         <div class="clearfix"></div>
         <p class="alert alert-info">
-            <i class="icon-info-sign"></i>
+            <i class="icon-info"></i>
             <?php echo JText::_("COM_ITPMETA_NOTE_NO_TAGS")?>
         </p>
         <?php }?>

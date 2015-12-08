@@ -38,7 +38,7 @@ defined('_JEXEC') or die;
                             <td style="max-width: 10px;"><?php echo $i + 1;?></td>
                             <td>
                                 <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=urls&filter_search=id:".(int)$this->latest[$i]["id"]);?>">
-                                    <?php echo JHtmlString::truncate(strip_tags($this->latest[$i]["uri"]), 96, ItpMeta\Constants::NO_SPLIT); ?>
+                                    <?php echo JHtmlString::truncate(strip_tags($this->latest[$i]["uri"]), 96, Itpmeta\Constants::NO_SPLIT); ?>
                                 </a>
                             </td>
                             <td>
@@ -94,7 +94,7 @@ defined('_JEXEC') or die;
                             <td><?php echo $i + 1;?></td>
                             <td>
                                 <a href="<?php echo JRoute::_("index.php?option=com_itpmeta&view=urls&filter_search=id:".(int)$this->urlsScripts[$i]["id"]);?>" >
-                                    <?php echo JHtmlString::truncate(strip_tags($this->urlsScripts[$i]["uri"]), 96, ItpMeta\Constants::NO_SPLIT); ?>
+                                    <?php echo JHtmlString::truncate(strip_tags($this->urlsScripts[$i]["uri"]), 96, Itpmeta\Constants::NO_SPLIT); ?>
                                 </a>
                             </td>
                             <td>

@@ -652,6 +652,9 @@ function getTag(name){
         case "twitter_card_player_stream":
             val = '<meta name="twitter:player:stream" content="{STREAM}" />';
             break;
+		case "twitter_card_player_stream_content_type":
+			val = '<meta name="twitter:player:stream:content_type" content="{CONTENT_TYPE}" />';
+			break;
 		case "twitter_card_image_0":
 			val = '<meta name="twitter:image0" content="{URL}" />';
 		break;
@@ -674,7 +677,7 @@ function getTag(name){
             val = '<meta name="twitter:label1" content="{URL}" />';
             break;
         case "twitter_card_label_2":
-            val = '<meta name="twitter:labe2" content="{URL}" />';
+            val = '<meta name="twitter:label2" content="{URL}" />';
             break;
 		
 		/* Google */

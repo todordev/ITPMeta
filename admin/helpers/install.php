@@ -25,7 +25,7 @@ class ItpMetaInstallHelper
 
     public static function endTable()
     {
-        echo "</table></div>";
+        echo '</table></div>';
     }
 
     public static function addRowHeading($heading)
@@ -49,12 +49,11 @@ class ItpMetaInstallHelper
      */
     public static function addRow($title, $result, $info)
     {
+        $outputType = Joomla\Utilities\ArrayHelper::getValue($result, 'type', '');
+        $outputText = Joomla\Utilities\ArrayHelper::getValue($result, 'text', '');
 
-        $outputType = JArrayHelper::getValue($result, "type", "");
-        $outputText = JArrayHelper::getValue($result, "text", "");
-
-        $output = "";
-        if (!empty($outputType) and !empty($outputText)) {
+        $output = '';
+        if ($outputType !== '' and $outputText !== '') {
             $output = '<span class="label label-' . $outputType . '">' . $outputText . '</span>';
         }
 

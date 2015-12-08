@@ -4,10 +4,12 @@
  * @subpackage   Extensions
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Extension;
+namespace Itpmeta\Extension;
+
+use Joomla\Utilities\ArrayHelper;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -21,10 +23,6 @@ defined('JPATH_PLATFORM') or die;
 class SocialCommunity extends Base
 {
     protected $uri;
-    protected $view;
-    protected $task;
-    protected $menuItemId;
-
     protected $data;
 
     /**
@@ -44,13 +42,13 @@ class SocialCommunity extends Base
      *
      * @return array
      */
-    public function getData($options = array())
+    public function getData(array $options = array())
     {
-        $id = \JArrayHelper::getValue($options, "id");
+        $id = ArrayHelper::getValue($options, 'id');
 
         switch ($this->view) {
 
-            case "profile":
+            case 'profile':
                 $this->data = $this->getProfileData($id);
                 break;
 
@@ -79,27 +77,27 @@ class SocialCommunity extends Base
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("a.name AS title, a.bio AS metadesc, a.image_small AS image")
-            ->from($this->db->quoteName("#__itpsc_profiles", "a"))
-            ->where("a.id = " . (int)$userId);
+            ->select('a.name AS title, a.bio AS metadesc, a.image_small AS image')
+            ->from($this->db->quoteName('#__itpsc_profiles', 'a'))
+            ->where('a.id = ' . (int)$userId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
-            $data["title"]    = $result["title"];
+            $data['title']    = $result['title'];
 
-            $data["created"]  = "";
-            $data["modified"] = "";
+            $data['created']  = '';
+            $data['modified'] = '';
 
             // Generate meta description
-            $data["metadesc"] = $this->prepareMetaDesc($result["metadesc"]);
+            $data['metadesc'] = $this->prepareMetaDesc($result['metadesc']);
 
             // Generate image
-            $params        = \JComponentHelper::getParams("com_socialcommunity");
-            $imagesFolder  = $params->get("images_directory", "images/profiles");
+            $params        = \JComponentHelper::getParams('com_socialcommunity');
+            $imagesFolder  = $params->get('images_directory', 'images/profiles');
 
-            $data["image"] = \JUri::root().$imagesFolder.$result["image"];
+            $data['image'] = \JUri::root().$imagesFolder.$result['image'];
 
             unset($result);
         }

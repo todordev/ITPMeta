@@ -4,10 +4,12 @@
  * @subpackage   Extensions
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Extension;
+namespace Itpmeta\Extension;
+
+use Joomla\Utilities\ArrayHelper;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -41,51 +43,51 @@ class Cobalt extends Base
      *
      * @return array
      */
-    public function getData($options = array())
+    public function getData(array $options = array())
     {
-        $view = "";
+        $view = '';
         $data = array();
 
-        $id         = \JArrayHelper::getValue($options, "id");
-        $sectionId  = \JArrayHelper::getValue($options, "section_id");
-        $categoryId = \JArrayHelper::getValue($options, "cat_id");
+        $id         = ArrayHelper::getValue($options, 'id');
+        $sectionId  = ArrayHelper::getValue($options, 'section_id');
+        $categoryId = ArrayHelper::getValue($options, 'cat_id');
 
-        $userId     = \JArrayHelper::getValue($options, "user_id");
+        $userId     = ArrayHelper::getValue($options, 'user_id');
 
-        $userCategoryId = \JArrayHelper::getValue($options, "ucat_id");
+        $userCategoryId = ArrayHelper::getValue($options, 'ucat_id');
 
         // If missing ID I have to get information from menu item.
         if (!is_null($id)) {
-            $view = "item";
+            $view = 'item';
         } elseif (!is_null($sectionId) and !is_null($userCategoryId)) { // It is user category
-            $view = "usercategory";
+            $view = 'usercategory';
         } elseif (!is_null($sectionId) and !is_null($categoryId)) { // It is category
-            $view = "category";
+            $view = 'category';
         } elseif (!is_null($sectionId) and is_null($categoryId) and is_null($userId)) { // It is section
-            $view = "section";
+            $view = 'section';
         } elseif (!is_null($sectionId) and !is_null($userId)) { // It is author profile
-            $view = "author";
+            $view = 'author';
         }
 
         switch ($view) {
 
-            case "item":
+            case 'item':
                 $data = $this->getItemData($id);
                 break;
 
-            case "category":
+            case 'category':
                 $data = $this->getCobaltCategoryData($categoryId);
                 break;
 
-            case "usercategory":
+            case 'usercategory':
                 $data = $this->getUserCategoryData($userCategoryId);
                 break;
 
-            case "section":
+            case 'section':
                 $data = $this->getSectionData($sectionId);
                 break;
 
-            case "author":
+            case 'author':
                 $data = $this->getAuthorData($userId, $sectionId);
                 break;
 
@@ -120,9 +122,9 @@ class Cobalt extends Base
 
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.title, a.description, a.metadesc, a.image, a.created_time AS created, a.modified_time AS modified")
-            ->from($this->db->quoteName("#__js_res_categories", "a"))
-            ->where("a.id=" . (int)$categoryId);
+            ->select('a.id, a.title, a.description, a.metadesc, a.image, a.created_time AS created, a.modified_time AS modified')
+            ->from($this->db->quoteName('#__js_res_categories', 'a'))
+            ->where('a.id=' . (int)$categoryId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
@@ -134,11 +136,11 @@ class Cobalt extends Base
             }
             unset($results);
 
-            $data["metadesc"] = $this->clean($data["metadesc"]);
+            $data['metadesc'] = $this->clean($data['metadesc']);
 
             // Generate meta description from textarea or HTML field.
-            if (!$data["metadesc"] and !empty($this->genMetaDesc)) {
-                $data["metadesc"] = $this->prepareMetaDesc($data["description"]);
+            if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
+                $data['metadesc'] = $this->prepareMetaDesc($data['description']);
             }
 
         }
@@ -164,18 +166,18 @@ class Cobalt extends Base
 
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.name, b.name AS section")
-            ->from($this->db->quoteName("#__users", "a"))
-            ->from($this->db->quoteName("#__js_res_sections", "b"))
-            ->where("a.id = " . (int)$userId)
-            ->where("b.id = " . (int)$sectionId);
+            ->select('a.name, b.name AS section')
+            ->from($this->db->quoteName('#__users', 'a'))
+            ->from($this->db->quoteName('#__js_res_sections', 'b'))
+            ->where('a.id = ' . (int)$userId)
+            ->where('b.id = ' . (int)$sectionId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
-            $data["title"]    = \JText::sprintf("LIB_ITPMETA_VIEW_USER_TITLE", $result["name"]);
-            $data["metadesc"] = \JText::sprintf("LIB_ITPMETA_VIEW_SECTION_USER_METADESC", $result["section"], $result["name"]);
+            $data['title']    = \JText::sprintf('LIB_ITPMETA_VIEW_USER_TITLE', $result['name']);
+            $data['metadesc'] = \JText::sprintf('LIB_ITPMETA_VIEW_SECTION_USER_METADESC', $result['section'], $result['name']);
         }
 
         return $data;
@@ -198,17 +200,17 @@ class Cobalt extends Base
 
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.name AS title, a.description, a.params, a.ctime AS created, a.mtime AS modified")
-            ->from($this->db->quoteName("#__js_res_category_user", "a"))
-            ->where("a.id=" . (int)$categoryId);
+            ->select('a.id, a.name AS title, a.description, a.params, a.ctime AS created, a.mtime AS modified')
+            ->from($this->db->quoteName('#__js_res_category_user', 'a'))
+            ->where('a.id=' . (int)$categoryId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
-            $params = \JArrayHelper::getValue($result, "params");
-            unset($result["params"]);
+            $params = ArrayHelper::getValue($result, 'params');
+            unset($result['params']);
 
             foreach ($result as $key => $value) {
                 $data[$key] = $value;
@@ -216,16 +218,16 @@ class Cobalt extends Base
 
             $params = json_decode($params, true);
 
-            $data["metadesc"] = \JArrayHelper::getValue($params, "meta_descr");
-            $data["image"]    = \JArrayHelper::getValue($params, "image");
+            $data['metadesc'] = ArrayHelper::getValue($params, 'meta_descr');
+            $data['image']    = ArrayHelper::getValue($params, 'image');
             unset($params);
             unset($result);
 
-            $data["metadesc"] = $this->clean($data["metadesc"]);
+            $data['metadesc'] = $this->clean($data['metadesc']);
 
             // Generate meta description from textarea or HTML field.
-            if (!$data["metadesc"] and !empty($this->genMetaDesc)) {
-                $data["metadesc"] = $this->prepareMetaDesc($data["description"]);
+            if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
+                $data['metadesc'] = $this->prepareMetaDesc($data['description']);
             }
 
         }
@@ -250,9 +252,9 @@ class Cobalt extends Base
 
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.title, a.meta_descr AS metadesc, a.ctime AS created, a.mtime AS modified")
-            ->from($this->db->quoteName("#__js_res_record", "a"))
-            ->where("a.id=" . (int)$itemId);
+            ->select('a.id, a.title, a.meta_descr AS metadesc, a.ctime AS created, a.mtime AS modified')
+            ->from($this->db->quoteName('#__js_res_record', 'a'))
+            ->where('a.id=' . (int)$itemId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
@@ -265,14 +267,14 @@ class Cobalt extends Base
             }
             unset($results);
 
-            $data["metadesc"] = $this->clean($data["metadesc"]);
+            $data['metadesc'] = $this->clean($data['metadesc']);
 
             // Get images
-            $data["image"] = $this->getItemImage($itemId);
+            $data['image'] = $this->getItemImage($itemId);
 
             // Generate meta description from textarea or HTML field.
-            if (!$data["metadesc"] and !empty($this->genMetaDesc)) {
-                $data["metadesc"] = $this->getItemDescription($itemId);
+            if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
+                $data['metadesc'] = $this->getItemDescription($itemId);
             }
 
         }
@@ -294,10 +296,10 @@ class Cobalt extends Base
         // Get images
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.field_label AS title, a.field_value AS image")
-            ->from($this->db->quoteName("#__js_res_record_values", "a"))
-            ->where("a.record_id  = " . (int)$itemId)
-            ->where("a.field_type = " . $this->db->quote("image"));
+            ->select('a.field_label AS title, a.field_value AS image')
+            ->from($this->db->quoteName('#__js_res_record_values', 'a'))
+            ->where('a.record_id  = ' . (int)$itemId)
+            ->where('a.field_type = ' . $this->db->quote('image'));
 
         $this->db->setQuery($query);
         $results = (array)$this->db->loadAssocList();
@@ -307,7 +309,7 @@ class Cobalt extends Base
             unset($results);
         }
 
-        return \JArrayHelper::getValue($imageData, "image");
+        return ArrayHelper::getValue($imageData, 'image');
     }
 
     /**
@@ -319,15 +321,15 @@ class Cobalt extends Base
      */
     protected function getItemDescription($itemId)
     {
-        $metaDesc = "";
+        $metaDesc = '';
 
         // Get images
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.field_type AS type, a.field_value AS text")
-            ->from($this->db->quoteName("#__js_res_record_values", "a"))
-            ->where("a.record_id  = " . (int)$itemId)
-            ->where("(a.field_type = " . $this->db->quote("html") . " OR " . "a.field_type = " . $this->db->quote("textarea") . ")");
+            ->select('a.field_type AS type, a.field_value AS text')
+            ->from($this->db->quoteName('#__js_res_record_values', 'a'))
+            ->where('a.record_id  = ' . (int)$itemId)
+            ->where('(a.field_type = ' . $this->db->quote('html') . ' OR ' . 'a.field_type = ' . $this->db->quote('textarea') . ')');
 
         $this->db->setQuery($query);
         $results = (array)$this->db->loadAssocList();
@@ -338,7 +340,7 @@ class Cobalt extends Base
             $textAreaFields = array();
 
             foreach ($results as $value) {
-                if (strcmp("html", $value["type"]) == 0) {
+                if (strcmp('html', $value['type']) === 0) {
                     $htmlFields[] = $value;
                 } else {
                     $textAreaFields[] = $value;
@@ -347,7 +349,7 @@ class Cobalt extends Base
 
             // Generate meta description from HTML field.
             foreach ($htmlFields as $value) {
-                $metaDesc = $this->prepareMetaDesc($value["text"]);
+                $metaDesc = $this->prepareMetaDesc($value['text']);
                 if (!empty($metaDesc)) {
                     break;
                 }
@@ -357,7 +359,7 @@ class Cobalt extends Base
             if (!$metaDesc) {
 
                 foreach ($textAreaFields as $value) {
-                    $metaDesc = $this->prepareMetaDesc($value["text"]);
+                    $metaDesc = $this->prepareMetaDesc($value['text']);
                     if (!empty($metaDesc)) {
                         break;
                     }
@@ -365,9 +367,7 @@ class Cobalt extends Base
 
             }
 
-            unset($htmlFields);
-            unset($textAreaFields);
-            unset($results);
+            unset($htmlFields, $textAreaFields, $results);
         }
 
         return $metaDesc;
@@ -390,20 +390,20 @@ class Cobalt extends Base
 
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.title, a.description")
-            ->from($this->db->quoteName("#__js_res_sections", "a"))
-            ->where("a.id=" . (int)$sectionId);
+            ->select('a.id, a.title, a.description')
+            ->from($this->db->quoteName('#__js_res_sections', 'a'))
+            ->where('a.id=' . (int)$sectionId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
-            $data["title"] = \JArrayHelper::getValue($result, "title");
+            $data['title'] = ArrayHelper::getValue($result, 'title');
 
-            $description = \JArrayHelper::getValue($result, "description");
+            $description = ArrayHelper::getValue($result, 'description');
 
             $metaDesc         = \JString::substr(\JString::trim(strip_tags($description)), 0, 160);
-            $data["metadesc"] = $metaDesc;
+            $data['metadesc'] = $metaDesc;
         }
 
         return $data;

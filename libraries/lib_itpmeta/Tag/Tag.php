@@ -4,10 +4,10 @@
  * @subpackage   Tags
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Tag;
+namespace Itpmeta\Tag;
 
 use Prism;
 
@@ -39,26 +39,24 @@ class Tag extends Base implements Prism\Database\TableInterface
      */
     public function load($keys, $options = array())
     {
-        $id    = (!isset($keys["id"])) ? 0 : (int)$keys["id"];
-        $name  = (!isset($keys["name"])) ? null : $keys["name"];
+        $id    = (!array_key_exists('id', $keys)) ? 0 : (int)$keys['id'];
+        $name  = (!array_key_exists('name', $keys)) ? null : $keys['name'];
 
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.name, a.type, a.title, a.tag, a.content, a.output, a.ordering, a.url_id")
-            ->from($this->db->quoteName("#__itpm_tags", "a"));
+            ->select('a.id, a.name, a.type, a.title, a.tag, a.content, a.output, a.ordering, a.url_id')
+            ->from($this->db->quoteName('#__itpm_tags', 'a'));
 
-        if (!empty($name)) {
-            $query->where("a.name = " . $this->db->quote($name));
+        if ($name !== null or $name !== '') {
+            $query->where('a.name = ' . $this->db->quote($name));
         } else {
-            $query->where("a.id = " . (int)$id);
+            $query->where('a.id = ' . (int)$id);
         }
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-            $this->bind($result);
-        }
+        $this->bind($result);
     }
 
     /**
@@ -83,33 +81,33 @@ class Tag extends Base implements Prism\Database\TableInterface
         $query = $this->db->getQuery(true);
 
         $query
-            ->set($this->db->quoteName("name") . "=" . $this->db->quote($this->name))
-            ->set($this->db->quoteName("type") . "=" . $this->db->quote($this->type))
-            ->set($this->db->quoteName("title") . "=" . $this->db->quote($this->title))
-            ->set($this->db->quoteName("tag") . "=" . $this->db->quote($this->tag))
-            ->set($this->db->quoteName("content") . "=" . $this->db->quote($this->content))
-            ->set($this->db->quoteName("output") . "=" . $this->db->quote($this->output))
-            ->set($this->db->quoteName("url_id") . "=" . (int)$this->url_id);
+            ->set($this->db->quoteName('name') . '=' . $this->db->quote($this->name))
+            ->set($this->db->quoteName('type') . '=' . $this->db->quote($this->type))
+            ->set($this->db->quoteName('title') . '=' . $this->db->quote($this->title))
+            ->set($this->db->quoteName('tag') . '=' . $this->db->quote($this->tag))
+            ->set($this->db->quoteName('content') . '=' . $this->db->quote($this->content))
+            ->set($this->db->quoteName('output') . '=' . $this->db->quote($this->output))
+            ->set($this->db->quoteName('url_id') . '=' . (int)$this->url_id);
 
-        if (!empty($this->id)) { // UPDATE
+        if ($this->id !== null and $this->id > 0) { // UPDATE
             $query
-                ->update($this->db->quoteName("#__itpm_tags"))
-                ->where($this->db->quoteName("id") . "=" . (int)$this->id);
+                ->update($this->db->quoteName('#__itpm_tags'))
+                ->where($this->db->quoteName('id') . '=' . (int)$this->id);
 
         } else { // INSERT
 
             $query
-                ->insert($this->db->quoteName("#__itpm_tags"));
+                ->insert($this->db->quoteName('#__itpm_tags'));
 
             // Get max ordering
             $max = $this->getMaxOrdering();
-            $query->set($this->db->quoteName("ordering") . "=" . $max);
+            $query->set($this->db->quoteName('ordering') . '=' . $max);
         }
 
         $this->db->setQuery($query);
         $this->db->execute();
 
-        if (empty($this->id)) {
+        if (!$this->id) {
             $this->id = $this->db->insertid();
         }
 
@@ -123,16 +121,14 @@ class Tag extends Base implements Prism\Database\TableInterface
     {
         $query = $this->db->getQuery(true);
         $query
-            ->select("MAX(a.ordering)")
-            ->from($this->db->quoteName("#__itpm_tags", "a"))
-            ->where("a.url_id =" . $this->url_id);
+            ->select('MAX(a.ordering)')
+            ->from($this->db->quoteName('#__itpm_tags', 'a'))
+            ->where('a.url_id =' . $this->url_id);
 
         $this->db->setQuery($query, 0, 1);
         $max = (int)$this->db->loadResult();
 
-        $max = $max + 1;
-
-        return $max;
+        return ++$max;
     }
 
     /**

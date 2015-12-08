@@ -10,6 +10,7 @@
             label="COM_ITPMETA_URI_STRING" 
             description="COM_ITPMETA_URI_STRING_DESC"
             required="true"
+            hint="/blog/35-article"
          />
         
         <field

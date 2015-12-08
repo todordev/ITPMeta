@@ -20,14 +20,10 @@ class ItpMetaController extends JControllerLegacy
 {
     protected $option;
 
-    public function __construct($config = array())
-    {
-        parent::__construct($config);
-        $this->option = JFactory::getApplication()->input->getCmd("option");
-    }
-
     public function display($cachable = false, $urlparams = array())
     {
+        $this->option = JFactory::getApplication()->input->getCmd('option');
+        
         $document = JFactory::getDocument();
         /** @var $document JDocumentHtml */
 
@@ -35,7 +31,7 @@ class ItpMetaController extends JControllerLegacy
         $document->addStyleSheet('../media/' . $this->option . '/css/backend.style.css');
 
         $viewName = $this->input->getCmd('view', 'dashboard');
-        $this->input->set("view", $viewName);
+        $this->input->set('view', $viewName);
 
         parent::display();
 

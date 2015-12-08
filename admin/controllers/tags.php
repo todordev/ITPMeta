@@ -42,7 +42,7 @@ class ItpMetaControllerTags extends Prism\Controller\Admin
 
         // Gets the data from the form
         $cid = $this->input->post->get('cid', array(), 'array');
-        JArrayHelper::toInteger($cid);
+        $cid = Joomla\Utilities\ArrayHelper::toInteger($cid);
 
         $urlId = $app->getUserState("url.id");
 

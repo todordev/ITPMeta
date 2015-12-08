@@ -38,8 +38,8 @@ class ItpMetaControllerGlobals extends JControllerAdmin
         $order = $this->input->post->get('order', array(), 'array');
 
         // Sanitize the input
-        JArrayHelper::toInteger($pks);
-        JArrayHelper::toInteger($order);
+        $pks   = Joomla\Utilities\ArrayHelper::toInteger($pks);
+        $order = Joomla\Utilities\ArrayHelper::toInteger($order);
 
         // Get the model
         $model = $this->getModel();
@@ -53,10 +53,10 @@ class ItpMetaControllerGlobals extends JControllerAdmin
         }
 
         $response = array(
-            "success" => true,
-            "title"   => JText::_('COM_ITPMETA_SUCCESS'),
-            "text"    => JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'),
-            "data"    => array()
+            'success' => true,
+            'title'   => JText::_('COM_ITPMETA_SUCCESS'),
+            'text'    => JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'),
+            'data'    => array()
         );
 
         echo json_encode($response);

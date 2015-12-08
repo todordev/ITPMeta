@@ -1,6 +1,11 @@
 ITP Meta Release Notes
 ==========================
 
+###v4.3
+* Added functionality to create tags for VirtueMart.
+* Added Twitter tag __twitter:player:stream:content_type__
+* Added option to extract first image from item content (description) and use it as og:image.
+
 ###v4.2
 * Fixed bug in the plugin System - ItpMeta.
 

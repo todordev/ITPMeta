@@ -4,10 +4,12 @@
  * @subpackage   Extensions
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Extension;
+namespace Itpmeta\Extension;
+
+use Joomla\Utilities\ArrayHelper;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -20,10 +22,6 @@ defined('JPATH_PLATFORM') or die;
 class K2 extends Base
 {
     protected $uri;
-    protected $view;
-    protected $task;
-    protected $menuItemId;
-
     protected $data;
 
     /**
@@ -44,44 +42,44 @@ class K2 extends Base
      *
      * @return array
      */
-    public function getData($options = array())
+    public function getData(array $options = array())
     {
         $data = array();
 
-        $id   = \JArrayHelper::getValue($options, "id", 0, "int");
-        $task = \JArrayHelper::getValue($options, "task");
+        $id   = ArrayHelper::getValue($options, 'id', 0, 'int');
+        $task = ArrayHelper::getValue($options, 'task');
 
-        // I am using $view because I could change it to "tag".
+        // I am using $view because I could change it to 'tag'.
         // So, I don't want to replace the original property.
         $view = $this->view;
 
         switch ($task) {
 
-            case "user":
-            case "tag":
+            case 'user':
+            case 'tag':
                 $view = $task;
                 break;
 
-            case "category":
+            case 'category':
                 $view = $task;
                 break;
         }
 
         switch ($view) {
 
-            case "item":
+            case 'item':
                 $data = $this->getItemData($id);
                 break;
 
-            case "category":
+            case 'category':
                 $data = $this->getCategoryData($id, $view);
                 break;
 
-            case "tag":
+            case 'tag':
                 $data = $this->prepareTagData($options);
                 break;
 
-            case "user":
+            case 'user':
                 $data = $this->getUserData($options);
                 break;
 
@@ -102,7 +100,7 @@ class K2 extends Base
 
     protected function prepareTagData($parsed)
     {
-        $tagName = \JArrayHelper::getValue($parsed, "tag");
+        $tagName = ArrayHelper::getValue($parsed, 'tag');
         $tagName = htmlentities($tagName, ENT_QUOTES, 'UTF-8');
 
         // Get menu item data.
@@ -114,30 +112,30 @@ class K2 extends Base
         $menuItem = $menu->getItem($this->menuItemId);
 
         // Get layout of current menu item.
-        $layout = \JArrayHelper::getValue($menuItem->query, "layout");
+        $layout = ArrayHelper::getValue($menuItem->query, 'layout');
 
-        if (strcmp("tag", $layout) == 0) { // If it is a menu item of layout "tag".
+        if (strcmp('tag', $layout) == 0) { // If it is a menu item of layout 'tag'.
 
-            $title    = \JString::trim(\JArrayHelper::getValue($data, "title"));
-            $metaDesc = \JString::trim(\JArrayHelper::getValue($data, "metadesc"));
+            $title    = \JString::trim(ArrayHelper::getValue($data, 'title'));
+            $metaDesc = \JString::trim(ArrayHelper::getValue($data, 'metadesc'));
 
             if (!$title) {
-                $title = \JText::sprintf("LIB_ITPMETA_DISPLAYING_TAG", $tagName);
+                $title = \JText::sprintf('LIB_ITPMETA_DISPLAYING_TAG', $tagName);
             }
 
             if (!$metaDesc) {
-                $metaDesc = \JText::sprintf("LIB_ITPMETA_DISPLAYING_TAG_DESC", $tagName);
+                $metaDesc = \JText::sprintf('LIB_ITPMETA_DISPLAYING_TAG_DESC', $tagName);
             }
 
         } else { // If it is not a menu item.
 
-            $title    = \JText::sprintf("LIB_ITPMETA_DISPLAYING_TAG", $tagName);
-            $metaDesc = \JText::sprintf("LIB_ITPMETA_DISPLAYING_TAG_DESC", $tagName);
+            $title    = \JText::sprintf('LIB_ITPMETA_DISPLAYING_TAG', $tagName);
+            $metaDesc = \JText::sprintf('LIB_ITPMETA_DISPLAYING_TAG_DESC', $tagName);
 
         }
 
-        $data["title"]    = $title;
-        $data["metadesc"] = $metaDesc;
+        $data['title']    = $title;
+        $data['metadesc'] = $metaDesc;
 
         return $data;
     }
@@ -160,29 +158,29 @@ class K2 extends Base
         $menuItem = $menu->getItem($this->menuItemId);
 
         // Get layout of current menu item.
-        $layout = \JArrayHelper::getValue($menuItem->query, "layout");
-        $userId = \JArrayHelper::getValue($parsed, "id", 0, "int");
+        $layout = ArrayHelper::getValue($menuItem->query, 'layout');
+        $userId = ArrayHelper::getValue($parsed, 'id', 0, 'int');
 
         $user = $this->getUser($userId);
 
         // Prepare title and meta description.
-        if (strcmp("user", $layout) == 0) { // If there is a layout "user", that is a menu item "user".
-            $data["title"]    = \JString::trim(\JArrayHelper::getValue($data, "title"));
-            $data["metadesc"] = \JString::trim(\JArrayHelper::getValue($data, "metadesc"));
+        if (strcmp('user', $layout) == 0) { // If there is a layout 'user', that is a menu item 'user'.
+            $data['title']    = \JString::trim(ArrayHelper::getValue($data, 'title'));
+            $data['metadesc'] = \JString::trim(ArrayHelper::getValue($data, 'metadesc'));
 
         } else { // Not menu item. Generate a title and meta description.
 
-            $data["title"] = \JText::sprintf("LIB_ITPMETA_VIEW_USER_TITLE", $user["name"]);
+            $data['title'] = \JText::sprintf('LIB_ITPMETA_VIEW_USER_TITLE', $user['name']);
 
-            if (!empty($user["metadesc"])) {
-                $data["metadesc"] = $user["metadesc"];
+            if (!empty($user['metadesc'])) {
+                $data['metadesc'] = $user['metadesc'];
             } else {
-                $data["metadesc"] = \JText::sprintf("LIB_ITPMETA_VIEW_USER_METADESC", $user["name"]);
+                $data['metadesc'] = \JText::sprintf('LIB_ITPMETA_VIEW_USER_METADESC', $user['name']);
             }
 
         }
 
-        $data["image"] = \JArrayHelper::getValue($user, "image");
+        $data['image'] = ArrayHelper::getValue($user, 'image');
         unset($user);
 
         return $data;
@@ -195,26 +193,26 @@ class K2 extends Base
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("a.userName AS name, a.description , a.image")
-            ->from($this->db->quoteName("#__k2_users", "a"))
-            ->where("a.userID = " . (int)$userId);
+            ->select('a.userName AS name, a.description , a.image')
+            ->from($this->db->quoteName('#__k2_users', 'a'))
+            ->where('a.userID = ' . (int)$userId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
-            $data["created"]  = null;
-            $data["modified"] = null;
+            $data['created']  = null;
+            $data['modified'] = null;
 
-            $data["name"] = $result["name"];
+            $data['name'] = $result['name'];
 
             // Prepare meta description.
-            $data["metadesc"] = $this->prepareMetaDesc($result["description"]);
+            $data['metadesc'] = $this->prepareMetaDesc($result['description']);
 
-            $data["image"] = null;
-            if (!empty($result["image"])) {
-                $data["image"] = "media/k2/users/" . $result["image"];
+            $data['image'] = null;
+            if (!empty($result['image'])) {
+                $data['image'] = 'media/k2/users/' . $result['image'];
             }
 
             unset($result);
@@ -242,54 +240,54 @@ class K2 extends Base
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("a.name AS title, a.description, a.params, a.image")
-            ->from($this->db->quoteName("#__k2_categories", "a"))
-            ->where("a.id=" . (int)$categoryId);
+            ->select('a.name AS title, a.description, a.params, a.image')
+            ->from($this->db->quoteName('#__k2_categories', 'a'))
+            ->where('a.id=' . (int)$categoryId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
-            $data["created"]  = null;
-            $data["modified"] = null;
-            $data["title"]    = $result["title"];
+            $data['created']  = null;
+            $data['modified'] = null;
+            $data['title']    = $result['title'];
 
             // If it is a menu item, get menu item meta data.
             $menuItem   = $this->getMenuItem($this->menuItemId);
 
             // Use menu item title and description, if the items is set to a menu item.
             if (
-                (strcmp("itemlist", $menuItem->query["view"]) == 0 and strcmp($viewName, $menuItem->query["task"]) == 0)
+                (strcmp('itemlist', $menuItem->query['view']) == 0 and strcmp($viewName, $menuItem->query['task']) == 0)
                 and
-                ($categoryId == (int)$menuItem->query["id"])) {
+                ($categoryId == (int)$menuItem->query['id'])) {
 
                 $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                 // Get title
-                if (!empty($menuItemData["title"])) {
-                    $data["title"] = $menuItemData["title"];
+                if (!empty($menuItemData['title'])) {
+                    $data['title'] = $menuItemData['title'];
                 }
 
                 // Get meta description
-                if (!empty($menuItemData["metadesc"])) {
-                    $data["metadesc"] = $menuItemData["metadesc"];
+                if (!empty($menuItemData['metadesc'])) {
+                    $data['metadesc'] = $menuItemData['metadesc'];
                 }
 
             }
 
             // Prepare meta description.
-            if (!empty($result["params"])) {
-                $params = (array)json_decode($result["params"], true);
+            if (!empty($result['params'])) {
+                $params = (array)json_decode($result['params'], true);
             }
-            $data["metadesc"] = \JArrayHelper::getValue($params, "catMetaDesc");
+            $data['metadesc'] = ArrayHelper::getValue($params, 'catMetaDesc');
 
-            if (!$data["metadesc"] and !empty($this->genMetaDesc)) {
-                $data["metadesc"] = $this->prepareMetaDesc($result["description"]);
+            if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
+                $data['metadesc'] = $this->prepareMetaDesc($result['description']);
             }
 
-            if (!empty($result["image"])) {
-                $data["image"] = "media/k2/categories/" . $result["image"];
+            if (!empty($result['image'])) {
+                $data['image'] = 'media/k2/categories/' . $result['image'];
             }
 
             unset($result);
@@ -316,34 +314,38 @@ class K2 extends Base
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("a.title, a.introtext, a.fulltext, a.metadesc, a.created, a.modified")
-            ->from($this->db->quoteName("#__k2_items", "a"))
-            ->where("a.id=" . (int)$itemId);
+            ->select('a.title, a.introtext, a.fulltext, a.metadesc, a.created, a.modified')
+            ->from($this->db->quoteName('#__k2_items', 'a'))
+            ->where('a.id=' . (int)$itemId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
         if (!empty($result)) {
 
-            $data["title"]    = $result["title"];
-            $data["created"]  = $result["created"];
-            $data["modified"] = $result["modified"];
-            $data["metadesc"] = $result["metadesc"];
+            $data['title']    = $result['title'];
+            $data['created']  = $result['created'];
+            $data['modified'] = $result['modified'];
+            $data['metadesc'] = $result['metadesc'];
 
-            $data["image"] = "";
-            $image         = "media/k2/items/cache/" . md5("Image" . $itemId) . "_M.jpg";
+            $data['image'] = '';
+            $image         = 'media/k2/items/cache/' . md5('Image' . $itemId) . '_M.jpg';
 
-            jimport("joomla.filesystem.file");
+            jimport('joomla.filesystem.file');
             if (\JFile::exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $image)) {
-                $data["image"] = $image;
+                $data['image'] = $image;
             }
 
-            if (!$data["metadesc"] and !empty($this->genMetaDesc)) {
+            if (!$data['image'] and $this->extractImage) {
+                $data['image'] = $this->getImageFromContent($result['introtext'], $result['fulltext']);
+            }
 
-                $data["metadesc"] = $this->prepareMetaDesc($result["introtext"]);
+            if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
 
-                if (!$data["metadesc"]) {
-                    $data["metadesc"] = $this->prepareMetaDesc($result["fulltext"]);
+                $data['metadesc'] = $this->prepareMetaDesc($result['introtext']);
+
+                if (!$data['metadesc']) {
+                    $data['metadesc'] = $this->prepareMetaDesc($result['fulltext']);
                 }
             }
 

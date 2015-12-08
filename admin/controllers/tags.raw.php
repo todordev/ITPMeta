@@ -38,8 +38,8 @@ class ItpMetaControllerTags extends JControllerAdmin
         $order = $this->input->post->get('order', array(), 'array');
 
         // Sanitize the input
-        JArrayHelper::toInteger($pks);
-        JArrayHelper::toInteger($order);
+        $pks   = Joomla\Utilities\ArrayHelper::toInteger($pks);
+        $order = Joomla\Utilities\ArrayHelper::toInteger($order);
 
         // Get the model
         $model = $this->getModel();

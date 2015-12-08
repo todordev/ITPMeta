@@ -78,7 +78,7 @@ class ItpMetaControllerUrls extends Prism\Controller\Admin
         );
 
         $cid = $this->input->post->get("cid", array(), "array");
-        JArrayHelper::toInteger($cid);
+        $cid = Joomla\Utilities\ArrayHelper::toInteger($cid);
 
         $data = array(
             'enableau'  => 1,

@@ -4,10 +4,10 @@
  * @subpackage   URLs
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Statistics\Urls;
+namespace Itpmeta\Statistics\Urls;
 
 use Prism\Database\ArrayObject;
 
@@ -41,14 +41,14 @@ class Latest extends ArrayObject
      */
     public function load($options = array())
     {
-        $limit = !isset($options["limit"]) ? 5 : (int)$options["limit"];
+        $limit = (!array_key_exists('limit', $options)) ? 5 : (int)$options['limit'];
 
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("a.id, a.uri")
-            ->from($this->db->quoteName("#__itpm_urls", "a"))
-            ->order("a.id DESC");
+            ->select('a.id, a.uri')
+            ->from($this->db->quoteName('#__itpm_urls', 'a'))
+            ->order('a.id DESC');
 
         $this->db->setQuery($query, 0, (int)$limit);
 

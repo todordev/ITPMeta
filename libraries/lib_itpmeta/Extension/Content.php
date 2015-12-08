@@ -4,10 +4,12 @@
  * @subpackage   Extensions
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Extension;
+namespace Itpmeta\Extension;
+
+use Joomla\Utilities\ArrayHelper;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -21,9 +23,6 @@ defined('JPATH_PLATFORM') or die;
 class Content extends Base
 {
     protected $uri;
-    protected $view;
-    protected $task;
-    protected $menuItemId;
 
     protected $data = array();
 
@@ -44,24 +43,24 @@ class Content extends Base
      *
      * @return array
      */
-    public function getData($options = array())
+    public function getData(array $options = array())
     {
         $data = array();
 
-        $id = \JArrayHelper::getValue($options, "id");
+        $id = ArrayHelper::getValue($options, 'id');
 
         switch ($this->view) {
 
-            case "article":
+            case 'article':
                 $data = $this->getArticleData($id);
                 break;
 
-            case "category":
+            case 'category':
                 $data = $this->getCategoryData($id);
                 break;
 
             default: // Get menu item
-                if (!empty($this->menuItemId)) {
+                if ((int)$this->menuItemId > 0) {
                     $data = $this->getDataByMenuItem($this->menuItemId);
                 }
                 break;
@@ -87,15 +86,15 @@ class Content extends Base
             return null;
         }
 
-        $excluded = array("images", "introtext", "fulltext");
+        $excluded = array('images', 'introtext', 'fulltext');
         $data     = array();
 
         $query = $this->db->getQuery(true);
 
         $query
-            ->select("a.title, a.introtext, a.fulltext, a.images, a.metadesc, a.created, a.modified")
-            ->from($this->db->quoteName("#__content", "a"))
-            ->where("a.id = " . (int)$articleId);
+            ->select('a.title, a.introtext, a.fulltext, a.images, a.metadesc, a.created, a.modified')
+            ->from($this->db->quoteName('#__content', 'a'))
+            ->where('a.id = ' . (int)$articleId);
 
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
@@ -108,23 +107,28 @@ class Content extends Base
                 }
             }
 
-            $data["image"] = "";
-            $images        = json_decode($result["images"], true);
-            if (isset($images["image_intro"]) and !empty($images["image_intro"])) {
-                $data["image"] = $images["image_intro"];
+            // Prepare image.
+            $data['image'] = '';
+            $images        = json_decode($result['images'], true);
+            if (isset($images['image_intro']) and !empty($images['image_intro'])) {
+                $data['image'] = $images['image_intro'];
             }
 
-            if (isset($images["image_fulltext"]) and !empty($images["image_fulltext"])) {
-                $data["image"] = $images["image_fulltext"];
+            if (isset($images['image_fulltext']) and !empty($images['image_fulltext'])) {
+                $data['image'] = $images['image_fulltext'];
+            }
+
+            if (!$data['image'] and $this->extractImage) {
+                $data['image'] = $this->getImageFromContent($result['introtext'], $result['fulltext']);
             }
 
             // Generate description
-            if (!$data["metadesc"] and !empty($this->genMetaDesc)) {
+            if (!$data['metadesc'] and $this->genMetaDesc) {
 
-                $data["metadesc"] = $this->prepareMetaDesc($result["introtext"]);
+                $data['metadesc'] = $this->prepareMetaDesc($result['introtext']);
 
-                if (!$data["metadesc"]) {
-                    $data["metadesc"] = $this->prepareMetaDesc($result["fulltext"]);
+                if (!$data['metadesc']) {
+                    $data['metadesc'] = $this->prepareMetaDesc($result['fulltext']);
                 }
 
             }

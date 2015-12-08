@@ -4,10 +4,10 @@
  * @subpackage   Versions
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta;
+namespace Itpmeta;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -38,7 +38,7 @@ class Version
      *
      * @var integer
      */
-    public $devLevel = '2';
+    public $devLevel = '3';
 
     /**
      * Release Type
@@ -59,14 +59,14 @@ class Version
      *
      * @var string
      */
-    public $releaseDate = '29 July, 2015';
+    public $releaseDate = '07 December, 2015';
 
     /**
      * License
      *
      * @var string
      */
-    public $license = '<a href="http://www.gnu.org/copyleft/gpl.html" target="_blank">GNU/GPL</a>';
+    public $license = '<a href="http://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GNU/GPLv3</a>';
 
     /**
      * Copyright Text

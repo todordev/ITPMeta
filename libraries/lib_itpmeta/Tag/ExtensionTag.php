@@ -4,10 +4,10 @@
  * @subpackage   Tags
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Tag;
+namespace Itpmeta\Tag;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -42,142 +42,142 @@ class ExtensionTag extends Base
         switch ($this->name) {
 
             // Basic OpenGraph tags
-            case "ogtitle":
+            case 'ogtitle':
                 $tag = array(
-                    "title" => 'Open Graph Title [og:title]',
-                    "type"  => 'og:title',
-                    "tag"   => '<meta property="og:title" content="{PAGE_TITLE}" />'
+                    'title' => 'Open Graph Title [og:title]',
+                    'type'  => 'og:title',
+                    'tag'   => '<meta property="og:title" content="{PAGE_TITLE}" />'
                 );
                 break;
 
-            case "ogdescription":
+            case 'ogdescription':
                 $tag = array(
-                    "title" => 'Open Graph Description [og:description]',
-                    "type"  => 'og:description',
-                    "tag"   => '<meta property="og:description" content="{PAGE_DESCRIPTION}" />'
+                    'title' => 'Open Graph Description [og:description]',
+                    'type'  => 'og:description',
+                    'tag'   => '<meta property="og:description" content="{PAGE_DESCRIPTION}" />'
                 );
                 break;
 
-            case "ogimage":
+            case 'ogimage':
                 $tag = array(
-                    "title" => 'Open Graph Image [og:image]',
-                    "type"  => 'og:image',
-                    "tag"   => '<meta property="og:image" content="{IMAGE_URL}" />'
+                    'title' => 'Open Graph Image [og:image]',
+                    'type'  => 'og:image',
+                    'tag'   => '<meta property="og:image" content="{IMAGE_URL}" />'
                 );
                 break;
 
-            case "ogurl":
+            case 'ogurl':
                 $tag = array(
-                    "title" => 'Open Graph URL [og:url]',
-                    "type"  => 'og:url',
-                    "tag"   => '<meta property="og:url" content="{URL}" />'
+                    'title' => 'Open Graph URL [og:url]',
+                    'type'  => 'og:url',
+                    'tag'   => '<meta property="og:url" content="{URL}" />'
                 );
                 break;
 
-            case "ogarticle_published_time":
+            case 'ogarticle_published_time':
                 $tag = array(
-                    "title" => 'Published Time [article:published_time]',
-                    "type"  => 'article:published_time',
-                    "tag"   => '<meta property="article:published_time" content="{DATETIME}">'
+                    'title' => 'Published Time [article:published_time]',
+                    'type'  => 'article:published_time',
+                    'tag'   => '<meta property="article:published_time" content="{DATETIME}">'
                 );
                 break;
 
-            case "ogarticle_modified_time":
+            case 'ogarticle_modified_time':
                 $tag = array(
-                    "title" => 'Modified Time [article:modified_time]',
-                    "type"  => 'article:modified_time',
-                    "tag"   => '<meta property="article:modified_time" content="{DATETIME}">'
+                    'title' => 'Modified Time [article:modified_time]',
+                    'type'  => 'article:modified_time',
+                    'tag'   => '<meta property="article:modified_time" content="{DATETIME}">'
                 );
                 break;
 
             // SEO
-            case "seo_canonical":
+            case 'seo_canonical':
                 $tag = array(
-                    "title" => 'Canonical Link [rel:canonical]',
-                    "type"  => 'rel:canonical',
-                    "tag"   => '<link rel="canonical" href="{URL}" />'
+                    'title' => 'Canonical Link [rel:canonical]',
+                    'type'  => 'rel:canonical',
+                    'tag'   => '<link rel="canonical" href="{URL}" />'
                 );
                 break;
 
             // Twitter Card tags
-            case "twitter_card_title":
+            case 'twitter_card_title':
                 $tag = array(
-                    "title" => 'Twitter Card Title [twitter:title]',
-                    "type"  => 'twitter:title',
-                    "tag"   => '<meta name="twitter:title" content="{MAX_70_SYMBOLS}" />'
+                    'title' => 'Twitter Card Title [twitter:title]',
+                    'type'  => 'twitter:title',
+                    'tag'   => '<meta name="twitter:title" content="{MAX_70_SYMBOLS}" />'
                 );
                 break;
 
-            case "twitter_card_description":
+            case 'twitter_card_description':
                 $tag = array(
-                    "title" => 'Twitter Card Description [twitter:description]',
-                    "type"  => 'twitter:description',
-                    "tag"   => '<meta name="twitter:description" content="{DESCRIPTION}" />'
+                    'title' => 'Twitter Card Description [twitter:description]',
+                    'type'  => 'twitter:description',
+                    'tag'   => '<meta name="twitter:description" content="{DESCRIPTION}" />'
                 );
                 break;
 
-            case "twitter_card_url":
+            case 'twitter_card_url':
                 $tag = array(
-                    "title" => 'Twitter Card URL [twitter:url]',
-                    "type"  => 'twitter:url',
-                    "tag"   => '<meta name="twitter:url" content="{URL}" />'
+                    'title' => 'Twitter Card URL [twitter:url]',
+                    'type'  => 'twitter:url',
+                    'tag'   => '<meta name="twitter:url" content="{URL}" />'
                 );
                 break;
 
-            case "twitter_card_image":
+            case 'twitter_card_image':
                 $tag = array(
-                    "title" => 'Twitter Card Image [twitter:image]',
-                    "type"  => 'twitter:image',
-                    "tag"   => '<meta name="twitter:image" content="{URL}" />'
+                    'title' => 'Twitter Card Image [twitter:image]',
+                    'type'  => 'twitter:image',
+                    'tag'   => '<meta name="twitter:image" content="{URL}" />'
                 );
                 break;
 
-            case "twitter_card_image_src":
+            case 'twitter_card_image_src':
                 $tag = array(
-                    "title" => 'Twitter Card Image SRC [twitter:image:src]',
-                    "type"  => 'twitter:image:src',
-                    "tag"   => '<meta name="twitter:image:src" content="{URL}" />'
+                    'title' => 'Twitter Card Image SRC [twitter:image:src]',
+                    'type'  => 'twitter:image:src',
+                    'tag'   => '<meta name="twitter:image:src" content="{URL}" />'
                 );
                 break;
 
             // Dublin Core tags
-            case "dublincore_title":
+            case 'dublincore_title':
                 $tag = array(
-                    "title" => 'Dublin Core Title [name=DC.title]',
-                    "type"  => 'DC:title',
-                    "tag"   => '<meta name="DC.title" content="{TITLE}" />'
+                    'title' => 'Dublin Core Title [name=DC.title]',
+                    'type'  => 'DC:title',
+                    'tag'   => '<meta name="DC.title" content="{TITLE}" />'
                 );
                 break;
 
-            case "dublincore_description":
+            case 'dublincore_description':
                 $tag = array(
-                    "title" => 'Dublin Core Description [name=DC.description]',
-                    "type"  => 'DC:description',
-                    "tag"   => '<meta name="DC.description" content="{DESCRIPTION}" />'
+                    'title' => 'Dublin Core Description [name=DC.description]',
+                    'type'  => 'DC:description',
+                    'tag'   => '<meta name="DC.description" content="{DESCRIPTION}" />'
                 );
                 break;
 
-            case "dublincore_url":
+            case 'dublincore_url':
                 $tag = array(
-                    "title" => 'Dublin Core Source [name=DC.source]',
-                    "type"  => 'DC:source',
-                    "tag"   => '<meta name="DC.source" content="{SOURCE}" />'
+                    'title' => 'Dublin Core Source [name=DC.source]',
+                    'type'  => 'DC:source',
+                    'tag'   => '<meta name="DC.source" content="{SOURCE}" />'
                 );
                 break;
 
-            case "dublincore_published_time":
+            case 'dublincore_published_time':
                 $tag = array(
-                    "title" => 'Dublin Core Date [name=DC.date]',
-                    "type"  => 'DC:date',
-                    "tag"   => '<meta name="DC.date" scheme="W3CDTF" content="{DATE}" />'
+                    'title' => 'Dublin Core Date [name=DC.date]',
+                    'type'  => 'DC:date',
+                    'tag'   => '<meta name="DC.date" scheme="W3CDTF" content="{DATE}" />'
                 );
                 break;
 
-            case "dublincore_modified_time":
+            case 'dublincore_modified_time':
                 $tag = array(
-                    "title" => 'Dublin Core Date Modified [name=DC.date.modified]',
-                    "type"  => 'DC:date.modified',
-                    "tag"   => '<meta name="DC.date.modified" scheme="W3CDTF" content="{DATE}" />'
+                    'title' => 'Dublin Core Date Modified [name=DC.date.modified]',
+                    'type'  => 'DC:date.modified',
+                    'tag'   => '<meta name="DC.date.modified" scheme="W3CDTF" content="{DATE}" />'
                 );
                 break;
 
@@ -193,11 +193,11 @@ class ExtensionTag extends Base
     public function toArray()
     {
         return array(
-            "title"   => $this->getTitle(),
-            "type"    => $this->getType(),
-            "tag"     => $this->getTag(),
-            "content" => $this->getContent(),
-            "output"  => $this->getOutput()
+            'title'   => $this->getTitle(),
+            'type'    => $this->getType(),
+            'tag'     => $this->getTag(),
+            'content' => $this->getContent(),
+            'output'  => $this->getOutput()
         );
     }
 }

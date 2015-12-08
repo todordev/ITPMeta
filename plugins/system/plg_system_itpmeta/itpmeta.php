@@ -10,8 +10,8 @@
 // no direct access
 defined('_JEXEC') or die;
 
-jimport("Prism.init");
-jimport("ItpMeta.init");
+jimport('Prism.init');
+jimport('Itpmeta.init');
 
 /**
  * This plugin puts tags to the page code.
@@ -22,19 +22,16 @@ jimport("ItpMeta.init");
 class plgSystemItpMeta extends JPlugin
 {
     /**
-     * A Registry object holding the parameters for the plugin
-     *
-     * @var    Joomla\Registry\Registry
-     * @since  1.5
+     * @var JApplicationSite
      */
-    public $params = null;
-
+    protected $app;
+    
     /**
      * These are tags that won't be overridden.
      *
      * @var array
      */
-    private $notOverridden = array("google_alternate");
+    private $notOverridden = array('google_alternate');
 
     /**
      * Get clean URI.
@@ -43,14 +40,14 @@ class plgSystemItpMeta extends JPlugin
      */
     protected function getUri()
     {
-        $filter = JFilterInput::getInstance();
+        $filter    = JFilterInput::getInstance();
 
-        $uri       = JUri::getInstance();
+        $uri       = Itpmeta\Url\UrlHelper::getUri();
         $uriString = $uri->toString(array('path', 'query'));
         $uriString = $filter->clean($uriString);
 
         // Load tags for current address
-        $itpUri = ItpMeta\Uri::getInstance(JFactory::getDbo(), array("uri" => $uriString));
+        $itpUri = Itpmeta\Url\Uri::getInstance(JFactory::getDbo(), array('uri' => $uriString));
         $itpUri->setNotOverridden($this->notOverridden);
 
         return $itpUri;
@@ -59,10 +56,7 @@ class plgSystemItpMeta extends JPlugin
 
     private function isRestricted()
     {
-        $app = JFactory::getApplication();
-        /** @var $app JApplicationSite */
-
-        if ($app->isAdmin()) {
+        if ($this->app->isAdmin()) {
             return true;
         }
 
@@ -70,18 +64,18 @@ class plgSystemItpMeta extends JPlugin
         /** @var $document JDocumentHTML */
 
         $type = $document->getType();
-        if (strcmp("html", $type) != 0) {
+        if (strcmp('html', $type) !== 0) {
             return true;
         }
 
         // It works only for GET request
-        $method = $app->input->getMethod();
-        if (strcmp("GET", $method) !== 0) {
+        $method = $this->app->input->getMethod();
+        if (strcmp('GET', $method) !== 0) {
             return true;
         }
 
         // Check component enabled
-        if (!JComponentHelper::isEnabled('com_itpmeta', true)) {
+        if (!JComponentHelper::isEnabled('com_itpmeta')) {
             return true;
         }
 
@@ -100,25 +94,25 @@ class plgSystemItpMeta extends JPlugin
 
         // If user want to put tags after the <head> tag
         // leave from this method. It is the method that puts tags to the head no.
-        if ($this->params->get("tags_position", 0)) {
+        if ($this->params->get('tags_position', 0)) {
             return;
         }
 
         // Get current URI and load tags for current address.
         $itpUri = $this->getUri();
-        /** @var $itpUri ItpMeta\Uri */
+        /** @var $itpUri Itpmeta\Url\Uri */
 
         $tags = $itpUri->getTags();
 
         // Add metadata
-        if (!empty($tags)) {
+        if (count($tags) > 0) {
 
             $document = JFactory::getDocument();
             /** @var $document JDocumentHTML */
 
             foreach ($tags as $tag) {
                 $tag->output = JString::trim($tag->output);
-                if (!empty($tag->output)) {
+                if ($tag->output !== '') {
                     $document->addCustomTag($tag->output);
                 }
             }
@@ -138,9 +132,9 @@ class plgSystemItpMeta extends JPlugin
         }
 
         // Get document buffer
-        $buffer = JFactory::getApplication()->getBody();
+        $buffer = $this->app->getBody();
 
-        switch ($this->params->get("tags_position", 0)) {
+        switch ($this->params->get('tags_position', 0)) {
             case 1:
                 $buffer = $this->putAfterHead($buffer);
                 break;
@@ -155,8 +149,7 @@ class plgSystemItpMeta extends JPlugin
         // Add code after body tag and before closing body tag
         $buffer = $this->putAdditionalCode($buffer);
 
-        JFactory::getApplication()->setBody($buffer);
-
+        $this->app->setBody($buffer);
     }
 
     /**
@@ -170,25 +163,25 @@ class plgSystemItpMeta extends JPlugin
     {
         // Get current URI and load tags for current address.
         $itpUri = $this->getUri();
-        /** @var $itpUri ItpMeta\Uri */
+        /** @var $itpUri Itpmeta\Url\Uri */
 
         $tags = $itpUri->getTags();
 
-        if (empty($tags)) {
+        if (count($tags) === 0) {
             return $buffer;
         }
 
         // Add metadata
-        if (!empty($tags)) {
-            $output = "";
+        if (count($tags) > 0) {
+            $output = '';
             $items  = array();
             foreach ($tags as $tag) {
-                if (!empty($tag->output)) {
+                if ($tag->output !== '') {
                     $items[] = JString::trim($tag->output);
                 }
             }
 
-            if (!empty($items)) {
+            if (count($items) > 0) {
                 $output = implode("\n", $items);
             }
             $matches = array();
@@ -212,25 +205,25 @@ class plgSystemItpMeta extends JPlugin
     {
         // Get current URI and load tags for current address.
         $itpUri = $this->getUri();
-        /** @var $itpUri ItpMeta\Uri */
+        /** @var $itpUri Itpmeta\Url\Uri */
 
         $tags = $itpUri->getTags();
 
-        if (empty($tags)) {
+        if (!$tags) {
             return $buffer;
         }
 
         // Add metadata
-        if (!empty($tags)) {
+        if (count($tags) > 0) {
             $output = "</title>\n";
             $items  = array();
             foreach ($tags as $tag) {
-                if (!empty($tag->output)) {
+                if ($tag->output !== '') {
                     $items[] = JString::trim($tag->output);
                 }
             }
 
-            if (!empty($items)) {
+            if (count($items) > 0) {
                 $output .= implode("\n", $items);
             }
             $buffer = str_replace('</title>', $output, $buffer);
@@ -250,7 +243,7 @@ class plgSystemItpMeta extends JPlugin
     {
         // Get current URI and load tags for current address.
         $itpUri = $this->getUri();
-        /** @var $itpUri ItpMeta\Uri */
+        /** @var $itpUri Itpmeta\Url\Uri */
 
         // If the URI does not exist or not published
         // we don't change the buffer
@@ -259,8 +252,8 @@ class plgSystemItpMeta extends JPlugin
         }
 
         // After BODY tag.
-        $script = $itpUri->getScript("after");
-        if (!empty($script)) {
+        $script = $itpUri->getScript('after');
+        if ($script !== '') {
             $matches = array();
             if (preg_match('/(<body.*?>)/i', $buffer, $matches)) {
                 $afterBody = $matches[0] . "\n" . $script;
@@ -269,10 +262,10 @@ class plgSystemItpMeta extends JPlugin
         }
 
         // Before BODY tag.
-        $script = $itpUri->getScript("before");
-        if (!empty($script)) {
+        $script = $itpUri->getScript('before');
+        if ($script !== '') {
             $beforeBody = "\n" . $script . "\n</body>";
-            $buffer     = str_replace("</body>", $beforeBody, $buffer);
+            $buffer     = str_replace('</body>', $beforeBody, $buffer);
         }
 
         return $buffer;
@@ -291,71 +284,66 @@ class plgSystemItpMeta extends JPlugin
         $prefixes = array();
 
         // OpenGraph namespace
-        if ($params->get("opengraph_scheme", 0)) {
-            $prefixes[] = "og: http://ogp.me/ns#";
+        if ($params->get('opengraph_scheme', 0)) {
+            $prefixes[] = 'og: http://ogp.me/ns#';
         }
 
         // Facebook namespace
-        if ($params->get("facebook_scheme", 0)) {
-            $prefixes[] = "fb: http://ogp.me/ns/fb#";
+        if ($params->get('facebook_scheme', 0)) {
+            $prefixes[] = 'fb: http://ogp.me/ns/fb#';
         }
 
         // OpenGraph article namespace
-        if ($params->get("opengraph_article_scheme", 0)) {
-            $prefixes[] = "article: http://ogp.me/ns/article#";
+        if ($params->get('opengraph_article_scheme', 0)) {
+            $prefixes[] = 'article: http://ogp.me/ns/article#';
         }
 
         // OpenGraph blog namespace
-        if ($params->get("opengraph_blog_scheme", 0)) {
-            $prefixes[] = "blog: http://ogp.me/ns/blog#";
+        if ($params->get('opengraph_blog_scheme', 0)) {
+            $prefixes[] = 'blog: http://ogp.me/ns/blog#';
         }
 
         // OpenGraph blog namespace
-        if ($params->get("opengraph_business_scheme", 0)) {
-            $prefixes[] = "business: http://ogp.me/ns/business#";
+        if ($params->get('opengraph_business_scheme', 0)) {
+            $prefixes[] = 'business: http://ogp.me/ns/business#';
         }
 
         // OpenGraph blog namespace
-        if ($params->get("opengraph_product_scheme", 0)) {
-            $prefixes[] = "product: http://ogp.me/ns/product#";
+        if ($params->get('opengraph_product_scheme', 0)) {
+            $prefixes[] = 'product: http://ogp.me/ns/product#';
         }
 
         // OpenGraph book namespace
-        if ($params->get("opengraph_book_scheme", 0)) {
-            $prefixes[] = "books: http://ogp.me/ns/books#";
+        if ($params->get('opengraph_book_scheme', 0)) {
+            $prefixes[] = 'books: http://ogp.me/ns/books#';
         }
 
         // OpenGraph profile namespace
-        if ($params->get("opengraph_profile_scheme", 0)) {
-            $prefixes[] = "profile: http://ogp.me/ns/profile#";
+        if ($params->get('opengraph_profile_scheme', 0)) {
+            $prefixes[] = 'profile: http://ogp.me/ns/profile#';
         }
 
         // OpenGraph video namespace
-        if ($params->get("opengraph_video_scheme", 0)) {
-            $prefixes[] = "video: http://ogp.me/ns/video#";
+        if ($params->get('opengraph_video_scheme', 0)) {
+            $prefixes[] = 'video: http://ogp.me/ns/video#';
         }
 
         // OpenGraph website namespace
-        if ($params->get("opengraph_website_scheme", 0)) {
-            $prefixes[] = "website: http://ogp.me/ns/website#";
+        if ($params->get('opengraph_website_scheme', 0)) {
+            $prefixes[] = 'website: http://ogp.me/ns/website#';
         }
 
         // OpenGraph music namespace
-        if ($params->get("opengraph_music_scheme", 0)) {
-            $prefixes[] = "music: http://ogp.me/ns/music#";
+        if ($params->get('opengraph_music_scheme', 0)) {
+            $prefixes[] = 'music: http://ogp.me/ns/music#';
         }
 
-        if (!empty($prefixes)) {
-
+        if (count($prefixes) > 0) {
             $string = 'prefix="{STRING}"';
-
-            $prefix = implode(" ", $prefixes);
-
-            $string = str_replace("{STRING}", $prefix, $string);
-
+            $prefix = implode(' ', $prefixes);
+            $string = str_replace('{STRING}', $prefix, $string);
             $newHtmlAttr = '<html ' . $string;
-            $buffer      = str_replace("<html", $newHtmlAttr, $buffer);
-
+            $buffer      = str_replace('<html', $newHtmlAttr, $buffer);
         }
 
         return $buffer;

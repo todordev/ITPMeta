@@ -114,7 +114,7 @@ class ItpMetaModelUrl extends JModelAdmin
     public function updateAutoupdate($pks, $state)
     {
         $pks = (array)$pks;
-        JArrayHelper::toInteger($pks);
+        $pks = Joomla\Utilities\ArrayHelper::toInteger($pks);
 
         $state = (!$state) ? 0 : 1;
 

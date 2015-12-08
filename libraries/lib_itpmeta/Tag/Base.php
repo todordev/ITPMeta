@@ -4,10 +4,10 @@
  * @subpackage   Tags
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Tag;
+namespace Itpmeta\Tag;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -29,7 +29,7 @@ abstract class Base
     protected $ordering;
     protected $url_id;
 
-    protected $pattern = "/{.*}/iU";
+    protected $pattern = '/{.*}/iU';
 
     /**
      * Database driver.
@@ -60,13 +60,13 @@ abstract class Base
     public function generateOutput()
     {
         // Count indicators in a string.
-        $numMatches = preg_match_all($this->pattern, $this->tag, $matches);
+        $numMatches = (int)preg_match_all($this->pattern, $this->tag, $matches);
 
-        if (2 == $numMatches) { // Replace values of tags which contains two indicators.
+        if (2 === $numMatches) { // Replace values of tags which contains two indicators.
 
             $rows = preg_split("/\n/", $this->content);
 
-            if (2 == count($rows)) {
+            if (count($rows) === 2) {
 
                 $line1 = $rows[0];
                 $line2 = $this->clean($rows[1]);
@@ -296,7 +296,7 @@ abstract class Base
     public function bind($data, $ignored = array())
     {
         foreach ($data as $key => $value) {
-            if (!in_array($key, $ignored)) {
+            if (!in_array($key, $ignored, true)) {
                 $this->$key = $value;
             }
         }

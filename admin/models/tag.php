@@ -179,7 +179,7 @@ class ItpMetaModelTag extends JModelAdmin
             if ($urlTable->get("autoupdate")) {
 
                 if ((strcmp($title, $table->title) != 0) or (strcmp($content, $table->content) != 0)) {
-                    $urlTable->set("autoupdate", ItpMeta\Constants::AUTOUPDATE_DISABLED);
+                    $urlTable->set("autoupdate", Itpmeta\Constants::AUTOUPDATE_DISABLED);
                     $urlTable->store();
 
                     $app = JFactory::getApplication();
@@ -215,7 +215,7 @@ class ItpMetaModelTag extends JModelAdmin
      */
     public function deleteByUrlId(&$pks)
     {
-        JArrayHelper::toInteger($pks);
+        $pks = Joomla\Utilities\ArrayHelper::toInteger($pks);
 
         if (!empty($pks)) {
 
@@ -246,8 +246,8 @@ class ItpMetaModelTag extends JModelAdmin
      */
     public function saveAjax($itemId, $content)
     {
-        $tag = new ItpMeta\Tag\Tag(JFactory::getDbo());
-        $tag->load(array("id" => $itemId));
+        $tag = new Itpmeta\Tag\Tag(JFactory::getDbo());
+        $tag->load(array('id' => $itemId));
 
         if (!$tag->getId()) {
             return null;
@@ -263,8 +263,8 @@ class ItpMetaModelTag extends JModelAdmin
         $result->output  = $tag->getOutput();
 
         // Get URL.
-        $uri = new ItpMeta\Uri(JFactory::getDbo());
-        $uri->load(array("uri_id" => $tag->getUrlId()));
+        $uri = new Itpmeta\Url\Uri(JFactory::getDbo());
+        $uri->load(array('uri_id' => $tag->getUrlId()));
 
         $result->autoupdate = $uri->isAutoupdate();
 

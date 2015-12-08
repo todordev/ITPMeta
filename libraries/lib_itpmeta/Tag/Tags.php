@@ -4,10 +4,10 @@
  * @subpackage   Tags
  * @author       Todor Iliev
  * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace ItpMeta\Tag;
+namespace Itpmeta\Tag;
 
 use Prism;
 
@@ -28,14 +28,14 @@ class Tags extends Prism\Database\ArrayObject
      */
     public function load($options = array())
     {
-        $uriId = isset($options["uri_id"]) ? (int)$options["uri_id"] : 0;
+        $uriId = (array_key_exists('uri_id', $options)) ? (int)$options['uri_id'] : 0;
 
         // Load tags
         $query = $this->db->getQuery(true);
         $query
-            ->select("a.id, a.name, a.type, a.title, a.tag, a.content, a.output, a.ordering, a.url_id")
-            ->from($this->db->quoteName("#__itpm_tags", "a"))
-            ->where("a.url_id = " . (int)$uriId);
+            ->select('a.id, a.name, a.type, a.title, a.tag, a.content, a.output, a.ordering, a.url_id')
+            ->from($this->db->quoteName('#__itpm_tags', 'a'))
+            ->where('a.url_id = ' . (int)$uriId);
 
         $this->db->setQuery($query);
         $results = (array)$this->db->loadAssocList();
@@ -55,7 +55,7 @@ class Tags extends Prism\Database\ArrayObject
             /* @var $tagObject Tag */
 
             $tagName = $tagObject->getName();
-            if (strcmp($name, $tagName) == 0) {
+            if (strcmp($name, $tagName) === 0) {
                 $tag = $tagObject;
                 break;
             }

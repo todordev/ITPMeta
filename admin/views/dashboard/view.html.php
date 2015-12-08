@@ -40,7 +40,7 @@ class ItpMetaViewDashboard extends JViewLegacy
 
     public function display($tpl = null)
     {
-        $this->version = new ItpMeta\Version();
+        $this->version = new Itpmeta\Version();
 
         // Load Prism library version
         if (!class_exists("Prism\\Version")) {
@@ -54,19 +54,19 @@ class ItpMetaViewDashboard extends JViewLegacy
             }
         }
 
-        $basic = new ItpMeta\Statistics\Basic(JFactory::getDbo());
+        $basic = new Itpmeta\Statistics\Basic(JFactory::getDbo());
         $this->totalUrls        = $basic->getTotalUrls();
         $this->totalTags        = $basic->getTotalTags();
         $this->totalGlobalTags  = $basic->getTotalGlobalTags();
 
         // Get latest items.
         jimport("itpmeta.statistics.urls.latest");
-        $this->latest = new ItpMeta\Statistics\Urls\Latest(JFactory::getDbo());
+        $this->latest = new Itpmeta\Statistics\Urls\Latest(JFactory::getDbo());
         $this->latest->load();
 
         // Get urls with scripts.
         jimport("itpmeta.statistics.urls.scripts");
-        $this->urlsScripts = new ItpMeta\Statistics\Urls\Scripts(JFactory::getDbo());
+        $this->urlsScripts = new Itpmeta\Statistics\Urls\Scripts(JFactory::getDbo());
         $this->urlsScripts->load(array("limit" => 10));
 
         $uri = JUri::getInstance();

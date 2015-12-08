@@ -10,11 +10,11 @@
 // no direct access
 defined('_JEXEC') or die;
 
-jimport("Prism.init");
-jimport("ItpMeta.init");
+jimport('Prism.init');
+jimport('Itpmeta.init');
 
 // Get an instance of the controller prefixed
-$controller = JControllerLegacy::getInstance("ItpMeta");
+$controller = JControllerLegacy::getInstance('ItpMeta');
 
 // Perform the Request task
 $controller->execute(JFactory::getApplication()->input->getCmd('task'));
