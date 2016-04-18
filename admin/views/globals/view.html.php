@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-class ITPMetaViewGlobals extends JViewLegacy
+class ItpmetaViewGlobals extends JViewLegacy
 {
     /**
      * @var JDocumentHtml
@@ -35,14 +35,10 @@ class ITPMetaViewGlobals extends JViewLegacy
 
     protected $sidebar;
 
-    public function __construct($config)
-    {
-        parent::__construct($config);
-        $this->option = JFactory::getApplication()->input->get("option");
-    }
-
     public function display($tpl = null)
     {
+        $this->option     = JFactory::getApplication()->input->get('option');
+        
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
@@ -50,7 +46,7 @@ class ITPMetaViewGlobals extends JViewLegacy
         $this->prepareSorting();
 
         // Add submenu
-        ItpMetaHelper::addSubmenu($this->getName());
+        ItpmetaHelper::addSubmenu($this->getName());
 
         // Prepare actions
         $this->addToolbar();
@@ -68,7 +64,7 @@ class ITPMetaViewGlobals extends JViewLegacy
         // Prepare filters
         $listOrder = $this->escape($this->state->get('list.ordering'));
         $listDirn  = $this->escape($this->state->get('list.direction'));
-        $saveOrder = (strcmp($listOrder, 'a.ordering') != 0) ? false : true;
+        $saveOrder = (strcmp($listOrder, 'a.ordering') === 0);
 
         $this->listOrder = $listOrder;
         $this->listDirn  = $listDirn;
@@ -85,7 +81,6 @@ class ITPMetaViewGlobals extends JViewLegacy
             'a.title'     => JText::_('JGLOBAL_TITLE'),
             'a.id'        => JText::_('JGRID_HEADING_ID')
         );
-
     }
 
     /**
@@ -101,12 +96,12 @@ class ITPMetaViewGlobals extends JViewLegacy
         JToolBarHelper::addNew('global.add');
         JToolBarHelper::editList('global.edit');
         JToolBarHelper::divider();
-        JToolBarHelper::publishList("globals.publish");
-        JToolBarHelper::unpublishList("globals.unpublish");
+        JToolBarHelper::publishList('globals.publish');
+        JToolBarHelper::unpublishList('globals.unpublish');
         JToolBarHelper::divider();
-        JToolBarHelper::deleteList(JText::_("COM_ITPMETA_DELETE_ITEMS_QUESTION"), "globals.delete");
+        JToolBarHelper::deleteList(JText::_('COM_ITPMETA_DELETE_ITEMS_QUESTION'), 'globals.delete');
         JToolBarHelper::divider();
-        JToolBarHelper::custom('dashboard.backToDashboard', "dashboard", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
+        JToolBarHelper::custom('dashboard.backToDashboard', 'dashboard', '', JText::_('COM_ITPMETA_DASHBOARD'), false);
     }
 
     /**
@@ -119,7 +114,7 @@ class ITPMetaViewGlobals extends JViewLegacy
         JHtmlSidebar::addFilter(
             JText::_('JOPTION_SELECT_PUBLISHED'),
             'filter_state',
-            JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array("archived" => false, "trash" => false)), 'value', 'text', $this->state->get('filter.state'), true)
+            JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array('archived' => false, 'trash' => false)), 'value', 'text', $this->state->get('filter.state'), true)
         );
 
         $this->sidebar = JHtmlSidebar::render();
@@ -139,6 +134,6 @@ class ITPMetaViewGlobals extends JViewLegacy
         JHtml::_('behavior.multiselect');
         JHtml::_('formbehavior.chosen', 'select');
 
-        JHtml::_("Prism.ui.joomlaList");
+        JHtml::_('Prism.ui.joomlaList');
     }
 }

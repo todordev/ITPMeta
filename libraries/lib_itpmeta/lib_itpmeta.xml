@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension type="library" version="3.4" method="upgrade">
+<extension type="library" version="3.5" method="upgrade">
 	<name>ITPMeta Library</name>
 	<libraryname>Itpmeta</libraryname>
 	<author>Todor Iliev</author>
 	<authorEmail>todor@itprism.com</authorEmail>
     <authorUrl>http://itprism.com</authorUrl>
-	<copyright>Copyright (C) 2015 Todor Iliev ( ITPrism.com ). All rights reserved.</copyright>
+	<copyright>Copyright (C) 2016 Todor Iliev ( ITPrism.com ). All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.en.html GNU/GPLv3</license>
 	<packager>ITPrism</packager>
 	<packagerurl>http://itprism.com</packagerurl>
-	<version>4.3</version>
-	<creationDate>07 December, 2015</creationDate>
+	<version>4.4</version>
+	<creationDate>18 April, 2016</creationDate>
 	<description>ITPMeta library is a collection of classes, which are used for managing URLs and tags.</description>
 	<files>
         <folder>Extension</folder>

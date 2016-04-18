@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // No direct access
@@ -16,9 +16,9 @@ defined('_JEXEC') or die;
  * @package     ITPrism Components
  * @subpackage  ITPMeta
  */
-class ItpMetaControllerTags extends Prism\Controller\Admin
+class ItpmetaControllerTags extends Prism\Controller\Admin
 {
-    public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Tag', $prefix = 'ItpmetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
         return $model;
@@ -44,25 +44,22 @@ class ItpMetaControllerTags extends Prism\Controller\Admin
         $cid = $this->input->post->get('cid', array(), 'array');
         $cid = Joomla\Utilities\ArrayHelper::toInteger($cid);
 
-        $urlId = $app->getUserState("url.id");
+        $urlId = $app->getUserState('url.id');
 
         $redirectData = array(
-            "view"   => "url",
-            "layout" => "edit",
-            "id"     => $urlId
+            'view'   => 'url',
+            'layout' => 'edit',
+            'id'     => $urlId
         );
 
         if (!$cid) {
-            $this->displayWarning(JText::_("COM_ITPMETA_ERROR_INVALID_ITEMS"), $redirectData);
-
+            $this->displayWarning(JText::_('COM_ITPMETA_ERROR_INVALID_ITEMS'), $redirectData);
             return;
         }
 
         try {
-
             $model = $this->getModel();
             $model->delete($cid);
-
         } catch (Exception $e) {
             JLog::add($e->getMessage());
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));

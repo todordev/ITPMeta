@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * This class provides functionality
  * for managing Joomla! Content (com_content)
  *
- * @package ItpMeta
+ * @package Itpmeta
  * @subpackage   Extensions
  */
 class Content extends Base
@@ -34,7 +34,7 @@ class Content extends Base
      *    "id" => 1
      * );
      *
-     * $extension = new ItpMeta\Extension\Content("/my-page", $options);
+     * $extension = new Itpmeta\Extension\Content("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>
@@ -50,7 +50,6 @@ class Content extends Base
         $id = ArrayHelper::getValue($options, 'id');
 
         switch ($this->view) {
-
             case 'article':
                 $data = $this->getArticleData($id);
                 break;
@@ -99,8 +98,7 @@ class Content extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-
+        if (count($result) > 0) {
             foreach ($result as $key => $value) {
                 if (!in_array($key, $excluded)) {
                     $data[$key] = $value;
@@ -124,7 +122,6 @@ class Content extends Base
 
             // Generate description
             if (!$data['metadesc'] and $this->genMetaDesc) {
-
                 $data['metadesc'] = $this->prepareMetaDesc($result['introtext']);
 
                 if (!$data['metadesc']) {

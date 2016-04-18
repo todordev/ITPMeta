@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Plugins
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
@@ -19,7 +19,7 @@ jimport('Itpmeta.init');
  * @package        ITPMeta
  * @subpackage     Plugins
  */
-class plgSystemItpMeta extends JPlugin
+class plgSystemItpmeta extends JPlugin
 {
     /**
      * @var JApplicationSite
@@ -102,11 +102,10 @@ class plgSystemItpMeta extends JPlugin
         $itpUri = $this->getUri();
         /** @var $itpUri Itpmeta\Url\Uri */
 
-        $tags = $itpUri->getTags();
+        $tags = (array)$itpUri->getTags();
 
         // Add metadata
         if (count($tags) > 0) {
-
             $document = JFactory::getDocument();
             /** @var $document JDocumentHTML */
 
@@ -117,7 +116,6 @@ class plgSystemItpMeta extends JPlugin
                 }
             }
         }
-
     }
 
     /**
@@ -236,7 +234,7 @@ class plgSystemItpMeta extends JPlugin
      * Add additional code after body tag and before closing body tag.
      *
      * @param string $buffer
-     * 
+     *
      * @return string
      */
     private function putAdditionalCode($buffer)
@@ -276,7 +274,7 @@ class plgSystemItpMeta extends JPlugin
      *
      * @param string    $buffer Output buffer
      * @param Joomla\Registry\Registry $params Component parameters
-     *                          
+     *
      * @return string
      */
     private function putNamespaces($buffer, $params)

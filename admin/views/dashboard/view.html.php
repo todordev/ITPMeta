@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-class ItpMetaViewDashboard extends JViewLegacy
+class ItpmetaViewDashboard extends JViewLegacy
 {
     /**
      * @var JDocumentHtml
@@ -32,25 +32,21 @@ class ItpMetaViewDashboard extends JViewLegacy
 
     protected $sidebar;
 
-    public function __construct($config)
-    {
-        parent::__construct($config);
-        $this->option = JFactory::getApplication()->input->get("option");
-    }
-
     public function display($tpl = null)
     {
+        $this->option = JFactory::getApplication()->input->get('option');
+
         $this->version = new Itpmeta\Version();
 
         // Load Prism library version
-        if (!class_exists("Prism\\Version")) {
-            $this->prismVersion = JText::_("COM_ITPMETA_ITPRISM_LIBRARY_DOWNLOAD");
+        if (!class_exists('Prism\\Version')) {
+            $this->prismVersion = JText::_('COM_ITPMETA_ITPRISM_LIBRARY_DOWNLOAD');
         } else {
             $prismVersion       = new Prism\Version();
             $this->prismVersion = $prismVersion->getShortVersion();
 
-            if (version_compare($this->prismVersion, $this->version->requiredPrismVersion, "<")) {
-                $this->prismVersionLowerMessage = JText::_("COM_ITPMETA_PRISM_LIBRARY_LOWER_VERSION");
+            if (version_compare($this->prismVersion, $this->version->requiredPrismVersion, '<')) {
+                $this->prismVersionLowerMessage = JText::_('COM_ITPMETA_PRISM_LIBRARY_LOWER_VERSION');
             }
         }
 
@@ -60,20 +56,20 @@ class ItpMetaViewDashboard extends JViewLegacy
         $this->totalGlobalTags  = $basic->getTotalGlobalTags();
 
         // Get latest items.
-        jimport("itpmeta.statistics.urls.latest");
+        jimport('itpmeta.statistics.urls.latest');
         $this->latest = new Itpmeta\Statistics\Urls\Latest(JFactory::getDbo());
         $this->latest->load();
 
         // Get urls with scripts.
-        jimport("itpmeta.statistics.urls.scripts");
+        jimport('itpmeta.statistics.urls.scripts');
         $this->urlsScripts = new Itpmeta\Statistics\Urls\Scripts(JFactory::getDbo());
-        $this->urlsScripts->load(array("limit" => 10));
+        $this->urlsScripts->load(array('limit' => 10));
 
         $uri = JUri::getInstance();
-        $this->domain = $uri->toString(array("scheme", "host"));
+        $this->domain = $uri->toString(array('scheme', 'host'));
 
         // Add submenu
-        ItpMetaHelper::addSubmenu($this->getName());
+        ItpmetaHelper::addSubmenu($this->getName());
 
         $this->addToolbar();
         $this->addSidebar();

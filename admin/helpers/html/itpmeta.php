@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  * @subpackage     ITPMeta
  * @since          1.6
  */
-abstract class JHtmlItpMeta
+abstract class JHtmlItpmeta
 {
     /**
      * Returns an array of standard published state filter options.
@@ -52,15 +52,15 @@ abstract class JHtmlItpMeta
     {
         switch ($state) {
             case 1:
-                $text  = JText::_("COM_ITPMETA_DISABLE_AUTOUPDATE");
-                $task  = "urls.disableau";
-                $class = "publish";
+                $text  = JText::_('COM_ITPMETA_DISABLE_AUTOUPDATE');
+                $task  = 'urls.disableau';
+                $class = 'publish';
                 break;
 
             default:
-                $text  = JText::_("COM_ITPMETA_ENABLE_AUTOUPDATE");
-                $task  = "urls.enableau";
-                $class = "unpublish";
+                $text  = JText::_('COM_ITPMETA_ENABLE_AUTOUPDATE');
+                $task  = 'urls.enableau';
+                $class = 'unpublish';
                 break;
         }
 
@@ -73,23 +73,23 @@ abstract class JHtmlItpMeta
         return implode($html);
     }
 
-    public static function sort($title, $order, $direction = 'asc', $selected = 0, $task = null, $new_direction = 'asc', $tip = '', $form = "")
+    public static function sort($title, $order, $direction = 'asc', $selected = 0, $task = null, $new_direction = 'asc', $tip = '', $form = '')
     {
         JHtml::_('behavior.tooltip');
 
         $direction = strtolower($direction);
         $icon      = array('arrow-up-3', 'arrow-down-3');
-        $index     = (int)($direction == 'desc');
+        $index     = (int)($direction === 'desc');
 
-        if ($order != $selected) {
+        if ((int)$order !== (int)$selected) {
             $direction = $new_direction;
         } else {
-            $direction = ($direction == 'desc') ? 'asc' : 'desc';
+            $direction = ($direction === 'desc') ? 'asc' : 'desc';
         }
 
         $html = '<a href="#" onclick="Joomla.tableOrdering(\'' . $order . '\',\'' . $direction . '\',\'' . $task . '\'';
 
-        if (!empty($form)) {
+        if ($form !== '') {
             $html .= ",document.getElementById('" . $form . "')";
         }
 
@@ -97,7 +97,7 @@ abstract class JHtmlItpMeta
 
         $html .= JText::_($title);
 
-        if ($order == $selected) {
+        if ((int)$order === (int)$selected) {
             $html .= ' <i class="icon-' . $icon[$index] . '"></i>';
         }
 

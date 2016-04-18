@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // No direct access
@@ -16,9 +16,9 @@ defined('_JEXEC') or die;
  * @package     ITPrism Components
  * @subpackage  ITPMeta
  */
-class ItpMetaControllerTags extends JControllerAdmin
+class ItpmetaControllerTags extends JControllerAdmin
 {
-    public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Tag', $prefix = 'ItpmetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
         return $model;
@@ -33,6 +33,8 @@ class ItpMetaControllerTags extends JControllerAdmin
      */
     public function saveOrderAjax()
     {
+        $response = new Prism\Response\Json();
+
         // Get the input
         $pks   = $this->input->post->get('cid', array(), 'array');
         $order = $this->input->post->get('order', array(), 'array');
@@ -52,14 +54,12 @@ class ItpMetaControllerTags extends JControllerAdmin
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 
-        $response = array(
-            "success" => true,
-            "title"   => JText::_('COM_ITPMETA_SUCCESS'),
-            "text"    => JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'),
-            "data"    => array()
-        );
+        $response
+            ->success()
+            ->setTitle(JText::_('COM_ITPMETA_SUCCESS'))
+            ->setText(JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
 
-        echo json_encode($response);
+        echo $response;
         JFactory::getApplication()->close();
     }
 }

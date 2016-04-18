@@ -1,32 +1,41 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Tags
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 namespace Itpmeta\Tag;
 
-use Prism;
+use Prism\Database;
 
 defined('JPATH_PLATFORM') or die;
 
 /**
  * This class provides functionality for managing a list of meta tags.
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Tags
  */
-class Tags extends Prism\Database\ArrayObject
+class Tags extends Database\Collection
 {
     /**
      * Load tags for specific url.
      *
+     * <code>
+     * $options = array(
+     *      "uri_id" => 1
+     * )
+     *
+     * $tag   = new Itpmeta\Tag\Tags(\JFactory::getDbo());
+     * $tag->load($options);
+     * </code>
+     *
      * @param array $options
      */
-    public function load($options = array())
+    public function load(array $options = array())
     {
         $uriId = (array_key_exists('uri_id', $options)) ? (int)$options['uri_id'] : 0;
 
@@ -47,6 +56,24 @@ class Tags extends Prism\Database\ArrayObject
         }
     }
 
+    /**
+     * Return tag object by its name.
+     *
+     * <code>
+     * $options = array(
+     *      "uri_id" => 1
+     * )
+     *
+     * $tag   = new Itpmeta\Tag\Tags(\JFactory::getDbo());
+     * $tag->load($options);
+     *
+     * $tagObject = $tag->getTag('og_image');
+     * </code>
+     *
+     * @param string $name
+     *
+     * @return Tag
+     */
     public function getTag($name)
     {
         $tag = null;

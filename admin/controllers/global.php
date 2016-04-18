@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Components
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // No direct access
@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  * @subpackage    Components
  * @since         1.6
  */
-class ItpMetaControllerGlobal extends Prism\Controller\Form\Backend
+class ItpmetaControllerGlobal extends Prism\Controller\Form\Backend
 {
     public function save($key = null, $urlVar = null)
     {
@@ -25,11 +25,11 @@ class ItpMetaControllerGlobal extends Prism\Controller\Form\Backend
 
         // Gets the data from the form
         $data   = $this->input->post->get('jform', array(), 'array');
-        $itemId = JArrayHelper::getValue($data, "id", 0, "int");
+        $itemId = Joomla\Utilities\ArrayHelper::getValue($data, 'id', 0, 'int');
 
         $redirectData = array(
-            "task" => $this->getTask(),
-            "id"   => $itemId
+            'task' => $this->getTask(),
+            'id'   => $itemId
         );
 
         $model = $this->getModel();
@@ -40,7 +40,7 @@ class ItpMetaControllerGlobal extends Prism\Controller\Form\Backend
         /* @var $form JForm */
 
         if (!$form) {
-            throw new Exception($model->getError());
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_FORM_CANNOT_BE_LOADED'));
         }
 
         // Test if the data is valid.
@@ -49,29 +49,17 @@ class ItpMetaControllerGlobal extends Prism\Controller\Form\Backend
         // Check for validation errors.
         if ($validData === false) {
             $this->displayNotice($form->getErrors(), $redirectData);
-
             return;
         }
 
-        // Fix magic quotes
-        if (get_magic_quotes_gpc()) {
-            $validData["content"] = stripslashes($validData["content"]);
-            $validData["output"]  = stripslashes($validData["output"]);
-            $validData["tag"]     = stripslashes($validData["tag"]);
-            $validData["title"]   = stripslashes($validData["title"]);
-        }
-
         try {
-
             $itemId             = $model->save($validData);
-            $redirectData["id"] = $itemId;
-
+            $redirectData['id'] = $itemId;
         } catch (Exception $e) {
             JLog::add($e->getMessage());
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 
         $this->displayMessage(JText::_('COM_ITPMETA_GLOBAL_TAG_SAVED'), $redirectData);
-
     }
 }

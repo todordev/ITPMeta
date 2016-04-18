@@ -1,5 +1,8 @@
-ITP Meta Release Notes
+ITP Meta Changelog
 ==========================
+
+###v4.4
+* Fixed a compatibility issue between extension and Prism library v1.10.
 
 ###v4.3
 * Added functionality to create tags for VirtueMart.

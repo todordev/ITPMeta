@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Tags
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -14,10 +14,10 @@ defined('JPATH_PLATFORM') or die;
 /**
  * This class provides functionality for generating global tags.
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Tags
  */
-class GlobalTag extends Tag
+class GlobalTag extends Base
 {
     /**
      * Load data about global tags from database.
@@ -28,27 +28,26 @@ class GlobalTag extends Tag
      *      "name" => "og_image"
      * )
      *
-     * $tag   = new ItpMeta\Tag\GlobalTag(\JFactory::getDbo());
+     * $tag   = new Itpmeta\Tag\GlobalTag(\JFactory::getDbo());
      * $tag->load($keys);
      * </code>
      *
-     * @param array $keys
+     * @param array|int $keys
      * @param array $options
      */
-    public function load($keys, $options = array())
+    public function load($keys, array $options = array())
     {
-        $id    = (!array_key_exists('id', $keys)) ? 0 : (int)$keys['id'];
-        $name  = (!array_key_exists('name', $keys)) ? null : $keys['name'];
-
         $query = $this->db->getQuery(true);
         $query
             ->select('a.id, a.name, a.type, a.title, a.tag, a.content, a.output, a.ordering, a.url_id')
             ->from($this->db->quoteName('#__itpm_global_tags', 'a'));
 
-        if ($name !== null and $name !== '') {
-            $query->where('a.name = ' . $this->db->quote($name));
+        if (is_array($keys)) {
+            foreach ($keys as $key => $value) {
+                $query->where($this->db->quoteName('a.'.$key) .' = ' . $this->db->quote($value));
+            }
         } else {
-            $query->where('a.id = ' . (int)$id);
+            $query->where('a.id = ' . (int)$keys);
         }
 
         $this->db->setQuery($query);
@@ -65,7 +64,7 @@ class GlobalTag extends Tag
      *      "id" => 1,
      * )
      *
-     * $tag   = new ItpMeta\GlobalTag(\JFactory::getDbo());
+     * $tag   = new Itpmeta\Tag\GlobalTag(\JFactory::getDbo());
      * $tag->load($keys);
      *
      * $tag->setContent("http://itprism.com/images/picture.png");

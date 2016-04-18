@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-class ItpMetaModelScripts extends JModelAdmin
+class ItpmetaModelScripts extends JModelAdmin
 {
     /**
      * Returns a reference to the a Table object, always creating it.
@@ -22,7 +22,7 @@ class ItpMetaModelScripts extends JModelAdmin
      * @return  JTable  A database object
      * @since   1.6
      */
-    public function getTable($type = 'Url', $prefix = 'ItpMetaTable', $config = array())
+    public function getTable($type = 'Url', $prefix = 'ItpmetaTable', $config = array())
     {
         return JTable::getInstance($type, $prefix, $config);
     }
@@ -37,9 +37,9 @@ class ItpMetaModelScripts extends JModelAdmin
         parent::populateState();
 
         $app = JFactory::getApplication();
-        /** @var $app JApplicationAdministrator * */
+        /** @var $app JApplicationAdministrator */
 
-        $value = $app->getUserState("url.id");
+        $value = $app->getUserState('url.id');
         $this->setState($this->getName() . '.id', $value);
     }
 
@@ -89,9 +89,9 @@ class ItpMetaModelScripts extends JModelAdmin
      */
     public function save($data)
     {
-        $id         = JArrayHelper::getValue($data, "id", null);
-        $afterBody  = JArrayHelper::getValue($data, "after_body_tag");
-        $beforeBody = JArrayHelper::getValue($data, "before_body_tag");
+        $id         = Joomla\Utilities\ArrayHelper::getValue($data, 'id', 0, 'int');
+        $afterBody  = Joomla\Utilities\ArrayHelper::getValue($data, 'after_body_tag');
+        $beforeBody = Joomla\Utilities\ArrayHelper::getValue($data, 'before_body_tag');
 
         if (!$afterBody) {
             $afterBody = null;
@@ -104,11 +104,11 @@ class ItpMetaModelScripts extends JModelAdmin
         $row = $this->getTable();
         $row->load($id);
 
-        $row->set("after_body_tag", $afterBody);
-        $row->set("before_body_tag", $beforeBody);
+        $row->set('after_body_tag', $afterBody);
+        $row->set('before_body_tag', $beforeBody);
 
         $row->store(true);
 
-        return $row->get("id");
+        return $row->get('id');
     }
 }

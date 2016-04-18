@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * This class provides functionality
  * for managing Cobalt (com_cobalt) meta data.
  *
- * @package ItpMeta
+ * @package Itpmeta
  * @subpackage   Extensions
  */
 class Cobalt extends Base
@@ -34,7 +34,7 @@ class Cobalt extends Base
      *    "ucat_id" => 5
      * );
      *
-     * $extension = new ItpMeta\Extension\Cobalt("/my-page", $options);
+     * $extension = new Itpmeta\Extension\Cobalt("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>
@@ -70,7 +70,6 @@ class Cobalt extends Base
         }
 
         switch ($view) {
-
             case 'item':
                 $data = $this->getItemData($id);
                 break;
@@ -129,8 +128,7 @@ class Cobalt extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-
+        if (count($result) > 0) {
             foreach ($result as $key => $value) {
                 $data[$key] = $value;
             }
@@ -175,7 +173,7 @@ class Cobalt extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
+        if (count($result) > 0) {
             $data['title']    = \JText::sprintf('LIB_ITPMETA_VIEW_USER_TITLE', $result['name']);
             $data['metadesc'] = \JText::sprintf('LIB_ITPMETA_VIEW_SECTION_USER_METADESC', $result['section'], $result['name']);
         }
@@ -207,8 +205,7 @@ class Cobalt extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-
+        if (count($result) > 0) {
             $params = ArrayHelper::getValue($result, 'params');
             unset($result['params']);
 
@@ -220,8 +217,7 @@ class Cobalt extends Base
 
             $data['metadesc'] = ArrayHelper::getValue($params, 'meta_descr');
             $data['image']    = ArrayHelper::getValue($params, 'image');
-            unset($params);
-            unset($result);
+            unset($params, $result);
 
             $data['metadesc'] = $this->clean($data['metadesc']);
 
@@ -259,8 +255,7 @@ class Cobalt extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-
+        if (count($result) > 0) {
             // Prepare data
             foreach ($result as $key => $value) {
                 $data[$key] = \JString::trim($value);
@@ -304,7 +299,7 @@ class Cobalt extends Base
         $this->db->setQuery($query);
         $results = (array)$this->db->loadAssocList();
 
-        if (!empty($results)) {
+        if (count($results) > 0) {
             $imageData = array_shift($results);
             unset($results);
         }
@@ -334,8 +329,7 @@ class Cobalt extends Base
         $this->db->setQuery($query);
         $results = (array)$this->db->loadAssocList();
 
-        if (!empty($results)) {
-
+        if (count($results) > 0) {
             $htmlFields     = array();
             $textAreaFields = array();
 
@@ -357,7 +351,6 @@ class Cobalt extends Base
 
             // Generate meta description from TextArea field.
             if (!$metaDesc) {
-
                 foreach ($textAreaFields as $value) {
                     $metaDesc = $this->prepareMetaDesc($value['text']);
                     if (!empty($metaDesc)) {
@@ -397,7 +390,7 @@ class Cobalt extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
+        if (count($result) > 0) {
             $data['title'] = ArrayHelper::getValue($result, 'title');
 
             $description = ArrayHelper::getValue($result, 'description');

@@ -10,7 +10,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-class ItpMetaController extends JControllerLegacy
+class ItpmetaController extends JControllerLegacy
 {
     /**
      * Method to display a view.

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Statistics
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -14,7 +14,7 @@ defined('JPATH_PLATFORM') or die;
 /**
  * This class generates basic statistics.
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Statistics
  */
 class Basic
@@ -30,7 +30,7 @@ class Basic
      * Initialize the object.
      *
      * <code>
-     * $statistics   = new ItpMeta\Statistics\Basic(\JFactory::getDbo());
+     * $statistics   = new Itpmeta\Statistics\Basic(\JFactory::getDbo());
      * </code>
      *
      * @param \JDatabaseDriver $db
@@ -44,7 +44,7 @@ class Basic
      * This method returns a number of all urls.
      *
      * <code>
-     * $statistics   = new ItpMeta\Statistics\Basic(\JFactory::getDbo());
+     * $statistics   = new Itpmeta\Statistics\Basic(\JFactory::getDbo());
      * echo $statistics->getTotalUrls();
      * </code>
      *
@@ -68,7 +68,7 @@ class Basic
      * This method returns a number of all tags.
      *
      * <code>
-     * $statistics   = new ItpMeta\Statistics\Basic(\JFactory::getDbo());
+     * $statistics   = new Itpmeta\Statistics\Basic(\JFactory::getDbo());
      * echo $statistics->getTotalTags();
      * </code>
      *
@@ -92,7 +92,7 @@ class Basic
      * This method returns a number of all global tags.
      *
      * <code>
-     * $statistics   = new ItpMeta\Statistics\Basic(\JFactory::getDbo());
+     * $statistics   = new Itpmeta\Statistics\Basic(\JFactory::getDbo());
      * echo $statistics->getTotalGlobalTags();
      * </code>
      *

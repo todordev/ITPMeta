@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @package     ITPMeta
  * @subpackage  Component
  */
-class ItpMetaController extends JControllerLegacy
+class ItpmetaController extends JControllerLegacy
 {
     protected $option;
 
@@ -29,6 +29,8 @@ class ItpMetaController extends JControllerLegacy
 
         // Add component style
         $document->addStyleSheet('../media/' . $this->option . '/css/backend.style.css');
+        JHtml::_('Prism.ui.backendStyles');
+        JHtml::_('Prism.ui.styles');
 
         $viewName = $this->input->getCmd('view', 'dashboard');
         $this->input->set('view', $viewName);

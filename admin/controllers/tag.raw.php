@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // No direct access
 defined('_JEXEC') or die;
 
-class ItpMetaControllerTag extends JControllerForm
+class ItpmetaControllerTag extends JControllerForm
 {
     /**
      * Proxy for getModel.
@@ -19,10 +19,10 @@ class ItpMetaControllerTag extends JControllerForm
      * @param string $prefix
      * @param array $config
      *
-     * @return ItpMetaModelTag
+     * @return ItpmetaModelTag
      * @since    1.6
      */
-    public function getModel($name = 'Tag', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Tag', $prefix = 'ItpmetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
         return $model;
@@ -32,25 +32,19 @@ class ItpMetaControllerTag extends JControllerForm
     {
         // Get the data from the form
         $itemId  = $this->input->post->get('pk', 0, 'uint');
-        $content = $this->input->post->get('value', "", "raw");
+        $content = $this->input->post->get('value', '', 'raw');
 
         // Decode the content if there are encoded symbols.
-        $content = html_entity_decode($content, ENT_QUOTES, "UTF-8");
+        $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
 
         // Encode the content.
-        $content = htmlentities($content, ENT_QUOTES, "UTF-8");
-
-        // Fix Magic Quotes
-        if (get_magic_quotes_gpc()) {
-            $content = stripslashes($content);
-        }
+        $content = htmlentities($content, ENT_QUOTES, 'UTF-8');
 
         $response = new Prism\Response\Json();
 
         $model = $this->getModel();
 
         if (!$itemId or !$content) {
-
             $response
                 ->setTitle(JText::_('COM_ITPMETA_FAIL'))
                 ->setText(JText::_('COM_ITPMETA_ERROR_SYSTEM'))
@@ -60,7 +54,6 @@ class ItpMetaControllerTag extends JControllerForm
             JFactory::getApplication()->close();
         }
 
-        // Save the item
         try {
             $data = $model->saveAjax($itemId, $content);
         } catch (Exception $e) {

@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-class pkg_itpMetaInstallerScript
+class pkg_itpmetaInstallerScript
 {
     /**
      * Method to install the component
@@ -75,13 +75,13 @@ class pkg_itpMetaInstallerScript
         jimport('Itpmeta.init');
 
         // Register Component helpers
-        JLoader::register('ItpMetaInstallHelper', ITPMETA_PATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'install.php');
+        JLoader::register('ItpmetaInstallHelper', ITPMETA_PATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'install.php');
 
         // Start table with the information
-        ItpMetaInstallHelper::startTable();
+        ItpmetaInstallHelper::startTable();
 
         // Requirements
-        ItpMetaInstallHelper::addRowHeading(JText::_('COM_ITPMETA_MINIMUM_REQUIREMENTS'));
+        ItpmetaInstallHelper::addRowHeading(JText::_('COM_ITPMETA_MINIMUM_REQUIREMENTS'));
 
         // Display result about verification for cURL library
         $title = JText::_('COM_ITPMETA_CURL_LIBRARY');
@@ -92,7 +92,7 @@ class pkg_itpMetaInstallerScript
         } else {
             $result = array('type' => 'success', 'text' => JText::_('JON'));
         }
-        ItpMetaInstallHelper::addRow($title, $result, $info);
+        ItpmetaInstallHelper::addRow($title, $result, $info);
 
         // Display result about verification Magic Quotes
         $title = JText::_('COM_ITPMETA_MAGIC_QUOTES');
@@ -103,46 +103,70 @@ class pkg_itpMetaInstallerScript
         } else {
             $result = array('type' => 'success', 'text' => JText::_('JOFF'));
         }
-        ItpMetaInstallHelper::addRow($title, $result, $info);
+        ItpmetaInstallHelper::addRow($title, $result, $info);
 
         // Display result about verification PHP version.
         $title = JText::_('COM_ITPMETA_PHP_VERSION');
         $info  = '';
-        if (version_compare(PHP_VERSION, '5.3.0') < 0) {
+        if (version_compare(PHP_VERSION, '5.5.0') < 0) {
             $result = array('type' => 'important', 'text' => JText::_('COM_ITPMETA_WARNING'));
         } else {
             $result = array('type' => 'success', 'text' => JText::_('JYES'));
         }
-        ItpMetaInstallHelper::addRow($title, $result, $info);
+        ItpmetaInstallHelper::addRow($title, $result, $info);
 
-        // Display result about verification of installed Prism Library
-        jimport('itprism.version');
-        $title = JText::_('COM_ITPMETA_PRISM_LIBRARY');
+        // Display result about MySQL Version.
+        $title = JText::_('COM_ITPMETA_MYSQL_VERSION');
         $info  = '';
-        if (!class_exists('Prism\\Version')) {
-            $info   = JText::_('COM_ITPMETA_PRISM_LIBRARY_DOWNLOAD');
-            $result = array('type' => 'important', 'text' => JText::_('JNO'));
+        $dbVersion = JFactory::getDbo()->getVersion();
+        if (version_compare($dbVersion, '5.5.3', '<')) {
+            $result = array('type' => 'important', 'text' => JText::_('COM_ITPMETA_WARNING'));
         } else {
             $result = array('type' => 'success', 'text' => JText::_('JYES'));
         }
-        ItpMetaInstallHelper::addRow($title, $result, $info);
+        ItpmetaInstallHelper::addRow($title, $result, $info);
+
+        // Display result about verification of installed Prism Library
+        $info  = '';
+        if (!class_exists('Prism\\Version')) {
+            $title  = JText::_('COM_ITPMETA_PRISM_LIBRARY');
+            $info   = JText::_('COM_ITPMETA_PRISM_LIBRARY_DOWNLOAD');
+            $result = array('type' => 'important', 'text' => JText::_('JNO'));
+        } else {
+            $prismVersion   = new Prism\Version();
+            $text           = JText::sprintf('COM_ITPMETA_CURRENT_V_S', $prismVersion->getShortVersion());
+
+            if (class_exists('Itpmeta\\Version')) {
+                $componentVersion = new Itpmeta\Version();
+                $title            = JText::sprintf('COM_ITPMETA_PRISM_LIBRARY_S', $componentVersion->requiredPrismVersion);
+
+                if (version_compare($prismVersion->getShortVersion(), $componentVersion->requiredPrismVersion, '<')) {
+                    $info   = JText::_('COM_ITPMETA_PRISM_LIBRARY_DOWNLOAD');
+                    $result = array('type' => 'warning', 'text' => $text);
+                }
+
+            } else {
+                $title  = JText::_('COM_ITPMETA_PRISM_LIBRARY');
+                $result = array('type' => 'success', 'text' => $text);
+            }
+        }
+        ItpmetaInstallHelper::addRow($title, $result, $info);
 
         // Installed extensions
-        ItpMetaInstallHelper::addRowHeading(JText::_('COM_ITPMETA_INSTALLED_EXTENSIONS'));
+        ItpmetaInstallHelper::addRowHeading(JText::_('COM_ITPMETA_INSTALLED_EXTENSIONS'));
 
         // System - ITPMeta
         $result = array('type' => 'success', 'text' => JText::_('COM_ITPMETA_INSTALLED'));
-        ItpMetaInstallHelper::addRow(JText::_('COM_ITPMETA_SYSTEM_ITPMETA'), $result, JText::_('COM_ITPMETA_PLUGIN'));
+        ItpmetaInstallHelper::addRow(JText::_('COM_ITPMETA_SYSTEM_ITPMETA'), $result, JText::_('COM_ITPMETA_PLUGIN'));
 
         // End table
-        ItpMetaInstallHelper::endTable();
+        ItpmetaInstallHelper::endTable();
 
         echo JText::sprintf('COM_ITPMETA_MESSAGE_ENABLE_PLUGINS', JRoute::_('index.php?option=com_plugins&view=plugins&filter_search=itpmeta'));
 
         if (!class_exists('Prism\\Version')) {
             echo JText::_('COM_ITPMETA_MESSAGE_INSTALL_PRISM_LIBRARY');
         } else {
-
             if (class_exists('Itpmeta\\Version')) {
                 $prismVersion     = new Prism\Version();
                 $componentVersion = new Itpmeta\Version();

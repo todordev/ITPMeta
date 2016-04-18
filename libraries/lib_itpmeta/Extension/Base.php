@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * The base class that will be used
  * for collecting meta data for third-party extensions.
  *
- * @package ItpMeta
+ * @package Itpmeta
  * @subpackage   Extensions
  */
 abstract class Base
@@ -50,7 +50,7 @@ abstract class Base
      *    "extract_image" => false // Extract image from item content
      * );
      *
-     * $extension = new ItpMeta\Extension\Content($options);
+     * $extension = new Itpmeta\Extension\Content($options);
      * </code>
      *
      * @param $options
@@ -68,7 +68,7 @@ abstract class Base
      * Set database object.
      *
      * <code>
-     * $extension = new ItpMeta\Extension\Content("/my-page", $options);
+     * $extension = new Itpmeta\Extension\Content("/my-page", $options);
      * $extension->setDb(/JFactory::getDbo());
      * </code>
      *
@@ -134,7 +134,6 @@ abstract class Base
         $categoryId = (int)$categoryId;
 
         if ($categoryId > 0) {
-
             $excluded = array('params', 'description');
 
             $query = $this->db->getQuery(true);
@@ -148,7 +147,6 @@ abstract class Base
             $result = (array)$this->db->loadAssoc();
 
             if (count($result) > 0) {
-
                 foreach ($result as $key => $value) {
                     if (!in_array($key, $excluded, true)) {
                         $data[$key] = \JString::trim($value);
@@ -167,8 +165,7 @@ abstract class Base
                 $menuItem   = $this->getMenuItem($this->menuItemId);
 
                 // Use menu item title and description, if the items is set to a menu item.
-                if ((strcmp($viewName, $menuItem->query['view']) === 0) and ($categoryId === (int)$menuItem->query['id'])) {
-
+                if ((strcmp($viewName, $menuItem->query['view']) === 0) and ((int)$categoryId === (int)$menuItem->query['id'])) {
                     $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                     // Get title
@@ -206,7 +203,6 @@ abstract class Base
         $data = $this->getDataByMenuItem($this->menuItemId);
 
         if (count($data) > 0) {
-
             $doc = \JFactory::getDocument();
 
             if (empty($data['title'])) {
@@ -238,7 +234,6 @@ abstract class Base
         $metaDesc = '';
 
         if ($minLength <= \JString::strlen($content)) {
-
             if ($strLength > $length) {
                 $pos      = \JString::strpos($content, ' ', $length);
                 $metaDesc = \JString::substr($content, 0, $pos);
@@ -271,7 +266,6 @@ abstract class Base
     protected function prepareImageFromContent($image)
     {
         if (!preg_match('/^https?:\/\//i', $image)) {
-
             if (strpos($image, '/') === 0) {
                 $matches[1] = \JString::substr($image, 1);
             }

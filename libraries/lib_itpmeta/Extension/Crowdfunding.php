@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * This class provides functionality
  * for managing Crowdfunding (com_crowdfunding)
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  */
 class Crowdfunding extends Base
@@ -34,7 +34,7 @@ class Crowdfunding extends Base
      *    "user_id" => 2
      * );
      *
-     * $extension = new ItpMeta\Extension\Crowdfunding("/my-page", $options);
+     * $extension = new Itpmeta\Extension\Crowdfunding("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>
@@ -52,7 +52,6 @@ class Crowdfunding extends Base
         $data   = array();
 
         switch ($this->view) {
-
             case 'category':
                 $data = $this->getCategoryData($id);
                 break;
@@ -106,7 +105,6 @@ class Crowdfunding extends Base
         $data       = array();
 
         if (!empty($articleId)) {
-
             $query = $this->db->getQuery(true);
 
             $query
@@ -117,8 +115,7 @@ class Crowdfunding extends Base
             $this->db->setQuery($query);
             $result = (array)$this->db->loadAssoc();
 
-            if (!empty($result)) {
-
+            if (count($result) > 0) {
                 $excluded = array('images', 'introtext', 'fulltext');
 
                 foreach ($result as $key => $value) {
@@ -139,7 +136,6 @@ class Crowdfunding extends Base
 
                 // Generate description
                 if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
-
                     $data['metadesc'] = $this->prepareMetaDesc($result['introtext']);
 
                     if (!$data['metadesc']) {
@@ -164,20 +160,17 @@ class Crowdfunding extends Base
      *
      * @return array
      */
-    protected function getDetailsData($projectId, $screen = "")
+    protected function getDetailsData($projectId, $screen = '')
     {
         $data = array();
 
         if (!empty($projectId)) {
-
             $data = $this->getProjectData($projectId);
 
             if (!empty($data)) {
-
                 // If it is a menu item, get menu item meta data.
                 $menuItem   = $this->getMenuItem($this->menuItemId);
-                if ((strcmp('details', $menuItem->query['view'])) == 0 and ($projectId == (int)$menuItem->query['id'])) {
-
+                if ((strcmp('details', $menuItem->query['view'])) === 0 and ((int)$projectId === (int)$menuItem->query['id'])) {
                     $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                     // Get title
@@ -227,11 +220,9 @@ class Crowdfunding extends Base
         $data = array();
 
         if (!empty($projectId)) {
-
             $data = $this->getProjectData($projectId);
 
             if (!empty($data)) {
-
                 $doc = \JFactory::getDocument();
                 $data['title'] = $doc->getTitle();
 
@@ -260,7 +251,6 @@ class Crowdfunding extends Base
         $data        = array();
 
         if (!empty($projectId)) {
-
             $query = $this->db->getQuery(true);
 
             $query
@@ -271,8 +261,7 @@ class Crowdfunding extends Base
             $this->db->setQuery($query);
             $result = (array)$this->db->loadAssoc();
 
-            if (!empty($result)) {
-
+            if (count($result) > 0) {
                 $data['title']    = $result['title'];
 
                 $data['created']  = $result['created'];

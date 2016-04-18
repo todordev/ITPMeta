@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   URLs
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -16,7 +16,7 @@ defined('JPATH_PLATFORM') or die;
 /**
  * This class provides functionality for managing URIs.
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   URLs
  */
 abstract class UrlHelper
@@ -31,16 +31,13 @@ abstract class UrlHelper
     public static function getUri()
     {
         if (self::$uri === null) {
-
             $app        = \JFactory::getApplication();
             $option     = $app->input->getCmd('option');
 
             self::$uri  = clone \JUri::getInstance();
 
             switch ($option) {
-
                 case 'com_virtuemart':
-
                     $query = self::$uri->getQuery(true);
 
                     if (array_key_exists('showall', $query)) {

@@ -14,7 +14,7 @@ class ITPMetaViewEmpty extends JViewLegacy
 {
     public function display($tpl = null)
     {
-        $this->version = new ItpMetaVersion();
+        $this->version = new Itpmeta\Version();
         parent::display($tpl);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Initializator
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -24,7 +24,7 @@ if (!defined('ITPMETA_PATH_LIBRARY')) {
 JLoader::registerNamespace('Itpmeta', JPATH_LIBRARIES);
 
 // Register component helpers
-JLoader::register('ItpMetaHelper', ITPMETA_PATH_COMPONENT_ADMINISTRATOR .'/helpers/itpmeta.php');
+JLoader::register('ItpmetaHelper', ITPMETA_PATH_COMPONENT_ADMINISTRATOR .'/helpers/itpmeta.php');
 
 // Load HTML helper
 JHtml::addIncludePath(ITPMETA_PATH_COMPONENT_ADMINISTRATOR . '/helpers/html');

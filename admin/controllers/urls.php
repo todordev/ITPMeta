@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // No direct access
@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @package     ITPrism Components
  * @subpackage  ITPMeta
  */
-class ItpMetaControllerUrls extends Prism\Controller\Admin
+class ItpmetaControllerUrls extends Prism\Controller\Admin
 {
     public function __construct($config = array())
     {
@@ -28,7 +28,7 @@ class ItpMetaControllerUrls extends Prism\Controller\Admin
         $this->registerTask('disableau', 'enableau');
     }
 
-    public function getModel($name = 'Url', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Url', $prefix = 'ItpmetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
         return $model;
@@ -44,11 +44,11 @@ class ItpMetaControllerUrls extends Prism\Controller\Admin
     public function delete()
     {
         $redirectOptions = array(
-            "view" => "urls"
+            'view' => 'urls'
         );
 
-        $cid       = $this->input->post->get("cid", array(), "array");
-        $modelTags = $this->getModel("Tag");
+        $cid       = $this->input->post->get('cid', array(), 'array');
+        $modelTags = $this->getModel('Tag');
 
         try {
             $modelTags->deleteByUrlId($cid);
@@ -74,37 +74,34 @@ class ItpMetaControllerUrls extends Prism\Controller\Admin
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
         $redirectOptions = array(
-            "view" => "urls"
+            'view' => 'urls'
         );
 
-        $cid = $this->input->post->get("cid", array(), "array");
+        $cid = $this->input->post->get('cid', array(), 'array');
         $cid = Joomla\Utilities\ArrayHelper::toInteger($cid);
 
         $data = array(
-            'enableau'  => 1,
-            'disableau' => 0
+            'enableau'  => Prism\Constants::ENABLED,
+            'disableau' => Prism\Constants::DISABLED
         );
 
         $task  = $this->getTask();
-        $value = JArrayHelper::getValue($data, $task, 0, 'int');
+        $value = Joomla\Utilities\ArrayHelper::getValue($data, $task, 0, 'int');
 
-        if (empty($cid)) {
+        if (count($cid) === 0) {
             $this->displayNotice(JText::_($this->text_prefix . '_ERROR_NO_ITEM_SELECTED'), $redirectOptions);
-
             return;
         }
 
         try {
-
             $model = $this->getModel();
             $model->updateAutoupdate($cid, $value);
-
         } catch (Exception $e) {
             JLog::add($e->getMessage());
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 
-        if ($value == 1) {
+        if ((int)$value === Prism\Constants::ENABLED) {
             $msg = $this->text_prefix . '_N_ITEMS_AUTOUPDATE_ENABLED';
         } else {
             $msg = $this->text_prefix . '_N_ITEMS_AUTOUPDATE_DISABLED';

@@ -12,14 +12,12 @@ namespace Itpmeta\Tag;
 defined('JPATH_PLATFORM') or die;
 
 /**
- * This class provides functionality for generating some general tags.
+ * This class provides functionality for generating a custom tag.
  *
  * @package      Itpmeta
  * @subpackage   Tags
- *
- * @deprecated v5.0 Use Itpmeta\Tag\Custom
  */
-class ExtensionTag extends Base
+class Custom extends Base
 {
     /**
      * This is the base class of extension tags.
@@ -28,18 +26,17 @@ class ExtensionTag extends Base
      * <code>
      * $tagName = "ogtitle";
      *
-     * $tag   = new Itpmeta\Tag\ExtensionTag(\JFactory::getDbo());
+     * $tag   = new Itpmeta\Tag\Custom();
      * $tag->load($tagName);
      * </code>
      *
-     * @param string $keys
-     * @param array $options
+     * @param string $name
      *
      * @return self
      */
-    public function load($keys, array $options = array())
+    public function load($name)
     {
-        $this->name = $keys;
+        $this->name = $name;
 
         $tag = array();
 
@@ -191,20 +188,5 @@ class ExtensionTag extends Base
         $this->bind($tag);
 
         return $this;
-    }
-
-    public function store()
-    {
-    }
-
-    public function toArray()
-    {
-        return array(
-            'title'   => $this->getTitle(),
-            'type'    => $this->getType(),
-            'tag'     => $this->getTag(),
-            'content' => $this->getContent(),
-            'output'  => $this->getOutput()
-        );
     }
 }

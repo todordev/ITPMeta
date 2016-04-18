@@ -1,0 +1,6 @@
+cfg.name=itpmeta
+cfg.version=v4.4
+cfg.joomlaVersion=J3.5
+cfg.buildDir=packages
+cfg.sourceDir=/...path.../itpmeta
+cfg.pkgDir=/...path.../pkg_itpmeta

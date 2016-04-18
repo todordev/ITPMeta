@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-class ItpMetaModelUrls extends JModelList
+class ItpmetaModelUrls extends JModelList
 {
     /**
      * Constructor.
@@ -105,7 +105,7 @@ class ItpMetaModelUrls extends JModelList
                 'a.id, a.uri, a.published, a.autoupdate'
             )
         );
-        $query->from($db->quoteName("#__itpm_urls", "a"));
+        $query->from($db->quoteName('#__itpm_urls', 'a'));
 
         // Filter by state
         $published = $this->getState('filter.state');
@@ -124,8 +124,8 @@ class ItpMetaModelUrls extends JModelList
         }
 
         // Filter by search in title
-        $search = $this->getState('filter.search');
-        if (!empty($search)) {
+        $search = (string)$this->getState('filter.search');
+        if ($search !== '') {
             if (stripos($search, 'id:') === 0) {
                 $query->where('a.id = ' . (int)substr($search, 3));
             } else {
@@ -144,10 +144,10 @@ class ItpMetaModelUrls extends JModelList
     public function getNumbers()
     {
         // Get a storage key.
-        $storeNumbers = $this->getStoreId("numbers");
+        $storeNumbers = $this->getStoreId('numbers');
 
         // Try to load the data from internal storage.
-        if (isset($this->cache[$storeNumbers])) {
+        if (is_array($this->cache) and array_key_exists($storeNumbers, $this->cache)) {
             return $this->cache[$storeNumbers];
         }
 
@@ -155,7 +155,7 @@ class ItpMetaModelUrls extends JModelList
         $storeData = $this->getStoreId();
 
         // Try to load the data from internal storage.
-        if (isset($this->cache[$storeData])) {
+        if (is_array($this->cache) and array_key_exists($storeData, $this->cache)) {
             $data = $this->cache[$storeData];
         } else {
             $data = $this->getItems();
@@ -168,18 +168,18 @@ class ItpMetaModelUrls extends JModelList
 
         // Get the number of projects in categories
         $results = array();
-        if (!empty($itemsIds)) {
+        if (count($itemsIds) > 0) {
             $db    = JFactory::getDbo();
             $query = $db->getQuery(true);
 
             $query
-                ->select("a.url_id, COUNT(*) AS number")
-                ->from($db->quoteName("#__itpm_tags", "a"))
-                ->where("a.url_id IN (" . implode(",", $itemsIds) . ")")
-                ->group("a.url_id");
+                ->select('a.url_id, COUNT(*) AS number')
+                ->from($db->quoteName('#__itpm_tags', 'a'))
+                ->where('a.url_id IN (' . implode(',', $itemsIds) . ')')
+                ->group('a.url_id');
 
             $db->setQuery($query);
-            $results = $db->loadAssocList("url_id", "number");
+            $results = $db->loadAssocList('url_id', 'number');
 
             if (!$results) {
                 $results = array();

@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-class ItpMetaModelUrl extends JModelAdmin
+class ItpmetaModelUrl extends JModelAdmin
 {
     /**
      * Returns a reference to the a Table object, always creating it.
@@ -22,7 +22,7 @@ class ItpMetaModelUrl extends JModelAdmin
      * @return  JTable  A database object
      * @since   1.6
      */
-    public function getTable($type = 'Url', $prefix = 'ItpMetaTable', $config = array())
+    public function getTable($type = 'Url', $prefix = 'ItpmetaTable', $config = array())
     {
         return JTable::getInstance($type, $prefix, $config);
     }
@@ -75,22 +75,22 @@ class ItpMetaModelUrl extends JModelAdmin
      */
     public function save($data)
     {
-        $id         = JArrayHelper::getValue($data, "id", null);
-        $uri        = JArrayHelper::getValue($data, "uri", "");
-        $published  = JArrayHelper::getValue($data, "published", 0);
-        $autoupdate = JArrayHelper::getValue($data, "autoupdate", 0);
+        $id         = Joomla\Utilities\ArrayHelper::getValue($data, 'id', 0, 'int');
+        $uri        = Joomla\Utilities\ArrayHelper::getValue($data, 'uri', '');
+        $published  = Joomla\Utilities\ArrayHelper::getValue($data, 'published', 0, 'int');
+        $autoupdate = Joomla\Utilities\ArrayHelper::getValue($data, 'autoupdate', 0, 'int');
 
         // Load item data
         $row = $this->getTable();
         $row->load($id);
 
-        $row->set("uri", $uri);
-        $row->set("published", $published);
-        $row->set("autoupdate", $autoupdate);
+        $row->set('uri', $uri);
+        $row->set('published', $published);
+        $row->set('autoupdate', $autoupdate);
 
         $row->store();
 
-        return $row->get("id");
+        return $row->get('id');
     }
 
     public function isUriExist($uri)
@@ -103,7 +103,7 @@ class ItpMetaModelUrl extends JModelAdmin
         // Select the required fields from the table.
         $query
             ->select('COUNT(*)')
-            ->from($db->quoteName('#__itpm_urls', "a"))
+            ->from($db->quoteName('#__itpm_urls', 'a'))
             ->where('a.uri=' . $db->quote($uri));
 
         $db->setQuery($query, 0, 1);
@@ -113,7 +113,6 @@ class ItpMetaModelUrl extends JModelAdmin
 
     public function updateAutoupdate($pks, $state)
     {
-        $pks = (array)$pks;
         $pks = Joomla\Utilities\ArrayHelper::toInteger($pks);
 
         $state = (!$state) ? 0 : 1;
@@ -122,9 +121,9 @@ class ItpMetaModelUrl extends JModelAdmin
         $query = $db->getQuery(true);
 
         $query
-            ->update($db->quoteName("#__itpm_urls", "a"))
-            ->set("a.autoupdate = " . (int)$state)
-            ->where("a.id IN (" . implode(",", $pks) . ")");
+            ->update($db->quoteName('#__itpm_urls', 'a'))
+            ->set('a.autoupdate = ' . (int)$state)
+            ->where('a.id IN (' . implode(',', $pks) . ')');
 
         $db->setQuery($query);
         $db->execute();

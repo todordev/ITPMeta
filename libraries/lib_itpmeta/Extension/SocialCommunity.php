@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * This class provides functionality
  * for managing SocialCommunity (com_socialcommunity)
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  */
 class SocialCommunity extends Base
@@ -33,7 +33,7 @@ class SocialCommunity extends Base
      *    "id" => 1
      * );
      *
-     * $extension = new ItpMeta\Extension\SocialCommunity("/my-page", $options);
+     * $extension = new Itpmeta\Extension\SocialCommunity("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>
@@ -47,7 +47,6 @@ class SocialCommunity extends Base
         $id = ArrayHelper::getValue($options, 'id');
 
         switch ($this->view) {
-
             case 'profile':
                 $this->data = $this->getProfileData($id);
                 break;
@@ -84,7 +83,7 @@ class SocialCommunity extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
+        if (count($result) > 0) {
             $data['title']    = $result['title'];
 
             $data['created']  = '';

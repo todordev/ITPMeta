@@ -1,25 +1,23 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Tags
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 namespace Itpmeta\Tag;
-
-use Prism;
 
 defined('JPATH_PLATFORM') or die;
 
 /**
  * This class provides functionality for managing meta tags.
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Tags
  */
-class Tag extends Base implements Prism\Database\TableInterface
+class Tag extends Base
 {
     /**
      * Load tag data from database.
@@ -30,27 +28,26 @@ class Tag extends Base implements Prism\Database\TableInterface
      *      "name" => "og_image"
      * )
      *
-     * $tag   = new ItpMeta\Tag(\JFactory::getDbo());
+     * $tag   = new Itpmeta\Tag\Tag(\JFactory::getDbo());
      * $tag->load($keys);
      * </code>
      *
-     * @param array $keys
+     * @param array|int $keys
      * @param array $options
      */
-    public function load($keys, $options = array())
+    public function load($keys, array $options = array())
     {
-        $id    = (!array_key_exists('id', $keys)) ? 0 : (int)$keys['id'];
-        $name  = (!array_key_exists('name', $keys)) ? null : $keys['name'];
-
         $query = $this->db->getQuery(true);
         $query
             ->select('a.id, a.name, a.type, a.title, a.tag, a.content, a.output, a.ordering, a.url_id')
             ->from($this->db->quoteName('#__itpm_tags', 'a'));
 
-        if ($name !== null or $name !== '') {
-            $query->where('a.name = ' . $this->db->quote($name));
+        if (is_array($keys)) {
+            foreach ($keys as $key => $value) {
+                $query->where($this->db->quoteName('a.'.$key) .' = ' . $this->db->quote($value));
+            }
         } else {
-            $query->where('a.id = ' . (int)$id);
+            $query->where('a.id = ' . (int)$keys);
         }
 
         $this->db->setQuery($query);
@@ -67,7 +64,7 @@ class Tag extends Base implements Prism\Database\TableInterface
      *      "id" => 1,
      * )
      *
-     * $tag   = new ItpMeta\Tag(\JFactory::getDbo());
+     * $tag   = new Itpmeta\Tag\Tag(\JFactory::getDbo());
      * $tag->load($keys);
      *
      * $tag->setContent("http://itprism.com/images/picture.png");
@@ -129,31 +126,5 @@ class Tag extends Base implements Prism\Database\TableInterface
         $max = (int)$this->db->loadResult();
 
         return ++$max;
-    }
-
-    /**
-     * Set new content and generate a tag based that content.
-     *
-     * <code>
-     * $keys = array(
-     *      "id" => 1,
-     * )
-     *
-     * $tag   = new ItpMeta\Tag(\JFactory::getDbo());
-     * $tag->load($keys);
-     *
-     * $tag->setContent("http://itprism.com/images/picture.png");
-     * </code>
-     *
-     * @param string $content
-     *
-     * @return self
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-        $this->generateOutput();
-
-        return $this;
     }
 }

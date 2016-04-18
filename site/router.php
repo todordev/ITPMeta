@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
  *
  * @return string
  */
-function ItpMetaBuildRoute(&$query)
+function ItpmetaBuildRoute(&$query)
 {
     $segments = array();
 
@@ -30,7 +30,7 @@ function ItpMetaBuildRoute(&$query)
  *
  * @return string
  */
-function ItpMetaParseRoute($segments)
+function ItpmetaParseRoute($segments)
 {
     $query = array();
 

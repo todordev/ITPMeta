@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -16,7 +16,7 @@ defined('JPATH_PLATFORM') or die;
 /**
  * This helper provides functionality for K2 (com_k2).
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  */
 class K2 extends Base
@@ -33,7 +33,7 @@ class K2 extends Base
      *    "task" => "default"
      * );
      *
-     * $extension = new ItpMeta\Extension\K2("/my-page", $options);
+     * $extension = new Itpmeta\Extension\K2("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>
@@ -114,7 +114,7 @@ class K2 extends Base
         // Get layout of current menu item.
         $layout = ArrayHelper::getValue($menuItem->query, 'layout');
 
-        if (strcmp('tag', $layout) == 0) { // If it is a menu item of layout 'tag'.
+        if (strcmp('tag', $layout) === 0) { // If it is a menu item of layout 'tag'.
 
             $title    = \JString::trim(ArrayHelper::getValue($data, 'title'));
             $metaDesc = \JString::trim(ArrayHelper::getValue($data, 'metadesc'));
@@ -164,7 +164,7 @@ class K2 extends Base
         $user = $this->getUser($userId);
 
         // Prepare title and meta description.
-        if (strcmp('user', $layout) == 0) { // If there is a layout 'user', that is a menu item 'user'.
+        if (strcmp('user', $layout) === 0) { // If there is a layout 'user', that is a menu item 'user'.
             $data['title']    = \JString::trim(ArrayHelper::getValue($data, 'title'));
             $data['metadesc'] = \JString::trim(ArrayHelper::getValue($data, 'metadesc'));
 
@@ -200,8 +200,7 @@ class K2 extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-
+        if (count($result) > 0) {
             $data['created']  = null;
             $data['modified'] = null;
 
@@ -223,13 +222,13 @@ class K2 extends Base
 
     /**
      * Extract data about category.
-     * 
+     *
      * @param int $categoryId
      * @param string $viewName
      *
      * @return array
      */
-    protected function getCategoryData($categoryId, $viewName = "category")
+    protected function getCategoryData($categoryId, $viewName = 'category')
     {
         $data = array();
 
@@ -247,8 +246,7 @@ class K2 extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-
+        if (count($result) > 0) {
             $data['created']  = null;
             $data['modified'] = null;
             $data['title']    = $result['title'];
@@ -261,7 +259,6 @@ class K2 extends Base
                 (strcmp('itemlist', $menuItem->query['view']) == 0 and strcmp($viewName, $menuItem->query['task']) == 0)
                 and
                 ($categoryId == (int)$menuItem->query['id'])) {
-
                 $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                 // Get title
@@ -277,6 +274,7 @@ class K2 extends Base
             }
 
             // Prepare meta description.
+            $params = array();
             if (!empty($result['params'])) {
                 $params = (array)json_decode($result['params'], true);
             }
@@ -321,8 +319,7 @@ class K2 extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-
+        if (count($result) > 0) {
             $data['title']    = $result['title'];
             $data['created']  = $result['created'];
             $data['modified'] = $result['modified'];
@@ -341,7 +338,6 @@ class K2 extends Base
             }
 
             if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
-
                 $data['metadesc'] = $this->prepareMetaDesc($result['introtext']);
 
                 if (!$data['metadesc']) {

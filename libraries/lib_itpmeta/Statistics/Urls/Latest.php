@@ -1,25 +1,25 @@
 <?php
 /**
- * @package      ItpMeta\Statistics
+ * @package      Itpmeta\Statistics
  * @subpackage   URLs
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 namespace Itpmeta\Statistics\Urls;
 
-use Prism\Database\ArrayObject;
+use Prism\Database;
 
 defined('JPATH_PLATFORM') or die;
 
 /**
  * This class loads latest urls.
  *
- * @package         ItpMeta\Statistics
+ * @package         Itpmeta\Statistics
  * @subpackage      URLs
  */
-class Latest extends ArrayObject
+class Latest extends Database\Collection
 {
     /**
      * Load latest items ordering by creation date.
@@ -28,8 +28,8 @@ class Latest extends ArrayObject
      * $options = array(
      *     "limit" => 5
      * );
-     * 
-     * $latest = new ItpMeta\Statistics\Urls\Latest(JFactory::getDbo());
+     *
+     * $latest = new Itpmeta\Statistics\Urls\Latest(JFactory::getDbo());
      * $latest->load($options);
      *
      * foreach ($latest as $item) {
@@ -39,7 +39,7 @@ class Latest extends ArrayObject
      *
      * @param array $options
      */
-    public function load($options = array())
+    public function load(array $options = array())
     {
         $limit = (!array_key_exists('limit', $options)) ? 5 : (int)$options['limit'];
 

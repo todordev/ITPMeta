@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   URLs
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -16,7 +16,7 @@ defined('JPATH_PLATFORM') or die;
 /**
  * This class provides functionality for managing URIs.
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   URLs
  */
 class Uri extends Prism\Database\Table
@@ -45,7 +45,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = ItpMeta\Uri::getInstance(\JFactory::getDbo(), $keys);
+     * $uri = Itpmeta\Uri::getInstance(\JFactory::getDbo(), $keys);
      * </code>
      *
      * @param \JDatabaseDriver $db
@@ -79,14 +79,14 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->load($keys);
      * </code>
      *
      * @param array $keys;
      * @param array $options;
      */
-    public function load($keys, $options = array())
+    public function load($keys, array $options = array())
     {
         $query = $this->db->getQuery(true);
         $query
@@ -117,7 +117,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * $tags = $uri->getTags();
@@ -130,8 +130,7 @@ class Uri extends Prism\Database\Table
     public function getTags($force = false)
     {
         if ($this->tags === null or $force) {
-
-            if (!empty($this->id) and $this->isPublished()) { // Get all tags ( global and URI )
+            if ((int)$this->id > 0 and $this->isPublished()) { // Get all tags ( global and URI )
                 $query = '
                     ( SELECT
                         a.output, a.ordering, a.name, 0 AS tmp_ordering
@@ -162,7 +161,7 @@ class Uri extends Prism\Database\Table
                 $query
                     ->select('a.output, a.name')
                     ->from($this->db->quoteName('#__itpm_global_tags', 'a'))
-                    ->where('a.published = 1')
+                    ->where('a.published = ' . (int)Prism\Constants::PUBLISHED)
                     ->order('a.ordering ASC');
             }
 
@@ -173,8 +172,7 @@ class Uri extends Prism\Database\Table
             // if there are same ones.
             $result = array();
             foreach ($result_ as $row) {
-                if (!empty($row->name)) {
-
+                if ($row->name !== '') {
                     // Check for existing value in the array for not overridden values.
                     if (!in_array($row->name, $this->notOverridden, true)) {
                         $result[$row->name] = $row;
@@ -202,7 +200,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * if (!$uri->getId()) {
@@ -225,7 +223,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * if (!$uri->isAutoupdate()) {
@@ -248,7 +246,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * if (!$uri->isPublished()) {
@@ -269,7 +267,7 @@ class Uri extends Prism\Database\Table
      * <code>
      * $uriValue = "/my-page";
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->setUri($uriValue);
      * </code>
      *
@@ -294,7 +292,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * echo $uri->getScript($type);
@@ -307,7 +305,6 @@ class Uri extends Prism\Database\Table
     public function getScript($type)
     {
         switch ($type) {
-
             case 'after':
                 return $this->after_body_tag;
                 break;
@@ -337,7 +334,7 @@ class Uri extends Prism\Database\Table
      *    "primary_url" => 0
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->bind($data);
      *
      * $uri->store();
@@ -397,7 +394,7 @@ class Uri extends Prism\Database\Table
      *    "primary_url" => 0
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->setNotOverridden($data);
      * </code>
      *
@@ -415,7 +412,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new ItpMeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * echo $uri;

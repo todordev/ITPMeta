@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // No direct access
@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  * @subpackage     Component
  * @since          1.6
  */
-class ItpMetaControllerScripts extends Prism\Controller\Form\Backend
+class ItpmetaControllerScripts extends Prism\Controller\Form\Backend
 {
     public function save($key = null, $urlVar = null)
     {
@@ -25,18 +25,18 @@ class ItpMetaControllerScripts extends Prism\Controller\Form\Backend
 
         // Gets the data from the form
         $data   = $this->input->post->get('jform', array(), 'array');
-        $itemId = JArrayHelper::getValue($data, "id");
+        $itemId = Joomla\Utilities\ArrayHelper::getValue($data, 'id');
         $model  = $this->getModel();
 
         $redirectData = array(
-            "task" => $this->getTask(),
-            "id"   => $itemId
+            'task' => $this->getTask(),
+            'id'   => $itemId
         );
 
         // Validate the posted data.
         // Sometimes the form needs some posted data, such as for plugins and modules.
         $form = $model->getForm($data, false);
-        /** @var $form JForm * */
+        /** @var $form JForm */
 
         if (!$form) {
             throw new Exception($model->getError());
@@ -44,12 +44,6 @@ class ItpMetaControllerScripts extends Prism\Controller\Form\Backend
 
         // Test if the data is valid.
         $validData = $model->validate($form, $data);
-
-        // Fix magic quotes
-        if (get_magic_quotes_gpc()) {
-            $validData["after_body_tag"]  = stripslashes($validData["after_body_tag"]);
-            $validData["before_body_tag"] = stripslashes($validData["before_body_tag"]);
-        }
 
         try {
             $model->save($validData);
@@ -77,28 +71,25 @@ class ItpMetaControllerScripts extends Prism\Controller\Form\Backend
         $task = $this->getTask();
         $link = $this->defaultLink;
 
-        $itemId = JArrayHelper::getValue($data, "id");
+        $itemId = Joomla\Utilities\ArrayHelper::getValue($data, 'id');
 
         // Prepare redirection
         switch ($task) {
-            case "apply":
-                $link .= "&view=scripts&layout=edit";
+            case 'apply':
+                $link .= '&view=scripts&layout=edit';
                 break;
 
             default:
-                $link .= "&view=url&layout=edit&id=" . (int)$itemId;
+                $link .= '&view=url&layout=edit&id=' . (int)$itemId;
                 break;
         }
 
         return $link;
     }
 
-    /**
-     * Cancel operation
-     */
     public function cancel($key = null)
     {
-        $urlId = JFactory::getApplication()->getUserState("url.id", 0);
-        $this->setRedirect(JRoute::_($this->defaultLink . "&view=url&layout=edit&id=" . $urlId, false));
+        $urlId = JFactory::getApplication()->getUserState('url.id', 0);
+        $this->setRedirect(JRoute::_($this->defaultLink . '&view=url&layout=edit&id=' . $urlId, false));
     }
 }

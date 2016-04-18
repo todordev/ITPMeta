@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
@@ -38,20 +38,15 @@ class ITPMetaViewUrls extends JViewLegacy
 
     protected $sidebar;
 
-    public function __construct($config)
-    {
-        parent::__construct($config);
-        $this->option = JFactory::getApplication()->input->get("option");
-    }
-
     public function display($tpl = null)
     {
-
+        $this->option     = JFactory::getApplication()->input->get('option');
+        
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 
-        $this->numbers = $this->get("Numbers");
+        $this->numbers = $this->get('Numbers');
 
         // Load HTML helper
         JHtml::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'html');
@@ -59,7 +54,7 @@ class ITPMetaViewUrls extends JViewLegacy
         $this->prepareSorting();
 
         // Add submenu
-        ItpMetaHelper::addSubmenu($this->getName());
+        ItpmetaHelper::addSubmenu($this->getName());
 
         // Prepare actions
         $this->addToolbar();
@@ -78,7 +73,7 @@ class ITPMetaViewUrls extends JViewLegacy
         // Prepare filters
         $this->listOrder = $this->escape($this->state->get('list.ordering'));
         $this->listDirn  = $this->escape($this->state->get('list.direction'));
-        $this->saveOrder = (strcmp($this->listOrder, 'a.ordering') != 0) ? false : true;
+        $this->saveOrder = (strcmp($this->listOrder, 'a.ordering') === 0);
 
         $this->sortFields = array(
             'a.published'  => JText::_('JSTATUS'),
@@ -86,7 +81,6 @@ class ITPMetaViewUrls extends JViewLegacy
             'a.uri'        => JText::_('COM_ITPMETA_URI_STRING'),
             'a.id'         => JText::_('JGRID_HEADING_ID')
         );
-
     }
 
     /**
@@ -102,15 +96,15 @@ class ITPMetaViewUrls extends JViewLegacy
         JToolBarHelper::addNew('url.add');
         JToolBarHelper::editList('url.edit');
         JToolBarHelper::divider();
-        JToolBarHelper::publishList("urls.publish");
-        JToolBarHelper::unpublishList("urls.unpublish");
+        JToolBarHelper::publishList('urls.publish');
+        JToolBarHelper::unpublishList('urls.unpublish');
         JToolbarHelper::divider();
-        JToolbarHelper::custom('urls.enableau', "ok", "", JText::_("COM_ITPMETA_URLS_ENABLE_AU"), false);
-        JToolbarHelper::custom('urls.disableau', "ban-circle", "", JText::_("COM_ITPMETA_URLS_DISABLE_AU"), false);
+        JToolbarHelper::custom('urls.enableau', 'ok', '', JText::_('COM_ITPMETA_URLS_ENABLE_AU'), false);
+        JToolbarHelper::custom('urls.disableau', 'ban-circle', '', JText::_('COM_ITPMETA_URLS_DISABLE_AU'), false);
         JToolBarHelper::divider();
-        JToolBarHelper::deleteList(JText::_("COM_ITPMETA_DELETE_ITEMS_QUESTION"), "urls.delete");
+        JToolBarHelper::deleteList(JText::_('COM_ITPMETA_DELETE_ITEMS_QUESTION'), 'urls.delete');
         JToolBarHelper::divider();
-        JToolBarHelper::custom('dashboard.backToDashboard', "dashboard", "", JText::_("COM_ITPMETA_DASHBOARD"), false);
+        JToolBarHelper::custom('dashboard.backToDashboard', 'dashboard', '', JText::_('COM_ITPMETA_DASHBOARD'), false);
     }
 
     /**
@@ -124,7 +118,7 @@ class ITPMetaViewUrls extends JViewLegacy
         JHtmlSidebar::addFilter(
             JText::_('JOPTION_SELECT_PUBLISHED'),
             'filter_state',
-            JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array("archived" => false, "trash" => false)), 'value', 'text', $this->state->get('filter.state'), true)
+            JHtml::_('select.options', JHtml::_('jgrid.publishedOptions', array('archived' => false, 'trash' => false)), 'value', 'text', $this->state->get('filter.state'), true)
         );
 
         JHtmlSidebar::addFilter(
@@ -153,7 +147,7 @@ class ITPMetaViewUrls extends JViewLegacy
         JHtml::_('behavior.multiselect');
         JHtml::_('formbehavior.chosen', 'select');
 
-        JHtml::_("Prism.ui.joomlaList");
+        JHtml::_('Prism.ui.joomlaList');
         $this->document->addScript('../media/' . $this->option . '/js/admin/' . $this->getName() . '.js');
     }
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension type="package" version="3.4" method="upgrade">
+<extension type="package" version="3.5" method="upgrade">
 	<name>ITPMeta Package</name>
 	<packagename>itpmeta</packagename>
 	<author>Todor Iliev</author>
 	<authorEmail>todor@itprism.com</authorEmail>
 	<authorUrl>http://itprism.com</authorUrl>
-	<copyright>Copyright (C) 2015 Todor Iliev ( ITPrism.com )</copyright>
+	<copyright>Copyright (C) 2016 Todor Iliev ( ITPrism.com )</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.en.html GNU/GPLv3</license>
 	<url>http://itprism.com</url>
 	<packager>Todor Iliev</packager>
 	<packagerurl>http://itprism.com</packagerurl>
-	<version>4.3</version>
-	<creationDate>02 October, 2015</creationDate>
+	<version>4.4</version>
+	<creationDate>18 April, 2016</creationDate>
 	<description>
 	<![CDATA[
 	<p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta" target="_blank">ITPMeta</a> is an easy way to put any code in the header of your site.</p>
@@ -20,7 +20,7 @@
 	]]></description>
 	<files folder="packages">
 		<file type="component" 	id="com_itpmeta" >com_itpmeta.zip</file>
-		<file type="plugin" 	id="itpmeta"      group="system">plg_system_itpmeta.zip</file>
+		<file type="plugin" 	id="itpmeta" group="system">plg_system_itpmeta.zip</file>
 		<file type="library"    id="lib_itpmeta" >lib_itpmeta.zip</file>
 	</files>
 	

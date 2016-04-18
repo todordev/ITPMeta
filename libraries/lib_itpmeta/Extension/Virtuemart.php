@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * This class provides functionality
  * for managing VirtueMart (com_virtuemart)
  *
- * @package ItpMeta
+ * @package Itpmeta
  * @subpackage   Extensions
  */
 class Virtuemart extends Base
@@ -34,7 +34,7 @@ class Virtuemart extends Base
      *    "id" => 1
      * );
      *
-     * $extension = new ItpMeta\Extension\Content("/my-page", $options);
+     * $extension = new Itpmeta\Extension\Content("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>
@@ -48,7 +48,6 @@ class Virtuemart extends Base
         $data = array();
 
         switch ($this->view) {
-
             case 'productdetails':
                 $id = ArrayHelper::getValue($options, 'virtuemart_product_id', 0, 'int');
                 $data = $this->getProductDetails($id);
@@ -91,14 +90,11 @@ class Virtuemart extends Base
         $productId = (int)$productId;
         
         if ($productId > 0) {
-
             $productModel = \VmModel::getModel('product');
             $product = $productModel->getProduct($productId, true, true, true);
             $productModel->addImages($product);
             
             if ($product->virtuemart_product_id > 0) {
-
-                // Prepare the title.
                 $data['title'] = \JString::trim($product->product_name);
 
                 // Prepare the image.
@@ -115,7 +111,6 @@ class Virtuemart extends Base
                 // Prepare description
                 $data['metadesc'] = $this->prepareMetaDesc($product->metadesc);
                 if (!$data['metadesc'] and $this->genMetaDesc) {
-
                     $data['metadesc'] = $this->prepareMetaDesc($product->product_s_desc);
 
                     if (!$data['metadesc']) {
@@ -149,7 +144,6 @@ class Virtuemart extends Base
         $categoryId = (int)$categoryId;
 
         if ($categoryId > 0) {
-
             $categoryModel = \VmModel::getModel('category');
             $category      = $categoryModel->getCategory($categoryId);
 
@@ -166,8 +160,7 @@ class Virtuemart extends Base
             $menuItem   = $this->getMenuItem($this->menuItemId);
             
             // Use menu item title and description, if the items is set to a menu item.
-            if ((strcmp($viewName, $menuItem->query['view']) === 0) and ($categoryId === (int)$menuItem->query['id'])) {
-
+            if (strcmp($viewName, $menuItem->query['view']) === 0 and ((int)$categoryId === (int)$menuItem->query['id'])) {
                 $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                 // Get title
@@ -186,7 +179,6 @@ class Virtuemart extends Base
             if (!$data['metadesc'] and $this->genMetaDesc) {
                 $data['metadesc'] = $this->prepareMetaDesc($category->category_description);
             }
-
         }
 
         return $data;

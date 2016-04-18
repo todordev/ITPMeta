@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -17,7 +17,7 @@ defined('JPATH_PLATFORM') or die;
  * This class provides functionality
  * for managing UserIdeas (com_userideas)
  *
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Extensions
  */
 class UserIdeas extends Base
@@ -33,7 +33,7 @@ class UserIdeas extends Base
      *    "id" => 1
      * );
      *
-     * $extension = new ItpMeta\Extension\UserIdeas("/my-page", $options);
+     * $extension = new Itpmeta\Extension\UserIdeas("/my-page", $options);
      *
      * $metaData = $extension->getData($options);
      * </code>
@@ -47,7 +47,6 @@ class UserIdeas extends Base
         $id     = ArrayHelper::getValue($options, 'id');
 
         switch ($this->view) {
-
             case 'category':
                 $this->data = $this->getCategoryData($id);
                 break;
@@ -82,16 +81,13 @@ class UserIdeas extends Base
         $data = array();
 
         if (!empty($itemId)) {
-
-            // Get item data.
             $data = $this->getItem($itemId);
 
             // If it is a menu item, get menu item meta data.
             $menuItem   = $this->getMenuItem($this->menuItemId);
 
             // Use menu item title and description, if the items is set to a menu item.
-            if ((strcmp('details', $menuItem->query['view'])) == 0 and ($itemId == (int)$menuItem->query['id'])) {
-
+            if ((strcmp('details', $menuItem->query['view'])) === 0 and ((int)$itemId === (int)$menuItem->query['id'])) {
                 $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                 // Get title
@@ -139,8 +135,7 @@ class UserIdeas extends Base
         $this->db->setQuery($query);
         $result = (array)$this->db->loadAssoc();
 
-        if (!empty($result)) {
-
+        if (count($result) > 0) {
             $data['title']    = $result['title'];
 
             $data['created']  = $result['created'];

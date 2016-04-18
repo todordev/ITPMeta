@@ -10,6 +10,6 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-$controller = JControllerLegacy::getInstance('ITPMeta');
+$controller = JControllerLegacy::getInstance('Itpmeta');
 $controller->execute(JFactory::getApplication()->input->getCmd('task'));
 $controller->redirect();

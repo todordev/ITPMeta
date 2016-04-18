@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // No direct access
 defined('_JEXEC') or die;
 
-class ITPMetaViewTag extends JViewLegacy
+class ItpmetaViewTag extends JViewLegacy
 {
     /**
      * @var JDocumentHtml
@@ -28,23 +28,16 @@ class ITPMetaViewTag extends JViewLegacy
 
     protected $documentTitle;
     protected $option;
-
-    public function __construct($config)
-    {
-        parent::__construct($config);
-        $this->option = JFactory::getApplication()->input->get("option");
-    }
-
-    /**
-     * Display the view
-     */
+    
     public function display($tpl = null)
     {
+        $this->option = JFactory::getApplication()->input->get('option');
+        
         $this->state = $this->get('State');
         $this->item  = $this->get('Item');
         $this->form  = $this->get('Form');
 
-        $this->params = $this->state->get("params");
+        $this->params = $this->state->get('params');
 
         // Prepare actions, behaviors, scritps and document
         $this->addToolbar();
@@ -62,7 +55,7 @@ class ITPMetaViewTag extends JViewLegacy
     {
         JFactory::getApplication()->input->set('hidemainmenu', true);
 
-        $isNew               = ($this->item->id == 0);
+        $isNew               = ((int)$this->item->id === 0);
         $this->documentTitle = $isNew ? JText::_('COM_ITPMETA_ADD_TAG') : JText::_('COM_ITPMETA_EDIT_TAG');
 
         JToolBarHelper::apply('tag.apply');

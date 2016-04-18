@@ -3,14 +3,14 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // no direct access
 defined('_JEXEC') or die;
 
-class ItpMetaModelTags extends JModelList
+class ItpmetaModelTags extends JModelList
 {
     /**
      * Constructor.
@@ -53,7 +53,7 @@ class ItpMetaModelTags extends JModelList
         $this->setState('params', $params);
 
         // URL ID
-        $value = $app->getUserStateFromRequest("url.id", "id", 0, "int");
+        $value = $app->getUserStateFromRequest('url.id', 'id', 0, 'int');
         $this->setState('filter.url_id', $value);
 
         // List state information.
@@ -99,7 +99,7 @@ class ItpMetaModelTags extends JModelList
                 'a.id, a.title, a.type, a.tag, a.content, a.output, a.ordering'
             )
         );
-        $query->from($db->quoteName("#__itpm_tags", "a"));
+        $query->from($db->quoteName('#__itpm_tags', 'a'));
 
         // Filter by URL ID
         $urlId = $this->getState('filter.url_id');

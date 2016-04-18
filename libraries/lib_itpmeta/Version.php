@@ -1,9 +1,9 @@
 <?php
 /**
- * @package      ItpMeta
+ * @package      Itpmeta
  * @subpackage   Versions
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -14,7 +14,7 @@ defined('JPATH_PLATFORM') or die;
 /**
  * Contains information about component version.
  *
- * @package ItpMeta
+ * @package Itpmeta
  * @subpackage Versions
  */
 class Version
@@ -38,7 +38,7 @@ class Version
      *
      * @var integer
      */
-    public $devLevel = '3';
+    public $devLevel = '4';
 
     /**
      * Release Type
@@ -59,7 +59,7 @@ class Version
      *
      * @var string
      */
-    public $releaseDate = '07 December, 2015';
+    public $releaseDate = '18 April, 2016';
 
     /**
      * License
@@ -73,7 +73,7 @@ class Version
      *
      * @var string
      */
-    public $copyright = '&copy; 2015 ITPrism. All rights reserved.';
+    public $copyright = '&copy; 2016 ITPrism. All rights reserved.';
 
     /**
      * URL
@@ -101,7 +101,7 @@ class Version
      *
      * @var string
      */
-    public $requiredPrismVersion = '1.0';
+    public $requiredPrismVersion = '1.10';
 
     /**
      *  Build long format of the version text.

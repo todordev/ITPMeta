@@ -3,8 +3,8 @@
  * @package      ITPMeta
  * @subpackage   Component
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2015 Todor Iliev <todor@itprism.com>. All rights reserved.
- * @license      http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 // Check to ensure this file is included in Joomla!
@@ -16,12 +16,11 @@ defined('_JEXEC') or die;
  * @package     ITPMeta
  * @subpackage  Component
  */
-class ItpMetaControllerGlobals extends JControllerAdmin
+class ItpmetaControllerGlobals extends JControllerAdmin
 {
-    public function getModel($name = 'Global', $prefix = 'ItpMetaModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Global', $prefix = 'ItpmetaModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
-
         return $model;
     }
 
@@ -33,6 +32,8 @@ class ItpMetaControllerGlobals extends JControllerAdmin
      */
     public function saveOrderAjax()
     {
+        $response = new Prism\Response\Json();
+
         // Get the input
         $pks   = $this->input->post->get('cid', array(), 'array');
         $order = $this->input->post->get('order', array(), 'array');
@@ -52,15 +53,12 @@ class ItpMetaControllerGlobals extends JControllerAdmin
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 
-        $response = array(
-            'success' => true,
-            'title'   => JText::_('COM_ITPMETA_SUCCESS'),
-            'text'    => JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'),
-            'data'    => array()
-        );
+        $response
+            ->success()
+            ->setTitle(JText::_('COM_ITPMETA_SUCCESS'))
+            ->setText(JText::_('JLIB_APPLICATION_SUCCESS_ORDERING_SAVED'));
 
-        echo json_encode($response);
-
+        echo $response;
         JFactory::getApplication()->close();
     }
 }
