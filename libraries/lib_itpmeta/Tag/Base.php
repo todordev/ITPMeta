@@ -9,6 +9,8 @@
 
 namespace Itpmeta\Tag;
 
+use Joomla\String\StringHelper;
+
 defined('JPATH_PLATFORM') or die;
 
 /**
@@ -71,8 +73,8 @@ abstract class Base
         $numMatches = (int)preg_match_all($this->pattern, $this->tag, $matches);
 
         if (2 === $numMatches) { // Replace values of tags which contains two indicators.
-
-            $rows = preg_split("/\n/", $this->content);
+//            $rows = preg_split("/\n/", $this->content);
+            $rows = explode(PHP_EOL, $this->content);
 
             if (count($rows) === 2) {
                 $line1 = $rows[0];
@@ -80,12 +82,10 @@ abstract class Base
 
                 $tag          = preg_replace($this->pattern, $line1, $this->tag, 1); // First value
                 $this->output = preg_replace($this->pattern, $line2, $tag, 1); // Second value
-
             } else {
                 $line1        = $this->clean($rows[0]);
                 $this->output = preg_replace($this->pattern, $line1, $this->tag, 1);
             }
-
         } else { // Replace values of tags which contains one indicators.
             $this->output = preg_replace($this->pattern, $this->clean($this->content), $this->tag, 1);
         }
@@ -156,6 +156,8 @@ abstract class Base
     public function setType($type)
     {
         $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -330,7 +332,7 @@ abstract class Base
      */
     protected function clean($content)
     {
-        return \JString::trim(preg_replace('/\r|\n/', ' ', $content));
+        return StringHelper::trim(preg_replace('/\r|\n/', ' ', $content));
     }
 
     /**

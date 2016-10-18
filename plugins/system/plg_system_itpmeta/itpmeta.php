@@ -7,6 +7,8 @@
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
+use Joomla\String\StringHelper;
+
 // no direct access
 defined('_JEXEC') or die;
 
@@ -36,6 +38,7 @@ class plgSystemItpmeta extends JPlugin
     /**
      * Get clean URI.
      *
+     * @throws \Exception
      * @return string
      */
     protected function getUri()
@@ -51,7 +54,6 @@ class plgSystemItpmeta extends JPlugin
         $itpUri->setNotOverridden($this->notOverridden);
 
         return $itpUri;
-
     }
 
     private function isRestricted()
@@ -84,6 +86,8 @@ class plgSystemItpmeta extends JPlugin
 
     /**
      * Put tags into the HEAD tag.
+     *
+     * @throws \Exception
      */
     public function onBeforeCompileHead()
     {
@@ -110,7 +114,7 @@ class plgSystemItpmeta extends JPlugin
             /** @var $document JDocumentHTML */
 
             foreach ($tags as $tag) {
-                $tag->output = JString::trim($tag->output);
+                $tag->output = StringHelper::trim($tag->output);
                 if ($tag->output !== '') {
                     $document->addCustomTag($tag->output);
                 }
@@ -121,6 +125,8 @@ class plgSystemItpmeta extends JPlugin
     /**
      * Put some additional code - namespaces,
      * additional code after body tag or before closing body tag.
+     *
+     * @throws \Exception
      */
     public function onAfterRender()
     {
@@ -155,6 +161,8 @@ class plgSystemItpmeta extends JPlugin
      *
      * @param string $buffer
      *
+     * @throws \Exception
+     *
      * @return string
      */
     private function putAfterHead($buffer)
@@ -175,7 +183,7 @@ class plgSystemItpmeta extends JPlugin
             $items  = array();
             foreach ($tags as $tag) {
                 if ($tag->output !== '') {
-                    $items[] = JString::trim($tag->output);
+                    $items[] = StringHelper::trim($tag->output);
                 }
             }
 
@@ -197,6 +205,7 @@ class plgSystemItpmeta extends JPlugin
      *
      * @param string $buffer
      *
+     * @throws \Exception
      * @return string
      */
     private function putAfterTitle($buffer)
@@ -217,7 +226,7 @@ class plgSystemItpmeta extends JPlugin
             $items  = array();
             foreach ($tags as $tag) {
                 if ($tag->output !== '') {
-                    $items[] = JString::trim($tag->output);
+                    $items[] = StringHelper::trim($tag->output);
                 }
             }
 
@@ -235,6 +244,7 @@ class plgSystemItpmeta extends JPlugin
      *
      * @param string $buffer
      *
+     * @throws \Exception
      * @return string
      */
     private function putAdditionalCode($buffer)

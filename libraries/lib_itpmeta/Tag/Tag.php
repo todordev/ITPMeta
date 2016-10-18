@@ -34,6 +34,9 @@ class Tag extends Base
      *
      * @param array|int $keys
      * @param array $options
+     *
+     * @throws \RuntimeException
+     *
      */
     public function load($keys, array $options = array())
     {
@@ -70,6 +73,8 @@ class Tag extends Base
      * $tag->setContent("http://itprism.com/images/picture.png");
      * $tag->store();
      * </code>
+     *
+     * @throws \RuntimeException
      *
      * @return self
      */
@@ -113,6 +118,10 @@ class Tag extends Base
 
     /**
      * Calculate max ordering of the record.
+     *
+     * @throws \RuntimeException
+     *
+     * @return int
      */
     protected function getMaxOrdering()
     {

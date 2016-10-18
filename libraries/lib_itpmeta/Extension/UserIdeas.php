@@ -40,6 +40,8 @@ class UserIdeas extends Base
      *
      * @param array $options
      *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      * @return array
      */
     public function getData(array $options = array())
@@ -74,20 +76,21 @@ class UserIdeas extends Base
      *
      * @param int $itemId
      *
+     * @throws \Exception
      * @return array
      */
     protected function getDetailsData($itemId)
     {
         $data = array();
 
-        if (!empty($itemId)) {
+        if ((int)$itemId > 0) {
             $data = $this->getItem($itemId);
 
             // If it is a menu item, get menu item meta data.
             $menuItem   = $this->getMenuItem($this->menuItemId);
 
             // Use menu item title and description, if the items is set to a menu item.
-            if ((strcmp('details', $menuItem->query['view'])) === 0 and ((int)$itemId === (int)$menuItem->query['id'])) {
+            if ((strcmp('details', $menuItem->query['view']) === 0) and ((int)$itemId === (int)$menuItem->query['id'])) {
                 $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                 // Get title
@@ -99,7 +102,6 @@ class UserIdeas extends Base
                 if (!empty($menuItemData['metadesc'])) {
                     $data['metadesc'] = $menuItemData['metadesc'];
                 }
-
             }
 
             if (!$data) {
@@ -119,6 +121,7 @@ class UserIdeas extends Base
      *
      * @param int $itemId
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getItem($itemId)

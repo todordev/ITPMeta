@@ -40,6 +40,8 @@ class SocialCommunity extends Base
      *
      * @param array $options
      *
+     * @throws \RuntimeException
+     * @throws \Exception
      * @return array
      */
     public function getData(array $options = array())
@@ -67,6 +69,7 @@ class SocialCommunity extends Base
      *
      * @param int $userId
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getProfileData($userId)

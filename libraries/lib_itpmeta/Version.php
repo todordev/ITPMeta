@@ -38,7 +38,7 @@ class Version
      *
      * @var integer
      */
-    public $devLevel = '4';
+    public $devLevel = '5';
 
     /**
      * Release Type
@@ -59,7 +59,7 @@ class Version
      *
      * @var string
      */
-    public $releaseDate = '18 April, 2016';
+    public $releaseDate = '18 October, 2016';
 
     /**
      * License
@@ -80,7 +80,7 @@ class Version
      *
      * @var string
      */
-    public $url = '<a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">ITP Meta</a>';
+    public $url = '<a href="http://itprism.com/free-joomla-extensions/others/open-graph-meta" target="_blank">ITPMeta</a>';
 
     /**
      * Backlink
@@ -101,7 +101,7 @@ class Version
      *
      * @var string
      */
-    public $requiredPrismVersion = '1.10';
+    public $requiredPrismVersion = '1.16';
 
     /**
      *  Build long format of the version text.

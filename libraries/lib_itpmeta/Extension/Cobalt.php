@@ -9,6 +9,7 @@
 
 namespace Itpmeta\Extension;
 
+use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
 defined('JPATH_PLATFORM') or die;
@@ -40,6 +41,9 @@ class Cobalt extends Base
      * </code>
      *
      * @param array $options
+     *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      *
      * @return array
      */
@@ -109,6 +113,8 @@ class Cobalt extends Base
      *
      * @param int $categoryId
      *
+     * @throws \RuntimeException
+     *
      * @return array
      */
     protected function getCobaltCategoryData($categoryId)
@@ -140,7 +146,6 @@ class Cobalt extends Base
             if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
                 $data['metadesc'] = $this->prepareMetaDesc($data['description']);
             }
-
         }
 
         return $data;
@@ -152,6 +157,7 @@ class Cobalt extends Base
      * @param int $userId
      * @param int $sectionId
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getAuthorData($userId, $sectionId)
@@ -186,6 +192,8 @@ class Cobalt extends Base
      *
      * @param int $categoryId
      *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      * @return array
      */
     protected function getUserCategoryData($categoryId)
@@ -236,6 +244,9 @@ class Cobalt extends Base
      *
      * @param int $itemId
      *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     *
      * @return array
      */
     protected function getItemData($itemId)
@@ -258,7 +269,7 @@ class Cobalt extends Base
         if (count($result) > 0) {
             // Prepare data
             foreach ($result as $key => $value) {
-                $data[$key] = \JString::trim($value);
+                $data[$key] = StringHelper::trim($value);
             }
             unset($results);
 
@@ -271,7 +282,6 @@ class Cobalt extends Base
             if (!$data['metadesc'] and !empty($this->genMetaDesc)) {
                 $data['metadesc'] = $this->getItemDescription($itemId);
             }
-
         }
 
         return $data;
@@ -282,7 +292,10 @@ class Cobalt extends Base
      *
      * @param integer $itemId
      *
-     * @return NULL|string
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     *
+     * @return null|string
      */
     protected function getItemImage($itemId)
     {
@@ -311,6 +324,8 @@ class Cobalt extends Base
      * Generate meta description from textarea or HTML fields.
      *
      * @param integer $itemId
+     *
+     * @throws \RuntimeException
      *
      * @return string
      */
@@ -371,6 +386,9 @@ class Cobalt extends Base
      *
      * @param int $sectionId
      *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     *
      * @return array
      */
     protected function getSectionData($sectionId)
@@ -395,7 +413,7 @@ class Cobalt extends Base
 
             $description = ArrayHelper::getValue($result, 'description');
 
-            $metaDesc         = \JString::substr(\JString::trim(strip_tags($description)), 0, 160);
+            $metaDesc         = StringHelper::substr(StringHelper::trim(strip_tags($description)), 0, 160);
             $data['metadesc'] = $metaDesc;
         }
 

@@ -26,6 +26,8 @@ abstract class UrlHelper
     /**
      * Prepare some specific URLs that comes from components.
      *
+     * @throws \Exception
+     *
      * @return \JUri
      */
     public static function getUri()
@@ -48,7 +50,6 @@ abstract class UrlHelper
 
                     break;
             }
-
         }
 
         return self::$uri;

@@ -34,6 +34,8 @@ class GlobalTag extends Base
      *
      * @param array|int $keys
      * @param array $options
+     *
+     * @throws \RuntimeException
      */
     public function load($keys, array $options = array())
     {
@@ -71,6 +73,8 @@ class GlobalTag extends Base
      * $tag->store();
      * </code>
      *
+     * @throws \RuntimeException
+     *
      * @return self
      */
     public function store()
@@ -102,7 +106,11 @@ class GlobalTag extends Base
     }
 
     /**
-     * The method calculate max ordering of the record
+     * The method calculate max ordering of the record.
+     *
+     * @throws \RuntimeException
+     *
+     * @return int
      */
     protected function getMaxOrdering()
     {

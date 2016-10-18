@@ -9,6 +9,7 @@
 
 namespace Itpmeta\Url;
 
+use Joomla\String\StringHelper;
 use Prism;
 
 defined('JPATH_PLATFORM') or die;
@@ -30,6 +31,7 @@ class Uri extends Prism\Database\Table
     protected $menu_id = 0;
     protected $parent_menu_id = 0;
     protected $primary_url = 0;
+    protected $checked;
 
     protected $tags;
 
@@ -45,7 +47,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = Itpmeta\Uri::getInstance(\JFactory::getDbo(), $keys);
+     * $uri = Itpmeta\Uri\Uri::getInstance(\JFactory::getDbo(), $keys);
      * </code>
      *
      * @param \JDatabaseDriver $db
@@ -55,8 +57,8 @@ class Uri extends Prism\Database\Table
      */
     public static function getInstance(\JDatabaseDriver $db, $keys)
     {
-        $uri   = (array_key_exists('uri', $keys)) ? $keys['uri'] : null;
-        $uriId = (array_key_exists('uri_id', $keys)) ? $keys['uri_id'] : 0;
+        $uri   = array_key_exists('uri', $keys) ? $keys['uri'] : null;
+        $uriId = array_key_exists('uri_id', $keys) ? $keys['uri_id'] : 0;
 
         // Generate hash index
         $index = !$uriId ? md5($uri) : $uriId;
@@ -79,23 +81,24 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->load($keys);
      * </code>
      *
      * @param array $keys;
      * @param array $options;
+     *
+     * @throws \RuntimeException
      */
     public function load($keys, array $options = array())
     {
         $query = $this->db->getQuery(true);
         $query
-            ->select('a.id, a.uri, a.after_body_tag, a.before_body_tag, a.published, a.autoupdate')
+            ->select('a.id, a.uri, a.after_body_tag, a.before_body_tag, a.published, a.autoupdate, a.checked')
             ->from($this->db->quoteName('#__itpm_urls', 'a'));
-
         
-        $uri   = (array_key_exists('uri', $keys)) ? $keys['uri'] : null;
-        $uriId = (array_key_exists('uri_id', $keys)) ? (int)$keys['uri_id'] : 0;
+        $uri   = array_key_exists('uri', $keys) ? $keys['uri'] : null;
+        $uriId = array_key_exists('uri_id', $keys) ? (int)$keys['uri_id'] : 0;
 
         if ($uriId > 0) {
             $query->where('a.id = ' . (int)$uriId);
@@ -117,13 +120,15 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * $tags = $uri->getTags();
      * </code>
      *
      * @param bool $force
+     *
+     * @throws \RuntimeException
      *
      * @return array
      */
@@ -200,7 +205,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * if (!$uri->getId()) {
@@ -216,6 +221,27 @@ class Uri extends Prism\Database\Table
     }
 
     /**
+     * Return the date when that record has been checked for modifications.
+     *
+     * <code>
+     * $keys = array(
+     *    "uri" => "/my-page"
+     * );
+     *
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
+     * $uri->load($keys);
+     *
+     * echo $uri->getCheckDate();
+     * </code>
+     *
+     * @return string
+     */
+    public function getCheckDate()
+    {
+        return $this->checked;
+    }
+
+    /**
      * Check if auto update option has been enabled.
      *
      * <code>
@@ -223,7 +249,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * if (!$uri->isAutoupdate()) {
@@ -246,7 +272,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * if (!$uri->isPublished()) {
@@ -267,7 +293,7 @@ class Uri extends Prism\Database\Table
      * <code>
      * $uriValue = "/my-page";
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->setUri($uriValue);
      * </code>
      *
@@ -292,7 +318,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * echo $uri->getScript($type);
@@ -334,19 +360,21 @@ class Uri extends Prism\Database\Table
      *    "primary_url" => 0
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->bind($data);
      *
      * $uri->store();
      * </code>
+     *
+     * @throws \RuntimeException
      */
     public function store()
     {
         // Prepare script tags
-        $afterBodyTag = \JString::trim($this->after_body_tag);
+        $afterBodyTag = StringHelper::trim($this->after_body_tag);
         $afterBodyTag = ($afterBodyTag !== '') ? $this->db->quote($afterBodyTag) : 'NULL';
 
-        $beforeBodyTag = \JString::trim($this->before_body_tag);
+        $beforeBodyTag = StringHelper::trim($this->before_body_tag);
         $beforeBodyTag = ($beforeBodyTag !== '') ? $this->db->quote($beforeBodyTag) : 'NULL';
 
         $query = $this->db->getQuery(true);
@@ -361,8 +389,7 @@ class Uri extends Prism\Database\Table
             ->set('primary_url     = ' . (int)$this->primary_url);
 
         if (!$this->id) { // Insert a new record
-            $query
-                ->insert($this->db->quoteName('#__itpm_urls'));
+            $query->insert($this->db->quoteName('#__itpm_urls'));
 
             $this->db->setQuery($query);
             $this->db->execute();
@@ -371,6 +398,40 @@ class Uri extends Prism\Database\Table
 
         } else { // Update a record
             $query
+                ->update($this->db->quoteName('#__itpm_urls'))
+                ->where($this->db->quoteName('id') . ' = ' . (int)$this->id);
+
+            $this->db->setQuery($query);
+            $this->db->execute();
+        }
+    }
+
+    /**
+     * Update the date when this record has been checked for new tags.
+     *
+     * <code>
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
+     * $uri->updateCheckDate('2016-01-01');
+     * </code>
+     *
+     * @param string $date
+     *
+     * @throws \RuntimeException
+     */
+    public function updateCheckDate($date = '')
+    {
+        if ((int)$this->id > 0) {
+            $dateValidator = new Prism\Validator\Date($date);
+            if (!$date or !$dateValidator->isValid()) {
+                $today          = new \JDate();
+                $this->checked = $today->toSql();
+            } else {
+                $this->checked = $date;
+            }
+
+            $query = $this->db->getQuery(true);
+            $query
+                ->set($this->db->quoteName('checked') .' = '. $this->db->quote($this->checked))
                 ->update($this->db->quoteName('#__itpm_urls'))
                 ->where($this->db->quoteName('id') . ' = ' . (int)$this->id);
 
@@ -394,7 +455,7 @@ class Uri extends Prism\Database\Table
      *    "primary_url" => 0
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->setNotOverridden($data);
      * </code>
      *
@@ -412,7 +473,7 @@ class Uri extends Prism\Database\Table
      *    "uri" => "/my-page"
      * );
      *
-     * $uri = new Itpmeta\Uri::getInstance(\JFactory::getDbo());
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
      * $uri->load($keys);
      *
      * echo $uri;

@@ -41,6 +41,9 @@ class Content extends Base
      *
      * @param array $options
      *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \Exception
      * @return array
      */
     public function getData(array $options = array())
@@ -77,6 +80,7 @@ class Content extends Base
      *
      * @param int $articleId
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getArticleData($articleId)
@@ -100,7 +104,7 @@ class Content extends Base
 
         if (count($result) > 0) {
             foreach ($result as $key => $value) {
-                if (!in_array($key, $excluded)) {
+                if (!in_array($key, $excluded, true)) {
                     $data[$key] = $value;
                 }
             }
@@ -127,7 +131,6 @@ class Content extends Base
                 if (!$data['metadesc']) {
                     $data['metadesc'] = $this->prepareMetaDesc($result['fulltext']);
                 }
-
             }
 
             unset($result);

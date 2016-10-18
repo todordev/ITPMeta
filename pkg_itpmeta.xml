@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension type="package" version="3.5" method="upgrade">
+<extension type="package" version="3.6" method="upgrade">
 	<name>ITPMeta Package</name>
 	<packagename>itpmeta</packagename>
 	<author>Todor Iliev</author>
@@ -10,8 +10,8 @@
 	<url>http://itprism.com</url>
 	<packager>Todor Iliev</packager>
 	<packagerurl>http://itprism.com</packagerurl>
-	<version>4.4</version>
-	<creationDate>18 April, 2016</creationDate>
+	<version>4.5</version>
+	<creationDate>18 October, 2016</creationDate>
 	<description>
 	<![CDATA[
 	<p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta" target="_blank">ITPMeta</a> is an easy way to put any code in the header of your site.</p>
@@ -27,6 +27,7 @@
 	<scriptfile>install.php</scriptfile>
 
     <updateservers>
-        <server type="extension" priority="1" name="ITP Meta ( from CDN )">http://cdn.itprism.com/updates/itpmeta.xml</server>
+        <server type="extension" priority="1" name="ITPMeta Package">http://cdn.itprism.com/updates/itpmeta/package.xml</server>
+        <server type="extension" priority="2" name="ITPMeta ( from CDN )">http://cdn.itprism.com/updates/itpmeta.xml</server>
     </updateservers>
 </extension>

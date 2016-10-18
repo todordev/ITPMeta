@@ -3,7 +3,7 @@
 	<description>ITPMeta Ant Build File</description>
 
 	<!-- load variables from config file -->
-	<property name="cfg.configFile" location="antconfig_j3.txt" />
+	<property name="cfg.configFile" location="antconfig.txt" />
 	<loadproperties srcfile="${cfg.configFile}" />
 
 	<!-- auto values but should be checked -->
@@ -15,9 +15,7 @@
 	<property name="cfg.mediaDestDir" location="${cfg.pkgDir}/media" />
 	<property name="cfg.siteDestDir" location="${cfg.pkgDir}/site" />
 	<property name="cfg.librariesDestDir" location="${cfg.pkgDir}/libraries" />
-	
 	<property name="cfg.pluginsDestDir" location="${cfg.pkgDir}/plugins" />
-	<property name="cfg.modulesDestDir" location="${cfg.pkgDir}/modules" />
 
 	<!-- Admin, Site and Media source -->
 	<property name="cfg.adminSourceDir" location="${cfg.sourceDir}/administrator/components" />
@@ -27,10 +25,6 @@
 
 	<!-- plug-ins source -->
     <property name="cfg.pluginsSourceDir" location="${cfg.sourceDir}/plugins" />
-	
-	<!-- modules source -->
-    <property name="cfg.modulesSourceDir" location="${cfg.sourceDir}/modules" />
-	
 	<target name="build" depends="clean, init, copy, build_component, info" />
 
 	<!-- delete old files -->
@@ -39,7 +33,6 @@
 			<fileset dir="${cfg.adminDestDir}" includes="**/*" />
 			<fileset dir="${cfg.librariesDestDir}" includes="**/*" />
 			<fileset dir="${cfg.mediaDestDir}" includes="**/*" />
-			<fileset dir="${cfg.modulesDestDir}" includes="**/*" />
 			<fileset dir="${cfg.pluginsDestDir}" includes="**/*" />
 			<fileset dir="${cfg.siteDestDir}" includes="**/*" />
 			
@@ -61,7 +54,6 @@
 		<mkdir dir="${cfg.pkgDir}/site" />
 		<mkdir dir="${cfg.pkgDir}/libraries" />
 		<mkdir dir="${cfg.pkgDir}/packages" />
-		<mkdir dir="${cfg.pkgDir}/modules" />
 		<mkdir dir="${cfg.pkgDir}/plugins" />
 		
 		<!-- plug-ins -->

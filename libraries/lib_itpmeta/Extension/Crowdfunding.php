@@ -41,6 +41,7 @@ class Crowdfunding extends Base
      *
      * @param array $options
      *
+     * @throws \Exception
      * @return array
      */
     public function getData(array $options = array())
@@ -94,17 +95,18 @@ class Crowdfunding extends Base
     /**
      * Extract data about raising capital page ( Intro Article ).
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getRaiseData()
     {
         // Get intro article
         $params     = \JComponentHelper::getParams('com_crowdfunding');
-        $articleId  = $params->get('project_intro_article', 0);
+        $articleId  = (int)$params->get('project_intro_article', 0);
 
         $data       = array();
 
-        if (!empty($articleId)) {
+        if ($articleId > 0) {
             $query = $this->db->getQuery(true);
 
             $query
@@ -119,7 +121,7 @@ class Crowdfunding extends Base
                 $excluded = array('images', 'introtext', 'fulltext');
 
                 foreach ($result as $key => $value) {
-                    if (!in_array($key, $excluded)) {
+                    if (!in_array($key, $excluded, true)) {
                         $data[$key] = $value;
                     }
                 }
@@ -141,12 +143,10 @@ class Crowdfunding extends Base
                     if (!$data['metadesc']) {
                         $data['metadesc'] = $this->prepareMetaDesc($result['fulltext']);
                     }
-
                 }
 
                 unset($result);
             }
-
         }
 
         return $data;
@@ -158,19 +158,20 @@ class Crowdfunding extends Base
      * @param int $projectId
      * @param string $screen
      *
+     * @throws \Exception
      * @return array
      */
     protected function getDetailsData($projectId, $screen = '')
     {
         $data = array();
 
-        if (!empty($projectId)) {
+        if ((int)$projectId > 0) {
             $data = $this->getProjectData($projectId);
 
             if (!empty($data)) {
                 // If it is a menu item, get menu item meta data.
                 $menuItem   = $this->getMenuItem($this->menuItemId);
-                if ((strcmp('details', $menuItem->query['view'])) === 0 and ((int)$projectId === (int)$menuItem->query['id'])) {
+                if ((strcmp('details', $menuItem->query['view']) === 0) and ((int)$projectId === (int)$menuItem->query['id'])) {
                     $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                     // Get title
@@ -182,7 +183,6 @@ class Crowdfunding extends Base
                     if (!empty($menuItemData['metadesc'])) {
                         $data['metadesc'] = $menuItemData['metadesc'];
                     }
-
                 }
 
                 // If it is one of the following screens
@@ -191,18 +191,16 @@ class Crowdfunding extends Base
                 $projectScreens = array('updates', 'comments', 'funders');
 
                 // If it is screens updates, comments or funders, use document title.
-                if (in_array($screen, $projectScreens)) {
+                if (in_array($screen, $projectScreens, true)) {
                     $data['title'] = $doc->getTitle();
                 }
 
                 if (!$data['metadesc']) {
                     $data['metadesc'] = $doc->getDescription();
                 }
-
             } else {
                 $data = array();
             }
-
         }
 
         return $data;
@@ -213,13 +211,14 @@ class Crowdfunding extends Base
      *
      * @param int $projectId
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getDefaultProjectData($projectId)
     {
         $data = array();
 
-        if (!empty($projectId)) {
+        if ((int)$projectId > 0) {
             $data = $this->getProjectData($projectId);
 
             if (!empty($data)) {
@@ -233,7 +232,6 @@ class Crowdfunding extends Base
             } else {
                 $data = array();
             }
-
         }
 
         return $data;
@@ -244,13 +242,14 @@ class Crowdfunding extends Base
      *
      * @param int $projectId
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getProjectData($projectId)
     {
         $data        = array();
 
-        if (!empty($projectId)) {
+        if ((int)$projectId > 0) {
             $query = $this->db->getQuery(true);
 
             $query
@@ -278,7 +277,6 @@ class Crowdfunding extends Base
 
                 unset($result);
             }
-
         }
 
         return $data;

@@ -9,6 +9,7 @@
 
 namespace Itpmeta\Extension;
 
+use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
 defined('JPATH_PLATFORM') or die;
@@ -41,6 +42,7 @@ class Virtuemart extends Base
      *
      * @param array $options
      *
+     * @throws \Exception
      * @return array
      */
     public function getData(array $options = array())
@@ -95,7 +97,7 @@ class Virtuemart extends Base
             $productModel->addImages($product);
             
             if ($product->virtuemart_product_id > 0) {
-                $data['title'] = \JString::trim($product->product_name);
+                $data['title'] = StringHelper::trim($product->product_name);
 
                 // Prepare the image.
                 if ($product->file_url_thumb !== '') {
@@ -131,6 +133,7 @@ class Virtuemart extends Base
      * @param int $categoryId
      * @param string $viewName
      *
+     * @throws \Exception
      * @return array
      */
     protected function getCategoryData($categoryId, $viewName = 'category')
@@ -172,7 +175,6 @@ class Virtuemart extends Base
                 if (!empty($menuItemData['metadesc'])) {
                     $data['metadesc'] = $menuItemData['metadesc'];
                 }
-
             }
 
             // Generate meta description from category description.

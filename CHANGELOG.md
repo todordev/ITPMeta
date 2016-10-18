@@ -1,5 +1,9 @@
-ITP Meta Changelog
+ITPMeta Changelog
 ==========================
+
+###v4.5
+* Added support [EShop](http://joomdonation.com/joomla-extensions/eshop-joomla-shopping-cart.html).
+* Added option Auto-update Period to the **plugin System - ITPMeta Tags**. Use that option to set a period in which the system will not check for changes in meta tags.
 
 ###v4.4
 * Fixed a compatibility issue between extension and Prism library v1.10.

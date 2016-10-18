@@ -10,6 +10,7 @@
 namespace Itpmeta\Extension;
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\String\StringHelper;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -54,8 +55,10 @@ abstract class Base
      * </code>
      *
      * @param $options
+     *
+     * @throws \InvalidArgumentException
      */
-    public function __construct($options)
+    public function __construct(array $options)
     {
         $this->view         = ArrayHelper::getValue($options, 'view');
         $this->task         = ArrayHelper::getValue($options, 'task');
@@ -84,6 +87,7 @@ abstract class Base
      *
      * @param int $menuItemId
      *
+     * @throws \Exception
      * @return array
      */
     protected function getDataByMenuItem($menuItemId)
@@ -108,6 +112,7 @@ abstract class Base
      *
      * @param int $menuItemId
      *
+     * @throws \Exception
      * @return null|object
      */
     protected function getMenuItem($menuItemId)
@@ -126,6 +131,7 @@ abstract class Base
      * @param int $categoryId
      * @param string $viewName
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getCategoryData($categoryId, $viewName = 'category')
@@ -149,12 +155,12 @@ abstract class Base
             if (count($result) > 0) {
                 foreach ($result as $key => $value) {
                     if (!in_array($key, $excluded, true)) {
-                        $data[$key] = \JString::trim($value);
+                        $data[$key] = StringHelper::trim($value);
                     }
                 }
 
                 // Get image
-                $params        = (array_key_exists('params', $result)) ? json_decode($result['params']) : null;
+                $params        = array_key_exists('params', $result) ? json_decode($result['params']) : null;
                 $data['image'] = null;
 
                 if ($params !== null and (isset($params->image) and $params->image !== '')) {
@@ -177,7 +183,6 @@ abstract class Base
                     if (!empty($menuItemData['metadesc'])) {
                         $data['metadesc'] = $menuItemData['metadesc'];
                     }
-
                 }
 
                 // Generate meta description from category description.
@@ -187,7 +192,6 @@ abstract class Base
 
                 unset($result);
             }
-
         }
 
         return $data;
@@ -220,7 +224,7 @@ abstract class Base
     protected function clean($content)
     {
         $content = strip_tags($content);
-        return \JString::trim(preg_replace('/\r|\n/', ' ', $content));
+        return StringHelper::trim(preg_replace('/\r|\n/', ' ', $content));
     }
 
     protected function prepareMetaDesc($content)
@@ -229,14 +233,14 @@ abstract class Base
 
         $minLength = 50;
         $length    = 160;
-        $strLength = \JString::strlen($content);
+        $strLength = StringHelper::strlen($content);
 
         $metaDesc = '';
 
-        if ($minLength <= \JString::strlen($content)) {
+        if ($minLength <= StringHelper::strlen($content)) {
             if ($strLength > $length) {
-                $pos      = \JString::strpos($content, ' ', $length);
-                $metaDesc = \JString::substr($content, 0, $pos);
+                $pos      = StringHelper::strpos($content, ' ', $length);
+                $metaDesc = StringHelper::substr($content, 0, $pos);
             } else {
                 $metaDesc = $content;
             }
@@ -254,10 +258,8 @@ abstract class Base
             $result = $this->prepareImageFromContent($matches[1]);
         }
 
-        if ($result === '' and $content2 !== '') {
-            if (preg_match($pattern, $content2, $matches) and !empty($matches[1])) {
-                $result = $this->prepareImageFromContent($matches[1]);
-            }
+        if (($result === '' and $content2 !== '') and preg_match($pattern, $content2, $matches) and !empty($matches[1])) {
+            $result = $this->prepareImageFromContent($matches[1]);
         }
 
         return $result;
@@ -267,7 +269,7 @@ abstract class Base
     {
         if (!preg_match('/^https?:\/\//i', $image)) {
             if (strpos($image, '/') === 0) {
-                $matches[1] = \JString::substr($image, 1);
+                $matches[1] = StringHelper::substr($image, 1);
             }
 
             return \JUri::base().$image;

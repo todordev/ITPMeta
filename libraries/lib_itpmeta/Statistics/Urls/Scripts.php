@@ -38,6 +38,8 @@ class Scripts extends Database\Collection
      * </code>
      *
      * @param array $options
+     *
+     * @throws \RuntimeException
      */
     public function load(array $options = array())
     {

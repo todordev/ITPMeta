@@ -48,6 +48,7 @@ class Basic
      * echo $statistics->getTotalUrls();
      * </code>
      *
+     * @throws \RuntimeException
      * @return int
      */
     public function getTotalUrls()
@@ -59,9 +60,8 @@ class Basic
             ->from($this->db->quoteName('#__itpm_urls', 'a'));
 
         $this->db->setQuery($query);
-        $result = (int)$this->db->loadResult();
 
-        return $result;
+        return (int)$this->db->loadResult();
     }
 
     /**
@@ -72,6 +72,7 @@ class Basic
      * echo $statistics->getTotalTags();
      * </code>
      *
+     * @throws \RuntimeException
      * @return int
      */
     public function getTotalTags()
@@ -83,9 +84,8 @@ class Basic
             ->from($this->db->quoteName('#__itpm_tags', 'a'));
 
         $this->db->setQuery($query);
-        $result = (int)$this->db->loadResult();
 
-        return $result;
+        return (int)$this->db->loadResult();
     }
 
     /**
@@ -96,6 +96,7 @@ class Basic
      * echo $statistics->getTotalGlobalTags();
      * </code>
      *
+     * @throws \RuntimeException
      * @return int
      */
     public function getTotalGlobalTags()
@@ -107,8 +108,7 @@ class Basic
             ->from($this->db->quoteName('#__itpm_global_tags', 'a'));
 
         $this->db->setQuery($query);
-        $result = (int)$this->db->loadResult();
 
-        return $result;
+        return (int)$this->db->loadResult();
     }
 }

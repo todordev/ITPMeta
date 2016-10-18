@@ -9,6 +9,7 @@
 
 namespace Itpmeta\Extension;
 
+use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
 defined('JPATH_PLATFORM') or die;
@@ -40,6 +41,9 @@ class K2 extends Base
      *
      * @param array $options
      *
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
+     * @throws \Exception
      * @return array
      */
     public function getData(array $options = array())
@@ -54,7 +58,6 @@ class K2 extends Base
         $view = $this->view;
 
         switch ($task) {
-
             case 'user':
             case 'tag':
                 $view = $task;
@@ -66,7 +69,6 @@ class K2 extends Base
         }
 
         switch ($view) {
-
             case 'item':
                 $data = $this->getItemData($id);
                 break;
@@ -87,7 +89,6 @@ class K2 extends Base
                 if (!empty($this->menuItemId)) {
                     $data = $this->getDataByMenuItem($this->menuItemId);
                 }
-
                 break;
         }
 
@@ -115,9 +116,8 @@ class K2 extends Base
         $layout = ArrayHelper::getValue($menuItem->query, 'layout');
 
         if (strcmp('tag', $layout) === 0) { // If it is a menu item of layout 'tag'.
-
-            $title    = \JString::trim(ArrayHelper::getValue($data, 'title'));
-            $metaDesc = \JString::trim(ArrayHelper::getValue($data, 'metadesc'));
+            $title    = StringHelper::trim(ArrayHelper::getValue($data, 'title'));
+            $metaDesc = StringHelper::trim(ArrayHelper::getValue($data, 'metadesc'));
 
             if (!$title) {
                 $title = \JText::sprintf('LIB_ITPMETA_DISPLAYING_TAG', $tagName);
@@ -126,12 +126,9 @@ class K2 extends Base
             if (!$metaDesc) {
                 $metaDesc = \JText::sprintf('LIB_ITPMETA_DISPLAYING_TAG_DESC', $tagName);
             }
-
         } else { // If it is not a menu item.
-
             $title    = \JText::sprintf('LIB_ITPMETA_DISPLAYING_TAG', $tagName);
             $metaDesc = \JText::sprintf('LIB_ITPMETA_DISPLAYING_TAG_DESC', $tagName);
-
         }
 
         $data['title']    = $title;
@@ -145,6 +142,7 @@ class K2 extends Base
      *
      * @param $parsed
      *
+     * @throws \Exception
      * @return array
      */
     protected function getUserData($parsed)
@@ -161,12 +159,12 @@ class K2 extends Base
         $layout = ArrayHelper::getValue($menuItem->query, 'layout');
         $userId = ArrayHelper::getValue($parsed, 'id', 0, 'int');
 
-        $user = $this->getUser($userId);
+        $user   = $this->getUser($userId);
 
         // Prepare title and meta description.
         if (strcmp('user', $layout) === 0) { // If there is a layout 'user', that is a menu item 'user'.
-            $data['title']    = \JString::trim(ArrayHelper::getValue($data, 'title'));
-            $data['metadesc'] = \JString::trim(ArrayHelper::getValue($data, 'metadesc'));
+            $data['title']    = StringHelper::trim(ArrayHelper::getValue($data, 'title'));
+            $data['metadesc'] = StringHelper::trim(ArrayHelper::getValue($data, 'metadesc'));
 
         } else { // Not menu item. Generate a title and meta description.
 
@@ -177,7 +175,6 @@ class K2 extends Base
             } else {
                 $data['metadesc'] = \JText::sprintf('LIB_ITPMETA_VIEW_USER_METADESC', $user['name']);
             }
-
         }
 
         $data['image'] = ArrayHelper::getValue($user, 'image');
@@ -226,11 +223,14 @@ class K2 extends Base
      * @param int $categoryId
      * @param string $viewName
      *
+     * @throws \RuntimeException
+     * @throws \Exception
      * @return array
      */
     protected function getCategoryData($categoryId, $viewName = 'category')
     {
-        $data = array();
+        $data       = array();
+        $categoryId = (int)$categoryId;
 
         if (!$categoryId) {
             return $data;
@@ -255,10 +255,9 @@ class K2 extends Base
             $menuItem   = $this->getMenuItem($this->menuItemId);
 
             // Use menu item title and description, if the items is set to a menu item.
-            if (
-                (strcmp('itemlist', $menuItem->query['view']) == 0 and strcmp($viewName, $menuItem->query['task']) == 0)
+            if ((strcmp('itemlist', $menuItem->query['view']) === 0 and strcmp($viewName, $menuItem->query['task']) === 0)
                 and
-                ($categoryId == (int)$menuItem->query['id'])) {
+                ($categoryId === (int)$menuItem->query['id'])) {
                 $menuItemData = $this->getDataByMenuItem($this->menuItemId);
 
                 // Get title
@@ -270,7 +269,6 @@ class K2 extends Base
                 if (!empty($menuItemData['metadesc'])) {
                     $data['metadesc'] = $menuItemData['metadesc'];
                 }
-
             }
 
             // Prepare meta description.
@@ -299,6 +297,7 @@ class K2 extends Base
      *
      * @param int $itemId
      *
+     * @throws \RuntimeException
      * @return array
      */
     protected function getItemData($itemId)
