@@ -2,7 +2,7 @@ ITPMeta Changelog
 ==========================
 
 ###v4.6
-* Added functionality that store the tags in the cache. That will increase the performance doing fewer calls to database. 
+* Added functionality that stores the tags in the cache. That will increase the performance doing fewer calls to database. 
 * Added option to disable include of additional code (scripts).
 
 ###v4.5
