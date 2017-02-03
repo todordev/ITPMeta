@@ -3,13 +3,11 @@
  * @package      Itpmeta
  * @subpackage   URLs
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2017 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 namespace Itpmeta\Url;
-
-use Prism;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -53,5 +51,22 @@ abstract class UrlHelper
         }
 
         return self::$uri;
+    }
+
+    /**
+     * Get URI string.
+     *
+     * @throws \Exception
+     * @return string
+     */
+    public static function getCleanUri()
+    {
+        $filter    = \JFilterInput::getInstance();
+
+        $uri       = self::getUri();
+        $uriString = $uri->toString(array('path', 'query'));
+        $uriString = $filter->clean($uriString);
+
+        return $uriString;
     }
 }

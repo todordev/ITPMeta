@@ -3,11 +3,12 @@
  * @package      ITPMeta
  * @subpackage   Plugins
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2017 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
 use Joomla\String\StringHelper;
+use Itpmeta\Url\UrlHelper;
 
 // no direct access
 defined('_JEXEC') or die;
@@ -43,17 +44,69 @@ class plgSystemItpmeta extends JPlugin
      */
     protected function getUri()
     {
-        $filter    = JFilterInput::getInstance();
+        $container       = Prism\Container::getContainer();
+        $containerHelper = new Itpmeta\Container\Helper();
+        
+        $uriString       = UrlHelper::getCleanUri();
 
-        $uri       = Itpmeta\Url\UrlHelper::getUri();
-        $uriString = $uri->toString(array('path', 'query'));
-        $uriString = $filter->clean($uriString);
+        $keys = array (
+            'uri' => $uriString
+        );
 
         // Load tags for current address
-        $itpUri = Itpmeta\Url\Uri::getInstance(JFactory::getDbo(), array('uri' => $uriString));
+        $itpUri    = $containerHelper->fetchUri($container, $keys);
         $itpUri->setNotOverridden($this->notOverridden);
 
         return $itpUri;
+    }
+
+    /**
+     * Get clean URI.
+     *
+     * @throws \Exception
+     * @return array
+     */
+    protected function getTags()
+    {
+        $tags      = null;
+        $uriString = UrlHelper::getCleanUri();
+        
+        // Prepare caching.
+        $cache = null;
+        if ((bool)$this->params->get('cache') and $this->params->get('cache_period', 30) > 0) {
+            $lifetime = (int)$this->params->get('cache_period', 30) * (int)Prism\Constants::TIME_SECONDS_24H;
+            $cache    = JFactory::getCache('com_itpmeta', '');
+
+            if (!$this->app->get('caching', 0)) {
+                $cache->setCaching(1);
+            }
+
+            $cache->setLifeTime($lifetime);
+
+            // Get the categories from the cache.
+            $hash = Prism\Utilities\StringHelper::generateMd5Hash(Itpmeta\Constants::CACHE_URI, $uriString);
+            $tags = $cache->get($hash);
+            if (!is_array($tags)) {
+                $tags = null;
+            }
+        }
+
+        // Load statuses from database.
+        if ($tags === null) {
+            // Get current URI and load tags for current address.
+            $itpUri = $this->getUri();
+            /** @var $itpUri Itpmeta\Url\Uri */
+
+            $tags = (array)$itpUri->getTags();
+            
+            // Store the categories in the cache.
+            if ($cache !== null and count($tags) > 0) {
+                $hash = Prism\Utilities\StringHelper::generateMd5Hash(Itpmeta\Constants::CACHE_URI, $uriString);
+                $cache->store($tags, $hash);
+            }
+        }
+
+        return (array)$tags;
     }
 
     private function isRestricted()
@@ -102,12 +155,8 @@ class plgSystemItpmeta extends JPlugin
             return;
         }
 
-        // Get current URI and load tags for current address.
-        $itpUri = $this->getUri();
-        /** @var $itpUri Itpmeta\Url\Uri */
-
-        $tags = (array)$itpUri->getTags();
-
+        $tags = $this->getTags();
+        
         // Add metadata
         if (count($tags) > 0) {
             $document = JFactory::getDocument();
@@ -151,7 +200,9 @@ class plgSystemItpmeta extends JPlugin
         $buffer = $this->putNamespaces($buffer, $this->params);
 
         // Add code after body tag and before closing body tag
-        $buffer = $this->putAdditionalCode($buffer);
+        if ((bool)$this->params->get('additional_code', 0)) {
+            $buffer = $this->putAdditionalCode($buffer);
+        }
 
         $this->app->setBody($buffer);
     }
@@ -168,12 +219,9 @@ class plgSystemItpmeta extends JPlugin
     private function putAfterHead($buffer)
     {
         // Get current URI and load tags for current address.
-        $itpUri = $this->getUri();
-        /** @var $itpUri Itpmeta\Url\Uri */
+        $tags = $this->getTags();
 
-        $tags = $itpUri->getTags();
-
-        if (count($tags) === 0) {
+        if (!$tags) {
             return $buffer;
         }
 
@@ -211,10 +259,7 @@ class plgSystemItpmeta extends JPlugin
     private function putAfterTitle($buffer)
     {
         // Get current URI and load tags for current address.
-        $itpUri = $this->getUri();
-        /** @var $itpUri Itpmeta\Url\Uri */
-
-        $tags = $itpUri->getTags();
+        $tags = $this->getTags();
 
         if (!$tags) {
             return $buffer;

@@ -2,12 +2,12 @@
 <extension version="3.6" type="plugin" group="system" method="upgrade">
     <name>PLG_SYSTEM_ITPMETA</name>
     <author>Todor Iliev</author>
-    <copyright>Copyright (C) 2016 Todor Iliev ( ITPrism.com ). All rights reserved.</copyright>
+    <copyright>Copyright (C) 2017 Todor Iliev ( ITPrism.com ). All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.en.html GNU/GPLv3</license>
     <authorEmail>todor@itprism.com</authorEmail>
     <authorUrl>http://itprism.com</authorUrl>
-    <version>4.5</version>
-    <creationDate>18 October, 2016</creationDate>
+    <version>4.6</version>
+    <creationDate>03 February, 2017</creationDate>
 	<description><![CDATA[
     <p><a href="http://itprism.com/free-joomla-extensions/open-graph-meta" target="_blank">ITPMeta</a> plugin puts your code to the header of pages.</p>
     <p><a href='http://itprism.com/help/32-itpmeta-opengraph-documentation-faq' target='_blank'>Read documentation</a> that will help you to setup the extensions.</p>
@@ -30,6 +30,18 @@
                   <option value="1">PLG_SYSTEM_ITPMETA_AFTER_HEAD</option>
                   <option value="2">PLG_SYSTEM_ITPMETA_AFTER_TITLE</option>
                </field>
+
+				<field name="additional_code" type="radio" default="0" label="PLG_SYSTEM_ITPMETA_ADDITIONAL_CODE" description="PLG_SYSTEM_ITPMETA_ADDITIONAL_CODE_DESC" class="btn-group" >
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="cache" type="radio" default="0" label="PLG_SYSTEM_ITPMETA_CACHE_TAG" description="PLG_SYSTEM_ITPMETA_CACHE_TAG_DESC" class="btn-group" >
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="cache_period" type="text" default="30" label="PLG_SYSTEM_ITPMETA_CACHE_TAG_PERIOD" description="PLG_SYSTEM_ITPMETA_CACHE_TAG_PERIOD_DESC" class="btn-group" />
+
 	       </fieldset>
 	       
 	       <fieldset name="schemes" label="PLG_SYSTEM_ITPMETA_SCHEMAS_TITLE">

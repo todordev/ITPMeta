@@ -3,7 +3,7 @@
  * @package      Itpmeta
  * @subpackage   Constants
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2017 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -25,4 +25,10 @@ class Constants
 
     // Text handling types.
     const NO_SPLIT = false;
+
+    const CONTAINER_URI = 'com_itpmeta.uri';
+    const CACHE_URI = 'com_itpmeta.uri';
+
+    const COLLECTION_TYPE_FULL = 0;
+    const COLLECTION_TYPE_STRICT = 1;
 }

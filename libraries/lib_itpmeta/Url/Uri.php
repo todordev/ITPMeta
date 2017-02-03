@@ -3,7 +3,7 @@
  * @package      Itpmeta
  * @subpackage   URLs
  * @author       Todor Iliev
- * @copyright    Copyright (C) 2016 Todor Iliev <todor@itprism.com>. All rights reserved.
+ * @copyright    Copyright (C) 2017 Todor Iliev <todor@itprism.com>. All rights reserved.
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
@@ -411,7 +411,7 @@ class Uri extends Prism\Database\Table
      *
      * <code>
      * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
-     * $uri->updateCheckDate('2016-01-01');
+     * $uri->updateCheckDate('2017-01-01');
      * </code>
      *
      * @param string $date

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `#__itpm_global_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__itpm_tags` (
-  `id` smallint(6) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL DEFAULT '',
   `type` varchar(64) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `#__itpm_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__itpm_urls` (
-  `id` smallint(6) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `uri` varchar(2048) NOT NULL,
   `after_body_tag` text,
   `before_body_tag` text,
