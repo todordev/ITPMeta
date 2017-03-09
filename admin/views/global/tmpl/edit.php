@@ -11,47 +11,26 @@
 defined('_JEXEC') or die;
 ?>
 <div class="row-fluid">
-	<div class="span6 form-horizontal">
-        <form action="<?php echo JRoute::_('index.php?option=com_itpmeta'); ?>" method="post" name="adminForm" id="global-form" class="form-validate">
-        	<fieldset>
-                <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('title'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('title'); ?></div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('published'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('published'); ?></div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('type'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('type'); ?></div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('content'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('content'); ?></div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('tag'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('tag'); ?></div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('output'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('output'); ?></div>
-                </div>
+    <div class="span6" id="js-tag-form-wrapper">
+        <form action="<?php echo JRoute::_('index.php?option=com_itpmeta'); ?>" method="post" name="adminForm" id="global-form" class="form-validate form-horizontal">
+            <fieldset>
+                <?php echo $this->form->renderField('title'); ?>
+                <?php echo $this->form->renderField('published'); ?>
+                <?php echo $this->form->renderField('id'); ?>
+                <?php echo $this->form->renderField('type'); ?>
+                <?php echo $this->form->renderField('content'); ?>
+                <?php echo $this->form->renderField('tag'); ?>
+                <?php echo $this->form->renderField('output'); ?>
             </fieldset>
-            
+
             <?php echo $this->form->getInput('name'); ?>
-            <input type="hidden" name="task" value="" />
+            <input type="hidden" name="task" value=""/>
             <?php echo JHtml::_('form.token'); ?>
         </form>
     </div>
 
-	<?php 
-    $layout = new JLayoutFile('tags', $basePath = JPATH_COMPONENT_ADMINISTRATOR .'/layouts');	
-	echo $layout->render(null);
-	?>
+    <?php
+    $layout = new JLayoutFile('tags');
+    echo $layout->render();
+    ?>
 </div>

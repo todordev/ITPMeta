@@ -26,7 +26,9 @@ class ItpmetaControllerScripts extends Prism\Controller\Form\Backend
         // Gets the data from the form
         $data   = $this->input->post->get('jform', array(), 'array');
         $itemId = Joomla\Utilities\ArrayHelper::getValue($data, 'id');
+
         $model  = $this->getModel();
+        /** @var ItpmetaModelScripts $model */
 
         $redirectData = array(
             'task' => $this->getTask(),
@@ -39,7 +41,7 @@ class ItpmetaControllerScripts extends Prism\Controller\Form\Backend
         /** @var $form JForm */
 
         if (!$form) {
-            throw new Exception($model->getError());
+            throw new Exception(JText::_('COM_ITPMETA_ERROR_FORM_CANNOT_BE_LOADED'));
         }
 
         // Test if the data is valid.
@@ -48,7 +50,7 @@ class ItpmetaControllerScripts extends Prism\Controller\Form\Backend
         try {
             $model->save($validData);
         } catch (Exception $e) {
-            JLog::add($e->getMessage());
+            JLog::add($e->getMessage(), JLog::ERROR, 'com_itpmeta');
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 

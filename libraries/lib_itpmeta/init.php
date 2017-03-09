@@ -32,3 +32,15 @@ JHtml::addIncludePath(ITPMETA_PATH_COMPONENT_ADMINISTRATOR . '/helpers/html');
 // Load library language
 $lang = JFactory::getLanguage();
 $lang->load('lib_itpmeta', ITPMETA_PATH_COMPONENT_SITE);
+
+JLog::addLogger(
+    array(
+        'text_file' => 'com_itpmeta.errors.php'
+    ),
+    // Sets messages of specific log levels to be sent to the file
+    JLog::CRITICAL + JLog::EMERGENCY + JLog::ALERT + JLog::ERROR + JLog::WARNING,
+    // The log category/categories which should be recorded in this file
+    // In this case, it's just the one category from our extension, still
+    // we need to put it inside an array
+    array('com_itpmeta')
+);

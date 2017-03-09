@@ -33,6 +33,7 @@ class ItpmetaControllerTag extends Prism\Controller\Form\Backend
         );
 
         $model = $this->getModel();
+        /** @var ItpmetaModelTag $model */
 
         // Validate the posted data.
         // Sometimes the form needs some posted data, such as for plugins and modules.
@@ -56,7 +57,7 @@ class ItpmetaControllerTag extends Prism\Controller\Form\Backend
             $itemId             = $model->save($validData);
             $redirectData['id'] = $itemId;
         } catch (Exception $e) {
-            JLog::add($e->getMessage());
+            JLog::add($e->getMessage(), JLog::ERROR, 'com_itpmeta');
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 

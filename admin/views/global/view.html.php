@@ -23,6 +23,12 @@ class ItpmetaViewGlobal extends JViewLegacy
      * @var Joomla\Registry\Registry
      */
     protected $state;
+
+    /**
+     * @var JApplicationAdministrator
+     */
+    protected $app;
+
     protected $params;
 
     protected $item;
@@ -31,12 +37,10 @@ class ItpmetaViewGlobal extends JViewLegacy
     protected $documentTitle;
     protected $option;
 
-    /**
-     * Display the view
-     */
     public function display($tpl = null)
     {
-        $this->option = JFactory::getApplication()->input->get('option');
+        $this->app    = JFactory::getApplication();
+        $this->option = $this->app->input->get('option');
         
         $this->state = $this->get('State');
         $this->item  = $this->get('Item');
@@ -58,7 +62,7 @@ class ItpmetaViewGlobal extends JViewLegacy
      */
     protected function addToolbar()
     {
-        JFactory::getApplication()->input->set('hidemainmenu', true);
+        $this->app->input->set('hidemainmenu', true);
 
         $isNew               = ((int)$this->item->id === 0);
         $this->documentTitle = $isNew ? JText::_('COM_ITPMETA_ADD_GLOBAL_TAG') : JText::_('COM_ITPMETA_EDIT_GLOBAL_TAG');
@@ -82,8 +86,8 @@ class ItpmetaViewGlobal extends JViewLegacy
         JHtml::_('bootstrap.tooltip');
         JHtml::_('behavior.formvalidation');
         JHtml::_('formbehavior.chosen', 'select');
+        JHtml::_('Prism.ui.stickyKit');
 
-        // Add scripts
         $this->document->addScript('../media/' . $this->option . '/js/admin/utilities.js');
         $this->document->addScript('../media/' . $this->option . '/js/admin/tag_form.js');
         $this->document->addScript('../media/' . $this->option . '/js/admin/global.js');

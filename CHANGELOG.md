@@ -1,6 +1,11 @@
 ITPMeta Changelog
 ==========================
 
+###v4.7
+* Added _twitter:card_ __summary__ and __summary_large_image__ to the plugin (System - ITPMeta Tags) that generates the tags automatically.
+* Improved __System - ITPMeta Tags__ and __System - ITPMeta URLs__. Now, they makes fewer calls to the database.
+* Added functionality to remove cached tags of an URI when you add or edit a tag via the administration.
+
 ###v4.6
 * Added functionality that stores the tags in the cache. That will increase the performance doing fewer calls to database. 
 * Added option to disable include of additional code (scripts).

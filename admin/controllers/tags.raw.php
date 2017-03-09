@@ -45,12 +45,13 @@ class ItpmetaControllerTags extends JControllerAdmin
 
         // Get the model
         $model = $this->getModel();
+        /** @var ItpmetaModelTag $model */
 
         // Save the item
         try {
             $model->saveorder($pks, $order);
         } catch (Exception $e) {
-            JLog::add($e->getMessage());
+            JLog::add($e->getMessage(), JLog::ERROR, 'com_itpmeta');
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 

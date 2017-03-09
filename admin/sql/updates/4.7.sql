@@ -1,0 +1,1 @@
+ALTER TABLE `#__itpm_urls` DROP INDEX `idx_itpm_uri_checked`;

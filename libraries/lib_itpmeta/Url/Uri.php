@@ -395,7 +395,6 @@ class Uri extends Prism\Database\Table
             $this->db->execute();
 
             $this->id = $this->db->insertid();
-
         } else { // Update a record
             $query
                 ->update($this->db->quoteName('#__itpm_urls'))
@@ -469,6 +468,28 @@ class Uri extends Prism\Database\Table
     /**
      * Return the URI as string.
      *
+     * <code>
+     * $keys = array(
+     *    "uri" => "/my-page"
+     * );
+     *
+     * $uri = new Itpmeta\Uri\Uri(\JFactory::getDbo());
+     * $uri->load($keys);
+     *
+     * echo $uri->getUri();
+     * </code>
+     *
+     * @return string
+     */
+    public function getUri()
+    {
+        return (string)$this->uri;
+    }
+
+    /**
+     * Return the URI as string.
+     *
+     * <code>
      * $keys = array(
      *    "uri" => "/my-page"
      * );
@@ -477,7 +498,6 @@ class Uri extends Prism\Database\Table
      * $uri->load($keys);
      *
      * echo $uri;
-     *
      * </code>
      *
      * @return string

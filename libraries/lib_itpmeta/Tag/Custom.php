@@ -100,6 +100,23 @@ class Custom extends Base
                 break;
 
             // Twitter Card tags
+            case 'twitter_card_summary':
+                $tag = array(
+                    'title' => 'Twitter Card Summary [twitter:summary]',
+                    'type'  => 'twitter:card:summary',
+                    'tag'   => '<meta name="twitter:card" content="summary" />'
+                );
+                break;
+
+            case 'twitter_card_summary_large_image':
+                $tag = array(
+                    'title' => 'Twitter Card Summary (Large Image) [twitter:summary_large_image]',
+                    'type'  => 'twitter:card:summary_large_image',
+                    'tag'   => '<meta name="twitter:card" content="summary_large_image" />'
+                );
+                break;
+
+
             case 'twitter_card_title':
                 $tag = array(
                     'title' => 'Twitter Card Title [twitter:title]',
@@ -132,11 +149,11 @@ class Custom extends Base
                 );
                 break;
 
-            case 'twitter_card_image_src':
+            case 'twitter_card_image_alt':
                 $tag = array(
-                    'title' => 'Twitter Card Image SRC [twitter:image:src]',
-                    'type'  => 'twitter:image:src',
-                    'tag'   => '<meta name="twitter:image:src" content="{URL}" />'
+                    'title' => 'Twitter Card Image Alt [twitter:image:alt]',
+                    'type'  => 'twitter:image:alt',
+                    'tag'   => '<meta name="twitter:image:alt" content="{ALT_TEXT}" />'
                 );
                 break;
 

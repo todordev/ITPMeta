@@ -69,11 +69,10 @@ abstract class Base
      */
     protected function generateOutput()
     {
-        // Count indicators in a string.
+        // Count placeholder in the tag content.
         $numMatches = (int)preg_match_all($this->pattern, $this->tag, $matches);
 
-        if (2 === $numMatches) { // Replace values of tags which contains two indicators.
-//            $rows = preg_split("/\n/", $this->content);
+        if (2 === $numMatches) { // Replace values of tags which contains two placeholders.
             $rows = explode(PHP_EOL, $this->content);
 
             if (count($rows) === 2) {
@@ -86,7 +85,9 @@ abstract class Base
                 $line1        = $this->clean($rows[0]);
                 $this->output = preg_replace($this->pattern, $line1, $this->tag, 1);
             }
-        } else { // Replace values of tags which contains one indicators.
+        
+        // Replace values of tags which contains one placeholder.
+        } else {
             $this->output = preg_replace($this->pattern, $this->clean($this->content), $this->tag, 1);
         }
     }
@@ -253,6 +254,10 @@ abstract class Base
      */
     public function getOutput()
     {
+        if ($this->output === null) {
+            $this->generateOutput();
+        }
+
         return $this->output;
     }
 
@@ -272,11 +277,11 @@ abstract class Base
     /**
      * Get the ID of an URL where the tag belongs.
      *
-     * @return string
+     * @return int
      */
     public function getUrlId()
     {
-        return $this->url_id;
+        return (int)$this->url_id;
     }
 
     /**
@@ -370,16 +375,32 @@ abstract class Base
      * $tagAsArray = $tag->toArray();
      * </code>
      *
+     * @param bool $full
+     *
      * @return array
      */
-    public function toArray()
+    public function toArray($full = false)
     {
-        return array(
-            'title'   => $this->getTitle(),
-            'type'    => $this->getType(),
-            'tag'     => $this->getTag(),
-            'content' => $this->getContent(),
-            'output'  => $this->getOutput()
-        );
+        if ($full) {
+            return array(
+                'id'        => $this->getId(),
+                'name'      => $this->getName(),
+                'title'     => $this->getTitle(),
+                'type'      => $this->getType(),
+                'tag'       => $this->getTag(),
+                'content'   => $this->getContent(),
+                'output'    => $this->getOutput(),
+                'ordering'  => (int)$this->ordering,
+                'url_id'    => $this->getUrlId()
+            );
+        } else {
+            return array(
+                'title'   => $this->getTitle(),
+                'type'    => $this->getType(),
+                'tag'     => $this->getTag(),
+                'content' => $this->getContent(),
+                'output'  => $this->getOutput()
+            );
+        }
     }
 }

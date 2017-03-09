@@ -1,6 +1,9 @@
 System - ITPMeta Tags Changelog
 ===============================
 
+###v4.5
+* Improved adding of tags. Now, it makes fewer calls to database when adds and updates tags.
+
 ###v4.4
 * Improved.
 

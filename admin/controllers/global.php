@@ -33,6 +33,7 @@ class ItpmetaControllerGlobal extends Prism\Controller\Form\Backend
         );
 
         $model = $this->getModel();
+        /** @var ItpmetaModelGlobal $model */
 
         // Validate the posted data.
         // Sometimes the form needs some posted data, such as for plugins and modules.

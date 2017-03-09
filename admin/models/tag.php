@@ -7,6 +7,8 @@
  * @license      GNU General Public License version 3 or later; see LICENSE.txt
  */
 
+use Joomla\Utilities\ArrayHelper;
+
 // no direct access
 defined('_JEXEC') or die;
 
@@ -49,7 +51,7 @@ class ItpmetaModelTag extends JModelAdmin
      * @param   array   $data     An optional array of data for the form to interogate.
      * @param   boolean $loadData True if the form is to load its own data (default case), false if not.
      *
-     * @return  JForm   A JForm object on success, false on failure
+     * @return  JForm|bool   A JForm object on success, false on failure
      * @since   1.6
      */
     public function getForm($data = array(), $loadData = true)
@@ -72,7 +74,7 @@ class ItpmetaModelTag extends JModelAdmin
     protected function loadFormData()
     {
         $app = JFactory::getApplication();
-        /** @var $app JApplicationAdministrator * */
+        /** @var $app JApplicationAdministrator */
 
         // Check the session for previously entered form data.
         $data = $app->getUserState($this->option . '.edit.tag.data', array());
@@ -93,18 +95,22 @@ class ItpmetaModelTag extends JModelAdmin
      *
      * @param array $data    All data for the category in an array.
      *
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
+     * @throws \UnexpectedValueException
+     *
      * @return int
      */
     public function save($data)
     {
-        $id      = Joomla\Utilities\ArrayHelper::getValue($data, 'id', 0, 'int');
-        $name    = Joomla\Utilities\ArrayHelper::getValue($data, 'name');
-        $type    = Joomla\Utilities\ArrayHelper::getValue($data, 'type');
-        $title   = Joomla\Utilities\ArrayHelper::getValue($data, 'title');
-        $tag     = Joomla\Utilities\ArrayHelper::getValue($data, 'tag');
-        $content = Joomla\Utilities\ArrayHelper::getValue($data, 'content');
-        $output  = Joomla\Utilities\ArrayHelper::getValue($data, 'output');
-        $urlId   = Joomla\Utilities\ArrayHelper::getValue($data, 'url_id', 0, 'int');
+        $id      = ArrayHelper::getValue($data, 'id', 0, 'int');
+        $name    = ArrayHelper::getValue($data, 'name');
+        $type    = ArrayHelper::getValue($data, 'type');
+        $title   = ArrayHelper::getValue($data, 'title');
+        $tag     = ArrayHelper::getValue($data, 'tag');
+        $content = ArrayHelper::getValue($data, 'content');
+        $output  = ArrayHelper::getValue($data, 'output');
+        $urlId   = ArrayHelper::getValue($data, 'url_id', 0, 'int');
 
         // Load item data
         $row = $this->getTable();
@@ -128,6 +134,8 @@ class ItpmetaModelTag extends JModelAdmin
 
         $row->store();
 
+        $this->removeCachedTags($urlId);
+
         return $row->get('id');
     }
 
@@ -136,7 +144,7 @@ class ItpmetaModelTag extends JModelAdmin
      *
      * @param JTable $table
      *
-     * @since    1.6
+     * @throws \RuntimeException
      */
     protected function prepareTable($table)
     {
@@ -168,7 +176,7 @@ class ItpmetaModelTag extends JModelAdmin
     {
         if ((int)$table->get('id') > 0) {
             $urlTable = $this->getTable('Url');
-            $urlTable->load($table->url_id);
+            $urlTable->load($table->get('url_id'));
 
             if ($urlTable->get('autoupdate') and (strcmp($title, $table->get('title')) !== 0 or strcmp($content, $table->get('content') !== 0))) {
                 $urlTable->set('autoupdate', Itpmeta\Constants::AUTOUPDATE_DISABLED);
@@ -202,10 +210,12 @@ class ItpmetaModelTag extends JModelAdmin
      * Delete tags based on URL id
      *
      * @param array $pks URLs ids
+     *
+     * @throws \RuntimeException
      */
-    public function deleteByUrlId(&$pks)
+    public function deleteByUrlId($pks)
     {
-        $pks = Joomla\Utilities\ArrayHelper::toInteger($pks);
+        $pks = ArrayHelper::toInteger($pks);
 
         if (count($pks) > 0) {
             $db = $this->getDbo();
@@ -230,6 +240,8 @@ class ItpmetaModelTag extends JModelAdmin
      *
      * @param int $itemId
      * @param string  $content
+     *
+     * @throws \RuntimeException
      *
      * @return array
      */
@@ -258,6 +270,41 @@ class ItpmetaModelTag extends JModelAdmin
 
         $result['autoupdate'] = $uri->isAutoupdate();
 
+        $this->removeCachedTags($tag->getUrlId());
+
         return $result;
+    }
+
+    /**
+     * Clean the cache
+     *
+     * @param   int   $urlId
+     *
+     * @throws \RuntimeException
+     *
+     * @return  void
+     */
+    protected function removeCachedTags($urlId)
+    {
+        $url = new Itpmeta\Url\Uri(JFactory::getDbo());
+        $url->load(['uri_id' => $urlId]);
+
+        if ($url->getId() > 0) {
+            $uriString  = $url->getUri();
+
+            $option     = ($this->option !== null) ? $this->option : JFactory::getApplication()->input->get('option');
+            $conf       = JFactory::getConfig();
+
+            $options = array(
+                'defaultgroup' => $option,
+                'cachebase'    => $conf->get('cache_path', JPATH_SITE . '/cache')
+            );
+
+            /** @var JCacheControllerCallback $cache */
+            $cache = JCache::getInstance('callback', $options);
+
+            $hash = Prism\Utilities\StringHelper::generateMd5Hash(Itpmeta\Constants::CACHE_URI, $uriString);
+            $cache->remove($hash, $option);
+        }
     }
 }

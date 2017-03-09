@@ -30,6 +30,8 @@ class ItpmetaControllerTag extends JControllerForm
 
     public function saveAjax()
     {
+        $app     = JFactory::getApplication();
+
         // Get the data from the form
         $itemId  = $this->input->post->get('pk', 0, 'uint');
         $content = $this->input->post->get('value', '', 'raw');
@@ -43,6 +45,7 @@ class ItpmetaControllerTag extends JControllerForm
         $response = new Prism\Response\Json();
 
         $model = $this->getModel();
+        /** @var ItpmetaModelTag $model */
 
         if (!$itemId or !$content) {
             $response
@@ -51,13 +54,13 @@ class ItpmetaControllerTag extends JControllerForm
                 ->failure();
 
             echo $response;
-            JFactory::getApplication()->close();
+            $app->close();
         }
 
         try {
             $data = $model->saveAjax($itemId, $content);
         } catch (Exception $e) {
-            JLog::add($e->getMessage());
+            JLog::add($e->getMessage(), JLog::ERROR, 'com_itpmeta');
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 
@@ -68,6 +71,6 @@ class ItpmetaControllerTag extends JControllerForm
             ->success();
 
         echo $response;
-        JFactory::getApplication()->close();
+        $app->close();
     }
 }

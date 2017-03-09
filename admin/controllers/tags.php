@@ -57,11 +57,13 @@ class ItpmetaControllerTags extends Prism\Controller\Admin
             return;
         }
 
+        $model = $this->getModel();
+        /** @var ItpmetaModelTag $model */
+
         try {
-            $model = $this->getModel();
             $model->delete($cid);
         } catch (Exception $e) {
-            JLog::add($e->getMessage());
+            JLog::add($e->getMessage(), JLog::ERROR, 'com_itpmeta');
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 

@@ -74,13 +74,13 @@ class plgSystemItpmeta extends JPlugin
         // Prepare caching.
         $cache = null;
         if ((bool)$this->params->get('cache') and $this->params->get('cache_period', 30) > 0) {
-            $lifetime = (int)$this->params->get('cache_period', 30) * (int)Prism\Constants::TIME_SECONDS_24H;
             $cache    = JFactory::getCache('com_itpmeta', '');
 
             if (!$this->app->get('caching', 0)) {
                 $cache->setCaching(1);
             }
 
+            $lifetime = (int)$this->params->get('cache_period', 30) * (int)Prism\Constants::TIME_SECONDS_24H;
             $cache->setLifeTime($lifetime);
 
             // Get the categories from the cache.

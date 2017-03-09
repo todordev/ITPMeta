@@ -21,25 +21,30 @@ class ItpmetaViewTag extends JViewLegacy
      * @var Joomla\Registry\Registry
      */
     protected $state;
+
+    /**
+     * @var JApplicationAdministrator
+     */
+    protected $app;
+
     protected $params;
-
     protected $item;
-    protected $form;
 
+    protected $form;
     protected $documentTitle;
     protected $option;
-    
+
     public function display($tpl = null)
     {
-        $this->option = JFactory::getApplication()->input->get('option');
-        
+        $this->app    = JFactory::getApplication();
+        $this->option = $this->app->input->get('option');
+
         $this->state = $this->get('State');
         $this->item  = $this->get('Item');
         $this->form  = $this->get('Form');
 
         $this->params = $this->state->get('params');
 
-        // Prepare actions, behaviors, scritps and document
         $this->addToolbar();
         $this->setDocument();
 
@@ -53,7 +58,7 @@ class ItpmetaViewTag extends JViewLegacy
      */
     protected function addToolbar()
     {
-        JFactory::getApplication()->input->set('hidemainmenu', true);
+        $this->app->input->set('hidemainmenu', true);
 
         $isNew               = ((int)$this->item->id === 0);
         $this->documentTitle = $isNew ? JText::_('COM_ITPMETA_ADD_TAG') : JText::_('COM_ITPMETA_EDIT_TAG');
@@ -78,6 +83,7 @@ class ItpmetaViewTag extends JViewLegacy
         JHtml::_('bootstrap.tooltip');
         JHtml::_('behavior.formvalidation');
         JHtml::_('formbehavior.chosen', 'select');
+        JHtml::_('Prism.ui.stickyKit');
 
         $this->document->addScript('../media/' . $this->option . '/js/admin/utilities.js');
         $this->document->addScript('../media/' . $this->option . '/js/admin/tag_form.js');

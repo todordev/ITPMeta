@@ -48,13 +48,15 @@ class ItpmetaControllerUrls extends Prism\Controller\Admin
         );
 
         $cid       = $this->input->post->get('cid', array(), 'array');
+
         $modelTags = $this->getModel('Tag');
+        /** @var ItpmetaModelTag $modelTags */
 
         try {
             $modelTags->deleteByUrlId($cid);
             parent::delete();
         } catch (Exception $e) {
-            JLog::add($e->getMessage());
+            JLog::add($e->getMessage(), JLog::ERROR, 'com_itpmeta');
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 
@@ -93,11 +95,13 @@ class ItpmetaControllerUrls extends Prism\Controller\Admin
             return;
         }
 
+        $model = $this->getModel();
+        /** @var ItpmetaModelUrl $model */
+
         try {
-            $model = $this->getModel();
             $model->updateAutoupdate($cid, $value);
         } catch (Exception $e) {
-            JLog::add($e->getMessage());
+            JLog::add($e->getMessage(), JLog::ERROR, 'com_itpmeta');
             throw new Exception(JText::_('COM_ITPMETA_ERROR_SYSTEM'));
         }
 
